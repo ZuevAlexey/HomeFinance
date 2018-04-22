@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>MyCompany.Service.Entity.Core</id>
+    <version>1.0.1</version>
+    <authors>Aleksey Zuev (zuevalexey71@gmail.com)</authors>
+    <owners>Aleksey Zuev</owners>
+    <licenseUrl>http://none</licenseUrl>
+    <projectUrl>http://none</projectUrl>
+    <iconUrl>http://none</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Ядро для работы Entity - сервисов MyCompany</description>
+    <releaseNotes>Изменено пространоство имен</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>MyCompany Services Entity</tags>
+  </metadata>
+  <files>
+    <file src="bin\x64\Debug\MyCompany.Services.Entity.Core.dll" target="lib\net462" />
+  </files>
+</package>
