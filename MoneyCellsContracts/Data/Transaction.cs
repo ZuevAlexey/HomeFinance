@@ -34,6 +34,6 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Результат
       /// </summary>
-      public TransactionResult Result {get;set;}
+      public TransactionStatus Status {get;set;}
    }
 }

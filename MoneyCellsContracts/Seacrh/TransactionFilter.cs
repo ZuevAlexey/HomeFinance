@@ -30,6 +30,6 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Результаты транзакций
       /// </summary>
-      public ICollection<TransactionResult> Results {get;set;}
+      public ICollection<TransactionStatus> Results {get;set;}
    }
 }

@@ -64,7 +64,7 @@
     <Compile Include="Enums\MoneyCellStatus.cs" />
     <Compile Include="Enums\MoneyCellType.cs" />
     <Compile Include="Enums\CurrencyType.cs" />
-    <Compile Include="Enums\TransactionResult.cs" />
+    <Compile Include="Enums\TransactionStatus.cs" />
     <Compile Include="IMoneyCellsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seacrh\MoneyCellsFIlter.cs" />

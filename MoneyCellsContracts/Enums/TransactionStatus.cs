@@ -1,16 +1,21 @@
 namespace MyCompany.Services.Entity.MoneyCells.Contracts.Enums {
    /// <summary>
-   /// Результат транзакции
+   /// Статус транзакции
    /// </summary>
-   public enum TransactionResult {
+   public enum TransactionStatus {
+      /// <summary>
+      /// Обрабатывается
+      /// </summary>
+      Processing = 0,
+
       /// <summary>
       /// Успех
       /// </summary>
-      Success = 0,
+      Success = 1,
 
       /// <summary>
       /// Неудача
       /// </summary>
-      Fail = 1
+      Fail = 2
    }
 }
