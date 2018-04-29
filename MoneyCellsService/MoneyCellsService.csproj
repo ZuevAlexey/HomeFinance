@@ -105,8 +105,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\MoneyCell.cs" />
-    <Compile Include="Data\Transaction.cs" />
+    <Compile Include="Data\Entities\MoneyCell.cs" />
+    <Compile Include="Data\Context\MoneyCellsDb.cs" />
+    <Compile Include="Data\Entities\Transaction.cs" />
     <Compile Include="Service\MoneyCellsService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

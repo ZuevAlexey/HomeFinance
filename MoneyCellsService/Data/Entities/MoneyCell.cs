@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoneyCellsService.Data {
+namespace MoneyCellsService.Data.Entities {
    /// <summary>
    /// Объект-сущность СУБД, представляющий денежную ячейку
    /// </summary>
