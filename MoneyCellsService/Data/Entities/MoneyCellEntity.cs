@@ -10,7 +10,7 @@ namespace MoneyCellsService.Data.Entities {
    /// Объект-сущность СУБД, представляющий денежную ячейку
    /// </summary>
    [Table("MoneyCells")]
-   public class MoneyCell {
+   public class MoneyCellEntity {
       /// <summary>
       /// Идентификатор
       /// </summary>

@@ -53,6 +53,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Consul, Version=0.7.2.4, Culture=neutral, PublicKeyToken=20a6ad9a81df1d95, processorArchitecture=MSIL">
       <HintPath>..\packages\Consul.0.7.2.4\lib\net45\Consul.dll</HintPath>
     </Reference>
@@ -105,9 +108,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Entities\MoneyCell.cs" />
+    <Compile Include="Data\Entities\MoneyCellEntity.cs" />
     <Compile Include="Data\Context\MoneyCellsDb.cs" />
-    <Compile Include="Data\Entities\Transaction.cs" />
+    <Compile Include="Data\Entities\TransactionEntity.cs" />
+    <Compile Include="Mapping\IMoneyCellsMapper.cs" />
+    <Compile Include="Mapping\MoneyCellsMapper.cs" />
     <Compile Include="Service\MoneyCellsService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,5 +127,6 @@
       <Name>MoneyCellsContracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

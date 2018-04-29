@@ -12,11 +12,11 @@ namespace MoneyCellsService.Data.Context {
       /// <summary>
       /// Таблица денежных ячеек
       /// </summary>
-      public ITable<MoneyCell> MoneyCells => GetTable<MoneyCell>();
+      public ITable<MoneyCellEntity> MoneyCells => GetTable<MoneyCellEntity>();
 
       /// <summary>
       /// Таблица транзакций
       /// </summary>
-      public ITable<Transaction> Transactions => GetTable<Transaction>();
+      public ITable<TransactionEntity> Transactions => GetTable<TransactionEntity>();
    }
 }
