@@ -30,13 +30,13 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts {
       /// <param name="toMoneyCell">Ячейка-получатель денежных средств</param>
       /// <param name="amount">Размер транзакции</param>
       /// <returns>Транзакция</returns>
-      Transaction ProcessTransaction(long fromMoneyCell,long toMoneyCell,Currency amount);
+      Transaction ProcessTransaction(long fromMoneyCell,long toMoneyCell,float amount);
 
       /// <summary>
       /// Получить транзакции по фильтру
       /// </summary>
       /// <param name="filter">Фильтр транзакций</param>
       /// <returns>Транзакции</returns>
-      ICollection<Transaction> Get(TransactionFilter filter);
+      ICollection<Transaction> GetTransactions(TransactionFilter filter);
    }
 }
