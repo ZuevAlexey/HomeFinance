@@ -10,29 +10,30 @@ using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
 
 namespace Sandbox {
    class Program {
+      private const string PRETTY_LINE = "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*";
       static void Main(string[] args) {
          var client = new JRpcClient("http://127.0.0.1:15555");
          var proxy = client.GetProxy<IMoneyCellsService>("MoneyCellsService");
-
+         TransactionTest(proxy);
          //var cells = GetMoneyCells();
 
          //var result = proxy.Upsert(cells);
 
          //var filter = new MoneyCellFilter {
          //   Ids = new HashSet<long> { 1, 2 },
-         //   IsDeleted = true,
+         //   IsDeleted = false,
          //   OwnersIds = null,
          //   Statuses = null
          //};
 
          //var result = proxy.Get(filter);
 
-         Console.ReadKey();
+         //Console.ReadKey();
       }
 
-      private void TransactionTest(IMoneyCellsService moneyCellsService) {
-         const string PRETTY_LINE = "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*";
+      private static void TransactionTest(IMoneyCellsService moneyCellsService) {
          while (true) {
+            ShowMoneyCellsInfo(moneyCellsService);
             Console.WriteLine(PRETTY_LINE);
             Console.WriteLine("С какого счета будем списывать бабки?");
             if (!long.TryParse(Console.ReadLine(), out var fromId)) {
@@ -54,7 +55,6 @@ namespace Sandbox {
             Console.WriteLine(PRETTY_LINE);
             var transaction = moneyCellsService.ProcessTransaction(fromId, toId, amount);
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(Environment.NewLine);
             sb.AppendLine("Данные о транзакции :");
             sb.AppendLine($"Идентификатор получателя : {transaction.To}");
             sb.AppendLine($"Идентификатор отправителя : {transaction.From}");
@@ -65,10 +65,31 @@ namespace Sandbox {
             Console.WriteLine(PRETTY_LINE);
             Console.WriteLine("Еще разок (y/n)?");
             if (Console.ReadKey().Key == ConsoleKey.N) {
+               Console.WriteLine();
                break;
             }
          }
       }
+
+      private static void ShowMoneyCellsInfo(IMoneyCellsService moneyCellsService) {
+         Console.WriteLine("Инфа по картонкам:");
+         var filter = new MoneyCellFilter {Statuses = new HashSet<MoneyCellStatus> {MoneyCellStatus.Active}};
+         var moneyCells = moneyCellsService.Get(filter);
+         foreach (var cell in moneyCells) {
+            Show(cell);
+         }
+         Console.WriteLine(PRETTY_LINE);
+      }
+
+      private static void Show(MoneyCell cell) {
+         Console.WriteLine(PRETTY_LINE);
+         StringBuilder sb = new StringBuilder();
+         sb.AppendLine($"{cell.Name}:");
+         sb.AppendLine($"Идентификатор : {cell.Id} ({cell.Type})");
+         sb.AppendLine($"Баланс : {cell.Balance} {cell.CurrencyType}");
+         Console.WriteLine(sb.ToString());
+      }
+
       private static List<MoneyCell> GetMoneyCells() {
          var insert = new List<MoneyCell> {
             new MoneyCell {
