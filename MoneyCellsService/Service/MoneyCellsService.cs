@@ -81,11 +81,9 @@ namespace MoneyCellsService.Service {
 
          transaction.Id = _provider.UpsertTransaction(transaction);
          if (transaction.Id != MoneyCellsProvider.INVALID_ID) {
-            transaction = _transactionManager.ProcessTransaction(transaction);
+            _transactionManager.ProcessTransaction(transaction);
          }
-         return transaction == null
-            ? null
-            : _mapper.MapToTransaction(transaction);
+         return _mapper.MapToTransaction(transaction);
       }
    }
 }

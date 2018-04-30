@@ -20,10 +20,10 @@ namespace MoneyCellsService.Managers {
       /// </summary>
       /// <param name="transaction">Сущность БД - транзакция для проведения</param>
       /// <returns>Отработанная транзакция, в случае системных ошибок null</returns>
-      public TransactionEntity ProcessTransaction(TransactionEntity transaction) {
+      public void ProcessTransaction(TransactionEntity transaction) {
          if (!ValidateTransaction(transaction, out var fromMoneyCell, out var toMoneyCell)) {
             SaveTransaction(transaction, TransactionStatus.Fail);
-            return transaction;
+            return;
          }
 
          fromMoneyCell.Balance = fromMoneyCell.Balance - transaction.Amount;
@@ -34,11 +34,11 @@ namespace MoneyCellsService.Managers {
          };
          if (_provider.UpsertMoneyCells(moneyCells).Contains(MoneyCellsProvider.INVALID_ID)) {
             SaveTransaction(transaction, TransactionStatus.Fail);
-            return transaction;
+            return;
          }
 
          SaveTransaction(transaction, TransactionStatus.Success);
-         return transaction;
+         return;
       }
 
       /// <summary>
@@ -122,7 +122,10 @@ namespace MoneyCellsService.Managers {
       /// <param name="id">Идентификатор валютной ячейки</param>
       /// <returns>Фильтр валютных ячеек</returns>
       private MoneyCellFilter CreateMoneyCellFilter(long id) {
-         return new MoneyCellFilter {Ids = new HashSet<long> {id}};
+         return new MoneyCellFilter {
+            Ids = new HashSet<long> {id},
+            Statuses = new HashSet<MoneyCellStatus> {MoneyCellStatus.Active}
+         };
       }
    }
 }

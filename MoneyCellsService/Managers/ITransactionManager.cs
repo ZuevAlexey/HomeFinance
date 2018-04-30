@@ -10,6 +10,6 @@ namespace MoneyCellsService.Managers {
       /// </summary>
       /// <param name="transaction">Сущность БД - транзакция для проведения</param>
       /// <returns>Отработанная транзакция, в случае системных ошибок null</returns>
-      TransactionEntity ProcessTransaction(TransactionEntity transaction);
+      void ProcessTransaction(TransactionEntity transaction);
    }
 }
