@@ -4,21 +4,27 @@ using JRPC.Service;
 using JRPC.Service.Host.Owin;
 using JRPC.Service.Registry;
 using MoneyCellsService.Data.Providers;
+using MoneyCellsService.IoC;
 using MoneyCellsService.Managers;
 using MoneyCellsService.Mapping;
+using Topshelf;
+using Topshelf.Ninject;
 
 namespace MoneyCellsService {
    class Program {
       static void Main(string[] args) {
-         var client = new ConsulClient();
-         var registry = new DefaultModulesRegistry();
-         var moneyCellProvider = new MoneyCellsProvider();
-         registry.AddJRpcModule(new Service.MoneyCellsService(new MoneyCellsMapper(), moneyCellProvider,
-            new TransactionManager(moneyCellProvider)));
-         var svc = new JRpcService(registry, client, new OwinJrpcServer());
-         svc.Start();
-         Console.ReadLine();
-         svc.Stop();
+         HostFactory.Run(c => {
+            c.UseNinject(new MoneyCellsServiceCoreModule())
+               .Service<JRpcService>(s => {
+                  s.ConstructUsingNinject();
+                  s.WhenStarted((service, control) => service.Start());
+                  s.WhenStopped((service, control) => service.Stop());
+               });
+            c.RunAsNetworkService();
+            c.SetServiceName("MoneyCellsService");
+            c.SetDisplayName("MyCompany MoneyCells Service");
+            c.SetDescription("Сервис для работы с валютными ячейками и транзакциями");
+         });
       }
    }
 }
