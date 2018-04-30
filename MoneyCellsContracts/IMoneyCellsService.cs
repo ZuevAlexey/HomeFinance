@@ -19,7 +19,7 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts {
       /// </summary>
       /// <param name="moneyCells">Коллекция денежных ячеек для сохранения</param>
       /// <returns>Идентификаторы для успешно сохраненных банковских ячеек, для ошибок -1</returns>
-      ICollection<long> Upsert(ICollection<MoneyCell> moneyCells);
+      ICollection<long> Upsert(IEnumerable<MoneyCell> moneyCells);
 
       /// <summary>
       /// Провести транзакцию

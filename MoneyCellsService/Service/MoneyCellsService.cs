@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JRPC.Service;
 using LinqToDB;
 using MoneyCellsService.Data.Context;
+using MoneyCellsService.Data.Providers;
 using MoneyCellsService.Mapping;
 using MyCompany.Services.Entity.MoneyCells.Contracts;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
@@ -15,9 +17,11 @@ namespace MoneyCellsService.Service {
    /// </summary>
    public class MoneyCellsService : JRpcModule, IMoneyCellsService {
       private readonly IMoneyCellsMapper _mapper;
+      private readonly IMoneyCellsProvider _provider;
 
-      public MoneyCellsService(IMoneyCellsMapper mapper) {
+      public MoneyCellsService(IMoneyCellsMapper mapper, IMoneyCellsProvider provider) {
          _mapper = mapper;
+         _provider = provider;
       }
 
       /// <summary>
@@ -41,6 +45,22 @@ namespace MoneyCellsService.Service {
       }
 
       /// <summary>
+      /// Обновить данные для денежных ячеек
+      /// </summary>
+      /// <param name="moneyCells">Коллекция денежных ячеек для сохранения</param>
+      /// <returns>Идентификаторы для успешно сохраненных банковских ячеек, для ошибок -1</returns>
+      public ICollection<long> Upsert(IEnumerable<MoneyCell> moneyCells) {
+         var cells = moneyCells as MoneyCell[] ?? moneyCells.ToArray();
+         try {
+            var moneyCellsEntities = cells.Select(m => _mapper.MapToMoneyCellEntity(m));
+            return _provider.Upsert(moneyCellsEntities);
+         } catch {
+            //TODO: писать лог
+            return cells.Select(m => MoneyCellsProvider.INVALID_ID).ToList();
+         }
+      }
+
+      /// <summary>
       /// Получить транзакции по фильтру
       /// </summary>
       /// <param name="filter">Фильтр транзакций</param>
@@ -58,32 +78,6 @@ namespace MoneyCellsService.Service {
       /// <returns>Транзакция</returns>
       public Transaction ProcessTransaction(long fromMoneyCell, long toMoneyCell, float amount) {
          throw new NotImplementedException();
-      }
-
-
-      /// ///
-      /// <summary>
-      /// Обновить данные для денежных ячеек
-      /// </summary>
-      /// <param name="moneyCells">Коллекция денежных ячеек для сохранения</param>
-      /// <returns>Идентификаторы для успешно сохраненных банковских ячеек, для ошибок -1</returns>
-      public ICollection<long> Upsert(ICollection<MoneyCell> moneyCells) {
-         const int INVALID_ID = -1;
-         var result = new List<long>();
-         using (var db = new MoneyCellsDb()) {
-            foreach (var moneyCell in moneyCells) {
-               try {
-                  var entity = _mapper.MapToMoneyCellEntity(moneyCell);
-                  var id = db.InsertWithInt64Identity(entity);
-                  result.Add(id);
-               } catch (Exception ex) {
-                  Console.WriteLine(ex);
-                  result.Add(INVALID_ID);
-               }
-            }
-         }
-
-         return result;
       }
    }
 }
