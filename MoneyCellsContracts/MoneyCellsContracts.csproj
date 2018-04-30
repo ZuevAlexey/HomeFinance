@@ -67,6 +67,7 @@
     <Compile Include="Enums\TransactionStatus.cs" />
     <Compile Include="IMoneyCellsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seacrh\DatePeriod.cs" />
     <Compile Include="Seacrh\MoneyCellsFIlter.cs" />
     <Compile Include="Seacrh\TransactionFilter.cs" />
   </ItemGroup>

@@ -28,10 +28,14 @@ create table [dbo].[Transactions]
 [Status] tinyint not null
 
 CONSTRAINT FK_From_MoneyCells_Id FOREIGN KEY ([From])     
-    REFERENCES [dbo].[MoneyCells] ([Id]),
+    REFERENCES [dbo].[MoneyCells] ([Id])
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION,
 
 CONSTRAINT FK_To_MoneyCells_Id FOREIGN KEY ([To])     
-    REFERENCES [dbo].[MoneyCells] ([Id])   
+    REFERENCES [dbo].[MoneyCells] ([Id])
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
 )
 
 go

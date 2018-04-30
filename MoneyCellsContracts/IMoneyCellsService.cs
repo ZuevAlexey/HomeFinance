@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MoneyCellsContracts.Seacrh;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
 

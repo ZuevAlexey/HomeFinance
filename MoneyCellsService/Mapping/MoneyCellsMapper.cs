@@ -59,13 +59,9 @@ namespace MoneyCellsService.Mapping {
                .ForMember(t => t.Status, s => s.MapFrom(o => (MoneyCellStatus) o.Status))
                .ForMember(t => t.Type, s => s.MapFrom(o => (MoneyCellType) o.Type));
             e.CreateMap<Transaction, TransactionEntity>()
-               .ForMember(t => t.From, s => s.MapFrom(o => o.From.Id))
-               .ForMember(t => t.Status, s => s.MapFrom(o => (byte) o.Status))
-               .ForMember(t => t.To, s => s.MapFrom(o => o.To.Id));
+               .ForMember(t => t.Status, s => s.MapFrom(o => (byte) o.Status));
             e.CreateMap<TransactionEntity, Transaction>()
-               .ForMember(t => t.From, s => s.Ignore())
-               .ForMember(t => t.Status, s => s.MapFrom(o => (TransactionStatus) o.Status))
-               .ForMember(t => t.To, s => s.Ignore());
+               .ForMember(t => t.Status, s => s.MapFrom(o => (TransactionStatus) o.Status));
          });
 
          Mapper.AssertConfigurationIsValid();

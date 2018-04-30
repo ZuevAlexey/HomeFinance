@@ -12,14 +12,14 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       public long Id { get; set; }
 
       /// <summary>
-      /// Ячейка-источник
+      /// Идентификатор ячейки-источника
       /// </summary>
-      public MoneyCell From { get; set; }
+      public long From { get; set; }
 
       /// <summary>
-      /// Ячейка-получатель
+      /// Идентификатор ячейки-получателя
       /// </summary>
-      public MoneyCell To { get; set; }
+      public long To { get; set; }
 
       /// <summary>
       /// Размер

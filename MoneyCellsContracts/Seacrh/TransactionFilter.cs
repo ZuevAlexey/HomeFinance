@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 
-namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
+namespace MoneyCellsContracts.Seacrh {
    /// <summary>
    /// Фильтр транзакций
    /// </summary>
@@ -23,13 +23,13 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       public HashSet<long> ToMoneyCellsIds { get; set; }
 
       /// <summary>
-      /// Даты
+      /// Период дат
       /// </summary>
-      public HashSet<DateTime> Dates { get; set; }
+      public DatePeriod Period { get; set; }
 
       /// <summary>
       /// Результаты транзакций
       /// </summary>
-      public HashSet<TransactionStatus> Results { get; set; }
+      public HashSet<TransactionStatus> Statuses { get; set; }
    }
 }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using JRPC.Service;
-using LinqToDB;
-using MoneyCellsService.Data.Context;
+using MoneyCellsContracts.Seacrh;
+using MoneyCellsService.Data.Entities;
 using MoneyCellsService.Data.Providers;
+using MoneyCellsService.Managers;
 using MoneyCellsService.Mapping;
 using MyCompany.Services.Entity.MoneyCells.Contracts;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
@@ -18,10 +19,12 @@ namespace MoneyCellsService.Service {
    public class MoneyCellsService : JRpcModule, IMoneyCellsService {
       private readonly IMoneyCellsMapper _mapper;
       private readonly IMoneyCellsProvider _provider;
+      private readonly ITransactionManager _transactionManager;
 
-      public MoneyCellsService(IMoneyCellsMapper mapper, IMoneyCellsProvider provider) {
+      public MoneyCellsService(IMoneyCellsMapper mapper, IMoneyCellsProvider provider, ITransactionManager transactionManager) {
          _mapper = mapper;
          _provider = provider;
+         _transactionManager = transactionManager;
       }
 
       /// <summary>
@@ -32,7 +35,7 @@ namespace MoneyCellsService.Service {
       public ICollection<MoneyCell> Get(MoneyCellFilter filter) {
          return filter == null
             ? null
-            : _provider.Get(filter).Select(m => _mapper.MapToMoneyCell(m)).ToList();
+            : _provider.GetMoneyCell(filter).Select(m => _mapper.MapToMoneyCell(m)).ToList();
       }
 
       /// <summary>
@@ -44,7 +47,7 @@ namespace MoneyCellsService.Service {
          var cells = moneyCells as MoneyCell[] ?? moneyCells.ToArray();
          try {
             var moneyCellsEntities = cells.Select(m => _mapper.MapToMoneyCellEntity(m));
-            return _provider.Upsert(moneyCellsEntities);
+            return _provider.UpsertMoneyCells(moneyCellsEntities);
          } catch {
             //TODO: писать лог
             return cells.Select(m => MoneyCellsProvider.INVALID_ID).ToList();
@@ -57,7 +60,7 @@ namespace MoneyCellsService.Service {
       /// <param name="filter">Фильтр транзакций</param>
       /// <returns>Транзакции</returns>
       public ICollection<Transaction> GetTransactions(TransactionFilter filter) {
-         throw new NotImplementedException();
+         return _provider.GetTransactions(filter).Select(t => _mapper.MapToTransaction(t)).ToList();
       }
 
       /// <summary>
@@ -68,7 +71,21 @@ namespace MoneyCellsService.Service {
       /// <param name="amount">Размер транзакции</param>
       /// <returns>Транзакция</returns>
       public Transaction ProcessTransaction(long fromMoneyCell, long toMoneyCell, float amount) {
-         throw new NotImplementedException();
+         var transaction = new TransactionEntity {
+            From = fromMoneyCell,
+            To = toMoneyCell,
+            Amount = amount,
+            Date = DateTime.Now,
+            Status = (byte)TransactionStatus.Processing
+         };
+
+         transaction.Id = _provider.UpsertTransaction(transaction);
+         if (transaction.Id != MoneyCellsProvider.INVALID_ID) {
+            transaction = _transactionManager.ProcessTransaction(transaction);
+         }
+         return transaction == null
+            ? null
+            : _mapper.MapToTransaction(transaction);
       }
    }
 }
