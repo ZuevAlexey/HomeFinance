@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-
 using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 
 namespace MyCompany.Services.Entity.MoneyCells.Contracts {
    /// <summary>
@@ -30,7 +28,7 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts {
       /// <param name="toMoneyCell">Ячейка-получатель денежных средств</param>
       /// <param name="amount">Размер транзакции</param>
       /// <returns>Транзакция</returns>
-      Transaction ProcessTransaction(long fromMoneyCell,long toMoneyCell,float amount);
+      Transaction ProcessTransaction(long fromMoneyCell, long toMoneyCell, float amount);
 
       /// <summary>
       /// Получить транзакции по фильтру

@@ -1,9 +1,5 @@
-﻿using LinqToDB.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using LinqToDB.Mapping;
 
 namespace MoneyCellsService.Data.Entities {
    /// <summary>
@@ -14,49 +10,49 @@ namespace MoneyCellsService.Data.Entities {
       /// <summary>
       /// Идентификатор
       /// </summary>
-      [PrimaryKey,Identity]
+      [PrimaryKey, Identity]
       public long Id { get; set; }
 
       /// <summary>
       /// Идентификатор владельца
       /// </summary>
-      [Column,NotNull]
+      [Column, NotNull]
       public long OwnerId { get; set; }
 
       /// <summary>
       /// Дата создания
       /// </summary>
-      [Column,NotNull]
-      public DateTime CreationDate {get;set;}
+      [Column, NotNull]
+      public DateTime CreationDate { get; set; }
 
       /// <summary>
       /// Тип
       /// </summary>
-      [Column,NotNull]
+      [Column, NotNull]
       public byte Type { get; set; }
 
       /// <summary>
       /// Тип валюты
       /// </summary>
-      [Column,NotNull]
+      [Column, NotNull]
       public byte CurrencyType { get; set; }
 
       /// <summary>
       /// Баланс
       /// </summary>
-      [Column,NotNull]
-      public float Balance { get;set;}
+      [Column, NotNull]
+      public float Balance { get; set; }
 
       /// <summary>
       /// Статус
       /// </summary>
-      [Column,NotNull]
-      public byte Status { get;set;}
+      [Column, NotNull]
+      public byte Status { get; set; }
 
       /// <summary>
       /// Имя
       /// </summary>
-      [Column,NotNull]
+      [Column, NotNull]
       public string Name { get; set; }
    }
 }

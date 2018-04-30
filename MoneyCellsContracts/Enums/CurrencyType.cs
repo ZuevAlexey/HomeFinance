@@ -6,16 +6,16 @@
       /// <summary>
       /// Рубль
       /// </summary>
-      RUB=0,
+      RUB = 0,
 
       /// <summary>
       /// Евро
       /// </summary>
-      EUR=1,
+      EUR = 1,
 
       /// <summary>
       /// Доллар США
       /// </summary>
-      USD=2
+      USD = 2
    }
 }

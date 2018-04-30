@@ -1,5 +1,5 @@
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 using System;
+using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 
 namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
    /// <summary>
@@ -14,26 +14,26 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Ячейка-источник
       /// </summary>
-      public MoneyCell From {get;set;}
+      public MoneyCell From { get; set; }
 
       /// <summary>
       /// Ячейка-получатель
       /// </summary>
-      public MoneyCell To {get;set;}
+      public MoneyCell To { get; set; }
 
       /// <summary>
       /// Размер
       /// </summary>
-      public float Amount {get;set;}
+      public float Amount { get; set; }
 
       /// <summary>
       /// Дата
       /// </summary>
-      public DateTime Date {get;set;}
+      public DateTime Date { get; set; }
 
       /// <summary>
       /// Результат
       /// </summary>
-      public TransactionStatus Status {get;set;}
+      public TransactionStatus Status { get; set; }
    }
 }

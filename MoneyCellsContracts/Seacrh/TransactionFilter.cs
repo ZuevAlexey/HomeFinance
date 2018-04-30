@@ -1,6 +1,6 @@
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 using System;
 using System.Collections.Generic;
+using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 
 namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
    /// <summary>
@@ -15,21 +15,21 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Идентификаторы ячеек-источников
       /// </summary>
-      public ICollection<long> FromMoneyCellsIds {get;set;}
+      public ICollection<long> FromMoneyCellsIds { get; set; }
 
       /// <summary>
       /// Идентификаторы ячеек-получателей
       /// </summary>
-      public ICollection<long> ToMoneyCellsIds {get;set;}
+      public ICollection<long> ToMoneyCellsIds { get; set; }
 
       /// <summary>
       /// Даты
       /// </summary>
-      public ICollection<DateTime> Dates {get;set;}
+      public ICollection<DateTime> Dates { get; set; }
 
       /// <summary>
       /// Результаты транзакций
       /// </summary>
-      public ICollection<TransactionStatus> Results {get;set;}
+      public ICollection<TransactionStatus> Results { get; set; }
    }
 }

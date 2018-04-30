@@ -1,5 +1,6 @@
-﻿using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
-using System;
+﻿using System;
+using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
+
 namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
    /// <summary>
    /// Денежная ячейка
@@ -18,7 +19,7 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Дата создания
       /// </summary>
-      public DateTime CreationDate {get;set;}
+      public DateTime CreationDate { get; set; }
 
       /// <summary>
       /// Тип
@@ -33,12 +34,12 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Баланс
       /// </summary>
-      public float Balance { get;set;}
+      public float Balance { get; set; }
 
       /// <summary>
       /// Статус
       /// </summary>
-      public MoneyCellStatus Status { get;set;}
+      public MoneyCellStatus Status { get; set; }
 
       /// <summary>
       /// Имя

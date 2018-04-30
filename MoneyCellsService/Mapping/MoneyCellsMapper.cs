@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using MoneyCellsService.Data.Entities;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
@@ -14,7 +13,7 @@ namespace MoneyCellsService.Mapping {
       }
 
       /// <summary>
-      /// Сконвертировать объект типа <see cref="MoneyCellEntity"/> в объект типа <see cref="MoneyCell"/>
+      /// Сконвертировать объект типа <see cref="MoneyCellEntity" /> в объект типа <see cref="MoneyCell" />
       /// </summary>
       /// <param name="moneyCellEntity">Сущность бд, представляющая денежную ячейку</param>
       /// <returns>Денежная ячейка</returns>
@@ -23,7 +22,7 @@ namespace MoneyCellsService.Mapping {
       }
 
       /// <summary>
-      /// Сконвертировать объект типа <see cref="MoneyCell"/> в объект типа <see cref="MoneyCellEntity"/>
+      /// Сконвертировать объект типа <see cref="MoneyCell" /> в объект типа <see cref="MoneyCellEntity" />
       /// </summary>
       /// <param name="moneyCellEntity">Денежная ячейка</param>
       /// <returns>Сущность бд, представляющая денежную ячейку</returns>
@@ -32,7 +31,7 @@ namespace MoneyCellsService.Mapping {
       }
 
       /// <summary>
-      /// Сконвертировать объект типа <see cref="TransactionEntity"/> в объект типа <see cref="Transaction"/>
+      /// Сконвертировать объект типа <see cref="TransactionEntity" /> в объект типа <see cref="Transaction" />
       /// </summary>
       /// <param name="transactionEntity">Сущность бд, представляющая валютную транзакцию</param>
       /// <returns>Валютная транзакция</returns>
@@ -41,7 +40,7 @@ namespace MoneyCellsService.Mapping {
       }
 
       /// <summary>
-      /// Сконвертировать объект типа <see cref="Transaction"/> в объект типа <see cref="TransactionEntity"/>
+      /// Сконвертировать объект типа <see cref="Transaction" /> в объект типа <see cref="TransactionEntity" />
       /// </summary>
       /// <param name="transactionEntity">Валютная транзакция</param>
       /// <returns>Сущность бд, представляющая валютную транзакцию</returns>
@@ -52,20 +51,20 @@ namespace MoneyCellsService.Mapping {
       private void Initialyze() {
          Mapper.Initialize(e => {
             e.CreateMap<MoneyCell, MoneyCellEntity>()
-               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (byte)o.CurrencyType))
-               .ForMember(t => t.Status, s => s.MapFrom(o => (byte)o.Status))
-               .ForMember(t => t.Type, s => s.MapFrom(o => (byte)o.Type));
+               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (byte) o.CurrencyType))
+               .ForMember(t => t.Status, s => s.MapFrom(o => (byte) o.Status))
+               .ForMember(t => t.Type, s => s.MapFrom(o => (byte) o.Type));
             e.CreateMap<MoneyCellEntity, MoneyCell>()
-               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (CurrencyType)o.CurrencyType))
-               .ForMember(t => t.Status, s => s.MapFrom(o => (MoneyCellStatus)o.Status))
-               .ForMember(t => t.Type, s => s.MapFrom(o => (MoneyCellType)o.Type));
+               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (CurrencyType) o.CurrencyType))
+               .ForMember(t => t.Status, s => s.MapFrom(o => (MoneyCellStatus) o.Status))
+               .ForMember(t => t.Type, s => s.MapFrom(o => (MoneyCellType) o.Type));
             e.CreateMap<Transaction, TransactionEntity>()
                .ForMember(t => t.From, s => s.MapFrom(o => o.From.Id))
-               .ForMember(t => t.Status, s => s.MapFrom(o => (byte)o.Status))
+               .ForMember(t => t.Status, s => s.MapFrom(o => (byte) o.Status))
                .ForMember(t => t.To, s => s.MapFrom(o => o.To.Id));
             e.CreateMap<TransactionEntity, Transaction>()
                .ForMember(t => t.From, s => s.Ignore())
-               .ForMember(t => t.Status, s => s.MapFrom(o => (TransactionStatus)o.Status))
+               .ForMember(t => t.Status, s => s.MapFrom(o => (TransactionStatus) o.Status))
                .ForMember(t => t.To, s => s.Ignore());
          });
 

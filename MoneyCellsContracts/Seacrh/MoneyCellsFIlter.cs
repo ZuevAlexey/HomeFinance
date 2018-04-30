@@ -1,5 +1,5 @@
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 using System.Collections.Generic;
+using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 
 namespace MyCompany.Services.Entity.MoneyCells.Contracts.Search {
    /// <summary>
@@ -19,6 +19,6 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Search {
       /// <summary>
       /// Статусы ячеек
       /// </summary>
-      public ICollection<MoneyCellStatus> Statuses { get;set;}
+      public ICollection<MoneyCellStatus> Statuses { get; set; }
    }
 }
