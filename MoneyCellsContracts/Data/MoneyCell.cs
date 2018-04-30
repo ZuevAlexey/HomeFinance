@@ -45,5 +45,10 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// Имя
       /// </summary>
       public string Name { get; set; }
+
+      /// <summary>
+      /// Удалена
+      /// </summary>
+      public bool IsDeleted { get; set; }
    }
 }

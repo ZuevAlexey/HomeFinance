@@ -34,3 +34,10 @@ CONSTRAINT FK_To_MoneyCells_Id FOREIGN KEY ([To])
     REFERENCES [dbo].[MoneyCells] ([Id])   
 )
 
+go
+
+alter table [dbo].[MoneyCells]
+add [IsDeleted] bit not null default 0 
+
+
+
