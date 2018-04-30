@@ -10,26 +10,26 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
       /// <summary>
       /// Идентификаторы транзакций
       /// </summary>
-      public ICollection<long> Ids { get; set; }
+      public HashSet<long> Ids { get; set; }
 
       /// <summary>
       /// Идентификаторы ячеек-источников
       /// </summary>
-      public ICollection<long> FromMoneyCellsIds { get; set; }
+      public HashSet<long> FromMoneyCellsIds { get; set; }
 
       /// <summary>
       /// Идентификаторы ячеек-получателей
       /// </summary>
-      public ICollection<long> ToMoneyCellsIds { get; set; }
+      public HashSet<long> ToMoneyCellsIds { get; set; }
 
       /// <summary>
       /// Даты
       /// </summary>
-      public ICollection<DateTime> Dates { get; set; }
+      public HashSet<DateTime> Dates { get; set; }
 
       /// <summary>
       /// Результаты транзакций
       /// </summary>
-      public ICollection<TransactionStatus> Results { get; set; }
+      public HashSet<TransactionStatus> Results { get; set; }
    }
 }

@@ -9,16 +9,20 @@ namespace MyCompany.Services.Entity.MoneyCells.Contracts.Search {
       /// <summary>
       /// Идентификаторы ячеек
       /// </summary>
-      public ICollection<long> Ids { get; set; }
+      public HashSet<long> Ids { get; set; }
 
       /// <summary>
       /// Идентификаторы владельцев
       /// </summary>
-      public ICollection<long> OwnersIds { get; set; }
+      public HashSet<long> OwnersIds { get; set; }
 
       /// <summary>
       /// Статусы ячеек
       /// </summary>
-      public ICollection<MoneyCellStatus> Statuses { get; set; }
-   }
-}
+      public HashSet<MoneyCellStatus> Statuses { get; set; }
+
+      /// <summary>
+      /// Признак удалена ли ячейка. По умолчанию не просматриваем удаленные ячейки
+      /// </summary>
+      public bool IsDeleted { get; set; } = false;
+   }}

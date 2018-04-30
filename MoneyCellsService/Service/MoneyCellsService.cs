@@ -30,18 +30,9 @@ namespace MoneyCellsService.Service {
       /// <param name="filter">фильтр для поиска</param>
       /// <returns>Коллекция денежных ячеек</returns>
       public ICollection<MoneyCell> Get(MoneyCellFilter filter) {
-         return new List<MoneyCell> {
-            new MoneyCell {
-               Balance = 40,
-               CreationDate = DateTime.Now,
-               CurrencyType = CurrencyType.RUB,
-               Id = 1,
-               Name = "В кошельке",
-               OwnerId = 1,
-               Status = MoneyCellStatus.Active,
-               Type = MoneyCellType.Сash
-            }
-         };
+         return filter == null
+            ? null
+            : _provider.Get(filter).Select(m => _mapper.MapToMoneyCell(m)).ToList();
       }
 
       /// <summary>

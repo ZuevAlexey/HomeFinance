@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using LinqToDB;
 using MoneyCellsService.Data.Context;
 using MoneyCellsService.Data.Entities;
+using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
 using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
 
 namespace MoneyCellsService.Data.Providers {
@@ -14,7 +17,22 @@ namespace MoneyCellsService.Data.Providers {
       /// <param name="filter"></param>
       /// <returns></returns>
       public ICollection<MoneyCellEntity> Get(MoneyCellFilter filter) {
-         throw new System.NotImplementedException();
+         using (var db = new MoneyCellsDb()) {
+            var result = db.MoneyCells.Where(m => m.IsDeleted == filter.IsDeleted);
+            if (filter.Ids != null) {
+               result = result.Where(m => filter.Ids.Contains(m.Id));
+            }
+
+            if (filter.OwnersIds != null) {
+               result = result.Where(m => filter.OwnersIds.Contains(m.OwnerId));
+            }
+
+            if (filter.Statuses != null) {
+               result = result.Where(m => filter.Statuses.Contains((MoneyCellStatus)m.Status));
+            }
+
+            return result.ToList();
+         }
       }
 
       /// <summary>
@@ -27,7 +45,7 @@ namespace MoneyCellsService.Data.Providers {
          using (var db = new MoneyCellsDb())
             foreach (var moneyCellEntity in moneyCellsEntities) {
                try {
-                  var dbRow = db.MoneyCells.First(m => m.Id == moneyCellEntity.Id);
+                  var dbRow = db.MoneyCells.FirstOrDefault(m => m.Id == moneyCellEntity.Id);
                   if (dbRow == null) {
                      var id = db.InsertWithInt64Identity(moneyCellEntity);
                      result.Add(id);

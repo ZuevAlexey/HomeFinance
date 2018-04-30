@@ -113,8 +113,8 @@
     <Compile Include="Data\Entities\TransactionEntity.cs" />
     <Compile Include="Mapping\IMoneyCellsMapper.cs" />
     <Compile Include="Mapping\MoneyCellsMapper.cs" />
-    <Compile Include="Providers\IMoneyCellsProvider.cs" />
-    <Compile Include="Providers\MoneyCellsProvider.cs" />
+    <Compile Include="Data\Providers\IMoneyCellsProvider.cs" />
+    <Compile Include="Data\Providers\MoneyCellsProvider.cs" />
     <Compile Include="Service\MoneyCellsService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -24,7 +24,7 @@ namespace MoneyCellsService.Mapping {
       /// <summary>
       /// Сконвертировать объект типа <see cref="MoneyCell" /> в объект типа <see cref="MoneyCellEntity" />
       /// </summary>
-      /// <param name="moneyCellEntity">Денежная ячейка</param>
+      /// <param name="moneyCell">Денежная ячейка</param>
       /// <returns>Сущность бд, представляющая денежную ячейку</returns>
       public MoneyCellEntity MapToMoneyCellEntity(MoneyCell moneyCell) {
          return Mapper.Map<MoneyCellEntity>(moneyCell);
@@ -42,7 +42,7 @@ namespace MoneyCellsService.Mapping {
       /// <summary>
       /// Сконвертировать объект типа <see cref="Transaction" /> в объект типа <see cref="TransactionEntity" />
       /// </summary>
-      /// <param name="transactionEntity">Валютная транзакция</param>
+      /// <param name="transaction">Валютная транзакция</param>
       /// <returns>Сущность бд, представляющая валютную транзакцию</returns>
       public TransactionEntity MapToTransactionEntity(Transaction transaction) {
          return Mapper.Map<TransactionEntity>(transaction);

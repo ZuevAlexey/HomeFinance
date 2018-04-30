@@ -58,6 +58,7 @@ namespace MoneyCellsService.Data.Entities {
       /// <summary>
       /// Удалена
       /// </summary>
+      [Column,NotColumn]
       public bool IsDeleted { get; set; }
    }
 }
