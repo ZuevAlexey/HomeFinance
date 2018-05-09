@@ -18,5 +18,10 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Context {
       /// Таблица транзакций
       /// </summary>
       public ITable<TransactionEntity> Transactions => GetTable<TransactionEntity>();
+
+      /// <summary>
+      /// Таблица с идентификаторами системных денежных ячеек
+      /// </summary>
+      public ITable<SystemMoneyCellId> SystemMoneyCellIds => GetTable<SystemMoneyCellId>();
    }
 }

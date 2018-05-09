@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LinqToDB;
 using MyCompany.Services.MoneyCells.Contracts.Enums;
@@ -113,6 +114,77 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
                //TODO:писать лог
                return INVALID_ID;
             }
+      }
+
+      /// <summary>
+      /// Получить системную ячейку по типу валюты <see cref="Currency" />>
+      /// </summary>
+      /// <param name="currency">Тип валюты</param>
+      /// <returns>Системная валютная ячейка</returns>
+      public MoneyCellEntity GetSystemMoneyCell(byte currency) {
+         var systemId = GetSystemMoneyCellId(currency);
+         return GetMoneyCell(new MoneyCellFilter {Ids = new HashSet<long> {systemId}}).FirstOrDefault();
+      }
+
+      private long GetSystemMoneyCellId(byte currency) {
+         using (var db = new MoneyCellsDb()) {
+            var systemMoneyCellId = db.SystemMoneyCellIds.FirstOrDefault(s => s.Currency == currency);
+            if (systemMoneyCellId != null) {
+               systemMoneyCellId = ValidateSystemMoneyCell(systemMoneyCellId, currency);
+               return systemMoneyCellId.MoneyCellId;
+            }
+
+            var moneyCell = CreateSystemMoneyCell(currency);
+
+            systemMoneyCellId = new SystemMoneyCellId {
+               Currency = currency,
+               MoneyCellId = moneyCell.Id
+            };
+
+            db.Insert(systemMoneyCellId);
+
+            return systemMoneyCellId.MoneyCellId;
+         }
+      }
+
+      private MoneyCellEntity CreateSystemMoneyCell(byte currency) {
+         var systemMoneyCell = new MoneyCellEntity {
+            Status = (byte) MoneyCellStatus.Active,
+            Balance = GetDefaultMoneyCellBalance(),
+            CreationDate = DateTime.Now,
+            CurrencyType = currency,
+            IsDeleted = false,
+            Name = $"System{Enum.GetName(typeof(Currency), currency)}",
+            OwnerId = 0,
+            Type = (byte) MoneyCellType.Card
+         };
+
+         var moneyCellId = UpsertMoneyCells(new List<MoneyCellEntity> {systemMoneyCell}).FirstOrDefault();
+         systemMoneyCell.Id = moneyCellId;
+         return systemMoneyCell;
+      }
+
+      private SystemMoneyCellId ValidateSystemMoneyCell(SystemMoneyCellId systemMoneyCellId, byte currency) {
+         var moneyCell = GetMoneyCell(new MoneyCellFilter {Ids = new HashSet<long> {systemMoneyCellId.MoneyCellId}})
+            .FirstOrDefault();
+
+         using (var db = new MoneyCellsDb()) {
+            if (moneyCell == null || moneyCell.CurrencyType != currency) {
+               var newMoneyCell = CreateSystemMoneyCell(currency);
+               systemMoneyCellId.MoneyCellId = newMoneyCell.Id;
+
+               db.Update(systemMoneyCellId);
+            } else {
+               moneyCell.Balance = GetDefaultMoneyCellBalance();
+               db.Update(moneyCell);
+            }
+         }
+
+         return systemMoneyCellId;
+      }
+
+      private float GetDefaultMoneyCellBalance() {
+         return float.MaxValue / 2;
       }
    }
 }

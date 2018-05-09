@@ -54,6 +54,26 @@ namespace MyCompany.Services.MoneyCells.Service.Service {
       }
 
       /// <summary>
+      /// Снять сумму с денежной ячейки
+      /// </summary>
+      /// <param name="moneyCellId">Идентификатор денежной ячейки</param>
+      /// <param name="amount">Снимаемая сумма</param>
+      /// <returns>Транзакция</returns>
+      public Transaction WithDraw(long moneyCellId, float amount) {
+         return ProcessSystemTransaction(moneyCellId, amount, false);
+      }
+
+      /// <summary>
+      /// Положить сумму на денежную ячейку
+      /// </summary>
+      /// <param name="moneyCellId">Идентификатор денежной ячейки</param>
+      /// <param name="amount">Снимаемая сумма</param>
+      /// <returns>Транзакция</returns>
+      public Transaction Replenish(long moneyCellId, float amount) {
+         return ProcessSystemTransaction(moneyCellId, amount, true);
+      }
+
+      /// <summary>
       /// Получить транзакции по фильтру
       /// </summary>
       /// <param name="filter">Фильтр транзакций</param>
@@ -83,6 +103,27 @@ namespace MyCompany.Services.MoneyCells.Service.Service {
             _transactionManager.ProcessTransaction(transaction);
          }
          return _mapper.MapToTransaction(transaction);
+      }
+
+      private Transaction ProcessSystemTransaction(long moneyCellId, float amount, bool isReplenish) {
+         try {
+            var targetMoneyCell = _provider.GetMoneyCell(new MoneyCellFilter {Ids = new HashSet<long> {moneyCellId}})
+               .FirstOrDefault();
+            if (targetMoneyCell != null) {
+               var systemMoneyCell = _provider.GetSystemMoneyCell(targetMoneyCell.CurrencyType);
+               var fromId = isReplenish
+                  ? systemMoneyCell.Id
+                  : moneyCellId;
+               var toId = isReplenish
+                  ? moneyCellId
+                  : systemMoneyCell.Id;
+               return ProcessTransaction(fromId, toId, amount);
+            }
+         } catch {
+            //TODO: писать лог
+         }
+
+         return null;
       }
    }
 }

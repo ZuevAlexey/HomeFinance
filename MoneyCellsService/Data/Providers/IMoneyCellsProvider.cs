@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
 using MyCompany.Services.MoneyCells.Contracts.Seacrh;
 using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
@@ -34,5 +35,12 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
       /// <param name="transactionEntity">Сущность БД - транзакция</param>
       /// <returns>Идентификатор транзакции в случае успеха, иначе -1</returns>
       long UpsertTransaction(TransactionEntity transactionEntity);
+
+      /// <summary>
+      /// Получить системную ячейку по типу валюты <see cref="Currency"/>>
+      /// </summary>
+      /// <param name="currency">Тип валюты</param>
+      /// <returns>Системная валютная ячейка</returns>
+      MoneyCellEntity GetSystemMoneyCell(byte currency);
    }
 }

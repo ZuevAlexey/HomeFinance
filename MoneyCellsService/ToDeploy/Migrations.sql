@@ -43,5 +43,13 @@ go
 alter table [dbo].[MoneyCells]
 add [IsDeleted] bit not null default 0 
 
+go
+
+create table [dbo].[SystemMoneyCellIds]
+(
+[Currency] int PRIMARY KEY,
+[MoneyCellId] bigint not null
+)
+
 
 

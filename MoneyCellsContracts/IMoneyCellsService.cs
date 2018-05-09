@@ -22,6 +22,22 @@ namespace MyCompany.Services.MoneyCells.Contracts {
       ICollection<long> Upsert(IEnumerable<MoneyCell> moneyCells);
 
       /// <summary>
+      /// Снять сумму с денежной ячейки
+      /// </summary>
+      /// <param name="moneyCellId">Идентификатор денежной ячейки</param>
+      /// <param name="amount">Снимаемая сумма</param>
+      /// <returns>Транзакция</returns>
+      Transaction WithDraw(long moneyCellId, float amount);
+
+      /// <summary>
+      /// Положить сумму на денежную ячейку
+      /// </summary>
+      /// <param name="moneyCellId">Идентификатор денежной ячейки</param>
+      /// <param name="amount">Снимаемая сумма</param>
+      /// <returns>Транзакция</returns>
+      Transaction Replenish(long moneyCellId, float amount);
+
+      /// <summary>
       /// Провести транзакцию
       /// </summary>
       /// <param name="fromMoneyCell">Ячейка-источник денежных средств</param>

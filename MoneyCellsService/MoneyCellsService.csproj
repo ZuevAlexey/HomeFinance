@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="Data\Entities\MoneyCellEntity.cs" />
     <Compile Include="Data\Context\MoneyCellsDb.cs" />
+    <Compile Include="Data\Entities\SystemMoneyCellId.cs" />
     <Compile Include="Data\Entities\TransactionEntity.cs" />
     <Compile Include="IoC\MoneyCellsServiceCoreModule.cs" />
     <Compile Include="Managers\ITransactionManager.cs" />

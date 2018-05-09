@@ -51,11 +51,11 @@ namespace MyCompany.Services.MoneyCells.Service.Mapping {
       private void Initialyze() {
          Mapper.Initialize(e => {
             e.CreateMap<MoneyCell, MoneyCellEntity>()
-               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (byte) o.CurrencyType))
+               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (byte) o.Currency))
                .ForMember(t => t.Status, s => s.MapFrom(o => (byte) o.Status))
                .ForMember(t => t.Type, s => s.MapFrom(o => (byte) o.Type));
             e.CreateMap<MoneyCellEntity, MoneyCell>()
-               .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (CurrencyType) o.CurrencyType))
+               .ForMember(t => t.Currency, s => s.MapFrom(o => (Currency) o.CurrencyType))
                .ForMember(t => t.Status, s => s.MapFrom(o => (MoneyCellStatus) o.Status))
                .ForMember(t => t.Type, s => s.MapFrom(o => (MoneyCellType) o.Type));
             e.CreateMap<Transaction, TransactionEntity>()

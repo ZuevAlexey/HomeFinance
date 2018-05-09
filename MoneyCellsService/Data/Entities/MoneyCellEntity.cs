@@ -58,7 +58,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Entities {
       /// <summary>
       /// Удалена
       /// </summary>
-      [Column,NotColumn]
+      [Column,NotNull]
       public bool IsDeleted { get; set; }
    }
 }

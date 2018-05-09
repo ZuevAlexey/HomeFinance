@@ -53,7 +53,7 @@ namespace Sandbox {
                continue;
             }
             Console.WriteLine(PRETTY_LINE);
-            var transaction = moneyCellsService.ProcessTransaction(fromId, toId, amount);
+            var transaction = ProcessTransaction(moneyCellsService,fromId, toId, amount);        
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Данные о транзакции :");
             sb.AppendLine($"Идентификатор получателя : {transaction.To}");
@@ -71,6 +71,18 @@ namespace Sandbox {
          }
       }
 
+      private static Transaction ProcessTransaction(IMoneyCellsService moneyCellsService,long fromId, long toId, long amount) {
+         if (fromId == default(long)) {
+            return moneyCellsService.Replenish(toId, amount);
+         }
+
+         if (toId == default(long)) {
+            return moneyCellsService.WithDraw(fromId, amount);
+         }
+
+         return moneyCellsService.ProcessTransaction(fromId, toId, amount);
+      }
+
       private static void ShowMoneyCellsInfo(IMoneyCellsService moneyCellsService) {
          Console.WriteLine("Инфа по картонкам:");
          var filter = new MoneyCellFilter {Statuses = new HashSet<MoneyCellStatus> {MoneyCellStatus.Active}};
@@ -86,7 +98,7 @@ namespace Sandbox {
          StringBuilder sb = new StringBuilder();
          sb.AppendLine($"{cell.Name}:");
          sb.AppendLine($"Идентификатор : {cell.Id} ({cell.Type})");
-         sb.AppendLine($"Баланс : {cell.Balance} {cell.CurrencyType}");
+         sb.AppendLine($"Баланс : {cell.Balance} {cell.Currency}");
          Console.WriteLine(sb.ToString());
       }
 
@@ -95,7 +107,7 @@ namespace Sandbox {
             new MoneyCell {
                Balance = 1100,
                CreationDate = DateTime.Now,
-               CurrencyType = CurrencyType.RUB,
+               Currency = Currency.RUB,
                Name = "Кошелек",
                OwnerId = 1,
                Status = MoneyCellStatus.Active,
@@ -105,7 +117,7 @@ namespace Sandbox {
             new MoneyCell {
                Balance = 1,
                CreationDate = DateTime.Now,
-               CurrencyType = CurrencyType.USD,
+               Currency = Currency.USD,
                Name = "Наташкина заначка",
                OwnerId = 2,
                Status = MoneyCellStatus.Active,
@@ -115,7 +127,7 @@ namespace Sandbox {
             new MoneyCell {
                Balance = 150000,
                CreationDate = DateTime.Now,
-               CurrencyType = CurrencyType.RUB,
+               Currency = Currency.RUB,
                Name = "Для вклада в Восточный банк",
                Status = MoneyCellStatus.Active,
                IsDeleted = false,
@@ -127,7 +139,7 @@ namespace Sandbox {
                CreationDate = new DateTime(2018, 4, 10),
                Status = MoneyCellStatus.Active,
                IsDeleted = false,
-               CurrencyType = CurrencyType.RUB,
+               Currency = Currency.RUB,
                Name = "Вклад в восточном банке",
                OwnerId = 1,
                Type = MoneyCellType.Deposit
@@ -138,7 +150,7 @@ namespace Sandbox {
                Type = MoneyCellType.Card,
                Balance = 10000,
                CreationDate = new DateTime(2018, 4, 2),
-               CurrencyType = CurrencyType.RUB,
+               Currency = Currency.RUB,
                IsDeleted = false,
                Name = "Зарплатная карта Сбербанк",
                OwnerId = 1

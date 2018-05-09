@@ -2,7 +2,7 @@
    /// <summary>
    /// Тип валюты
    /// </summary>
-   public enum CurrencyType {
+   public enum Currency {
       /// <summary>
       /// Рубль
       /// </summary>

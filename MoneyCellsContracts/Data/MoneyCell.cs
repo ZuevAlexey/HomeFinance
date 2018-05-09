@@ -29,7 +29,7 @@ namespace MyCompany.Services.MoneyCells.Contracts.Data {
       /// <summary>
       /// Тип валюты
       /// </summary>
-      public CurrencyType CurrencyType { get; set; }
+      public Currency Currency { get; set; }
 
       /// <summary>
       /// Баланс
