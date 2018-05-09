@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using MoneyCellsContracts.Seacrh;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts.Data;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
 
-namespace MyCompany.Services.Entity.MoneyCells.Contracts {
+namespace MyCompany.Services.MoneyCells.Contracts {
    /// <summary>
    /// Интерфейс сервиса денежных ячеек
    /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace MyCompany.Services.Entity.MoneyCells.Contracts.Enums {
+﻿namespace MyCompany.Services.MoneyCells.Contracts.Enums {
    /// <summary>
    /// Статус ячейки
    /// </summary>

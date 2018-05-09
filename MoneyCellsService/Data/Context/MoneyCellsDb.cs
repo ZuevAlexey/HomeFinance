@@ -1,8 +1,8 @@
 ﻿using LinqToDB;
 using LinqToDB.Data;
-using MoneyCellsService.Data.Entities;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Data.Context {
+namespace MyCompany.Services.MoneyCells.Service.Data.Context {
    /// <summary>
    /// Сущность БД MoneyCellsService
    /// </summary>

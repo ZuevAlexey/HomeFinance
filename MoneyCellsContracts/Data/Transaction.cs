@@ -1,7 +1,7 @@
 using System;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
 
-namespace MyCompany.Services.Entity.MoneyCells.Contracts.Data {
+namespace MyCompany.Services.MoneyCells.Contracts.Data {
    /// <summary>
    /// Транзакция
    /// </summary>

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
 
-namespace MoneyCellsContracts.Seacrh {
+namespace MyCompany.Services.MoneyCells.Contracts.Seacrh {
    /// <summary>
    /// Фильтр транзакций
    /// </summary>
@@ -25,7 +24,7 @@ namespace MoneyCellsContracts.Seacrh {
       /// <summary>
       /// Период дат
       /// </summary>
-      public DatePeriod Period { get; set; }
+      public DateRange Range { get; set; }
 
       /// <summary>
       /// Результаты транзакций

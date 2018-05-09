@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoneyCellsContracts.Seacrh;
-using MoneyCellsService.Data.Entities;
-using MoneyCellsService.Data.Providers;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
+using MyCompany.Services.MoneyCells.Service.Data.Providers;
 
-namespace MoneyCellsService.Managers {
+namespace MyCompany.Services.MoneyCells.Service.Managers {
    public class TransactionManager : ITransactionManager {
       private readonly IMoneyCellsProvider _provider;
 

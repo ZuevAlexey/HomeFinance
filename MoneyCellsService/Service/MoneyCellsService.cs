@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using JRPC.Service;
-using MoneyCellsContracts.Seacrh;
-using MoneyCellsService.Data.Entities;
-using MoneyCellsService.Data.Providers;
-using MoneyCellsService.Managers;
-using MoneyCellsService.Mapping;
-using MyCompany.Services.Entity.MoneyCells.Contracts;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts;
+using MyCompany.Services.MoneyCells.Contracts.Data;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
+using MyCompany.Services.MoneyCells.Service.Data.Providers;
+using MyCompany.Services.MoneyCells.Service.Managers;
+using MyCompany.Services.MoneyCells.Service.Mapping;
 
-namespace MoneyCellsService.Service {
+namespace MyCompany.Services.MoneyCells.Service.Service {
    /// <summary>
    /// Сервис валютных ячеек
    /// </summary>

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace MoneyCellsContracts.Seacrh {
+namespace MyCompany.Services.MoneyCells.Contracts.Seacrh {
    /// <summary>
    /// Период дат
    /// </summary>
-   public class DatePeriod {
+   public class DateRange {
       /// <summary>
       /// Начало периода
       /// </summary>

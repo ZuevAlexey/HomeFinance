@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using JRPC.Client;
-using MyCompany.Services.Entity.MoneyCells.Contracts;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts;
+using MyCompany.Services.MoneyCells.Contracts.Data;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
 
 namespace Sandbox {
    class Program {

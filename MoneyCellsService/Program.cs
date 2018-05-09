@@ -1,16 +1,9 @@
-﻿using System;
-using Consul;
-using JRPC.Service;
-using JRPC.Service.Host.Owin;
-using JRPC.Service.Registry;
-using MoneyCellsService.Data.Providers;
-using MoneyCellsService.IoC;
-using MoneyCellsService.Managers;
-using MoneyCellsService.Mapping;
+﻿using JRPC.Service;
+using MyCompany.Services.MoneyCells.Service.IoC;
 using Topshelf;
 using Topshelf.Ninject;
 
-namespace MoneyCellsService {
+namespace MyCompany.Services.MoneyCells.Service {
    class Program {
       static void Main(string[] args) {
          HostFactory.Run(c => {

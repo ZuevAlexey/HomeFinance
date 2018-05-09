@@ -3,13 +3,13 @@ using JRPC.Registry.Ninject;
 using JRPC.Service;
 using JRPC.Service.Host.Owin;
 using JRPC.Service.Registry;
-using MoneyCellsService.Data.Providers;
-using MoneyCellsService.Managers;
-using MoneyCellsService.Mapping;
-using MyCompany.Services.Entity.MoneyCells.Contracts;
+using MyCompany.Services.MoneyCells.Contracts;
+using MyCompany.Services.MoneyCells.Service.Data.Providers;
+using MyCompany.Services.MoneyCells.Service.Managers;
+using MyCompany.Services.MoneyCells.Service.Mapping;
 using Ninject.Modules;
 
-namespace MoneyCellsService.IoC {
+namespace MyCompany.Services.MoneyCells.Service.IoC {
    public class MoneyCellsServiceCoreModule : NinjectModule {
       /// <summary>Loads the module into the kernel.</summary>
       public override void Load() {

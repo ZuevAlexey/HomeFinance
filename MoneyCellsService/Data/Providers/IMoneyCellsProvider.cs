@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using MoneyCellsContracts.Seacrh;
-using MoneyCellsService.Data.Entities;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Data.Providers {
+namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
    /// <summary>
    /// Провайдер валютных ячеек и транзакций
    /// </summary>

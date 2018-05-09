@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyCompany.Services.Entity.People.Contracts.Data {
+namespace MyCompany.Services.People.Contracts.Data {
    public class Person {
       public long PersonId { get; set; }
       public string FirstName { get; set; }

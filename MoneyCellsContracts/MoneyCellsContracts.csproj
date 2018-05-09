@@ -7,7 +7,7 @@
     <ProjectGuid>{C6B19791-753A-47A6-8809-4567BFB555C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MoneyCellsContracts</RootNamespace>
+    <RootNamespace>MyCompany.Services.MoneyCells.Contracts</RootNamespace>
     <AssemblyName>MyCompany.Services.MoneyCells.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -67,7 +67,7 @@
     <Compile Include="Enums\TransactionStatus.cs" />
     <Compile Include="IMoneyCellsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Seacrh\DatePeriod.cs" />
+    <Compile Include="Seacrh\DateRange.cs" />
     <Compile Include="Seacrh\MoneyCellsFIlter.cs" />
     <Compile Include="Seacrh\TransactionFilter.cs" />
   </ItemGroup>

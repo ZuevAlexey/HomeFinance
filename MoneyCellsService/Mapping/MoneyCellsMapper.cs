@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MoneyCellsService.Data.Entities;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Data;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Mapping {
+namespace MyCompany.Services.MoneyCells.Service.Mapping {
    /// <summary>
    /// Маппер сущностей сервиса денежных ячеек
    /// </summary>

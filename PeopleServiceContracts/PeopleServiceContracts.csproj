@@ -7,8 +7,8 @@
     <ProjectGuid>{3D553994-C93B-49FC-9B0E-61083E3AFAFD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyCompany.Services.Entity.People.Contracts</RootNamespace>
-    <AssemblyName>MyCompany.Services.Entity.People.Contracts</AssemblyName>
+    <RootNamespace>MyCompany.Services.People.Contracts</RootNamespace>
+    <AssemblyName>PeopleService</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

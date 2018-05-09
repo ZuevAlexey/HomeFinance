@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>MyCompany.Services.Entity.People.Contracts</id>
+    <id>MyCompany.Services.People.Contracts</id>
     <version>1.0.0</version>
     <authors>Aleksey Zuev (zuevalexey71@gmail.com)</authors>
     <owners>Aleksey Zuev</owners>

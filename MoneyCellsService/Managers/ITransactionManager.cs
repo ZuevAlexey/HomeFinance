@@ -1,6 +1,6 @@
-﻿using MoneyCellsService.Data.Entities;
+﻿using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Managers {
+namespace MyCompany.Services.MoneyCells.Service.Managers {
    /// <summary>
    /// Интерфейс менеджера транзакций
    /// </summary>

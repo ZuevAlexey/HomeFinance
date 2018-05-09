@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using LinqToDB;
-using MoneyCellsContracts.Seacrh;
-using MoneyCellsService.Data.Context;
-using MoneyCellsService.Data.Entities;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Enums;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Search;
+using MyCompany.Services.MoneyCells.Contracts.Enums;
+using MyCompany.Services.MoneyCells.Contracts.Seacrh;
+using MyCompany.Services.MoneyCells.Service.Data.Context;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Data.Providers {
+namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
    public class MoneyCellsProvider : IMoneyCellsProvider {
       public const long INVALID_ID = -1;
 
@@ -80,8 +78,8 @@ namespace MoneyCellsService.Data.Providers {
                result = result.Where(t => filter.Statuses.Contains((TransactionStatus) t.Status));
             }
 
-            if (filter.Period != null) {
-               result = result.Where(t => filter.Period.Contains(t.Date));
+            if (filter.Range != null) {
+               result = result.Where(t => filter.Range.Contains(t.Date));
             }
 
             if (filter.FromMoneyCellsIds != null) {

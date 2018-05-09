@@ -1,7 +1,7 @@
 ﻿using System;
 using LinqToDB.Mapping;
 
-namespace MoneyCellsService.Data.Entities {
+namespace MyCompany.Services.MoneyCells.Service.Data.Entities {
    /// <summary>
    /// Объект-сущность СУБД, представляющий валютрую транзакцию
    /// </summary>

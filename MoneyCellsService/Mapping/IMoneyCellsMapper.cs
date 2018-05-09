@@ -1,7 +1,7 @@
-﻿using MoneyCellsService.Data.Entities;
-using MyCompany.Services.Entity.MoneyCells.Contracts.Data;
+﻿using MyCompany.Services.MoneyCells.Contracts.Data;
+using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
-namespace MoneyCellsService.Mapping {
+namespace MyCompany.Services.MoneyCells.Service.Mapping {
    /// <summary>
    /// Интерфейс маппер сущностей сервиса денежных ячеек
    /// </summary>

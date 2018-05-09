@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MoneyCellsService</RootNamespace>
+    <RootNamespace>MyCompany.Services.MoneyCells.Service</RootNamespace>
     <AssemblyName>MoneyCellsService</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
