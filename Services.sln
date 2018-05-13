@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleService", "People\Peo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleServiceContracts", "People\PeopleServiceContracts\PeopleServiceContracts.csproj", "{3D553994-C93B-49FC-9B0E-61083E3AFAFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupService", "GroupService\GroupService\GroupService.csproj", "{8048B394-47FC-4306-8F08-092BCB86B3CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,14 @@ Global
 		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Release|x64.ActiveCfg = Release|x64
 		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Release|x64.Build.0 = Release|x64
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|x64.ActiveCfg = Debug|x64
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|x64.Build.0 = Debug|x64
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|x64.ActiveCfg = Release|Any CPU
+		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +97,7 @@ Global
 		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918} = {CD00FB96-7B34-4C34-99F6-117044F02981}
 		{DB657EE0-AB78-4FED-9757-1DEFF5B88418} = {754E9AE5-366D-4A89-8B8B-139940BD74F0}
 		{3D553994-C93B-49FC-9B0E-61083E3AFAFD} = {754E9AE5-366D-4A89-8B8B-139940BD74F0}
+		{8048B394-47FC-4306-8F08-092BCB86B3CB} = {25DEC448-03AF-439A-84D3-0514495CF1BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7573B631-0596-47B5-9289-698AEF2768B4}

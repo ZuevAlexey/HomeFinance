@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCompany.Services.Groups.Contracts</RootNamespace>
-    <AssemblyName>GroupContracts</AssemblyName>
+    <AssemblyName>GroupServiceContracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
