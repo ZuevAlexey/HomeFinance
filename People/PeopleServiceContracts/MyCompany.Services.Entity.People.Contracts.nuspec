@@ -12,10 +12,8 @@
     <description>Контракт Entity-сервиса людей</description>
     <releaseNotes>Регистрация пакета</releaseNotes>
     <copyright>Copyright 2018</copyright>
-    <tags>MyCompany Services Entity</tags>
-    <dependencies>
-      <dependency id="MyCompany.Service.Entity.Core" version="1.0.1" />
-    </dependencies>
+    <tags>MyCompany Services People</tags>
+    <dependencies />
   </metadata>
   <files>
     <file src="bin\x64\Debug\MyCompany.Services.Entity.People.Contracts.dll" target="lib\net462" />

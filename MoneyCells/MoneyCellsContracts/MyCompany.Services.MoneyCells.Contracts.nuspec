@@ -10,7 +10,7 @@
     <projectUrl>http://none</projectUrl>
     <iconUrl>http://none</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Содержит интерфейс работы с сервисом валютных ячеек. Позволяет производить CRUD-операции с валютными ячейками. Также поддерживает проведение транзакций между ячейками.</description>
+    <description>Содержит интерфейс работы с сервисом валютных ячеек. Позволяет производить CRUD-операции с валютными ячейками. Также поддерживает проведение транзакций между ячейками либо снятие/пополнение денежных сумм в ячейках вне механизма транзакций между зарегистрированными ячейками.</description>
     <releaseNotes>Регистрация пакета</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>MyCompany Services Entity</tags>

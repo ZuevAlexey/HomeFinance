@@ -6,6 +6,7 @@ using JRPC.Service.Registry;
 using MyCompany.Services.MoneyCells.Service.Mapping;
 using MyCompany.Services.People.Contracts;
 using MyCompany.Services.People.Service.Data.Provider;
+using MyCompany.Services.People.Service.Mapping;
 using MyCompany.Services.People.Service.Service;
 using Ninject.Modules;
 
@@ -21,7 +22,7 @@ namespace MyCompany.Services.People.Service.IoC {
          Bind<IPeopleService>().ToSelf();
 
          Bind<IPeopleProvider>().To<PeopleProvider>().InSingletonScope();
-         Bind<IPeopleMapper>().To<IPeopleMapper>().InSingletonScope();
+         Bind<IPeopleMapper>().To<PeopleMapper>().InSingletonScope();
       }
    }
 }
