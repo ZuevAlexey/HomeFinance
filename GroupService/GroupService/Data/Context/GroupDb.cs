@@ -9,6 +9,6 @@ namespace MyCompany.Services.Groups.Service.Data.Context {
       /// <summary>
       /// Таблица групп
       /// </summary>
-      public ITable<GroupEntity> People => GetTable<GroupEntity>();
+      public ITable<GroupEntity> Groups => GetTable<GroupEntity>();
    }
 }

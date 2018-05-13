@@ -13,7 +13,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
       /// </summary>
       /// <param name="filter"></param>
       /// <returns></returns>
-      ICollection<MoneyCellEntity> GetMoneyCell(MoneyCellFilter filter);
+      IEnumerable<MoneyCellEntity> GetMoneyCell(MoneyCellFilter filter);
 
       /// <summary>
       /// Обновить данные денежных ячеек в БД
@@ -27,7 +27,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
       /// </summary>
       /// <param name="filter">Фильтр, по которому выбираются транзакции</param>
       /// <returns>Коллекция транзакций, удовлетворяющих фильтру</returns>
-      ICollection<TransactionEntity> GetTransactions(TransactionFilter filter);
+      IEnumerable<TransactionEntity> GetTransactions(TransactionFilter filter);
 
       /// <summary>
       /// Сохранить транзакцию

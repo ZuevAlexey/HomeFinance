@@ -19,7 +19,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
       /// </summary>
       /// <param name="filter"></param>
       /// <returns></returns>
-      public ICollection<MoneyCellEntity> GetMoneyCell(MoneyCellFilter filter) {
+      public IEnumerable<MoneyCellEntity> GetMoneyCell(MoneyCellFilter filter) {
          using (var db = new MoneyCellsDb()) {
             var result = db.MoneyCells.Where(m => m.IsDeleted == filter.IsDeleted);
             if (filter.Ids != null) {
@@ -34,7 +34,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
                result = result.Where(m => filter.Statuses.Contains((MoneyCellStatus) m.Status));
             }
 
-            return result.ToList();
+            return result;
          }
       }
 
@@ -70,7 +70,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
       /// </summary>
       /// <param name="filter">Фильтр, по которому выбираются транзакции</param>
       /// <returns>Коллекция транзакций, удовлетворяющих фильтру</returns>
-      public ICollection<TransactionEntity> GetTransactions(TransactionFilter filter) {
+      public IEnumerable<TransactionEntity> GetTransactions(TransactionFilter filter) {
          using (var db = new MoneyCellsDb()) {
             var result = (IQueryable<TransactionEntity>) db.Transactions;
             if (filter.Ids != null) {
@@ -93,7 +93,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
                result = result.Where(t => filter.ToMoneyCellsIds.Contains(t.To));
             }
 
-            return result.ToList();
+            return result;
          }
       }
 

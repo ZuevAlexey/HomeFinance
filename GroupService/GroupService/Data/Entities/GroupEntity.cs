@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using LinqToDB.Mapping;
 
 namespace MyCompany.Services.Groups.Service.Data.Entities {
@@ -10,17 +6,17 @@ namespace MyCompany.Services.Groups.Service.Data.Entities {
    /// Сущность бд, представляющая группу
    /// </summary>
    [Table("Groups")]
-   internal class GroupEntity {
+   public class GroupEntity {
       /// <summary>
       /// Идентификатор
       /// </summary>
-      [PrimaryKey,Identity]
+      [PrimaryKey, Identity]
       public int Id { get; set; }
 
       /// <summary>
       /// Имя группы
       /// </summary>
-      [Column,NotNull]
+      [Column, NotNull]
       public string Name { get; set; }
 
       /// <summary>
