@@ -4,10 +4,11 @@ using JRPC.Service;
 using JRPC.Service.Host.Owin;
 using JRPC.Service.Registry;
 using MyCompany.Services.People.Contracts;
+using MyCompany.Services.People.Service.Data.Provider;
 using MyCompany.Services.People.Service.Service;
 using Ninject.Modules;
 
-namespace MyCompany.Services.MoneyCells.Service.IoC {
+namespace MyCompany.Services.People.Service.IoC {
    public class PeopleServiceCoreModule : NinjectModule {
       /// <summary>Loads the module into the kernel.</summary>
       public override void Load() {
@@ -17,6 +18,8 @@ namespace MyCompany.Services.MoneyCells.Service.IoC {
          Bind<JRpcService>().ToSelf();
          Bind<IModulesRegistry>().To<NinjectModulesRegistry>();
          Bind<IPeopleService>().ToSelf();
+
+         Bind<IPeopleProvider>().To<PeopleProvider>().InSingletonScope();
       }
    }
 }

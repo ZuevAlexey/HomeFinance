@@ -8,6 +8,9 @@ using MyCompany.Services.MoneyCells.Service.Data.Context;
 using MyCompany.Services.MoneyCells.Service.Data.Entities;
 
 namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
+   /// <summary>
+   /// Класс провайдера данных о валютных ячейках
+   /// </summary>
    public class MoneyCellsProvider : IMoneyCellsProvider {
       public const long INVALID_ID = -1;
 
@@ -45,8 +48,7 @@ namespace MyCompany.Services.MoneyCells.Service.Data.Providers {
          using (var db = new MoneyCellsDb())
             foreach (var moneyCellEntity in moneyCellsEntities) {
                try {
-                  var dbRow = db.MoneyCells.FirstOrDefault(m => m.Id == moneyCellEntity.Id);
-                  if (dbRow == null) {
+                  if (moneyCellEntity.Id == default(long)) {
                      var id = db.InsertWithInt64Identity(moneyCellEntity);
                      result.Add(id);
                      continue;

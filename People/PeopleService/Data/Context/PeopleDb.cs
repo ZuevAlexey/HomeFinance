@@ -9,6 +9,6 @@ namespace MyCompany.Services.People.Service.Data.Context {
       /// <summary>
       /// Таблица людей
       /// </summary>
-      public ITable<PersonEntity> MoneyCells => GetTable<PersonEntity>();
+      public ITable<PersonEntity> People => GetTable<PersonEntity>();
    }
 }

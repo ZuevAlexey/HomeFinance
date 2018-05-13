@@ -1,5 +1,5 @@
 ﻿using JRPC.Service;
-using MyCompany.Services.MoneyCells.Service.IoC;
+using MyCompany.Services.People.Service.IoC;
 using Topshelf;
 using Topshelf.Ninject;
 
