@@ -91,9 +91,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MoneyCellsContracts\MoneyCellsContracts.csproj">
+    <ProjectReference Include="..\MoneyCells\MoneyCellsContracts\MoneyCellsContracts.csproj">
       <Project>{c6b19791-753a-47a6-8809-4567bfb555c3}</Project>
       <Name>MoneyCellsContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\People\PeopleServiceContracts\PeopleServiceContracts.csproj">
+      <Project>{3d553994-c93b-49fc-9b0e-61083e3afafd}</Project>
+      <Name>PeopleServiceContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

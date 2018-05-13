@@ -9,9 +9,10 @@ using MyCompany.Services.MoneyCells.Contracts.Enums;
 using MyCompany.Services.MoneyCells.Contracts.Seacrh;
 
 namespace Sandbox {
-   class Program {
+   internal class Program {
       private const string PRETTY_LINE = "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*";
-      static void Main(string[] args) {
+
+      private static void Main(string[] args) {
          var client = new JRpcClient("http://127.0.0.1:15555");
          var proxy = client.GetProxy<IMoneyCellsService>("MoneyCellsService");
          TransactionTest(proxy);
@@ -76,11 +77,9 @@ namespace Sandbox {
             return moneyCellsService.Replenish(toId, amount);
          }
 
-         if (toId == default(long)) {
-            return moneyCellsService.WithDraw(fromId, amount);
-         }
-
-         return moneyCellsService.ProcessTransaction(fromId, toId, amount);
+         return toId == default(long)
+            ? moneyCellsService.WithDraw(fromId, amount)
+            : moneyCellsService.ProcessTransaction(fromId, toId, amount);
       }
 
       private static void ShowMoneyCellsInfo(IMoneyCellsService moneyCellsService) {
@@ -95,7 +94,7 @@ namespace Sandbox {
 
       private static void Show(MoneyCell cell) {
          Console.WriteLine(PRETTY_LINE);
-         StringBuilder sb = new StringBuilder();
+         var sb = new StringBuilder();
          sb.AppendLine($"{cell.Name}:");
          sb.AppendLine($"Идентификатор : {cell.Id} ({cell.Type})");
          sb.AppendLine($"Баланс : {cell.Balance} {cell.Currency}");
