@@ -5,6 +5,9 @@ using MyCompany.Services.People.Contracts;
 using MyCompany.Services.People.Contracts.Data;
 
 namespace MyCompany.Services.People.Service.Service {
+   /// <summary>
+   /// Сервис для изменения инфомрации о людях - владельцах валютных ячеек
+   /// </summary>
    internal class PeopleService : JRpcModule, IPeopleService {
       /// <summary>
       /// Получить людей по идентификаторам

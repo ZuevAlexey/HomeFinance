@@ -119,6 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Context\PeopleDb.cs" />
+    <Compile Include="Data\Entities\PersonEntity.cs" />
     <Compile Include="IoC\PeopleServiceCoreModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
