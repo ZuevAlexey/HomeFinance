@@ -17,7 +17,7 @@ namespace MyCompany.Services.People.Service.Data.Provider {
       /// </summary>
       /// <param name="ids">Коллекция идентификаторов</param>
       /// <returns>Коллекция людей-объектов бд</returns>
-      public ICollection<PersonEntity> GetPeople(IEnumerable<long> ids) {
+      public IEnumerable<PersonEntity> GetPeople(IEnumerable<long> ids) {
          using (var db = new PeopleDb()) {
             return db.People.Where(p => ids.Contains(p.Id)).ToList();
          }

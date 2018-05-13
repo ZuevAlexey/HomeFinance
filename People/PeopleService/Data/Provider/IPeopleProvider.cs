@@ -11,7 +11,7 @@ namespace MyCompany.Services.People.Service.Data.Provider {
       /// </summary>
       /// <param name="ids">Коллекция идентификаторов</param>
       /// <returns>Коллекция людей-объектов бд</returns>
-      ICollection<PersonEntity> GetPeople(IEnumerable<long> ids);
+      IEnumerable<PersonEntity> GetPeople(IEnumerable<long> ids);
 
       /// <summary>
       /// Обновить данные о людях-объектах бд
