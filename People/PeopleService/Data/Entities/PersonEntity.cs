@@ -7,10 +7,10 @@ using LinqToDB.Mapping;
 
 namespace MyCompany.Services.People.Service.Data.Entities {
    /// <summary>
-   /// Человек - сущность бд
+   /// Сущность бд, представляющаа человека
    /// </summary>
    [Table("People")]
-   internal class PersonEntity {
+   public class PersonEntity {
       /// <summary>
       /// Идентификатор
       /// </summary>

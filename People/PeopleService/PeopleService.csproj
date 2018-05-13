@@ -121,7 +121,11 @@
   <ItemGroup>
     <Compile Include="Data\Context\PeopleDb.cs" />
     <Compile Include="Data\Entities\PersonEntity.cs" />
+    <Compile Include="Data\Provider\IPeopleProvider.cs" />
+    <Compile Include="Data\Provider\PeopleProvider.cs" />
     <Compile Include="IoC\PeopleServiceCoreModule.cs" />
+    <Compile Include="Mapping\IPeopleMapper.cs" />
+    <Compile Include="Mapping\PeopleMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\PeopleService.cs" />

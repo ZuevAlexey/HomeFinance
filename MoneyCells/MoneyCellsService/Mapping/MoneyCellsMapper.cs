@@ -48,7 +48,7 @@ namespace MyCompany.Services.MoneyCells.Service.Mapping {
          return Mapper.Map<TransactionEntity>(transaction);
       }
 
-      private void Initialyze() {
+      private static void Initialyze() {
          Mapper.Initialize(e => {
             e.CreateMap<MoneyCell, MoneyCellEntity>()
                .ForMember(t => t.CurrencyType, s => s.MapFrom(o => (byte) o.Currency))
