@@ -83,6 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Group\GroupTest.cs" />
+    <Compile Include="MoneyCells\TransactionTest.cs" />
+    <Compile Include="People\PeopleTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +94,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GroupService\GroupService\GroupService.csproj">
+      <Project>{8048b394-47fc-4306-8f08-092bcb86b3cb}</Project>
+      <Name>GroupService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MoneyCells\MoneyCellsContracts\MoneyCellsContracts.csproj">
       <Project>{c6b19791-753a-47a6-8809-4567bfb555c3}</Project>
       <Name>MoneyCellsContracts</Name>
