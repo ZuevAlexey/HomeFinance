@@ -24,9 +24,9 @@ namespace MyCompany.Services.Groups.Service.Data.Provider {
       /// Добавить объекты в группу
       /// </summary>
       /// <param name="groupId">Идентификатор группы, в которую добавляем объекты</param>
-      /// <param name="objectsIds">Идентификаторы добавляемых объектов</param>
+      /// <param name="childrenIds">Идентификаторы добавляемых объектов</param>
       /// <returns>Коллекция, содержащая true - для успешно добавленного объекта (либо уже в группе состоявшего), false - в случае ошибки добавления</returns>
-      ICollection<bool> AddInGroup(long groupId, IEnumerable<long> objectsIds);
+      ICollection<bool> AddInGroup(long groupId, IEnumerable<long> childrenIds);
 
       /// <summary>
       /// Исключить объекты из группы

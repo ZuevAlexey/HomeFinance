@@ -22,7 +22,7 @@ namespace MyCompany.Services.Groups.Service.Data.Entities {
       /// <summary>
       /// Список дочерних элементов группы
       /// </summary>
-      [Association(ThisKey = "Id", OtherKey = "GroupId")]
+      [Association(ThisKey = "Id", OtherKey = "GroupId", CanBeNull = true)]
       public IEnumerable<ChildEntity> Children { get; set; }
    }
 }

@@ -10,5 +10,10 @@ namespace MyCompany.Services.Groups.Service.Data.Context {
       /// Таблица групп
       /// </summary>
       public ITable<GroupEntity> Groups => GetTable<GroupEntity>();
+
+      /// <summary>
+      /// Таблица дочерних элементов
+      /// </summary>
+      public ITable<ChildEntity> Children => GetTable<ChildEntity>();
    }
 }

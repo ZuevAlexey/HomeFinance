@@ -4,6 +4,7 @@ namespace MyCompany.Services.Groups.Service.Data.Entities {
    /// <summary>
    /// Сущность бд, отражающая члена группы
    /// </summary>
+   [Table("Children")]
    public class ChildEntity {
       /// <summary>
       /// Идентификатор

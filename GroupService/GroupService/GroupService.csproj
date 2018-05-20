@@ -122,6 +122,8 @@
     <Compile Include="Data\Context\GroupDb.cs" />
     <Compile Include="Data\Entities\GroupEntity.cs" />
     <Compile Include="Data\Entities\ChildEntity.cs" />
+    <Compile Include="Data\Provider\GroupProvider.cs" />
+    <Compile Include="Data\Provider\IGroupProvider.cs" />
     <Compile Include="IoC\GroupServiceCoreModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,7 +140,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Provider\" />
+    <Content Include="Migrations\Migrations.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
