@@ -7,6 +7,10 @@ using MyCompany.Services.Groups.Service.Data.Entities;
 using Ninject.Activation.Strategies;
 
 namespace MyCompany.Services.Groups.Service.Mapping {
+   /// <inheritdoc />
+   /// <summary>
+   /// Маппер сущностей сервиса группировок
+   /// </summary>
    internal class GroupMapper : IGroupMapper {
       public GroupMapper() {
          Initialize();

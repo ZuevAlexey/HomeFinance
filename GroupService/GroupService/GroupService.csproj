@@ -125,6 +125,8 @@
     <Compile Include="Data\Provider\GroupProvider.cs" />
     <Compile Include="Data\Provider\IGroupProvider.cs" />
     <Compile Include="IoC\GroupServiceCoreModule.cs" />
+    <Compile Include="Mapping\GroupMapper.cs" />
+    <Compile Include="Mapping\IGroupMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\GroupService.cs" />

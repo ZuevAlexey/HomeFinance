@@ -24,17 +24,17 @@ namespace MyCompany.Services.Groups.Contracts {
       /// Добавить объекты в группу
       /// </summary>
       /// <param name="groupId">Идентификатор группы, в которую добавляем объекты</param>
-      /// <param name="objectsIds">Идентификаторы добавляемых объектов</param>
+      /// <param name="childrenIds">Идентификаторы добавляемых объектов</param>
       /// <returns>Коллекция, содержащая true - для успешно добавленного объекта (либо уже в группе состоявшего), false - в случае ошибки добавления</returns>
-      ICollection<bool> AddInGroup(long groupId, IEnumerable<long> objectsIds);
+      ICollection<bool> AddInGroup(long groupId, IEnumerable<long> childrenIds);
 
       /// <summary>
       /// Исключить объекты из группы
       /// </summary>
       /// <param name="groupId">Идентификатор группы, из которой исключаем объекты</param>
-      /// <param name="objectsIds">Идентификаторы исключаемых объектов</param>
+      /// <param name="childrenIds">Идентификаторы исключаемых объектов</param>
       /// <returns>Коллекция, содержащая true - для успешно исключенного объекта (либо уже в группе не состоявшего), false - в случае ошибки исключения</returns>
-      ICollection<bool> RemoveFromGroup(long groupId, IEnumerable<long> objectsIds);
+      ICollection<bool> RemoveFromGroup(long groupId, IEnumerable<long> childrenIds);
 
       /// <summary>
       /// Получить членов группы по идентификатору группы
