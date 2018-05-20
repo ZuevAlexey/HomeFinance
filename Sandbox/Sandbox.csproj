@@ -94,9 +94,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GroupService\GroupService\GroupService.csproj">
-      <Project>{8048b394-47fc-4306-8f08-092bcb86b3cb}</Project>
-      <Name>GroupService</Name>
+    <ProjectReference Include="..\GroupService\GroupServiceContracts\GroupServiceContracts.csproj">
+      <Project>{81bb7dc3-7d91-460d-9852-26e82d1fd7c4}</Project>
+      <Name>GroupServiceContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\MoneyCells\MoneyCellsContracts\MoneyCellsContracts.csproj">
       <Project>{c6b19791-753a-47a6-8809-4567bfb555c3}</Project>
