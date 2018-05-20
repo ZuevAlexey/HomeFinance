@@ -5,6 +5,7 @@ using JRPC.Service.Host.Owin;
 using JRPC.Service.Registry;
 using MyCompany.Services.Groups.Contracts;
 using MyCompany.Services.Groups.Service.Data.Provider;
+using MyCompany.Services.Groups.Service.Mapping;
 using MyCompany.Services.Groups.Service.Service;
 using Ninject.Modules;
 
@@ -20,6 +21,7 @@ namespace MyCompany.Services.Groups.Service.IoC {
          Bind<IGroupService>().ToSelf();
 
          Bind<IGroupProvider>().To<GroupProvider>().InSingletonScope();
+         Bind<IGroupMapper>().To<GroupMapper>().InSingletonScope();
       }
    }
 }

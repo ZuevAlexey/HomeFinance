@@ -32,9 +32,9 @@ namespace MyCompany.Services.Groups.Service.Data.Provider {
       /// Исключить объекты из группы
       /// </summary>
       /// <param name="groupId">Идентификатор группы, из которой исключаем объекты</param>
-      /// <param name="objectsIds">Идентификаторы исключаемых объектов</param>
+      /// <param name="childrenIds">Идентификаторы исключаемых объектов</param>
       /// <returns>Коллекция, содержащая true - для успешно исключенного объекта (либо уже в группе не состоявшего), false - в случае ошибки исключения</returns>
-      ICollection<bool> RemoveFromGroup(long groupId, IEnumerable<long> objectsIds);
+      ICollection<bool> RemoveFromGroup(long groupId, IEnumerable<long> childrenIds);
 
       /// <summary>
       /// Получить членов группы по идентификатору группы
