@@ -1,0 +1,44 @@
+{
+    "people": [
+        {
+            "id": "Guid",
+            "lastName": "string",
+            "firstName": "string",
+            "image": "string",
+            "sex": "SEX" 
+        }
+    ],
+    "moneyCells":[
+        {
+            "id": "Guid",
+            "ownerId": "Guid",
+            "type": "MoneyCellType",
+            "amount": "number",
+            "startDate": "DateTime",
+            "endData": "DateTime",
+            "name": "string",
+            "status": "MoneyCellStatus",
+            "parent": "Guid"
+        }
+    ],
+    "transactions": [
+        {
+            "id": "Guid",
+            "fromId": "Guid",
+            "toId": "Guid",
+            "articleId": "number",
+            "amount": "number",
+            "date": "DateTime",
+            "description": "string"
+        }
+    ],
+    "articles": [
+        {
+            "id": "Guid",
+            "name": "string"
+        }
+    ],
+    "systemData": {
+        "lastSynchronizedTime": "DateTime"
+    }
+}
