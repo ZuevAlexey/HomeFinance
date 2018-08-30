@@ -1,6 +1,6 @@
-const sex = {
+const Sex = {
     MALE : "male",
     FEMALE : "female"
 }
 
-export default sex;
+export default Sex;

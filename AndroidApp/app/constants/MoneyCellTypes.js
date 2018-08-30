@@ -1,8 +1,8 @@
  // noinspection JSAnnotator
-const moneyCellType = {
+const MoneyCellType = {
     CASH : "cash",
     DEPOSIT : "deposit",
     CARD : "card"
 }
 
- export default moneyCellType
+ export default MoneyCellType
