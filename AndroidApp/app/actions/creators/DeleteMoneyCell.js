@@ -1,6 +1,6 @@
-import ActionName from '../../constants/ActionName';
+import {ActionName} from '../../constants/ActionName';
 
-export default DeleteMoneyCell = (id) => {
+export const DeleteMoneyCell = (id) => {
     return {
         type : ActionName.DELETE_MONEY_CELL,
         id

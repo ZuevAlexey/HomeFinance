@@ -1,6 +1,4 @@
-const MoneyCellStatus = {
+export const MoneyCellStatus = {
     ACTIVE : "active",
     INACTIVE : "inactive"
 }
-
-export default MoneyCellStatus;

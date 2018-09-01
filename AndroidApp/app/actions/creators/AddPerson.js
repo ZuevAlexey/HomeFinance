@@ -1,7 +1,7 @@
-import ActionName from '../../constants/ActionName';
+import {ActionName} from '../../constants/ActionName';
 import uuid from 'uuid-v4';
 
-export default AddPerson = (lastName, firstName, sex) => {
+export const AddPerson = (lastName, firstName, sex) => {
     return {
         type : ActionName.ADD_PERSON,
         id : uuid(),

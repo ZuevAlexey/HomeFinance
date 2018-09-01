@@ -1,6 +1,6 @@
-import ActionName from '../../constants/ActionName';
+import {ActionName} from '../../constants/ActionName';
 
-export default DeletePerson = (id) => {
+export const DeletePerson = (id) => {
     return {
         type : ActionName.DELETE_PERSON,
         id

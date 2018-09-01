@@ -1,6 +1,6 @@
-import ActionName from '../../constants/ActionName';
+import {ActionName} from '../../constants/ActionName';
 
-export default EditTransaction = (id, fromId, toId, articleId, amount, description, date) => {
+export const EditTransaction = (id, fromId, toId, articleId, amount, description, date) => {
     return {
         type : ActionName.EDIT_MONEY_CELL,
         id,

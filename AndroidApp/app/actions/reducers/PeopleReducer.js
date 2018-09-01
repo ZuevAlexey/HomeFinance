@@ -1,10 +1,10 @@
-import ActionName from "../../constants/ActionName";
-import PersonReducer from './PersonReducer';
+import {ActionName} from "../../constants/ActionName";
+import {PersonReducer} from './PersonReducer';
 
-export default PeopleReducer = (state, action) => {
+export const PeopleReducer = (state, action) => {
     switch(action.type){
         case ActionName.EDIT_PERSON:
-            return state.map(e => PersonReducer(e));
+            return state.map(e => PersonReducer(e, action));
         default:
             return state;
     }
