@@ -11,13 +11,15 @@
         {
             "id": "Guid",
             "ownerId": "Guid",
-            "type": "MoneyCellType",
+            "moneyCellType": "MoneyCellType",
             "amount": "number",
             "startDate": "DateTime",
-            "endData": "DateTime",
+            "endDate": "DateTime",
             "name": "string",
             "status": "MoneyCellStatus",
-            "parent": "Guid"
+            "parentId": "Guid",
+            "isValid": "bool",
+            "roi": "number"
         }
     ],
     "transactions": [
@@ -28,7 +30,8 @@
             "articleId": "number",
             "amount": "number",
             "date": "DateTime",
-            "description": "string"
+            "description": "string",
+            "isValid": "bool"
         }
     ],
     "articles": [

@@ -1,5 +1,4 @@
-// noinspection JSAnnotator
-const ActionName = {
+export const ActionName = {
     ADD_PERSON : "addPerson",
     EDIT_PERSON : "editPerson",
     DELETE_PERSON : "deletePerson",
@@ -10,5 +9,3 @@ const ActionName = {
     EDIT_TRANSACTION : "editTransaction",
     DELETE_TRANSACTION : "deleteTransaction"
 };
-
-export default ActionName;
