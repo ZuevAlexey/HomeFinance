@@ -21,7 +21,7 @@ export const MoneyCellsReducer = (state, action) => {
                     status: action.status,
                     parentId: action.parentId,
                     isValid: action.isValid,
-                    roi: action.roi,
+                    roi: action.roi
                 }
             ];
         default:

@@ -10,6 +10,7 @@ export const AddTransaction = (fromId, toId, articleId, amount, description, dat
         articleId,
         amount,
         description,
-        date
+        date,
+        isValid: true
     }
 }

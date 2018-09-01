@@ -14,7 +14,8 @@ export const PeopleReducer = (state, action) => {
                     id: action.id,
                     firstName: action.firstName,
                     lastName: action.lastName,
-                    sex: action.sex}
+                    sex: action.sex
+                }
             ];
         default:
             return state;

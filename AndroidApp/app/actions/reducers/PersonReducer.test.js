@@ -20,11 +20,12 @@ for(let key in ActionName){
 }
 
 it(`Person reducer process action ${ActionName.EDIT_PERSON}`, () => {
+    let id = 1;
     let lastName = 'Ivanov';
     let firstName = 'Vasya';
     let sex = Sex.FEMALE;
-    expect(PersonReducer(startState, EditPerson(1, lastName, firstName, sex)))
-    .toEqual({id: 1, lastName, firstName, sex});
+    expect(PersonReducer(startState, EditPerson(id, lastName, firstName, sex)))
+    .toEqual({id, lastName, firstName, sex});
 });
 
 it(`Person reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
