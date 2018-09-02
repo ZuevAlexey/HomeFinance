@@ -21,6 +21,8 @@ export const TransactionsReducer = (state, action) => {
                     isValid: action.isValid
                 }
             ];
+        case ActionName.SINCHRONIZATION:
+            return action.transactions;
         default:
             return state;
     }

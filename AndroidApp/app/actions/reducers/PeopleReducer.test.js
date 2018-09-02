@@ -4,6 +4,7 @@ import {PeopleReducer} from "./PeopleReducer";
 import {EditPerson} from '../creators/EditPerson';
 import {DeletePerson} from '../creators/DeletePerson';
 import {AddPerson} from '../creators/AddPerson';
+import {Sinchronize} from '../creators/Sinchronize';
 
 let petya = {
     id: 1,
@@ -26,7 +27,7 @@ let tanya = {
 let startState = [petya, vasya, tanya];
 
 for(let key in ActionName){
-    if(!['EDIT_PERSON', 'ADD_PERSON', 'DELETE_PERSON'].includes(key)){
+    if(!['EDIT_PERSON', 'ADD_PERSON', 'DELETE_PERSON', 'SINCHRONIZATION'].includes(key)){
         it(`People reducer don\'t process action ${ActionName[key]}`, () => {
             expect(PeopleReducer(startState, {type : ActionName[key]}))
             .toBe(startState);
@@ -69,4 +70,23 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     for(let key in equalMap){
         expect(newPerson[key]).toEqual(equalMap[key]);
     }
+});
+
+it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+    let newPeople = [{
+        id: 51,
+        lastName: 'Ivanov',
+        firstName: 'Ivan',
+        sex: Sex.MALE 
+    },
+    {
+        id: 5,
+        lastName: 'Stepanova',
+        firstName: 'Irina',
+        sex: Sex.FEMALE 
+    }];
+
+    let action = Sinchronize(newPeople, null, null, null, null);
+    let newState = PeopleReducer(startState, action);
+    expect(newState).toBe(newPeople);
 });

@@ -24,6 +24,8 @@ export const MoneyCellsReducer = (state, action) => {
                     roi: action.roi
                 }
             ];
+        case ActionName.SINCHRONIZATION:
+            return action.moneyCells;
         default:
             return state;
     }

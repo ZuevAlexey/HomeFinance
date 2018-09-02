@@ -36,11 +36,11 @@
     ],
     "articles": [
         {
-            "id": "Guid",
+            "id": "number",
             "name": "string"
         }
     ],
     "systemData": {
-        "lastSynchronizedTime": "DateTime"
+        "lastSinchronizationTime": "DateTime"
     }
 }

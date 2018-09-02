@@ -17,6 +17,8 @@ export const PeopleReducer = (state, action) => {
                     sex: action.sex
                 }
             ];
+        case ActionName.SINCHRONIZATION:
+            return action.people;
         default:
             return state;
     }

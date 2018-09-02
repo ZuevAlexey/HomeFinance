@@ -3,6 +3,7 @@ import {TransactionsReducer} from "./TransactionsReducer";
 import {EditTransaction} from '../creators/EditTransaction';
 import {DeleteTransaction} from '../creators/DeleteTransaction';
 import {AddTransaction} from '../creators/AddTransaction';
+import {Sinchronize} from '../creators/Sinchronize';
 
 let trans1 = {
     id: 1,
@@ -37,7 +38,7 @@ let trans3 = {
 let startState = [trans1, trans2, trans3];
 
 for(let key in ActionName){
-    if(!['EDIT_TRANSACTION', 'ADD_TRANSACTION', 'DELETE_TRANSACTION'].includes(key)){
+    if(!['EDIT_TRANSACTION', 'ADD_TRANSACTION', 'DELETE_TRANSACTION', 'SINCHRONIZATION'].includes(key)){
         it(`Transactions reducer don\'t process action ${ActionName[key]}`, () => {
             expect(TransactionsReducer(startState, {type : ActionName[key]}))
             .toBe(startState);
@@ -90,4 +91,30 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     for(let key in equalMap){
         expect(newTransaction[key]).toEqual(equalMap[key]);
     }
+});
+
+it(`Transactions reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+    let newTransactions = [{
+        id: 56,
+        fromId: 34,
+        toId: 87,
+        articleId: 2345,
+        amount: 1807,
+        date: new Date(2018, 8, 2, 1, 55),
+        description: "Премия",
+        isValid: true
+        }, {
+        id: 25,
+        fromId: 45,
+        toId: 2,
+        articleId: 1004,
+        amount: 890,
+        date: new Date(2018, 9, 8, 14, 55),
+        description: "Телефон",
+        isValid: true
+        }];
+    
+    let action = Sinchronize(null, null, newTransactions, null, null);
+    let newState = TransactionsReducer(startState, action);
+    expect(newState).toBe(newTransactions);
 });

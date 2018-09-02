@@ -5,6 +5,7 @@ import {MoneyCellsReducer} from "./MoneyCellsReducer";
 import {EditMoneyCell} from '../creators/EditMoneyCell';
 import {DeleteMoneyCell} from '../creators/DeleteMoneyCell';
 import {AddMoneyCell} from '../creators/AddMoneyCell';
+import {Sinchronize} from '../creators/Sinchronize';
 
 let cash = {
     id: 1,
@@ -42,7 +43,7 @@ let deposit = {
 let startState = [cash, card, deposit];
 
 for(let key in ActionName){
-    if(!['EDIT_MONEY_CELL', 'ADD_MONEY_CELL', 'DELETE_MONEY_CELL'].includes(key)){
+    if(!['EDIT_MONEY_CELL', 'ADD_MONEY_CELL', 'DELETE_MONEY_CELL', 'SINCHRONIZATION'].includes(key)){
         it(`MoneyCells reducer don\'t process action ${ActionName[key]}`, () => {
             expect(MoneyCellsReducer(startState, {type : ActionName[key]})).toBe(startState);
         });
@@ -91,4 +92,32 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     for(let key in equalMap){
         expect(newMoneyCell[key]).toEqual(equalMap[key]);
     }
+});
+
+it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+    let newMoneyCells = [{
+        id: 145,
+        ownerId: 13,
+        type: MoneyCellType.CASH,
+        amount: 1454,
+        startDate: new Date(2018, 8, 0),
+        endData: new Date(2018, 8, 0),
+        name: 'Кошелек',
+        status: MoneyCellStatus.ACTIVE,
+        parentId: null
+        }, {
+        id: 16,
+        ownerId: 45,
+        type: MoneyCellType.CASH,
+        amount: 23423,
+        startDate: new Date(2018, 8, 0),
+        endData: new Date(2018, 8, 0),
+        name: 'Кошелек',
+        status: MoneyCellStatus.ACTIVE,
+        parentId: null
+    }];
+    
+    let action = Sinchronize(null, newMoneyCells, null, null, null);
+    let newState = MoneyCellsReducer(startState, action);
+    expect(newState).toBe(newMoneyCells);
 });
