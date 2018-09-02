@@ -1,7 +1,7 @@
 import {ActionName} from "../../constants/ActionName";
 import {MoneyCellReducer} from './MoneyCellReducer';
 
-export const MoneyCellsReducer = (state, action) => {
+export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_MONEY_CELL:
             return state.map(e => MoneyCellReducer(e, action));

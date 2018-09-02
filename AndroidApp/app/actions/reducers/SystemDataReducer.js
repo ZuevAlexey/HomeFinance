@@ -1,6 +1,6 @@
 import {ActionName} from "../../constants/ActionName";
 
-export const SystemDataReducer = (state, action) => {
+export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
         case ActionName.SINCHRONIZATION:
             return {

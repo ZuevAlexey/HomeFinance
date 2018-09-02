@@ -1,6 +1,6 @@
 import {ActionName} from "../../constants/ActionName";
 
-export const TransactionReducer = (state, action) => {
+export const TransactionReducer = (state = {}, action) => {
     switch(action.type){
         case ActionName.EDIT_TRANSACTION:
             return action.id === state.id ? {
