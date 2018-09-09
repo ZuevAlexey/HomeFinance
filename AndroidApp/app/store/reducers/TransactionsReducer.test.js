@@ -1,11 +1,12 @@
 import {ActionName} from "../../constants/ActionName";
 import {TransactionsReducer} from "./TransactionsReducer";
-import {EditTransaction} from '../creators/EditTransaction';
-import {DeleteTransaction} from '../creators/DeleteTransaction';
-import {AddTransaction} from '../creators/AddTransaction';
-import {Sinchronize} from '../creators/Sinchronize';
+import {EditTransaction} from '../actions/EditTransaction';
+import {DeleteTransaction} from '../actions/DeleteTransaction';
+import {AddTransaction} from '../actions/AddTransaction';
+import {Sinchronize} from '../actions/Sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 
-let trans1 = {
+const trans1 = {
     id: 1,
     fromId: 1,
     toId: 2,
@@ -15,7 +16,7 @@ let trans1 = {
     description: "Оплата комуналки",
     isValid: true
 };
-let trans2 = {
+const trans2 = {
     id: 2,
     fromId: 4,
     toId: 1,
@@ -25,7 +26,7 @@ let trans2 = {
     description: "Молоко",
     isValid: true
 };
-let trans3 = {
+const trans3 = {
     id: 3,
     fromId: 1,
     toId: 2,
@@ -35,27 +36,27 @@ let trans3 = {
     description: "Лечение зубов",
     isValid: false
 };
-let startState = [trans1, trans2, trans3];
+const startState = [trans1, trans2, trans3];
 
-for(let key in ActionName){
-    if(!['EDIT_TRANSACTION', 'ADD_TRANSACTION', 'DELETE_TRANSACTION', 'SINCHRONIZATION'].includes(key)){
-        it(`Transactions reducer don\'t process action ${ActionName[key]}`, () => {
-            expect(TransactionsReducer(startState, {type : ActionName[key]}))
-            .toBe(startState);
-        });
-    }
-}
+const processedActions = [
+    ActionName.ADD_TRANSACTION,
+    ActionName.DELETE_TRANSACTION, 
+    ActionName.EDIT_TRANSACTION,
+    ActionName.SINCHRONIZATION
+];
+AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
 
 it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
-    let id = 1;
-    let fromId = 23;
-    let toId = 78;
-    let articleId = 340;
-    let amount = 3000;
-    let description = 'зарплата';
-    let date = new Date(2018, 10, 10);
-    let isValid = false;
-    let action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
+    const id = 1;
+    const fromId = 23;
+    const toId = 78;
+    const articleId = 340;
+    const amount = 3000;
+    const description = 'зарплата';
+    const date = new Date(2018, 10, 10);
+    const isValid = false;
+    const action = EditTransaction(id, trans1.fromId, trans1.toId, fromId, toId, articleId, trans1.amount,
+        amount, description, date, isValid);
     expect(TransactionsReducer(startState, action))
         .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid}, trans2, trans3]);
 });
@@ -66,26 +67,26 @@ it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, 
 });
 
 it(`Transactions reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
-    expect(TransactionsReducer(startState, DeleteTransaction(2)))
+    expect(TransactionsReducer(startState, DeleteTransaction(2, null, null, null)))
     .toEqual([trans1, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
-    expect(TransactionsReducer(startState, DeleteTransaction(5)))
+    expect(TransactionsReducer(startState, DeleteTransaction(5, null, null, null)))
     .toEqual(startState);
 });
 
 it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
-    let stateLength = startState.length;
-    let fromId = 23;
-    let toId = 78;
-    let articleId = 340;
-    let amount = 3000;
-    let description = 'зарплата';
-    let date = new Date(2018, 10, 10);
-    let isValid = true;
-    let action = AddTransaction(fromId, toId, articleId, amount, description, date);
-    let newTransaction = TransactionsReducer(startState, action)[stateLength];
+    const stateLength = startState.length;
+    const fromId = 23;
+    const toId = 78;
+    const articleId = 340;
+    const amount = 3000;
+    const description = 'зарплата';
+    const date = new Date(2018, 10, 10);
+    const isValid = true;
+    const action = AddTransaction(fromId, toId, articleId, amount, description, date);
+    const newTransaction = TransactionsReducer(startState, action)[stateLength];
     expect(newTransaction.id).toBeDefined();
     let equalMap = {fromId, toId, articleId, amount, description, date, isValid};
     for(let key in equalMap){
@@ -94,7 +95,7 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
 });
 
 it(`Transactions reducer process action ${ActionName.SINCHRONIZATION}`, () => {
-    let newTransactions = [{
+    const newTransactions = [{
         id: 56,
         fromId: 34,
         toId: 87,
@@ -114,7 +115,7 @@ it(`Transactions reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         isValid: true
         }];
     
-    let action = Sinchronize(null, null, newTransactions, null, null);
-    let newState = TransactionsReducer(startState, action);
+    const action = Sinchronize(null, null, newTransactions, null, null);
+    const newState = TransactionsReducer(startState, action);
     expect(newState).toBe(newTransactions);
 });

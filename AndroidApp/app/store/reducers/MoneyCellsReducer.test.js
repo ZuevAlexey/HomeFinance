@@ -2,12 +2,13 @@ import {ActionName} from "../../constants/ActionName";
 import {MoneyCellType} from "../../constants/MoneyCellType";
 import {MoneyCellStatus} from "../../constants/MoneyCellStatus";
 import {MoneyCellsReducer} from "./MoneyCellsReducer";
-import {EditMoneyCell} from '../creators/EditMoneyCell';
-import {DeleteMoneyCell} from '../creators/DeleteMoneyCell';
-import {AddMoneyCell} from '../creators/AddMoneyCell';
-import {Sinchronize} from '../creators/Sinchronize';
+import {EditMoneyCell} from '../actions/EditMoneyCell';
+import {DeleteMoneyCell} from '../actions/DeleteMoneyCell';
+import {AddMoneyCell} from '../actions/AddMoneyCell';
+import {Sinchronize} from '../actions/Sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 
-let cash = {
+const cash = {
     id: 1,
     ownerId: 1,
     type: MoneyCellType.CASH,
@@ -18,7 +19,7 @@ let cash = {
     status: MoneyCellStatus.ACTIVE,
     parentId: null
 };
-let card = {
+const card = {
     id: 2,
     ownerId: 1,
     type: MoneyCellType.CARD,
@@ -29,7 +30,7 @@ let card = {
     status: MoneyCellStatus.INACTIVE,
     parentId: null
 };
-let deposit = {
+const deposit = {
     id: 3,
     ownerId: 1,
     type: MoneyCellType.DEPOSIT,
@@ -40,19 +41,22 @@ let deposit = {
     status: MoneyCellStatus.ACTIVE,
     parentId: 2
 };
-let startState = [cash, card, deposit];
+const startState = [cash, card, deposit];
 
-for(let key in ActionName){
-    if(!['EDIT_MONEY_CELL', 'ADD_MONEY_CELL', 'DELETE_MONEY_CELL', 'SINCHRONIZATION'].includes(key)){
-        it(`MoneyCells reducer don\'t process action ${ActionName[key]}`, () => {
-            expect(MoneyCellsReducer(startState, {type : ActionName[key]})).toBe(startState);
-        });
-    }
-}
+const processedActions = [
+    ActionName.EDIT_MONEY_CELL,
+    ActionName.ADD_MONEY_CELL,
+    ActionName.DELETE_MONEY_CELL,
+    ActionName.ADD_TRANSACTION,
+    ActionName.DELETE_TRANSACTION, 
+    ActionName.EDIT_TRANSACTION,
+    ActionName.SINCHRONIZATION
+];
+AssertUnprocessedActions(processedActions, 'MoneyCells', MoneyCellsReducer);
 
 it(`MoneyCells reducer process action ${ActionName.EDIT_MONEY_CELL}`, () => {
-    let name = 'Зарплатная карточка';
-    let status = MoneyCellStatus.ACTIVE;
+    const name = 'Зарплатная карточка';
+    const status = MoneyCellStatus.ACTIVE;
     expect(MoneyCellsReducer(startState, EditMoneyCell(2, name, status)))
         .toEqual([cash, {...card, name, status}, deposit]);
 });
@@ -73,29 +77,29 @@ it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_MONEY_CELL}`, (
 });
 
 it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
-    let stateLength = startState.length;
-    let ownerId = 56;
-    let moneyCellType = MoneyCellType.DEPOSIT;
-    let amount = 250000;
-    let startDate = new Date(2018, 10, 1);
-    let endDate = new Date(2018, 1, 1);
-    let name = 'вклад';
-    let status = MoneyCellStatus.ACTIVE;
-    let parentId = 67;
-    let isValid = true;
-    let roi = 10;
+    const stateLength = startState.length;
+    const ownerId = 56;
+    const moneyCellType = MoneyCellType.DEPOSIT;
+    const amount = 250000;
+    const startDate = new Date(2018, 10, 1);
+    const endDate = new Date(2018, 1, 1);
+    const name = 'вклад';
+    const status = MoneyCellStatus.ACTIVE;
+    const parentId = 67;
+    const isValid = true;
+    const roi = 10;
 
-    let action = AddMoneyCell(ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId);
-    let newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
+    const action = AddMoneyCell(ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId);
+    const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
     expect(newMoneyCell.id).toBeDefined();
-    let equalMap = {ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId};
+    const equalMap = {ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId};
     for(let key in equalMap){
         expect(newMoneyCell[key]).toEqual(equalMap[key]);
     }
 });
 
 it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
-    let newMoneyCells = [{
+    const newMoneyCells = [{
         id: 145,
         ownerId: 13,
         type: MoneyCellType.CASH,
@@ -117,7 +121,7 @@ it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         parentId: null
     }];
     
-    let action = Sinchronize(null, newMoneyCells, null, null, null);
-    let newState = MoneyCellsReducer(startState, action);
+    const action = Sinchronize(null, newMoneyCells, null, null, null);
+    const newState = MoneyCellsReducer(startState, action);
     expect(newState).toBe(newMoneyCells);
 });

@@ -1,29 +1,23 @@
 import {ActionName} from "../../constants/ActionName";
 import {Sex} from "../../constants/Sex";
 import {PersonReducer} from "./PersonReducer";
-import {EditPerson} from '../creators/EditPerson';
+import {EditPerson} from '../actions/EditPerson';
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 
-let startState = {
+const startState = {
     id: 1,
     lastName: 'Petrov',
     firstName: 'Petya',
     sex: Sex.MALE 
 }
 
-for(let key in ActionName){
-    if(key !== 'EDIT_PERSON'){
-        it(`Person reducer don\'t process action ${ActionName[key]}`, () => {
-            expect(PersonReducer(startState, {type : ActionName[key]}))
-            .toBe(startState);
-        });
-    }
-}
+AssertUnprocessedActions([ActionName.EDIT_PERSON], 'Person', PersonReducer);
 
 it(`Person reducer process action ${ActionName.EDIT_PERSON}`, () => {
-    let id = 1;
-    let lastName = 'Ivanov';
-    let firstName = 'Vasya';
-    let sex = Sex.FEMALE;
+    const id = 1;
+    const lastName = 'Ivanov';
+    const firstName = 'Vasya';
+    const sex = Sex.FEMALE;
     expect(PersonReducer(startState, EditPerson(id, lastName, firstName, sex)))
     .toEqual({id, lastName, firstName, sex});
 });

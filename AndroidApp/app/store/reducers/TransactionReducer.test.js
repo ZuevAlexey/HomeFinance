@@ -1,8 +1,9 @@
 import {ActionName} from "../../constants/ActionName";
 import {TransactionReducer} from "./TransactionReducer";
-import {EditTransaction} from '../creators/EditTransaction';
+import {EditTransaction} from '../actions/EditTransaction';
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 
-let startState = {
+const startState = {
     id: 1,
     fromId: 1,
     toId: 2,
@@ -13,25 +14,19 @@ let startState = {
     isValid: true
 }
 
-for(let key in ActionName){
-    if(key !== 'EDIT_TRANSACTION'){
-        it(`Transaction reducer don\'t process action ${ActionName[key]}`, () => {
-            expect(TransactionReducer(startState, {type : ActionName[key]}))
-            .toBe(startState);
-        });
-    }
-}
+AssertUnprocessedActions([ActionName.EDIT_TRANSACTION], 'Transaction', TransactionReducer);
 
 it(`Transaction reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
-    let id = 1;
-    let fromId = 23;
-    let toId = 78;
-    let articleId = 340;
-    let amount = 3000;
-    let description = 'зарплата';
-    let date = new Date(2018, 10, 10);
-    let isValid = false;
-    let action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
+    const id = 1;
+    const fromId = 23;
+    const toId = 78;
+    const articleId = 340;
+    const amount = 3000;
+    const description = 'зарплата';
+    const date = new Date(2018, 10, 10);
+    const isValid = false;
+    const action = EditTransaction(id, startState.fromId, startState.toId, fromId, toId, articleId,
+        startState.amount, amount, description, date, isValid);
     expect(TransactionReducer(startState, action))
     .toEqual({id, fromId, toId, articleId, amount, description, date, isValid});
 });

@@ -1,45 +1,45 @@
 import {ActionName} from "../../constants/ActionName";
 import {Sex} from "../../constants/Sex";
 import {PeopleReducer} from "./PeopleReducer";
-import {EditPerson} from '../creators/EditPerson';
-import {DeletePerson} from '../creators/DeletePerson';
-import {AddPerson} from '../creators/AddPerson';
-import {Sinchronize} from '../creators/Sinchronize';
+import {EditPerson} from '../actions/EditPerson';
+import {DeletePerson} from '../actions/DeletePerson';
+import {AddPerson} from '../actions/AddPerson';
+import {Sinchronize} from '../actions/Sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 
-let petya = {
+const petya = {
     id: 1,
     lastName: 'Petrov',
     firstName: 'Petya',
     sex: Sex.MALE 
 };
-let vasya = {
+const vasya = {
     id: 2,
     lastName: 'Ivanov',
     firstName: 'Vasya',
     sex: Sex.MALE 
 };
-let tanya = {
+const tanya = {
     id: 3,
     lastName: 'Sidorova',
     firstName: 'Tanya',
     sex: Sex.FEMALE 
 };
-let startState = [petya, vasya, tanya];
+const startState = [petya, vasya, tanya];
 
-for(let key in ActionName){
-    if(!['EDIT_PERSON', 'ADD_PERSON', 'DELETE_PERSON', 'SINCHRONIZATION'].includes(key)){
-        it(`People reducer don\'t process action ${ActionName[key]}`, () => {
-            expect(PeopleReducer(startState, {type : ActionName[key]}))
-            .toBe(startState);
-        });
-    }
-}
+const processedActions = [
+    ActionName.EDIT_PERSON,
+    ActionName.ADD_PERSON,
+    ActionName.DELETE_PERSON,
+    ActionName.SINCHRONIZATION
+];
+AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
 
 it(`People reducer process action ${ActionName.EDIT_PERSON}`, () => {
-    let id = 1;
-    let lastName = 'Ivanov';
-    let firstName = 'Vasya';
-    let sex = Sex.FEMALE;
+    const id = 1;
+    const lastName = 'Ivanov';
+    const firstName = 'Vasya';
+    const sex = Sex.FEMALE;
     expect(PeopleReducer(startState, EditPerson(id, lastName, firstName, sex)))
         .toEqual([{id, lastName, firstName, sex}, vasya, tanya]);
 });
@@ -60,20 +60,20 @@ it(`People reducer don\'t process action ${ActionName.DELETE_PERSON}`, () => {
 });
 
 it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
-    let stateLength = startState.length;
-    let lastName = 'Sinicina';
-    let firstName = 'Sveta';
-    let sex = Sex.FEMALE;
-    let newPerson = PeopleReducer(startState, AddPerson(lastName, firstName, sex))[stateLength];
+    const stateLength = startState.length;
+    const lastName = 'Sinicina';
+    const firstName = 'Sveta';
+    const sex = Sex.FEMALE;
+    const newPerson = PeopleReducer(startState, AddPerson(lastName, firstName, sex))[stateLength];
     expect(newPerson.id).toBeDefined();
-    let equalMap = {lastName, firstName, sex};
+    const equalMap = {lastName, firstName, sex};
     for(let key in equalMap){
         expect(newPerson[key]).toEqual(equalMap[key]);
     }
 });
 
 it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
-    let newPeople = [{
+    const newPeople = [{
         id: 51,
         lastName: 'Ivanov',
         firstName: 'Ivan',
@@ -86,7 +86,7 @@ it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         sex: Sex.FEMALE 
     }];
 
-    let action = Sinchronize(newPeople, null, null, null, null);
-    let newState = PeopleReducer(startState, action);
+    const action = Sinchronize(newPeople, null, null, null, null);
+    const newState = PeopleReducer(startState, action);
     expect(newState).toBe(newPeople);
 });
