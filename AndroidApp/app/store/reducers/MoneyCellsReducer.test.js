@@ -1,15 +1,15 @@
-import {ActionName} from "../../constants/ActionName";
-import {MoneyCellType} from "../../constants/MoneyCellType";
-import {MoneyCellStatus} from "../../constants/MoneyCellStatus";
-import {MoneyCellsReducer} from "./MoneyCellsReducer";
-import {EditMoneyCell} from '../actions/EditMoneyCell';
-import {DeleteMoneyCell} from '../actions/DeleteMoneyCell';
-import {AddMoneyCell} from '../actions/AddMoneyCell';
-import {Sinchronize} from '../actions/Sinchronize';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
-import {AddTransaction} from '../actions/AddTransaction';
-import {DeleteTransaction} from "../actions/DeleteTransaction";
-import {EditTransaction} from "../actions/EditTransaction";
+import {ActionName} from "../../constants/actionName";
+import {MoneyCellType} from "../../constants/moneyCellType";
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
+import {MoneyCellsReducer} from "./moneyCellsReducer";
+import {EditMoneyCell} from '../actions/editMoneyCell';
+import {DeleteMoneyCell} from '../actions/deleteMoneyCell';
+import {AddMoneyCell} from '../actions/addMoneyCell';
+import {Sinchronize} from '../actions/sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
+import {AddTransaction} from '../actions/addTransaction';
+import {DeleteTransaction} from "../actions/deleteTransaction";
+import {EditTransaction} from "../actions/editTransaction";
 
 const cash = {
     id: 1,

@@ -1,5 +1,5 @@
-import {ActionName} from "../../constants/ActionName";
-import {MoneyCellReducer} from './MoneyCellReducer';
+import {ActionName} from "../../constants/actionName";
+import {MoneyCellReducer} from './moneyCellReducer';
 
 export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){

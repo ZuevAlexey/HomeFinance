@@ -1,7 +1,7 @@
-import {ActionName} from "../../constants/ActionName";
-import {SystemDataReducer} from './SystemDataReducer';
-import {Sinchronize} from '../actions/Sinchronize';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {SystemDataReducer} from './systemDataReducer';
+import {Sinchronize} from '../actions/sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 let startState = {
     lastSinchronizationTime: new Date(2018, 8, 2, 14, 0)

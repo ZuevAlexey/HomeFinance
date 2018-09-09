@@ -1,4 +1,4 @@
-import {ActionName} from '../../constants/ActionName';
+import {ActionName} from '../../constants/actionName';
 
 export const DeleteTransaction = (id, fromId, toId, amount) => {
     return {

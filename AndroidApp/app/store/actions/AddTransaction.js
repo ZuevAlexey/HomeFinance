@@ -1,4 +1,4 @@
-import {ActionName} from '../../constants/ActionName';
+import {ActionName} from '../../constants/actionName';
 import uuid from 'uuid-v4';
 
 export const AddTransaction = (fromId, toId, articleId, amount, description, date) => {

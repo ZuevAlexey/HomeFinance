@@ -1,7 +1,7 @@
-import {ActionName} from "../../constants/ActionName";
-import {ArticlesReducer} from './ArticlesReducer';
-import {Sinchronize} from '../actions/Sinchronize';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {ArticlesReducer} from './articlesReducer';
+import {Sinchronize} from '../actions/sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const startState = [
     {

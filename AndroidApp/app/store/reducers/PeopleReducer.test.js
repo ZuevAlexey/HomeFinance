@@ -1,11 +1,11 @@
-import {ActionName} from "../../constants/ActionName";
-import {Sex} from "../../constants/Sex";
-import {PeopleReducer} from "./PeopleReducer";
-import {EditPerson} from '../actions/EditPerson';
-import {DeletePerson} from '../actions/DeletePerson';
-import {AddPerson} from '../actions/AddPerson';
-import {Sinchronize} from '../actions/Sinchronize';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {Sex} from "../../constants/sex";
+import {PeopleReducer} from "./peopleReducer";
+import {EditPerson} from '../actions/editPerson';
+import {DeletePerson} from '../actions/deletePerson';
+import {AddPerson} from '../actions/addPerson';
+import {Sinchronize} from '../actions/sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const petya = {
     id: 1,

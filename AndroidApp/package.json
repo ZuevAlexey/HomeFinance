@@ -23,6 +23,7 @@
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-router-native": "^4.3.0",
+    "redux": "^4.0.0",
     "uuid-v4": "^0.1.0"
   }
 }

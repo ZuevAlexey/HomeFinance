@@ -1,8 +1,8 @@
-import {ActionName} from "../../constants/ActionName";
-import {Sex} from "../../constants/Sex";
-import {PersonReducer} from "./PersonReducer";
-import {EditPerson} from '../actions/EditPerson';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {Sex} from "../../constants/sex";
+import {PersonReducer} from "./personReducer";
+import {EditPerson} from '../actions/editPerson';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const startState = {
     id: 1,

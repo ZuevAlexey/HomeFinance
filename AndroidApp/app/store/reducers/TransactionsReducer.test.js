@@ -1,10 +1,10 @@
-import {ActionName} from "../../constants/ActionName";
-import {TransactionsReducer} from "./TransactionsReducer";
-import {EditTransaction} from '../actions/EditTransaction';
-import {DeleteTransaction} from '../actions/DeleteTransaction';
-import {AddTransaction} from '../actions/AddTransaction';
-import {Sinchronize} from '../actions/Sinchronize';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {TransactionsReducer} from "./transactionsReducer";
+import {EditTransaction} from '../actions/editTransaction';
+import {DeleteTransaction} from '../actions/deleteTransaction';
+import {AddTransaction} from '../actions/addTransaction';
+import {Sinchronize} from '../actions/sinchronize';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const trans1 = {
     id: 1,

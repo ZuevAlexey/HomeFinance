@@ -1,4 +1,4 @@
-import {ActionName} from '../../constants/ActionName';
+import {ActionName} from '../../constants/actionName';
 
 export const EditTransaction = (id, oldFromId, oldToId, newFromId, newToId, articleId, oldAmount, newAmount, description, date, isValid) => {
     return {

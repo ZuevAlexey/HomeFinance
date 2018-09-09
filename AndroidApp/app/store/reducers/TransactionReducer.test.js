@@ -1,7 +1,7 @@
-import {ActionName} from "../../constants/ActionName";
-import {TransactionReducer} from "./TransactionReducer";
-import {EditTransaction} from '../actions/EditTransaction';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {ActionName} from "../../constants/actionName";
+import {TransactionReducer} from "./transactionReducer";
+import {EditTransaction} from '../actions/editTransaction';
+import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const startState = {
     id: 1,

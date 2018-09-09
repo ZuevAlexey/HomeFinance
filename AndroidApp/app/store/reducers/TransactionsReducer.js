@@ -1,5 +1,5 @@
-import {ActionName} from "../../constants/ActionName";
-import {TransactionReducer} from './TransactionReducer';
+import {ActionName} from "../../constants/actionName";
+import {TransactionReducer} from './transactionReducer';
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
