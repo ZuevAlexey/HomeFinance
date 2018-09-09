@@ -1,12 +1,12 @@
 import {ActionName} from "../../constants/ActionName";
+import {AssertUnprocessedActions} from '../../helpers/TestHelper';
 import {MoneyCellType} from "../../constants/MoneyCellType";
 import {MoneyCellStatus} from "../../constants/MoneyCellStatus";
 import {MoneyCellReducer} from "./MoneyCellReducer";
 import {EditMoneyCell} from '../actions/EditMoneyCell';
 import {AddTransaction} from '../actions/AddTransaction';
-import {AssertUnprocessedActions} from '../../helpers/TestHelper';
-import { DeleteTransaction } from "../actions/DeleteTransaction";
-import { EditTransaction } from "../actions/EditTransaction";
+import {DeleteTransaction} from "../actions/DeleteTransaction";
+import {EditTransaction} from "../actions/EditTransaction";
 
 const startState = {
     id: 1,
@@ -68,7 +68,7 @@ it(`MoneyCell reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
 });
 
 it(`MoneyCell reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
-    const action = AddTransaction(3, 2, null, 2700, null, null);
+    const action = DeleteTransaction(3, 2, null, 2700, null, null);
     expect(MoneyCellReducer(startState, action))
         .toBe(startState);
 });
@@ -77,11 +77,11 @@ it(`MoneyCell reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const transactionId = 324;
     const oldAmount = 3000;
     const newAmount = 1300;
+    
     const revertWithdrawal = EditTransaction(null, startState.id, 34, 56, 23, null,
         oldAmount, newAmount, null, null, null);
     expect(MoneyCellReducer(startState, revertWithdrawal))
         .toEqual({...startState, amount: startState.amount + oldAmount});
-
         
     const revertDeposit = EditTransaction(null, 34, startState.id, 56, 23, null,
         oldAmount, newAmount, null, null, null);
@@ -122,10 +122,8 @@ it(`MoneyCell reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
 });
 
 it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
-    const ourMoneyCellId = 3;
-    const anotherMoneyCellId = 2;
-    const amount = 1500;
-    const action = AddTransaction(ourMoneyCellId, anotherMoneyCellId, null, amount, null, null);
+    const action = EditTransaction(null, 56, 45, 22, 56, null,
+        3000, 4500, null, null, null);
     expect(MoneyCellReducer(startState, action))
         .toBe(startState);
 });

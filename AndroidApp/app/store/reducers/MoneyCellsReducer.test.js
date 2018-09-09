@@ -7,6 +7,9 @@ import {DeleteMoneyCell} from '../actions/DeleteMoneyCell';
 import {AddMoneyCell} from '../actions/AddMoneyCell';
 import {Sinchronize} from '../actions/Sinchronize';
 import {AssertUnprocessedActions} from '../../helpers/TestHelper';
+import {AddTransaction} from '../actions/AddTransaction';
+import {DeleteTransaction} from "../actions/DeleteTransaction";
+import {EditTransaction} from "../actions/EditTransaction";
 
 const cash = {
     id: 1,
@@ -124,4 +127,61 @@ it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
     const action = Sinchronize(null, newMoneyCells, null, null, null);
     const newState = MoneyCellsReducer(startState, action);
     expect(newState).toBe(newMoneyCells);
+});
+
+it(`MoneyCells reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
+    const amount = 3000;
+    const action = AddTransaction(cash.id, deposit.id, null, amount, null, null);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual([
+            {...cash, amount: cash.amount - amount},
+            card,
+            {...deposit, amount: deposit.amount + amount}
+        ]);
+});
+
+it(`MoneyCells reducer don\'t process action ${ActionName.ADD_TRANSACTION}`, () => {
+    const amount = 3000;
+    const action = AddTransaction(456, 34, null, amount, null, null);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual(startState);
+});
+
+it(`MoneyCells reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
+    const amount = 3000;
+    const action = DeleteTransaction(78, cash.id, deposit.id, amount);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual([
+            {...cash, amount: cash.amount + amount},
+            card,
+            {...deposit, amount: deposit.amount - amount}
+        ]);
+});
+
+it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
+    const action = DeleteTransaction(35, 22, null, 2700, null, null);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual(startState);
+});
+
+it(`MoneyCell reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
+    const transactionId = 324;
+    const oldAmount = 3000;
+    const newAmount = 1300;
+    
+    const action = EditTransaction(null, cash.id, deposit.id, card.id, cash.id, null,
+        oldAmount, newAmount, null, null, null);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual([
+            {...cash, amount: cash.amount + oldAmount + newAmount},
+            {...card, amount: card.amount - newAmount},
+            {...deposit, amount: deposit.amount - oldAmount}
+        ]);
+});
+
+it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
+    const action = EditTransaction(null, 56, 45, 22, 56, null,
+        3000, 4500, null, null, null);
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual(startState);
 });

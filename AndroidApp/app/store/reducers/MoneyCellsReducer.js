@@ -4,6 +4,9 @@ import {MoneyCellReducer} from './MoneyCellReducer';
 export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_MONEY_CELL:
+        case ActionName.ADD_TRANSACTION:
+        case ActionName.DELETE_TRANSACTION:
+        case ActionName.EDIT_TRANSACTION:
             return state.map(e => MoneyCellReducer(e, action));
         case ActionName.DELETE_MONEY_CELL:
             return state.filter(e => e.id !== action.id);
