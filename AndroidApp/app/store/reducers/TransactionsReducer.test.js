@@ -3,7 +3,7 @@ import {TransactionsReducer} from "./transactionsReducer";
 import {EditTransaction} from '../actions/editTransaction';
 import {DeleteTransaction} from '../actions/deleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
-import {Sinchronize} from '../actions/sinchronize';
+import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const trans1 = {
@@ -42,9 +42,11 @@ const processedActions = [
     ActionName.ADD_TRANSACTION,
     ActionName.DELETE_TRANSACTION, 
     ActionName.EDIT_TRANSACTION,
-    ActionName.SINCHRONIZATION
+    ActionName.SYNCHRONIZATION
 ];
 AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
+
+const lastModificationTime = new Date();
 
 it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const id = 1;
@@ -57,8 +59,9 @@ it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const isValid = false;
     const action = EditTransaction(id, trans1.fromId, trans1.toId, fromId, toId, articleId, trans1.amount,
         amount, description, date, isValid);
+    action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
-        .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid}, trans2, trans3]);
+        .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime}, trans2, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
@@ -67,8 +70,10 @@ it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, 
 });
 
 it(`Transactions reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
-    expect(TransactionsReducer(startState, DeleteTransaction(2, null, null, null)))
-    .toEqual([trans1, trans3]);
+    let action = DeleteTransaction(2, null, null, null);
+    action.lastModificationTime = lastModificationTime;
+    expect(TransactionsReducer(startState, action))
+    .toEqual([trans1, {...trans2, isDeleted: true, lastModificationTime}, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
@@ -85,16 +90,15 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
     const isValid = true;
+    const id = 1;
     const action = AddTransaction(fromId, toId, articleId, amount, description, date);
+    action.lastModificationTime = lastModificationTime;
+    action.id = id;
     const newTransaction = TransactionsReducer(startState, action)[stateLength];
-    expect(newTransaction.id).toBeDefined();
-    let equalMap = {fromId, toId, articleId, amount, description, date, isValid};
-    for(let key in equalMap){
-        expect(newTransaction[key]).toEqual(equalMap[key]);
-    }
+    expect(newTransaction).toEqual({fromId, toId, articleId, amount, description, date, isValid, lastModificationTime, id});
 });
 
-it(`Transactions reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+it(`Transactions reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
     const newTransactions = [{
         id: 56,
         fromId: 34,
@@ -115,7 +119,7 @@ it(`Transactions reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         isValid: true
         }];
     
-    const action = Sinchronize(null, null, newTransactions, null, null);
+    const action = Synchronize(null, null, newTransactions, null, null);
     const newState = TransactionsReducer(startState, action);
     expect(newState).toBe(newTransactions);
 });

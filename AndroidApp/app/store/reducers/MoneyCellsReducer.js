@@ -9,7 +9,7 @@ export const MoneyCellsReducer = (state = [], action) => {
         case ActionName.EDIT_TRANSACTION:
             return state.map(e => MoneyCellReducer(e, action));
         case ActionName.DELETE_MONEY_CELL:
-            return state.filter(e => e.id !== action.id);
+            return state.map(e => MoneyCellReducer(e, action));
         case ActionName.ADD_MONEY_CELL:
             return [
                 ...state,
@@ -24,10 +24,11 @@ export const MoneyCellsReducer = (state = [], action) => {
                     status: action.status,
                     parentId: action.parentId,
                     isValid: action.isValid,
-                    roi: action.roi
+                    roi: action.roi,
+                    lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SINCHRONIZATION:
+        case ActionName.SYNCHRONIZATION:
             return action.moneyCells;
         default:
             return state;

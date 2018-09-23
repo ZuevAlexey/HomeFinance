@@ -8,5 +8,6 @@ export const ActionName = {
     ADD_TRANSACTION : 'addTransaction',
     EDIT_TRANSACTION : 'editTransaction',
     DELETE_TRANSACTION : 'deleteTransaction',
-    SINCHRONIZATION : 'synchronization'
+    SYNCHRONIZATION : 'synchronization',
+    EDIT_SYSTEM_DATA : 'editSystemData'
 };

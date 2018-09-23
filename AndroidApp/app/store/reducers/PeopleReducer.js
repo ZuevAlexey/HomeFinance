@@ -6,7 +6,7 @@ export const PeopleReducer = (state = [], action) => {
         case ActionName.EDIT_PERSON:
             return state.map(e => PersonReducer(e, action));
         case ActionName.DELETE_PERSON:
-            return state.filter(e => e.id !== action.id);
+            return state.map(e => PersonReducer(e, action));
         case ActionName.ADD_PERSON:
             return [
                 ...state,
@@ -14,10 +14,11 @@ export const PeopleReducer = (state = [], action) => {
                     id: action.id,
                     firstName: action.firstName,
                     lastName: action.lastName,
-                    sex: action.sex
+                    sex: action.sex,
+                    lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SINCHRONIZATION:
+        case ActionName.SYNCHRONIZATION:
             return action.people;
         default:
             return state;

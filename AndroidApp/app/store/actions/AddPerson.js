@@ -7,6 +7,7 @@ export const AddPerson = (lastName, firstName, sex) => {
         id : uuid(),
         lastName,
         firstName,
-        sex
+        sex,
+        lastModificationTime: new Date()
     }
 }

@@ -11,7 +11,14 @@ export const TransactionReducer = (state = {}, action) => {
                 amount: action.newAmount,
                 description: action.description,
                 date: action.date,
-                isValid: action.isValid
+                isValid: action.isValid,
+                lastModificationTime: action.lastModificationTime
+            } : state;
+        case ActionName.DELETE_TRANSACTION:
+            return action.id === state.id ? {
+                ...state,
+                isDeleted : true,
+                lastModificationTime: action.lastModificationTime
             } : state;
         default:
             return state;
