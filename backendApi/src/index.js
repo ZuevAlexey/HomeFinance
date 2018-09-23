@@ -12,6 +12,10 @@ app.get(routing.api.getState, (req, res) => {
     res.json(store.getState());
 });
 
+app.get(routing.api.test, (req, res) => {
+    res.json({isSuccess: true});
+});
+
 app.post(routing.api.action, (req, res) => {
     let action = req.body;
     store.dispatch(action);
