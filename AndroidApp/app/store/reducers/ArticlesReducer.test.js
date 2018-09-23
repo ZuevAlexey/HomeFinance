@@ -1,6 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {ArticlesReducer} from './articlesReducer';
-import {Sinchronize} from '../actions/sinchronize';
+import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const startState = [
@@ -10,9 +10,9 @@ const startState = [
     }
 ];
 
-AssertUnprocessedActions([ActionName.SINCHRONIZATION], 'Articles', ArticlesReducer);
+AssertUnprocessedActions([ActionName.SYNCHRONIZATION], 'Articles', ArticlesReducer);
 
-it(`Articles reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+it(`Articles reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
     const newArticles = [{
         id: 100,
         name: 'З/п'
@@ -21,7 +21,7 @@ it(`Articles reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         name: 'Комуналка'
     }];
 
-    const action = Sinchronize(null, null, null, newArticles, null);
+    const action = Synchronize(null, null, null, newArticles, null);
     const newState = ArticlesReducer(startState, action);
     expect(newState).toBe(newArticles);
 });

@@ -125,6 +125,7 @@ module.exports = {
     "transactions": [],
     "articles": [],
     "systemData": {
-        "lastSinchronizationTime": "2018-10-09T12:20:00.000Z"
+        "lastSinchronizationTime": "2018-10-09T12:20:00.000Z",
+        "serverAddress" : "http://192.168.1.60:4698"
     }
 }

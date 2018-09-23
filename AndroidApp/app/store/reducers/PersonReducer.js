@@ -10,6 +10,12 @@ export const PersonReducer = (state = {}, action) => {
                 sex: action.sex,
                 lastModificationTime: action.lastModificationTime
             } : state;
+        case ActionName.DELETE_PERSON:
+            return action.id === state.id ? {
+                ...state,
+                isDeleted: true,
+                lastModificationTime: action.lastModificationTime
+            } : state;
         default:
             return state;
     }

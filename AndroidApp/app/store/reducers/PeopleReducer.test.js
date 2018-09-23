@@ -4,7 +4,7 @@ import {PeopleReducer} from "./peopleReducer";
 import {EditPerson} from '../actions/editPerson';
 import {DeletePerson} from '../actions/deletePerson';
 import {AddPerson} from '../actions/addPerson';
-import {Sinchronize} from '../actions/sinchronize';
+import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const petya = {
@@ -31,16 +31,17 @@ const processedActions = [
     ActionName.EDIT_PERSON,
     ActionName.ADD_PERSON,
     ActionName.DELETE_PERSON,
-    ActionName.SINCHRONIZATION
+    ActionName.SYNCHRONIZATION
 ];
 AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
+
+const lastModificationTime = new Date();
 
 it(`People reducer process action ${ActionName.EDIT_PERSON}`, () => {
     const id = 1;
     const lastName = 'Ivanov';
     const firstName = 'Vasya';
     const sex = Sex.FEMALE;
-    const lastModificationTime = new Date();
     let action = EditPerson(id, lastName, firstName, sex);
     action.lastModificationTime = lastModificationTime;
     expect(PeopleReducer(startState, action))
@@ -53,8 +54,10 @@ it(`People reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
 });
 
 it(`People reducer process action ${ActionName.DELETE_PERSON}`, () => {
-    expect(PeopleReducer(startState, DeletePerson(3)))
-    .toEqual([petya, vasya]);
+    let action = DeletePerson(3);
+    action.lastModificationTime = lastModificationTime;
+    expect(PeopleReducer(startState, action))
+    .toEqual([petya, vasya, {...tanya, isDeleted: true, lastModificationTime}]);
 });
 
 it(`People reducer don\'t process action ${ActionName.DELETE_PERSON}`, () => {
@@ -76,7 +79,7 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id});
 });
 
-it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+it(`People reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
     const newPeople = [{
         id: 51,
         lastName: 'Ivanov',
@@ -90,7 +93,7 @@ it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         sex: Sex.FEMALE 
     }];
 
-    const action = Sinchronize(newPeople, null, null, null, null);
+    const action = Synchronize(newPeople, null, null, null, null);
     const newState = PeopleReducer(startState, action);
     expect(newState).toBe(newPeople);
 });

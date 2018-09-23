@@ -6,7 +6,7 @@ export const TransactionsReducer = (state = [], action) => {
         case ActionName.EDIT_TRANSACTION:
             return state.map(e => TransactionReducer(e, action));
         case ActionName.DELETE_TRANSACTION:
-            return state.filter(e => e.id !== action.id);
+            return state.map(e => TransactionReducer(e, action));
         case ActionName.ADD_TRANSACTION:
             return [
                 ...state,
@@ -22,7 +22,7 @@ export const TransactionsReducer = (state = [], action) => {
                     lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SINCHRONIZATION:
+        case ActionName.SYNCHRONIZATION:
             return action.transactions;
         default:
             return state;

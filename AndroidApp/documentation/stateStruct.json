@@ -4,7 +4,9 @@
             "id": "Guid",
             "lastName": "string",
             "firstName": "string",
-            "sex": "SEX" 
+            "sex": "SEX",
+            "lastModificationTime": "DateTime",
+            "isDeleted": "boolean"
         }
     ],
     "moneyCells":[
@@ -19,7 +21,9 @@
             "status": "MoneyCellStatus",
             "parentId": "Guid",
             "isValid": "bool",
-            "roi": "number"
+            "roi": "number",
+            "lastModificationTime": "DateTime",
+            "isDeleted": "boolean"
         }
     ],
     "transactions": [
@@ -31,13 +35,17 @@
             "amount": "number",
             "date": "DateTime",
             "description": "string",
-            "isValid": "bool"
+            "isValid": "bool",
+            "lastModificationTime": "DateTime",
+            "isDeleted": "boolean"
         }
     ],
     "articles": [
         {
             "id": "number",
-            "name": "string"
+            "name": "string",
+            "lastModificationTime": "DateTime",
+            "isDeleted": "boolean"
         }
     ],
     "systemData": {

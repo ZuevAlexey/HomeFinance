@@ -1,8 +1,8 @@
 import {ActionName} from '../../constants/actionName';
 
-export const Sinchronize = (people, moneyCells, transactions, articles, lastSinchronizationTime) => {
+export const Synchronize = (people, moneyCells, transactions, articles, lastSinchronizationTime) => {
     return {
-        type : ActionName.SINCHRONIZATION,
+        type : ActionName.SYNCHRONIZATION,
         people,
         moneyCells,
         transactions,

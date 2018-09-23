@@ -9,6 +9,12 @@ export const MoneyCellReducer = (state = {}, action) => {
                 status: action.status,
                 lastModificationTime: action.lastModificationTime
             } : state;
+        case ActionName.DELETE_MONEY_CELL:
+            return action.id === state.id ? {
+                ...state,
+                isDeleted: true,
+                lastModificationTime: action.lastModificationTime
+            } : state;
         case ActionName.ADD_TRANSACTION:
             return processAddTransaction(state, action);
         case ActionName.DELETE_TRANSACTION:

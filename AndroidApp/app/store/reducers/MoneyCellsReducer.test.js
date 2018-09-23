@@ -5,7 +5,7 @@ import {MoneyCellsReducer} from "./moneyCellsReducer";
 import {EditMoneyCell} from '../actions/editMoneyCell';
 import {DeleteMoneyCell} from '../actions/deleteMoneyCell';
 import {AddMoneyCell} from '../actions/addMoneyCell';
-import {Sinchronize} from '../actions/sinchronize';
+import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 import {AddTransaction} from '../actions/addTransaction';
 import {DeleteTransaction} from "../actions/deleteTransaction";
@@ -53,7 +53,7 @@ const processedActions = [
     ActionName.ADD_TRANSACTION,
     ActionName.DELETE_TRANSACTION, 
     ActionName.EDIT_TRANSACTION,
-    ActionName.SINCHRONIZATION
+    ActionName.SYNCHRONIZATION
 ];
 
 const lastModificationTime = new Date();
@@ -75,8 +75,10 @@ it(`MoneyCells reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () 
 });
 
 it(`MoneyCells reducer process action ${ActionName.DELETE_MONEY_CELL}`, () => {
-    expect(MoneyCellsReducer(startState, DeleteMoneyCell(1)))
-        .toEqual([card, deposit]);
+    let action = DeleteMoneyCell(1);
+    action.lastModificationTime = lastModificationTime;
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual([{...cash, isDeleted: true, lastModificationTime}, card, deposit]);
 });
 
 it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_MONEY_CELL}`, () => {
@@ -105,7 +107,7 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id});
 });
 
-it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
+it(`MoneyCells reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
     const newMoneyCells = [{
         id: 145,
         ownerId: 13,
@@ -128,7 +130,7 @@ it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
         parentId: null
     }];
     
-    const action = Sinchronize(null, newMoneyCells, null, null, null);
+    const action = Synchronize(null, newMoneyCells, null, null, null);
     const newState = MoneyCellsReducer(startState, action);
     expect(newState).toBe(newMoneyCells);
 });

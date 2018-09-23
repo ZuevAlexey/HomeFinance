@@ -7,6 +7,7 @@ import {EditMoneyCell} from '../actions/editMoneyCell';
 import {AddTransaction} from '../actions/addTransaction';
 import {DeleteTransaction} from "../actions/deleteTransaction";
 import {EditTransaction} from "../actions/editTransaction";
+import {DeleteMoneyCell} from "../actions/DeleteMoneyCell";
 
 const startState = {
     id: 1,
@@ -25,7 +26,8 @@ const processedActions = [
     ActionName.EDIT_MONEY_CELL,
     ActionName.ADD_TRANSACTION,
     ActionName.DELETE_TRANSACTION, 
-    ActionName.EDIT_TRANSACTION
+    ActionName.EDIT_TRANSACTION,
+    ActionName.DELETE_MONEY_CELL
 ];
 
 const lastModificationTime = new Date();
@@ -141,4 +143,16 @@ it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () 
         3000, 4500, null, null, null);
     expect(MoneyCellReducer(startState, action))
         .toBe(startState);
+});
+
+it(`MoneyCell reducer process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+    let action = DeleteMoneyCell(1);
+    action.lastModificationTime = lastModificationTime;
+    expect(MoneyCellReducer(startState, action))
+        .toEqual({...startState, isDeleted: true, lastModificationTime});
+});
+
+it(`MoneyCell reducer don\'t process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+    expect(MoneyCellReducer(startState, DeleteMoneyCell(32)))
+        .toEqual(startState);
 });
