@@ -55,13 +55,18 @@ const processedActions = [
     ActionName.EDIT_TRANSACTION,
     ActionName.SINCHRONIZATION
 ];
+
+const lastModificationTime = new Date();
+
 AssertUnprocessedActions(processedActions, 'MoneyCells', MoneyCellsReducer);
 
 it(`MoneyCells reducer process action ${ActionName.EDIT_MONEY_CELL}`, () => {
     const name = 'Зарплатная карточка';
     const status = MoneyCellStatus.ACTIVE;
-    expect(MoneyCellsReducer(startState, EditMoneyCell(2, name, status)))
-        .toEqual([cash, {...card, name, status}, deposit]);
+    let action = EditMoneyCell(2, name, status);
+    action.lastModificationTime = lastModificationTime;
+    expect(MoneyCellsReducer(startState, action))
+        .toEqual([cash, {...card, name, status, lastModificationTime}, deposit]);
 });
 
 it(`MoneyCells reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () => {
@@ -91,14 +96,13 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     const parentId = 67;
     const isValid = true;
     const roi = 10;
+    const id = 1;
 
     const action = AddMoneyCell(ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId);
+    action.id = 1;
+    action.lastModificationTime = lastModificationTime;
     const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
-    expect(newMoneyCell.id).toBeDefined();
-    const equalMap = {ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId};
-    for(let key in equalMap){
-        expect(newMoneyCell[key]).toEqual(equalMap[key]);
-    }
+    expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id});
 });
 
 it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
@@ -132,11 +136,12 @@ it(`MoneyCells reducer process action ${ActionName.SINCHRONIZATION}`, () => {
 it(`MoneyCells reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     const amount = 3000;
     const action = AddTransaction(cash.id, deposit.id, null, amount, null, null);
+    action.lastModificationTime = lastModificationTime;
     expect(MoneyCellsReducer(startState, action))
         .toEqual([
-            {...cash, amount: cash.amount - amount},
+            {...cash, amount: cash.amount - amount, lastModificationTime},
             card,
-            {...deposit, amount: deposit.amount + amount}
+            {...deposit, amount: deposit.amount + amount, lastModificationTime}
         ]);
 });
 
@@ -150,12 +155,13 @@ it(`MoneyCells reducer don\'t process action ${ActionName.ADD_TRANSACTION}`, () 
 it(`MoneyCells reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
     const amount = 3000;
     const action = DeleteTransaction(78, cash.id, deposit.id, amount);
+    action.lastModificationTime = lastModificationTime;
     expect(MoneyCellsReducer(startState, action))
         .toEqual([
-            {...cash, amount: cash.amount + amount},
+            {...cash, amount: cash.amount + amount, lastModificationTime},
             card,
-            {...deposit, amount: deposit.amount - amount}
-        ]);
+            {...deposit, amount: deposit.amount - amount, lastModificationTime}
+]);
 });
 
 it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
@@ -165,17 +171,16 @@ it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, 
 });
 
 it(`MoneyCell reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
-    const transactionId = 324;
     const oldAmount = 3000;
     const newAmount = 1300;
-    
     const action = EditTransaction(null, cash.id, deposit.id, card.id, cash.id, null,
         oldAmount, newAmount, null, null, null);
+    action.lastModificationTime = lastModificationTime;
     expect(MoneyCellsReducer(startState, action))
         .toEqual([
-            {...cash, amount: cash.amount + oldAmount + newAmount},
-            {...card, amount: card.amount - newAmount},
-            {...deposit, amount: deposit.amount - oldAmount}
+            {...cash, amount: cash.amount + oldAmount + newAmount, lastModificationTime},
+            {...card, amount: card.amount - newAmount, lastModificationTime},
+            {...deposit, amount: deposit.amount - oldAmount, lastModificationTime}
         ]);
 });
 

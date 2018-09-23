@@ -11,6 +11,7 @@ export const AddTransaction = (fromId, toId, articleId, amount, description, dat
         amount,
         description,
         date,
-        isValid: true
+        isValid: true,
+        lastModificationTime: new Date()
     }
 }

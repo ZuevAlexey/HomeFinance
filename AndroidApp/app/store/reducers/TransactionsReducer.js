@@ -18,7 +18,8 @@ export const TransactionsReducer = (state = [], action) => {
                     amount: action.amount,
                     date: action.date,
                     description: action.description,
-                    isValid: action.isValid
+                    isValid: action.isValid,
+                    lastModificationTime: action.lastModificationTime
                 }
             ];
         case ActionName.SINCHRONIZATION:

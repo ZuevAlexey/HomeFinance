@@ -6,6 +6,7 @@ export const DeleteTransaction = (id, fromId, toId, amount) => {
         id,
         fromId,
         toId,
-        amount
+        amount,
+        lastModificationTime: new Date()
     }
 }

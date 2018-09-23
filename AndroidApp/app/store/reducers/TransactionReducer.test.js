@@ -25,10 +25,12 @@ it(`Transaction reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
     const isValid = false;
+    const lastModificationTime = new Date();
     const action = EditTransaction(id, startState.fromId, startState.toId, fromId, toId, articleId,
         startState.amount, amount, description, date, isValid);
+    action.lastModificationTime = lastModificationTime;
     expect(TransactionReducer(startState, action))
-    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid});
+    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime});
 });
 
 it(`Transaction reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {

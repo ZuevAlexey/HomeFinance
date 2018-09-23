@@ -5,6 +5,7 @@ export const EditMoneyCell = (id, name, status) => {
         type : ActionName.EDIT_MONEY_CELL,
         id,
         name,
-        status
+        status,
+        lastModificationTime: new Date()
     }
 }

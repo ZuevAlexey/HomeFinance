@@ -13,6 +13,7 @@ export const EditTransaction = (id, oldFromId, oldToId, newFromId, newToId, arti
         newAmount,
         description,
         date,
-        isValid
+        isValid,
+        lastModificationTime: new Date()
     };
 }

@@ -4,7 +4,7 @@ export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
         case ActionName.SINCHRONIZATION:
             return {
-                lastSinchronizationTime : action.sinchronizationDate
+                lastSinchronizationTime : action.lastSinchronizationTime
             };
         default:
             return state;

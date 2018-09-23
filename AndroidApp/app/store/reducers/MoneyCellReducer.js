@@ -6,7 +6,8 @@ export const MoneyCellReducer = (state = {}, action) => {
             return action.id === state.id ? {
                 ...state,
                 name: action.name,
-                status: action.status
+                status: action.status,
+                lastModificationTime: action.lastModificationTime
             } : state;
         case ActionName.ADD_TRANSACTION:
             return processAddTransaction(state, action);
@@ -26,7 +27,8 @@ const processTransaction = (state, action, shouldProcess, amountProcessor) => {
 
     return {
         ...state,
-        amount: amountProcessor(state, action)
+        amount: amountProcessor(state, action),
+        lastModificationTime: action.lastModificationTime
     }
 }
 

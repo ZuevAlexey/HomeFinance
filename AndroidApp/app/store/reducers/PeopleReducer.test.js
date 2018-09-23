@@ -40,8 +40,11 @@ it(`People reducer process action ${ActionName.EDIT_PERSON}`, () => {
     const lastName = 'Ivanov';
     const firstName = 'Vasya';
     const sex = Sex.FEMALE;
-    expect(PeopleReducer(startState, EditPerson(id, lastName, firstName, sex)))
-        .toEqual([{id, lastName, firstName, sex}, vasya, tanya]);
+    const lastModificationTime = new Date();
+    let action = EditPerson(id, lastName, firstName, sex);
+    action.lastModificationTime = lastModificationTime;
+    expect(PeopleReducer(startState, action))
+        .toEqual([{id, lastName, firstName, sex, lastModificationTime}, vasya, tanya]);
 });
 
 it(`People reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
@@ -64,12 +67,13 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     const lastName = 'Sinicina';
     const firstName = 'Sveta';
     const sex = Sex.FEMALE;
-    const newPerson = PeopleReducer(startState, AddPerson(lastName, firstName, sex))[stateLength];
-    expect(newPerson.id).toBeDefined();
-    const equalMap = {lastName, firstName, sex};
-    for(let key in equalMap){
-        expect(newPerson[key]).toEqual(equalMap[key]);
-    }
+    const lastModificationTime = new Date();
+    const id = 1;
+    let action = AddPerson(lastName, firstName, sex);
+    action.lastModificationTime = lastModificationTime;
+    action.id = id;
+    const newPerson = PeopleReducer(startState, action)[stateLength];
+    expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id});
 });
 
 it(`People reducer process action ${ActionName.SINCHRONIZATION}`, () => {
