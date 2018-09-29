@@ -4,7 +4,6 @@ export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
         case ActionName.EDIT_SYSTEM_DATA:
             return {
-                ...state,
                 serverAddress: action.serverAddress,
                 lastSynchronizationTime: action.lastSynchronizationTime
             }
