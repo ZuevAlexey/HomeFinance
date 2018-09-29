@@ -12,7 +12,7 @@ export const ActionName = {
     MARK_DELETE_TRANSACTION : 'markDeleteTransaction',
     REMOVE_TRANSACTIONS : 'removeTransactions',
     EDIT_SYSTEM_DATA : 'editSystemData',
-    ADD_ARTICLE : 'addArticle',
+    ADD_ARTICLES : 'addArticles',
     EDIT_ARTICLE : 'editArticle',
     REMOVE_ARTICLES : 'deleteArticles'
 };

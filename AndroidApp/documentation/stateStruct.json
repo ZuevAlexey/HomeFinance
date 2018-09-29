@@ -46,10 +46,7 @@
     "articles": [
         {
             "id": "number",
-            "name": "string",
-            "lastModificationTime": "DateTime",
-            "creationTime": "DateTime",
-            "isDeleted": "boolean"
+            "name": "string"
         }
     ],
     "systemData": {
