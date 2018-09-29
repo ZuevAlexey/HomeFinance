@@ -4,6 +4,7 @@ import {EditTransaction} from '../actions/editTransaction';
 import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
+import {RemoveTransactions} from "../actions/removeTransactions";
 
 const trans1 = {
     id: 1,
@@ -41,7 +42,7 @@ const processedActions = [
     ActionName.ADD_TRANSACTION,
     ActionName.MARK_DELETE_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
-    ActionName.SYNCHRONIZATION
+    ActionName.REMOVE_TRANSACTIONS
 ];
 AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
 
@@ -94,4 +95,16 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     action.id = id;
     const newTransaction = TransactionsReducer(startState, action)[stateLength];
     expect(newTransaction).toEqual({fromId, toId, articleId, amount, description, date, isValid, lastModificationTime, id});
+});
+
+
+it(`Transactions reducer process action ${ActionName.REMOVE_TRANSACTIONS}`, () => {
+    let action = RemoveTransactions([1,3]);
+    expect(TransactionsReducer(startState, action))
+        .toEqual([trans2]);
+});
+
+it(`Transactions reducer don\'t process action ${ActionName.REMOVE_TRANSACTIONS}`, () => {
+    expect(TransactionsReducer(startState, RemoveTransactions([32])))
+        .toEqual(startState);
 });

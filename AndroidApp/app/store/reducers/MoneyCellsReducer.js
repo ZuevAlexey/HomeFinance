@@ -24,6 +24,8 @@ export const MoneyCellsReducer = (state = [], action) => {
                     lastModificationTime: action.lastModificationTime
                 }
             ];
+        case ActionName.REMOVE_MONEY_CELLS:
+            return state.filter(e => !action.ids.has(e.id));
         default:
             return state;
     }

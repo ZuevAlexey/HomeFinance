@@ -22,8 +22,8 @@ export const TransactionsReducer = (state = [], action) => {
                     lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SYNCHRONIZATION:
-            return action.transactions;
+        case ActionName.REMOVE_TRANSACTIONS:
+            return state.filter(e => !action.ids.has(e.id));
         default:
             return state;
     }

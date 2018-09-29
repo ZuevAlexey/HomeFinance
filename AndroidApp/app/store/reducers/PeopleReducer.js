@@ -18,8 +18,8 @@ export const PeopleReducer = (state = [], action) => {
                     lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SYNCHRONIZATION:
-            return action.people;
+        case ActionName.REMOVE_PEOPLE:
+            return state.filter(e => !action.ids.has(e.id));
         default:
             return state;
     }

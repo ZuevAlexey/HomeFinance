@@ -5,6 +5,7 @@ import {EditPerson} from '../actions/editPerson';
 import {MarkDeletePerson} from '../actions/markDeletePerson';
 import {AddPerson} from '../actions/addPerson';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
+import {RemovePeople} from "../actions/removePeople";
 
 const petya = {
     id: 1,
@@ -29,7 +30,8 @@ const startState = [petya, vasya, tanya];
 const processedActions = [
     ActionName.EDIT_PERSON,
     ActionName.ADD_PERSON,
-    ActionName.MARK_DELETE_PERSON
+    ActionName.MARK_DELETE_PERSON,
+    ActionName.REMOVE_PEOPLE
 ];
 AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
 
@@ -75,4 +77,15 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     action.id = id;
     const newPerson = PeopleReducer(startState, action)[stateLength];
     expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id});
+});
+
+it(`MoneyCells reducer process action ${ActionName.REMOVE_PEOPLE}`, () => {
+    let action = RemovePeople([1,3]);
+    expect(PeopleReducer(startState, action))
+        .toEqual([vasya]);
+});
+
+it(`MoneyCells reducer don\'t process action ${ActionName.REMOVE_PEOPLE}`, () => {
+    expect(PeopleReducer(startState, RemovePeople([32])))
+        .toEqual(startState);
 });
