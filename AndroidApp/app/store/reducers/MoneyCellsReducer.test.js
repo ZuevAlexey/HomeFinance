@@ -5,7 +5,6 @@ import {MoneyCellsReducer} from "./moneyCellsReducer";
 import {EditMoneyCell} from '../actions/editMoneyCell';
 import {DeleteMoneyCell} from '../actions/deleteMoneyCell';
 import {AddMoneyCell} from '../actions/addMoneyCell';
-import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 import {AddTransaction} from '../actions/addTransaction';
 import {DeleteTransaction} from "../actions/deleteTransaction";
@@ -52,8 +51,7 @@ const processedActions = [
     ActionName.MARK_DELETE_MONEY_CELL,
     ActionName.ADD_TRANSACTION,
     ActionName.MARK_DELETE_TRANSACTION,
-    ActionName.EDIT_TRANSACTION,
-    ActionName.SYNCHRONIZATION
+    ActionName.EDIT_TRANSACTION
 ];
 
 const lastModificationTime = new Date();
@@ -105,34 +103,6 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     action.lastModificationTime = lastModificationTime;
     const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
     expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id});
-});
-
-it(`MoneyCells reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
-    const newMoneyCells = [{
-        id: 145,
-        ownerId: 13,
-        type: MoneyCellType.CASH,
-        amount: 1454,
-        startDate: new Date(2018, 8, 0),
-        endData: new Date(2018, 8, 0),
-        name: 'Кошелек',
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null
-        }, {
-        id: 16,
-        ownerId: 45,
-        type: MoneyCellType.CASH,
-        amount: 23423,
-        startDate: new Date(2018, 8, 0),
-        endData: new Date(2018, 8, 0),
-        name: 'Кошелек',
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null
-    }];
-    
-    const action = Synchronize(null, newMoneyCells, null, null, null);
-    const newState = MoneyCellsReducer(startState, action);
-    expect(newState).toBe(newMoneyCells);
 });
 
 it(`MoneyCells reducer process action ${ActionName.ADD_TRANSACTION}`, () => {

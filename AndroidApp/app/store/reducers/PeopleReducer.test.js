@@ -4,7 +4,6 @@ import {PeopleReducer} from "./peopleReducer";
 import {EditPerson} from '../actions/editPerson';
 import {DeletePerson} from '../actions/deletePerson';
 import {AddPerson} from '../actions/addPerson';
-import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const petya = {
@@ -30,8 +29,7 @@ const startState = [petya, vasya, tanya];
 const processedActions = [
     ActionName.EDIT_PERSON,
     ActionName.ADD_PERSON,
-    ActionName.MARK_DELETE_PERSON,
-    ActionName.SYNCHRONIZATION
+    ActionName.MARK_DELETE_PERSON
 ];
 AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
 
@@ -77,23 +75,4 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     action.id = id;
     const newPerson = PeopleReducer(startState, action)[stateLength];
     expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id});
-});
-
-it(`People reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
-    const newPeople = [{
-        id: 51,
-        lastName: 'Ivanov',
-        firstName: 'Ivan',
-        sex: Sex.MALE 
-    },
-    {
-        id: 5,
-        lastName: 'Stepanova',
-        firstName: 'Irina',
-        sex: Sex.FEMALE 
-    }];
-
-    const action = Synchronize(newPeople, null, null, null, null);
-    const newState = PeopleReducer(startState, action);
-    expect(newState).toBe(newPeople);
 });

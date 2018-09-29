@@ -3,7 +3,6 @@ import {TransactionsReducer} from "./transactionsReducer";
 import {EditTransaction} from '../actions/editTransaction';
 import {DeleteTransaction} from '../actions/deleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
-import {Synchronize} from '../actions/synchronize';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 const trans1 = {
@@ -96,30 +95,4 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     action.id = id;
     const newTransaction = TransactionsReducer(startState, action)[stateLength];
     expect(newTransaction).toEqual({fromId, toId, articleId, amount, description, date, isValid, lastModificationTime, id});
-});
-
-it(`Transactions reducer process action ${ActionName.SYNCHRONIZATION}`, () => {
-    const newTransactions = [{
-        id: 56,
-        fromId: 34,
-        toId: 87,
-        articleId: 2345,
-        amount: 1807,
-        date: new Date(2018, 8, 2, 1, 55),
-        description: "Премия",
-        isValid: true
-        }, {
-        id: 25,
-        fromId: 45,
-        toId: 2,
-        articleId: 1004,
-        amount: 890,
-        date: new Date(2018, 9, 8, 14, 55),
-        description: "Телефон",
-        isValid: true
-        }];
-    
-    const action = Synchronize(null, null, newTransactions, null, null);
-    const newState = TransactionsReducer(startState, action);
-    expect(newState).toBe(newTransactions);
 });
