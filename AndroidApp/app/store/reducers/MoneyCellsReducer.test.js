@@ -3,7 +3,7 @@ import {MoneyCellType} from "../../constants/moneyCellType";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {MoneyCellsReducer} from "./moneyCellsReducer";
 import {EditMoneyCell} from '../actions/editMoneyCell';
-import {DeleteMoneyCell} from '../actions/deleteMoneyCell';
+import {MarkDeleteMoneyCell} from '../actions/markDeleteMoneyCell';
 import {AddMoneyCell} from '../actions/addMoneyCell';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
@@ -65,14 +65,14 @@ it(`MoneyCells reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () 
 });
 
 it(`MoneyCells reducer process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
-    let action = DeleteMoneyCell(1);
+    let action = MarkDeleteMoneyCell(1);
     action.lastModificationTime = lastModificationTime;
     expect(MoneyCellsReducer(startState, action))
         .toEqual([{...cash, isDeleted: true, lastModificationTime}, card, deposit]);
 });
 
 it(`MoneyCells reducer don\'t process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
-    expect(MoneyCellsReducer(startState, DeleteMoneyCell(32)))
+    expect(MoneyCellsReducer(startState, MarkDeleteMoneyCell(32)))
         .toEqual(startState);
 });
 

@@ -2,7 +2,7 @@ import {ActionName} from "../../constants/actionName";
 import {Sex} from "../../constants/sex";
 import {PeopleReducer} from "./peopleReducer";
 import {EditPerson} from '../actions/editPerson';
-import {DeletePerson} from '../actions/deletePerson';
+import {MarkDeletePerson} from '../actions/markDeletePerson';
 import {AddPerson} from '../actions/addPerson';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
@@ -52,14 +52,14 @@ it(`People reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
 });
 
 it(`People reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {
-    let action = DeletePerson(3);
+    let action = MarkDeletePerson(3);
     action.lastModificationTime = lastModificationTime;
     expect(PeopleReducer(startState, action))
     .toEqual([petya, vasya, {...tanya, isDeleted: true, lastModificationTime}]);
 });
 
 it(`People reducer don\'t process action ${ActionName.MARK_DELETE_PERSON}`, () => {
-    expect(PeopleReducer(startState, DeletePerson(5)))
+    expect(PeopleReducer(startState, MarkDeletePerson(5)))
     .toEqual(startState);
 });
 

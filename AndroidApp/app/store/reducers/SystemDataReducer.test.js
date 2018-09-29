@@ -1,6 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {SystemDataReducer} from './systemDataReducer';
-import {EditSystemData} from '../actions/EditSystemData';
+import {EditSystemData} from '../actions/editSystemData';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
 let startState = {

@@ -3,7 +3,7 @@ import {Sex} from "../../constants/sex";
 import {PersonReducer} from "./personReducer";
 import {EditPerson} from '../actions/editPerson';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {DeletePerson} from "../actions/DeletePerson";
+import {MarkDeletePerson} from "../actions/markDeletePerson";
 
 const startState = {
     id: 1,
@@ -33,13 +33,13 @@ it(`Person reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
 });
 
 it(`Person reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {
-    let action = DeletePerson(1);
+    let action = MarkDeletePerson(1);
     action.lastModificationTime = lastModificationTime;
     expect(PersonReducer(startState, action))
         .toEqual({...startState, isDeleted: true, lastModificationTime});
 });
 
 it(`Person reducer don\'t process action ${ActionName.MARK_DELETE_PERSON}`, () => {
-    expect(PersonReducer(startState, DeletePerson(5)))
+    expect(PersonReducer(startState, MarkDeletePerson(5)))
         .toEqual(startState);
 });

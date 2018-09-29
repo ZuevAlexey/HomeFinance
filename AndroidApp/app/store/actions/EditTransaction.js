@@ -1,16 +1,13 @@
 import {ActionName} from '../../constants/actionName';
 
-export const EditTransaction = (id, oldFromId, oldToId, newFromId, newToId, articleId, oldAmount, newAmount, description, date, isValid) => {
+export const EditTransaction = (id, fromId, toId, articleId, amount, description, date, isValid) => {
     return {
         type : ActionName.EDIT_TRANSACTION,
         id,
-        oldFromId,
-        oldToId,
-        newFromId,
-        newToId,
+        fromId,
+        toId,
         articleId,
-        oldAmount,
-        newAmount,
+        amount,
         description,
         date,
         isValid,

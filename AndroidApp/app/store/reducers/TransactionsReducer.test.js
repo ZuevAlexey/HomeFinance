@@ -1,7 +1,7 @@
 import {ActionName} from "../../constants/actionName";
 import {TransactionsReducer} from "./transactionsReducer";
 import {EditTransaction} from '../actions/editTransaction';
-import {DeleteTransaction} from '../actions/deleteTransaction';
+import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
@@ -56,8 +56,7 @@ it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
     const isValid = false;
-    const action = EditTransaction(id, trans1.fromId, trans1.toId, fromId, toId, articleId, trans1.amount,
-        amount, description, date, isValid);
+    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
         .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime}, trans2, trans3]);
@@ -69,14 +68,14 @@ it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, 
 });
 
 it(`Transactions reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
-    let action = DeleteTransaction(2, null, null, null);
+    let action = MarkDeleteTransaction(2);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
     .toEqual([trans1, {...trans2, isDeleted: true, lastModificationTime}, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
-    expect(TransactionsReducer(startState, DeleteTransaction(5, null, null, null)))
+    expect(TransactionsReducer(startState, MarkDeleteTransaction(5)))
     .toEqual(startState);
 });
 

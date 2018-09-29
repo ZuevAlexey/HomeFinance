@@ -4,7 +4,7 @@ import {MoneyCellType} from "../../constants/moneyCellType";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {MoneyCellReducer} from "./moneyCellReducer";
 import {EditMoneyCell} from '../actions/editMoneyCell';
-import {DeleteMoneyCell} from "../actions/DeleteMoneyCell";
+import {MarkDeleteMoneyCell} from "../actions/markDeleteMoneyCell";
 
 const startState = {
     id: 1,
@@ -42,13 +42,13 @@ it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () =
 });
 
 it(`MoneyCell reducer process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
-    let action = DeleteMoneyCell(1);
+    let action = MarkDeleteMoneyCell(1);
     action.lastModificationTime = lastModificationTime;
     expect(MoneyCellReducer(startState, action))
         .toEqual({...startState, isDeleted: true, lastModificationTime});
 });
 
 it(`MoneyCell reducer don\'t process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
-    expect(MoneyCellReducer(startState, DeleteMoneyCell(32)))
+    expect(MoneyCellReducer(startState, MarkDeleteMoneyCell(32)))
         .toEqual(startState);
 });
