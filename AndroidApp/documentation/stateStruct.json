@@ -6,6 +6,7 @@
             "firstName": "string",
             "sex": "SEX",
             "lastModificationTime": "DateTime",
+            "creationTime": "DateTime",
             "isDeleted": "boolean"
         }
     ],
@@ -23,6 +24,7 @@
             "isValid": "bool",
             "roi": "number",
             "lastModificationTime": "DateTime",
+            "creationTime": "DateTime",
             "isDeleted": "boolean"
         }
     ],
@@ -37,6 +39,7 @@
             "description": "string",
             "isValid": "bool",
             "lastModificationTime": "DateTime",
+            "creationTime": "DateTime",
             "isDeleted": "boolean"
         }
     ],
@@ -45,6 +48,7 @@
             "id": "number",
             "name": "string",
             "lastModificationTime": "DateTime",
+            "creationTime": "DateTime",
             "isDeleted": "boolean"
         }
     ],
