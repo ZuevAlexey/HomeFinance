@@ -5,7 +5,7 @@ export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_TRANSACTION:
             return state.map(e => TransactionReducer(e, action));
-        case ActionName.DELETE_TRANSACTION:
+        case ActionName.MARK_DELETE_TRANSACTION:
             return state.map(e => TransactionReducer(e, action));
         case ActionName.ADD_TRANSACTION:
             return [

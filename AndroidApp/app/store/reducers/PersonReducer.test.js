@@ -12,7 +12,7 @@ const startState = {
     sex: Sex.MALE
 }
 
-AssertUnprocessedActions([ActionName.EDIT_PERSON, ActionName.DELETE_PERSON], 'Person', PersonReducer);
+AssertUnprocessedActions([ActionName.EDIT_PERSON, ActionName.MARK_DELETE_PERSON], 'Person', PersonReducer);
 
 const lastModificationTime = new Date();
 
@@ -32,14 +32,14 @@ it(`Person reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
     .toBe(startState);
 });
 
-it(`Person reducer process action ${ActionName.DELETE_PERSON}`, () => {
+it(`Person reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     let action = DeletePerson(1);
     action.lastModificationTime = lastModificationTime;
     expect(PersonReducer(startState, action))
         .toEqual({...startState, isDeleted: true, lastModificationTime});
 });
 
-it(`Person reducer don\'t process action ${ActionName.DELETE_PERSON}`, () => {
+it(`Person reducer don\'t process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     expect(PersonReducer(startState, DeletePerson(5)))
         .toEqual(startState);
 });

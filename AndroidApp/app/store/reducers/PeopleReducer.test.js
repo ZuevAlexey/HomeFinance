@@ -30,7 +30,7 @@ const startState = [petya, vasya, tanya];
 const processedActions = [
     ActionName.EDIT_PERSON,
     ActionName.ADD_PERSON,
-    ActionName.DELETE_PERSON,
+    ActionName.MARK_DELETE_PERSON,
     ActionName.SYNCHRONIZATION
 ];
 AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
@@ -53,14 +53,14 @@ it(`People reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
     .toEqual(startState);
 });
 
-it(`People reducer process action ${ActionName.DELETE_PERSON}`, () => {
+it(`People reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     let action = DeletePerson(3);
     action.lastModificationTime = lastModificationTime;
     expect(PeopleReducer(startState, action))
     .toEqual([petya, vasya, {...tanya, isDeleted: true, lastModificationTime}]);
 });
 
-it(`People reducer don\'t process action ${ActionName.DELETE_PERSON}`, () => {
+it(`People reducer don\'t process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     expect(PeopleReducer(startState, DeletePerson(5)))
     .toEqual(startState);
 });

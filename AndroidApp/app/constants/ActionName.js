@@ -1,13 +1,18 @@
 export const ActionName = {
     ADD_PERSON : 'addPerson',
     EDIT_PERSON : 'editPerson',
-    DELETE_PERSON : 'deletePerson',
+    MARK_DELETE_PERSON : 'markDeletePerson',
+    REMOVE_PERSON : 'deletePerson',
     ADD_MONEY_CELL : 'addMoneyCell',
     EDIT_MONEY_CELL : 'editMoneyCell',
-    DELETE_MONEY_CELL : 'deleteMoneyCell',
+    MARK_DELETE_MONEY_CELL : 'markDeleteMoneyCell',
+    REMOVE_MONEY_CELL : 'removeMoneyCell',
     ADD_TRANSACTION : 'addTransaction',
     EDIT_TRANSACTION : 'editTransaction',
-    DELETE_TRANSACTION : 'deleteTransaction',
-    SYNCHRONIZATION : 'synchronization',
-    EDIT_SYSTEM_DATA : 'editSystemData'
+    MARK_DELETE_TRANSACTION : 'markDeleteTransaction',
+    REMOVE_TRANSACTION : 'removeTransaction',
+    EDIT_SYSTEM_DATA : 'editSystemData',
+    ADD_ARTICLE : 'addArticle',
+    EDIT_ARTICLE : 'editArticle',
+    REMOVE_ARTICLE : 'deleteArticle'
 };

@@ -2,7 +2,7 @@ import {ActionName} from '../../constants/actionName';
 
 export const DeleteTransaction = (id, fromId, toId, amount) => {
     return {
-        type : ActionName.DELETE_TRANSACTION,
+        type : ActionName.MARK_DELETE_TRANSACTION,
         id,
         fromId,
         toId,

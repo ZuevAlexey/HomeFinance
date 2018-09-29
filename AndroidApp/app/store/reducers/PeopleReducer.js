@@ -5,7 +5,7 @@ export const PeopleReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_PERSON:
             return state.map(e => PersonReducer(e, action));
-        case ActionName.DELETE_PERSON:
+        case ActionName.MARK_DELETE_PERSON:
             return state.map(e => PersonReducer(e, action));
         case ActionName.ADD_PERSON:
             return [

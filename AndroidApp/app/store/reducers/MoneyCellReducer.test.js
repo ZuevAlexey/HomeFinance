@@ -25,9 +25,10 @@ const startState = {
 const processedActions = [
     ActionName.EDIT_MONEY_CELL,
     ActionName.ADD_TRANSACTION,
-    ActionName.DELETE_TRANSACTION, 
+    ActionName.MARK_DELETE_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
-    ActionName.DELETE_MONEY_CELL
+    ActionName.MARK_DELETE_MONEY_CELL,
+    ActionName.SYNCHRONIZATION
 ];
 
 const lastModificationTime = new Date();
@@ -65,7 +66,7 @@ it(`MoneyCell reducer don\'t process action ${ActionName.ADD_TRANSACTION}`, () =
         .toBe(startState);
 });
 
-it(`MoneyCell reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`MoneyCell reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     const amount = 3000;
     const revertWithdrawal = DeleteTransaction(78, startState.id, 34, amount);
     revertWithdrawal.lastModificationTime = lastModificationTime;
@@ -77,7 +78,7 @@ it(`MoneyCell reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
         .toEqual({...startState, amount: startState.amount - amount, lastModificationTime});
 });
 
-it(`MoneyCell reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`MoneyCell reducer don\'t process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     const action = DeleteTransaction(3, 2, null, 2700, null, null);
     expect(MoneyCellReducer(startState, action))
         .toBe(startState);
@@ -145,14 +146,14 @@ it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () 
         .toBe(startState);
 });
 
-it(`MoneyCell reducer process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+it(`MoneyCell reducer process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
     let action = DeleteMoneyCell(1);
     action.lastModificationTime = lastModificationTime;
     expect(MoneyCellReducer(startState, action))
         .toEqual({...startState, isDeleted: true, lastModificationTime});
 });
 
-it(`MoneyCell reducer don\'t process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+it(`MoneyCell reducer don\'t process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
     expect(MoneyCellReducer(startState, DeleteMoneyCell(32)))
         .toEqual(startState);
 });

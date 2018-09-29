@@ -49,9 +49,9 @@ const startState = [cash, card, deposit];
 const processedActions = [
     ActionName.EDIT_MONEY_CELL,
     ActionName.ADD_MONEY_CELL,
-    ActionName.DELETE_MONEY_CELL,
+    ActionName.MARK_DELETE_MONEY_CELL,
     ActionName.ADD_TRANSACTION,
-    ActionName.DELETE_TRANSACTION, 
+    ActionName.MARK_DELETE_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
     ActionName.SYNCHRONIZATION
 ];
@@ -74,14 +74,14 @@ it(`MoneyCells reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () 
         .toEqual(startState);
 });
 
-it(`MoneyCells reducer process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+it(`MoneyCells reducer process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
     let action = DeleteMoneyCell(1);
     action.lastModificationTime = lastModificationTime;
     expect(MoneyCellsReducer(startState, action))
         .toEqual([{...cash, isDeleted: true, lastModificationTime}, card, deposit]);
 });
 
-it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_MONEY_CELL}`, () => {
+it(`MoneyCells reducer don\'t process action ${ActionName.MARK_DELETE_MONEY_CELL}`, () => {
     expect(MoneyCellsReducer(startState, DeleteMoneyCell(32)))
         .toEqual(startState);
 });
@@ -154,7 +154,7 @@ it(`MoneyCells reducer don\'t process action ${ActionName.ADD_TRANSACTION}`, () 
         .toEqual(startState);
 });
 
-it(`MoneyCells reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`MoneyCells reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     const amount = 3000;
     const action = DeleteTransaction(78, cash.id, deposit.id, amount);
     action.lastModificationTime = lastModificationTime;
@@ -166,7 +166,7 @@ it(`MoneyCells reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
 ]);
 });
 
-it(`MoneyCells reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`MoneyCells reducer don\'t process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     const action = DeleteTransaction(35, 22, null, 2700, null, null);
     expect(MoneyCellsReducer(startState, action))
         .toEqual(startState);

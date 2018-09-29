@@ -40,7 +40,7 @@ const startState = [trans1, trans2, trans3];
 
 const processedActions = [
     ActionName.ADD_TRANSACTION,
-    ActionName.DELETE_TRANSACTION, 
+    ActionName.MARK_DELETE_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
     ActionName.SYNCHRONIZATION
 ];
@@ -69,14 +69,14 @@ it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, 
     .toEqual(startState);
 });
 
-it(`Transactions reducer process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`Transactions reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     let action = DeleteTransaction(2, null, null, null);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
     .toEqual([trans1, {...trans2, isDeleted: true, lastModificationTime}, trans3]);
 });
 
-it(`Transactions reducer don\'t process action ${ActionName.DELETE_TRANSACTION}`, () => {
+it(`Transactions reducer don\'t process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     expect(TransactionsReducer(startState, DeleteTransaction(5, null, null, null)))
     .toEqual(startState);
 });
