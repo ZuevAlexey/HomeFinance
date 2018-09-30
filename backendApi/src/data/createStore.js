@@ -1,3 +1,6 @@
+import {getDateISO} from '../helpers/dateTimeHelper';
+import Actions from './actions';
+
 let path = require('path');
 import {createLogger} from '../helpers/logger';
 import {saveObjectToFile, readObjectFromFile, createFolderIfNeed, createFileIfNeed} from '../helpers/fsHelpers';
@@ -29,32 +32,20 @@ export const createStore = (storeName) => {
             saveObjectToFile(state, storeFileName);
             logger.info(`Обработан запрос на диспетчеризацию события. Результирующее состояние cохранили в файл ${historyFileName}`);
         },
-        getDiff: (action) => {
-            let diff = {type: action.type};
+        getDiff: (action, reqDateTime) => {
+            let diff = {
+                type: Actions.SYNC,
+                data: {
+                    systemData: {
+                        lastSynchronizationTime: reqDateTime
+                    }
+                }
+            };
             StateBranches.map(branchName => {
-               diff[branchName] = state[branchName].filter(el => el.lastModificationTime > action.data.systemData.lastSinchronizationTime);
+               diff.data[branchName] = state[branchName]
+                   .filter(el => el.lastModificationTime > action.data.systemData.lastSynchronizationTime);
             });
             return diff;
         }
     };
 };
-
-const getDateISO = () => {
-    let now = new Date();
-    let tzo = - now.getTimezoneOffset();
-    let dif = tzo >= 0 ? '+' : '-';
-    let pad = (num) => {
-        let norm = Math.floor(Math.abs(num));
-        return (norm < 10 ? '0' : '') + norm;
-    };
-
-    return now.getFullYear() +
-        '-' + pad(now.getMonth() + 1) +
-        '-' + pad(now.getDate()) +
-        'T' + pad(now.getHours()) +
-        '.' + pad(now.getMinutes()) +
-        '.' + pad(now.getSeconds()) +
-        dif + pad(tzo / 60) +
-        '.' + pad(tzo % 60);
-};
-
