@@ -4,11 +4,7 @@ import {MoneyCellReducer} from './moneyCellReducer';
 export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_MONEY_CELL:
-        case ActionName.ADD_TRANSACTION:
-        case ActionName.DELETE_TRANSACTION:
-        case ActionName.EDIT_TRANSACTION:
-            return state.map(e => MoneyCellReducer(e, action));
-        case ActionName.DELETE_MONEY_CELL:
+        case ActionName.MARK_DELETE_MONEY_CELL:
             return state.map(e => MoneyCellReducer(e, action));
         case ActionName.ADD_MONEY_CELL:
             return [
@@ -28,8 +24,8 @@ export const MoneyCellsReducer = (state = [], action) => {
                     lastModificationTime: action.lastModificationTime
                 }
             ];
-        case ActionName.SYNCHRONIZATION:
-            return action.moneyCells;
+        case ActionName.REMOVE_MONEY_CELLS:
+            return state.filter(e => !action.ids.has(e.id));
         default:
             return state;
     }

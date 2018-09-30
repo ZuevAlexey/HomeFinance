@@ -1,8 +1,8 @@
 import {ActionName} from '../../constants/actionName';
 
-export const DeleteMoneyCell = (id) => {
+export const MarkDeleteMoneyCell = (id) => {
     return {
-        type : ActionName.DELETE_MONEY_CELL,
+        type : ActionName.MARK_DELETE_MONEY_CELL,
         id,
         lastModificationTime: new Date()
     }

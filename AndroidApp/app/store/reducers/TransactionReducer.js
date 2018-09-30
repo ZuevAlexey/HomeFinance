@@ -5,16 +5,16 @@ export const TransactionReducer = (state = {}, action) => {
         case ActionName.EDIT_TRANSACTION:
             return action.id === state.id ? {
                 ...state,
-                fromId: action.newFromId,
-                toId: action.newToId,
+                fromId: action.fromId,
+                toId: action.toId,
                 articleId: action.articleId,
-                amount: action.newAmount,
+                amount: action.amount,
                 description: action.description,
                 date: action.date,
                 isValid: action.isValid,
                 lastModificationTime: action.lastModificationTime
             } : state;
-        case ActionName.DELETE_TRANSACTION:
+        case ActionName.MARK_DELETE_TRANSACTION:
             return action.id === state.id ? {
                 ...state,
                 isDeleted : true,

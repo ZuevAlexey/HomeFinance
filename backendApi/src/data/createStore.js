@@ -1,11 +1,20 @@
+import {getDateISO} from '../helpers/dateTimeHelper';
+import Actions from './actions';
+
 let path = require('path');
 import {createLogger} from '../helpers/logger';
-import {saveObjectToFile, readObjectFromFile, createFolderIfNeed, createFileIfNeed} from '../helpers/fsHelpers';
+import {
+    saveObjectToFile,
+    readObjectFromFile,
+    createFolderIfNeed,
+    createFileIfNeed,
+    getModuleDirectory
+} from '../helpers/fsHelpers';
 import {reduce} from './reducers/mainReducer';
 import StateBranches from './branches';
 
 export const createStore = (storeName) => {
-    let dataFolder = path.resolve(process.cwd(), 'data');
+    let dataFolder = path.resolve(getModuleDirectory(), 'data');
     createFolderIfNeed(dataFolder);
     let rootFolder = path.resolve(dataFolder, storeName);
     createFolderIfNeed(rootFolder);
@@ -29,32 +38,59 @@ export const createStore = (storeName) => {
             saveObjectToFile(state, storeFileName);
             logger.info(`Обработан запрос на диспетчеризацию события. Результирующее состояние cохранили в файл ${historyFileName}`);
         },
-        getDiff: (action) => {
-            let diff = {type: action.type};
-            StateBranches.map(branchName => {
-               diff[branchName] = state[branchName].filter(el => el.lastModificationTime > action.data.systemData.lastSinchronizationTime);
+        getDiff: (action, reqDateTime) => {
+            let diff = {
+                type: Actions.SYNC,
+                isSuccess: true,
+                data: {
+                    systemData: {
+                        lastSynchronizationTime: reqDateTime
+                    }
+                }
+            };
+            StateBranches.forEach(branchName => {
+                let branchDiff = getBranchDiff(state[branchName], action.data.systemData.lastSynchronizationTime);
+                if(branchDiff !== undefined){
+                    diff.data[branchName] = branchDiff;
+                }
             });
             return diff;
         }
     };
 };
 
-const getDateISO = () => {
-    let now = new Date();
-    let tzo = - now.getTimezoneOffset();
-    let dif = tzo >= 0 ? '+' : '-';
-    let pad = (num) => {
-        let norm = Math.floor(Math.abs(num));
-        return (norm < 10 ? '0' : '') + norm;
+const getBranchDiff = (branch, lastSynchronizationTime) => {
+    console.log(lastSynchronizationTime);
+    let branchDiff = {
+        add: [],
+        edit: [],
+        remove: []
     };
+    branch.forEach(el => {
+        if (el.creationTime > lastSynchronizationTime) {
+            if (el.isDeleted) {
+                return;
+            }
 
-    return now.getFullYear() +
-        '-' + pad(now.getMonth() + 1) +
-        '-' + pad(now.getDate()) +
-        'T' + pad(now.getHours()) +
-        '.' + pad(now.getMinutes()) +
-        '.' + pad(now.getSeconds()) +
-        dif + pad(tzo / 60) +
-        '.' + pad(tzo % 60);
+            branchDiff.add.push(el);
+            return;
+        }
+
+        if (el.lastModificationTime > lastSynchronizationTime) {
+            if (el.isDeleted) {
+                branchDiff.remove.push(el.id);
+                return;
+            }
+
+            branchDiff.edit.push(el);
+            return;
+        }
+    });
+
+    let isEmpty = branchDiff.add.length === 0
+        && branchDiff.edit.length === 0
+        && branchDiff.remove.length === 0;
+    return isEmpty
+        ? undefined
+        : branchDiff;
 };
-

@@ -1,8 +1,8 @@
 import {ActionName} from '../../constants/actionName';
 
-export const DeletePerson = (id) => {
+export const MarkDeleteTransaction = (id) => {
     return {
-        type : ActionName.DELETE_PERSON,
+        type : ActionName.MARK_DELETE_TRANSACTION,
         id,
         lastModificationTime: new Date()
     }

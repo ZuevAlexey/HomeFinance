@@ -4,7 +4,8 @@
   "description": "Сервер принимает запросы от приложения HF",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "build": "webpack"
   },
   "keywords": [
     "Home",
