@@ -1,0 +1,28 @@
+{
+  "type": "sync",
+  "data": {
+    "systemData": {
+      "lastSynchronizationTime": "2018-11-01T12:20:00.000Z"
+    },
+    "people": {
+      "add": [],
+      "edit": [],
+      "remove": []
+    },
+    "moneyCells": {
+      "add": [],
+      "edit": [],
+      "remove": []
+    },
+    "transactions": {
+      "add": [],
+      "edit": [],
+      "remove": []
+    },
+    "articles": {
+      "add": [],
+      "edit": [],
+      "remove": []
+    }
+  }
+}

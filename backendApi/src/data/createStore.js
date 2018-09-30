@@ -35,17 +35,56 @@ export const createStore = (storeName) => {
         getDiff: (action, reqDateTime) => {
             let diff = {
                 type: Actions.SYNC,
+                isSuccess: true,
                 data: {
                     systemData: {
                         lastSynchronizationTime: reqDateTime
                     }
                 }
             };
-            StateBranches.map(branchName => {
-               diff.data[branchName] = state[branchName]
-                   .filter(el => el.lastModificationTime > action.data.systemData.lastSynchronizationTime);
+            StateBranches.forEach(branchName => {
+                let branchDiff = getBranchDiff(state[branchName], action.data.systemData.lastSynchronizationTime);
+                if(branchDiff !== undefined){
+                    diff.data[branchName] = branchDiff;
+                }
             });
             return diff;
         }
     };
+};
+
+const getBranchDiff = (branch, lastSynchronizationTime) => {
+    console.log(lastSynchronizationTime);
+    let branchDiff = {
+        add: [],
+        edit: [],
+        remove: []
+    };
+    branch.forEach(el => {
+        if (el.creationTime > lastSynchronizationTime) {
+            if (el.isDeleted) {
+                return;
+            }
+
+            branchDiff.add.push(el);
+            return;
+        }
+
+        if (el.lastModificationTime > lastSynchronizationTime) {
+            if (el.isDeleted) {
+                branchDiff.remove.push(el.id);
+                return;
+            }
+
+            branchDiff.edit.push(el);
+            return;
+        }
+    });
+
+    let isEmpty = branchDiff.add.length === 0
+        && branchDiff.edit.length === 0
+        && branchDiff.remove.length === 0;
+    return isEmpty
+        ? undefined
+        : branchDiff;
 };

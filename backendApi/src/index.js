@@ -2,6 +2,7 @@ import express from 'express';
 import routing from '../route.config';
 import {createStore} from './data/createStore';
 import {createLogger} from './helpers/logger';
+import * as Actions from "./data/actions";
 
 const app = express();
 app.listen(routing.port);
@@ -35,8 +36,9 @@ const safetyCall = (req, res, action) => {
   try {
       action(req, res);
   } catch (error){
-      appLog.error(`request = ${req} ; error = ${error}`)
+      appLog.error(`request = ${req} ; error = ${error}; stack = ${error.stack}`);
       res.json({
+          type: Actions.SYNC,
           isSuccess: false,
           systemData : {}
       });
