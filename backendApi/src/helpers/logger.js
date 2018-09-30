@@ -2,10 +2,10 @@ import {getDateISO} from "./dateTimeHelper";
 
 let fs = require('fs');
 let path = require('path');
-import {createFolderIfNeed} from './fsHelpers';
+import {createFolderIfNeed, getModuleDirectory} from './fsHelpers';
 
 const logDiretoryName = 'logs';
-const fullLogDirectoryPath = path.resolve(process.cwd(), logDiretoryName);
+const fullLogDirectoryPath = path.resolve(getModuleDirectory(), logDiretoryName);
 createFolderIfNeed(fullLogDirectoryPath);
 
 export const createLogger = (logName) => {
@@ -21,7 +21,7 @@ export const createLogger = (logName) => {
 };
 
 const writeToLog = (logFile, message, level) => {
-    fs.appendFileSync(logFile, `${getDateISO()}: ${level} ${message}\n`, function (err) {
+    fs.appendFileSync(logFile, `${getDateISO()}: ${level} ${message}\r\n`, function (err) {
         if (err) throw err;
     });
 };

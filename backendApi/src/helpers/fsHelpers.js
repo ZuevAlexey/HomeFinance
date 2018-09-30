@@ -1,4 +1,5 @@
 let fs = require('fs');
+let path = require('path');
 
 export const readObjectFromFile = (fileName) => {
     let fileData = fs.readFileSync(fileName, 'utf8');
@@ -29,3 +30,7 @@ export const createFileIfNeed = (fileName, initialObject) => {
         saveToFileSync(initialObject, fileName);
     }
 };
+
+export const getModuleDirectory = () => {
+    return path.dirname(process.mainModule.filename);
+}

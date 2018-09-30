@@ -3,12 +3,18 @@ import Actions from './actions';
 
 let path = require('path');
 import {createLogger} from '../helpers/logger';
-import {saveObjectToFile, readObjectFromFile, createFolderIfNeed, createFileIfNeed} from '../helpers/fsHelpers';
+import {
+    saveObjectToFile,
+    readObjectFromFile,
+    createFolderIfNeed,
+    createFileIfNeed,
+    getModuleDirectory
+} from '../helpers/fsHelpers';
 import {reduce} from './reducers/mainReducer';
 import StateBranches from './branches';
 
 export const createStore = (storeName) => {
-    let dataFolder = path.resolve(process.cwd(), 'data');
+    let dataFolder = path.resolve(getModuleDirectory(), 'data');
     createFolderIfNeed(dataFolder);
     let rootFolder = path.resolve(dataFolder, storeName);
     createFolderIfNeed(rootFolder);
