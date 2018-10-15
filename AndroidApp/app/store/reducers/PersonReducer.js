@@ -19,4 +19,4 @@ export const PersonReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+};

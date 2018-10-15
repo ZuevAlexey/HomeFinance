@@ -13,7 +13,7 @@ const startState = {
     date: new Date(2018, 8, 1, 14, 55),
     description: "Оплата комуналки",
     isValid: true
-}
+};
 
 AssertUnprocessedActions([ActionName.EDIT_TRANSACTION, ActionName.MARK_DELETE_TRANSACTION], 'Transaction', TransactionReducer);
 

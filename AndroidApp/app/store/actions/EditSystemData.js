@@ -6,4 +6,4 @@ export const EditSystemData = (lastSynchronizationTime, serverAddress) => {
         serverAddress,
         lastSynchronizationTime
     }
-}
+};

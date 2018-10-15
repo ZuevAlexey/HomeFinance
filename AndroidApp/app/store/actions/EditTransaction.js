@@ -13,4 +13,4 @@ export const EditTransaction = (id, fromId, toId, articleId, amount, description
         isValid,
         lastModificationTime: new Date()
     };
-}
+};

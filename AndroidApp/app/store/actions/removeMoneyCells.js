@@ -5,4 +5,4 @@ export const RemoveMoneyCells = (ids) => {
         type : ActionName.REMOVE_MONEY_CELLS,
         ids: new Set(ids)
     }
-}
+};

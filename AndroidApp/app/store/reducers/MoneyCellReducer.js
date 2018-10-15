@@ -18,4 +18,4 @@ export const MoneyCellReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+};

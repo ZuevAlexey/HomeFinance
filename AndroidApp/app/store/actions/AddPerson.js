@@ -10,4 +10,4 @@ export const AddPerson = (lastName, firstName, sex) => {
         sex,
         lastModificationTime: new Date()
     }
-}
+};

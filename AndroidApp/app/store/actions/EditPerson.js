@@ -9,4 +9,4 @@ export const EditPerson = (id, lastName, firstName, sex) => {
         sex,
         lastModificationTime: new Date()
     }
-}
+};

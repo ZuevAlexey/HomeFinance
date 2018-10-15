@@ -6,4 +6,4 @@ export const MarkDeleteTransaction = (id) => {
         id,
         lastModificationTime: new Date()
     }
-}
+};

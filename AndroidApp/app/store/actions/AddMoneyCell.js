@@ -18,4 +18,4 @@ export const AddMoneyCell = (ownerId, moneyCellType, name, status, amount = 0, i
     status,
     lastModificationTime: new Date()
     }
-}
+};

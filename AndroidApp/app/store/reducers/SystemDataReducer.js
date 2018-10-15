@@ -6,8 +6,8 @@ export const SystemDataReducer = (state = {}, action) => {
             return {
                 serverAddress: action.serverAddress,
                 lastSynchronizationTime: action.lastSynchronizationTime
-            }
+            };
         default:
             return state;
     }
-}
+};

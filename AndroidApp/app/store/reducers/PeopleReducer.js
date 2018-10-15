@@ -23,4 +23,4 @@ export const PeopleReducer = (state = [], action) => {
         default:
             return state;
     }
-}
+};

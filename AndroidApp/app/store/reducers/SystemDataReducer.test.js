@@ -12,7 +12,7 @@ AssertUnprocessedActions([ActionName.EDIT_SYSTEM_DATA], 'SystemData', SystemData
 
 it(`SystemData reducer process action ${ActionName.EDIT_SYSTEM_DATA}`, () => {
     const lastSynchronizationTime = new Date(2019, 3, 5);
-    const serverAddress = "http://myDomain.com"
+    const serverAddress = "http://myDomain.com";
 
     const action = EditSystemData(lastSynchronizationTime, serverAddress);
     const newState = SystemDataReducer(startState, action);

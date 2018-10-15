@@ -6,4 +6,4 @@ export const MarkDeleteMoneyCell = (id) => {
         id,
         lastModificationTime: new Date()
     }
-}
+};

@@ -6,4 +6,4 @@ export const EditArticle = (id, name) => {
         id,
         name
     }
-}
+};

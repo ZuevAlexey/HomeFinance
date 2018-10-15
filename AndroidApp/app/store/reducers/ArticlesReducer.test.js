@@ -21,7 +21,7 @@ const flatCost = {
 const healCost = {
     id: 201,
     name: 'лечение'
-}
+};
 
 const startState = [workPay, depositIncome, flatCost, healCost];
 

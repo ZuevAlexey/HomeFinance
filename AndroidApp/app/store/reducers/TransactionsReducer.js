@@ -27,4 +27,4 @@ export const TransactionsReducer = (state = [], action) => {
         default:
             return state;
     }
-}
+};

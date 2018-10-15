@@ -5,4 +5,4 @@ export const AddArticles = (articles) => {
         type: ActionName.ADD_ARTICLES,
         articles
     }
-}
+};

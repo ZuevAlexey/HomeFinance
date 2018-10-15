@@ -15,4 +15,4 @@ export const ArticlesReducer = (state = [], action) => {
         default:
             return state;
     }
-}
+};

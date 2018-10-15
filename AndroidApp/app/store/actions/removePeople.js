@@ -5,4 +5,4 @@ export const RemovePeople = (ids) => {
         type : ActionName.REMOVE_PEOPLE,
         ids: new Set(ids)
     }
-}
+};

@@ -1,15 +1,28 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import PeopleList from "./app/components/peopleList";
+import {View} from "react-native";
+import {Sex} from "./app/constants/sex";
+
+let people = [
+    {
+        id:'1',
+        lastName: 'Зуев',
+        firstName: 'Алексей',
+        sex:Sex.MALE
+    },
+    {
+        id:'2',
+        lastName: 'Зуева',
+        firstName: 'Наталья',
+        sex:Sex.FEMALE
+    }
+];
 
 export default class App extends React.Component {
-
   render() {
-    let data = [1,2,3,4,5].map(e => e * 2);
     return (
         <View>
-            {data.map((el, index) =>{
-              return <Text key={index}>{el}</Text>
-            })}
+          <PeopleList people={people}/>
         </View>
     );
   }

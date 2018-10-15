@@ -5,4 +5,4 @@ export const RemoveArticles = (ids) => {
         type : ActionName.REMOVE_ARTICLES,
         ids: new Set(ids)
     }
-}
+};
