@@ -1,97 +1,45 @@
 import React from 'react';
-import List from "./app/components/list/itemList";
-import {View} from "react-native";
-import {Sex} from "./app/constants/sex";
+import {Text, View} from "react-native";
 import {StatusBar} from "react-native";
-
-let people = [
-    {
-        id:'1',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'2',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'3',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'4',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'5',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'6',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'7',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'8',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'9',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'10',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'11',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'12',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    }
-];
+import {Header} from "./app/components/header/header";
+import {Theme} from "./app/components/theme";
+import PeopleList from "./app/pages/peopleList/peopleList";
 
 export default class App extends React.Component {
   render() {
     return (
         <View style={{flex:1}}>
-            <View style = {{height:StatusBar.currentHeight, backgroundColor: 'teal'}}>
+            <View style = {
+                {
+                    height:StatusBar.currentHeight,
+                    backgroundColor: Theme.statusBarColor
+                }
+            }>
                 <StatusBar
                     barStyle='light-content'
                 />
             </View>
-            <View style = {{flex:1,backgroundColor:'red'}}>
-            </View>
+            <Header
+                containerStyle = {
+                    {
+                        flex:1,
+                        borderWidth:1,
+                        borderColor: Theme.borderColor,
+                        borderLeftColor: Theme.noBorderColor,
+                        borderRightColor: Theme.noBorderColor,
+                        borderBottomColor: Theme.noBorderColor
+                }}
+                title = 'People'
+                status = {<Text style = {
+                    {
+                    textAlign: 'center',
+                    fontSize: 30,
+                    color: Theme.goodColor
+                    }}
+                >+400$</Text>}
+            />
             <View style = {{flex:10}}>
-                <List people={people}/>
+                <PeopleList />
             </View>
         </View>
     );

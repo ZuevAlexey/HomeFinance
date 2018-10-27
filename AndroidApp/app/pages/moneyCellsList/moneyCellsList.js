@@ -4,22 +4,22 @@ import {Sex} from "../../constants/sex";
 import Styles from "./style";
 import {Alert, Text} from "react-native";
 
-export default class PeopleList extends React.Component {
+export default class MoneyCellsList extends React.Component {
 
-  render() {
-    return (
-        <ItemList
-            avatarFactory = {getAvatar}
-            avatarStyle = {Styles.avatar}
-            titleFactory = {getTitle}
-            onItemPress = {onPersonPress}
-            onItemEditPress = {onPersonEditPress}
-            onItemDeletePress = {onPersonDeletePress}
-            addItemPress = {addPersonPress}
-            items = {people}
-        />
-    );
-  }
+    render() {
+        return (
+            <ItemList
+                avatarFactory = {getAvatar}
+                avatarStyle = {Styles.avatar}
+                titleFactory = {getTitle}
+                onItemPress = {onPersonPress}
+                onItemEditPress = {onPersonEditPress}
+                onItemDeletePress = {onPersonDeletePress}
+                addItemPress = {addPersonPress}
+                items = {people}
+            />
+        );
+    }
 }
 
 const addPersonPress = () => {
@@ -60,10 +60,20 @@ const getAvatar = (person) => {
 
 let people = [
     {
-        id:'1',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
+        id: '1',
+        ownerId: "Guid",
+        moneyCellType: "MoneyCellType",
+        amount: "number",
+        startDate: "DateTime",
+        endDate: "DateTime",
+        name: "string",
+        status: "MoneyCellStatus",
+        parentId: "Guid",
+        isValid: "bool",
+        roi: "number",
+        lastModificationTime: "DateTime",
+        creationTime: "DateTime",
+        isDeleted: "boolean"
     },
     {
         id:'2',

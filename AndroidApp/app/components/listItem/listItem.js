@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableNativeFeedback, View} from 'react-native';
+import {Text, TouchableNativeFeedback, View} from 'react-native';
 import {Icon} from "react-native-elements";
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
@@ -8,6 +8,7 @@ import {Theme} from '../theme';
 export const ListItem = (props) => {
       let {
           avatar,
+          avatarStyle,
           title,
           onPress,
           onEditPress,
@@ -22,6 +23,7 @@ export const ListItem = (props) => {
               >
                   <Avatar
                       avatar = {avatar}
+                      style = {avatarStyle}
                   />
                   <View
                       style={Styles.titleContainer}

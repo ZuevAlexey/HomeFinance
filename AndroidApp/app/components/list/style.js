@@ -12,7 +12,7 @@ module.exports = StyleSheet.create({
         flex: 1,
         borderWidth:1,
         borderTopColor: Theme.borderColor,
-        borderColor: 'white',
+        borderColor: Theme.noBorderColor,
         alignItems: 'center',
         justifyContent : 'center'
     },

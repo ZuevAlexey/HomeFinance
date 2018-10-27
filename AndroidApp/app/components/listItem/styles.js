@@ -7,7 +7,7 @@ module.exports = StyleSheet.create({
         paddingTop:0,
         paddingBottom:0,
         borderTopColor: Theme.borderColor,
-        borderColor: 'white',
+        borderColor: Theme.noBorderColor,
         borderWidth: 1,
         alignItems: 'center'
     },

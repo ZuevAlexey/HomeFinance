@@ -1,66 +1,57 @@
 import React from 'react';
-import {Button, List} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {ListItem} from "../listItem/listItem";
-import {Text, Alert, View, ScrollView} from "react-native";
-import {Sex} from "../../constants/sex";
+import {Text, View, ScrollView} from "react-native";
 import Styles from './style';
 import {Theme} from "../theme";
 
-export default class ItemList extends React.Component {
-    getAvatar(sex) {
-        let name;
-        if(sex === Sex.FEMALE){
-            name = 'female';
-        } else {
-            name = 'male';
-        }
-
-        return {
-            type: 'font-awesome',
-            name
-        };
-    };
-
-    render() {
-        return (
+export const ItemList = (props) => {
+    let {items,
+        titleFactory,
+        avatarFactory,
+        avatarStyle,
+        onItemPress,
+        onItemEditPress,
+        onItemDeletePress,
+        addItemPress
+    } = props;
+    return (
+        <View
+            style = {Styles.container}
+        >
             <View
-                style = {Styles.container}
+                style={Styles.listContainer}
             >
-                <View
-                    style={Styles.listContainer}
-                >
-                    <ScrollView>
-                       {
-                            this.props.people.map((person) => (
-                                <ListItem
-                                    title={
-                                        <Text>{person.lastName + ' ' + person.firstName}</Text>
-                                    }
-                                    key={person.id}
-                                    avatar = {this.getAvatar(person.sex)}
-                                    onPress={() => Alert.alert(`press ${person.lastName}`)}
-                                    onEditPress={() => Alert.alert(`edit ${person.lastName}`)}
-                                    onDeletePress={() => Alert.alert(`delete ${person.lastName}`)}
-                                />))
-                       }
-                    </ScrollView>
-                </View>
-                <View
-                    style = {Styles.buttonContainer}
-                >
-                    <Button
-                        icon={
-                            {
-                                name: 'person',
-                                type: 'Octicons'
-                            }
-                        }
-                        title = 'Add new person'
-                        backgroundColor = {Theme.buttonColor}
-                        onPress={() => Alert.alert(`add new person 1`)}
-                    />
-                </View>
+                <ScrollView>
+                   {
+                        items.map((item) => (
+                            <ListItem
+                                title={titleFactory(item)}
+                                key={item.id}
+                                avatar = {avatarFactory(item)}
+                                avatarStyle = {avatarStyle}
+                                onPress={() => onItemPress(item)}
+                                onEditPress={() => onItemEditPress(item)}
+                                onDeletePress={() => onItemDeletePress(item)}
+                            />))
+                   }
+                </ScrollView>
             </View>
-        )
-    }
-}
+            <View
+                style = {Styles.buttonContainer}
+            >
+                <Button
+                    icon={
+                        {
+                            name: 'person',
+                            type: 'Octicons'
+                        }
+                    }
+                    title = 'Add new person'
+                    backgroundColor = {Theme.buttonColor}
+                    onPress={() => addItemPress()}
+                />
+            </View>
+        </View>
+    )
+};
