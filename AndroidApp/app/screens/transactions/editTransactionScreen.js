@@ -7,7 +7,7 @@ export const EditTransactionScreen = (props) => {
     return (
         <Screen
             {...props}
-            headerTitle = {`Edit ${transaction.name}`}
+            headerTitle = {`Edit ${transaction.description}`}
         >
             {Object.keys(transaction).map(key => (
                 <Text key = {key} style = {{textAlign: 'center'}}>{`Transaction[${key}] =  ${transaction[key]}`}</Text>

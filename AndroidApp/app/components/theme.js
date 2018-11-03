@@ -5,6 +5,7 @@ export const Theme = {
     noBorderColor: 'white',
     goodColor: 'orange',
     badColor: 'red',
+    normalColor: 'blue',
     statusBarStyle: 'light-content',
     listAvatarStyle: {
         borderWidth: 3,

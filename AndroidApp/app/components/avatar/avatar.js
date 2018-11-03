@@ -2,6 +2,7 @@ import Styles from "./style";
 import {Icon} from "react-native-elements";
 import {StyleSheet, View} from "react-native";
 import React from "react";
+import {Theme} from "../theme";
 
 export const Avatar = (props) => {
     let {
@@ -16,7 +17,7 @@ export const Avatar = (props) => {
             onPress = {onPress}
             >
             <Icon
-                color = 'teal'
+                color = {Theme.mainColor}
                 size = {35}
                 {...avatar}
                 onPress = {onPress}
