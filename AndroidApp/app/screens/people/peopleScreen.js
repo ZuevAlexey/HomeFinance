@@ -5,7 +5,7 @@ import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
-class PeoplePage extends React.Component {
+class PeopleScreen extends React.Component {
   render() {
     return (
         <Screen
@@ -77,7 +77,7 @@ const getAvatar = (person) => {
     };
 };
 
-export default PeoplePage;
+export default PeopleScreen;
 
 let people = [
     {

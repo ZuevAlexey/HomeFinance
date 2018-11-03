@@ -10,9 +10,9 @@ module.exports = StyleSheet.create({
         borderWidth:1,
         backgroundColor: 'white',
         borderColor: Theme.borderColor,
-        borderLeftColor: Theme.noBorderColor,
-        borderRightColor: Theme.noBorderColor,
-        borderBottomColor: Theme.noBorderColor
+        borderLeftColor: Theme.borderColor,
+        borderRightColor: Theme.borderColor,
+        borderBottomColor: Theme.borderColor
     },
     headerBody: {
         flex:5,
@@ -23,7 +23,11 @@ module.exports = StyleSheet.create({
         flex:2
     },
     contentContainer: {
-        flex:1
+        borderWidth:1,
+        borderColor: Theme.borderColor,
+        flex:1,
+        alignContent: 'center',
+        justifyContent: 'center'
     },
     titleText: {
         textAlign: 'center',

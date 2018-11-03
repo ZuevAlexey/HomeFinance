@@ -6,7 +6,7 @@ import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
-class MoneyCellsPage extends React.Component {
+class MoneyCellsScreen extends React.Component {
     render() {
         return (
             <Screen {...this.props}
@@ -95,7 +95,7 @@ const getAvatar = (moneyCell) => {
     };
 };
 
-export default MoneyCellsPage;
+export default MoneyCellsScreen;
 
 let moneyCells = [
     {

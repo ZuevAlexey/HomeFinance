@@ -27,9 +27,9 @@ export const Screen = (props) => {
                 <Body style={Styles.headerBody}>
                     <Text style = {Styles.titleText}>{headerTitle}</Text>
                 </Body>
-                <Right style={Styles.headerRight}>
+                {headerStatus && <Right style={Styles.headerRight}>
                     {headerStatus}
-                </Right>
+                </Right>}
             </Header>
             <Container style = {Styles.contentContainer}>
                 {children}
