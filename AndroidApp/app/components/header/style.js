@@ -9,17 +9,17 @@ module.exports = StyleSheet.create({
         flex: 1
     },
     titleContainer: {
-        flex:4,
+        flex: 4,
         alignContent: 'center',
         justifyContent: 'center'
     },
     titleText: {
         textAlign: 'center',
         fontSize: 30,
-        color: Theme.headerTitleColor
+        color: Theme.mainColor
     },
     statusContainer: {
-        flex:2,
+        flex: 1,
         alignContent: 'center',
         justifyContent: 'center'
     }

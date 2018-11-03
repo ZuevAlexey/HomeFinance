@@ -1,28 +1,47 @@
 import React from 'react';
-import {ItemList} from "../../components/list/itemList";
+import {List} from "../../components/list/list";
 import {Sex} from "../../constants/sex";
-import Styles from "./style";
 import {Alert, Text} from "react-native";
+import {Theme} from "../../components/theme";
+import {Screen} from "../../components/screen/screen";
 
-export default class MoneyCellsList extends React.Component {
-
-    render() {
-        return (
-            <ItemList
+class PeoplePage extends React.Component {
+  render() {
+    return (
+        <Screen
+            {...this.props}
+            headerTitle = 'People'
+            headerStatus = {<Text style = {
+                {
+                    textAlign: 'center',
+                    fontSize: 30,
+                    color: Theme.goodColor
+                }}
+            >+400$</Text>}
+        >
+            <List
                 avatarFactory = {getAvatar}
-                avatarStyle = {Styles.avatar}
+                avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
                 onItemPress = {onPersonPress}
                 onItemEditPress = {onPersonEditPress}
                 onItemDeletePress = {onPersonDeletePress}
-                addItemPress = {addPersonPress}
                 items = {people}
+                addButtonInfo= {{
+                    icon: {
+                        name: 'md-person-add',
+                        type: 'ionicon'
+                    },
+                    title: 'Add new person',
+                    onPress: addPersonPress()
+                }}
             />
-        );
-    }
+        </Screen>
+    );
+  }
 }
 
-const addPersonPress = () => {
+const addPersonPress = () => () => {
     Alert.alert(`add new person`)
 };
 
@@ -58,22 +77,14 @@ const getAvatar = (person) => {
     };
 };
 
+export default PeoplePage;
+
 let people = [
     {
-        id: '1',
-        ownerId: "Guid",
-        moneyCellType: "MoneyCellType",
-        amount: "number",
-        startDate: "DateTime",
-        endDate: "DateTime",
-        name: "string",
-        status: "MoneyCellStatus",
-        parentId: "Guid",
-        isValid: "bool",
-        roi: "number",
-        lastModificationTime: "DateTime",
-        creationTime: "DateTime",
-        isDeleted: "boolean"
+        id:'1',
+        lastName: 'Зуев',
+        firstName: 'Алексей',
+        sex: Sex.MALE
     },
     {
         id:'2',

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Button} from 'react-native-elements';
 import {ListItem} from "../listItem/listItem";
-import {Text, View, ScrollView} from "react-native";
+import {View, ScrollView} from "react-native";
 import Styles from './style';
 import {Theme} from "../theme";
 
-export const ItemList = (props) => {
+export const List = (props) => {
     let {items,
         titleFactory,
         avatarFactory,
@@ -13,7 +13,7 @@ export const ItemList = (props) => {
         onItemPress,
         onItemEditPress,
         onItemDeletePress,
-        addItemPress
+        addButtonInfo
     } = props;
     return (
         <View
@@ -37,21 +37,16 @@ export const ItemList = (props) => {
                    }
                 </ScrollView>
             </View>
-            <View
+            {addButtonInfo && <View
                 style = {Styles.buttonContainer}
             >
                 <Button
-                    icon={
-                        {
-                            name: 'person',
-                            type: 'Octicons'
-                        }
-                    }
-                    title = 'Add new person'
-                    backgroundColor = {Theme.buttonColor}
-                    onPress={() => addItemPress()}
+                    icon={addButtonInfo.icon}
+                    title = {addButtonInfo.title}
+                    backgroundColor = {Theme.mainColor}
+                    onPress={() => addButtonInfo.onPress()}
                 />
-            </View>
+            </View>}
         </View>
     )
 };

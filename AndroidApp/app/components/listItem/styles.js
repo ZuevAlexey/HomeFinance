@@ -3,22 +3,28 @@ import {Theme} from "../theme";
 
 module.exports = StyleSheet.create({
     container: {
-        flexDirection:'row',
-        paddingTop:0,
-        paddingBottom:0,
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 1,
+        paddingTop: 0,
+        paddingBottom: 0,
         borderTopColor: Theme.borderColor,
+        borderBottomColor: Theme.borderColor,
         borderColor: Theme.noBorderColor,
         borderWidth: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    editContainer: {
-        marginLeft:'auto',
-        flexDirection: 'row',
-        alignItems: 'center'
+    avatarContainer:{
+        flex: 1
     },
     titleContainer: {
+        flex: 3,
         alignItems: 'center',
-        justifyContent : 'center',
-        marginLeft: 10
+        justifyContent : 'center'
+    },
+    editContainer: {
+        marginLeft: 'auto',
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });

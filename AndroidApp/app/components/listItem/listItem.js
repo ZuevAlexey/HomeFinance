@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableNativeFeedback, View} from 'react-native';
+import {TouchableNativeFeedback, View} from 'react-native';
 import {Icon} from "react-native-elements";
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
@@ -35,13 +35,13 @@ export const ListItem = (props) => {
                   >
                       <Icon
                           name = 'edit'
-                          color = {Theme.buttonColor}
+                          color = {Theme.mainColor}
                           onPress = {onEditPress}
                           reverse
                       />
                       <Icon
                           name = 'delete'
-                          color = {Theme.buttonColor}
+                          color = {Theme.mainColor}
                           onPress = {onDeletePress}
                           reverse
                       />

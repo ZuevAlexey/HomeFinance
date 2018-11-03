@@ -6,7 +6,10 @@ module.exports = StyleSheet.create({
         justifyContent : 'center',
         flex: 1,
         borderWidth:1,
-        borderTopColor: Theme.borderColor
+        borderTopColor: Theme.borderColor,
+        borderBottomColor: Theme.noBorderColor,
+        borderLeftColor: Theme.noBorderColor,
+        borderRightColor: Theme.noBorderColor,
     },
     buttonContainer: {
         flex: 1,
