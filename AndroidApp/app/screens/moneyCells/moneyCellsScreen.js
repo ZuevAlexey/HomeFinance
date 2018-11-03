@@ -6,41 +6,39 @@ import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
-class MoneyCellsScreen extends React.Component {
-    render() {
-        return (
-            <Screen {...this.props}
-                    headerTitle = 'MoneyCells'
-                    headerStatus = {<Text style = {
-                    {
-                        textAlign: 'center',
-                        fontSize: 30,
-                        color: Theme.badColor
-                    }}
-                >-400$</Text>}
-            >
-                <List
-                    avatarFactory = {getAvatar}
-                    avatarStyle = {Theme.listAvatarStyle}
-                    titleFactory = {getTitle}
-                    onItemPress = {onMoneyCellPress}
-                    onItemEditPress = {onMoneyCellEditPress}
-                    onItemDeletePress = {onMoneyCellDeletePress}
-                    addItemPress = {addMoneyCellPress}
-                    items = {moneyCells}
-                    addButtonInfo= {{
-                        icon: {
-                            name: 'credit-card-plus',
-                            type: 'material-community'
-                        },
-                        title: 'Add new moneyCell',
-                        onPress: addMoneyCellPress()
-                    }}
-                />
-            </Screen>
-        );
-    }
-}
+export const MoneyCellsScreen = (props) => {
+    return (
+        <Screen {...props}
+                headerTitle = 'MoneyCells'
+                headerStatus = {<Text style = {
+                {
+                    textAlign: 'center',
+                    fontSize: 30,
+                    color: Theme.badColor
+                }}
+            >-400$</Text>}
+        >
+            <List
+                avatarFactory = {getAvatar}
+                avatarStyle = {Theme.listAvatarStyle}
+                titleFactory = {getTitle}
+                onItemPress = {onMoneyCellPress}
+                onItemEditPress = {onMoneyCellEditPress}
+                onItemDeletePress = {onMoneyCellDeletePress}
+                addItemPress = {addMoneyCellPress}
+                items = {moneyCells}
+                addButtonInfo= {{
+                    icon: {
+                        name: 'credit-card-plus',
+                        type: 'material-community'
+                    },
+                    title: 'Add new moneyCell',
+                    onPress: addMoneyCellPress()
+                }}
+            />
+        </Screen>
+    );
+};
 
 const addMoneyCellPress = (props) => () => {
     Alert.alert(`add new moneyCell`)
@@ -94,8 +92,6 @@ const getAvatar = (moneyCell) => {
         name
     };
 };
-
-export default MoneyCellsScreen;
 
 let moneyCells = [
     {

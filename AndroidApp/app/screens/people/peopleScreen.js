@@ -5,12 +5,11 @@ import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
-class PeopleScreen extends React.Component {
-  render() {
-    let {navigation} = this.props;
+export const PeopleScreen = (props) => {
+    let {navigation} = props;
     return (
         <Screen
-            {...this.props}
+            {...props}
             headerTitle = 'People'
             headerStatus = {<Text style = {
                 {
@@ -39,8 +38,7 @@ class PeopleScreen extends React.Component {
             />
         </Screen>
     );
-  }
-}
+};
 
 const addPersonPress = () => () => {
     Alert.alert(`add new person`)
@@ -77,8 +75,6 @@ const getAvatar = (person) => {
         name
     };
 };
-
-export default PeopleScreen;
 
 let people = [
     {

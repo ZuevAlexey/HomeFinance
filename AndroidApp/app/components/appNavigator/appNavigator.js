@@ -1,11 +1,11 @@
 import React from "react";
 import {createDrawerNavigator, createStackNavigator} from "react-navigation";
-import PeopleScreen from "../../screens/people/peopleScreen";
+import {PeopleScreen} from "../../screens/people/peopleScreen";
 import {CustomDrawerContentComponent} from "../customDrawerComponent/customDrawerComponent";
-import MoneyCellsScreen from "../../screens/moneyCells/moneyCellsScreen";
+import {MoneyCellsScreen} from "../../screens/moneyCells/moneyCellsScreen";
 import {Theme} from "../theme";
-import SynchronizationScreen from "../../screens/synchronization/synchronizationScreen";
-import PersonInfoScreen from "../../screens/people/personInfoScreen";
+import {SynchronizationScreen} from "../../screens/synchronization/synchronizationScreen";
+import {PersonInfoScreen} from "../../screens/people/personInfoScreen";
 
 export const AppNavigator = createDrawerNavigator({
     People: createStackNavigator({
