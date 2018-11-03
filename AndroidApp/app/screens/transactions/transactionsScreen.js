@@ -5,6 +5,7 @@ import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
+import {showOkCancelDialog} from "../../helpers/okCancelDialog";
 
 export const TransactionsScreen = (props) => {
     let {navigation} = props;
@@ -44,16 +45,22 @@ const addMoneyCellPress = (navigation) => () => {
     navigation.push('AddNew');
 };
 
-const onMoneyCellPress = (navigation) => (moneyCell) => {
-    navigation.push('MoneyCell', {moneyCell});
+const onMoneyCellPress = (navigation) => (transaction) => {
+    navigation.push('Transaction', {transaction});
 };
 
-const onMoneyCellEditPress = (navigation) => (moneyCell) => {
-    navigation.push('Edit', {moneyCell});
+const onMoneyCellEditPress = (navigation) => (transaction) => {
+    navigation.push('Edit', {transaction});
 };
 
-const onMoneyCellDeletePress = (moneyCell) => {
-    Alert.alert(`delete ${moneyCell.name}`)
+const onMoneyCellDeletePress = (transaction) => {
+    showOkCancelDialog(
+        'Deleting transaction',
+        `You want to delete a transaction '${transaction.name}'. Are you sure?`,
+        'Delete',
+        'Cancel',
+        () => Alert.alert(`Delete '${transaction.name}'`)
+    );
 };
 
 const getTitle = (moneyCell) => {

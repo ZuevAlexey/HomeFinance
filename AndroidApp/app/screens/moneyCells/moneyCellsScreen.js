@@ -5,6 +5,7 @@ import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
+import {showOkCancelDialog} from "../../helpers/okCancelDialog";
 
 export const MoneyCellsScreen = (props) => {
     let {navigation} = props;
@@ -53,7 +54,13 @@ const onMoneyCellEditPress = (navigation) => (moneyCell) => {
 };
 
 const onMoneyCellDeletePress = (moneyCell) => {
-    Alert.alert(`delete ${moneyCell.name}`)
+    showOkCancelDialog(
+        'Deleting money cell',
+        `You want to delete a money cell '${moneyCell.name}'. Are you sure?`,
+        'Delete',
+        'Cancel',
+        () => Alert.alert(`Delete '${moneyCell.name}'`)
+    );
 };
 
 const getTitle = (moneyCell) => {

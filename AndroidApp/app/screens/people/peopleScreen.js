@@ -4,6 +4,7 @@ import {Sex} from "../../constants/sex";
 import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
+import {showOkCancelDialog} from "../../helpers/okCancelDialog";
 
 export const PeopleScreen = (props) => {
     let {navigation} = props;
@@ -25,7 +26,7 @@ export const PeopleScreen = (props) => {
                 titleFactory = {getTitle}
                 onItemPress = {onPersonPress(navigation)}
                 onItemEditPress = {onPersonEditPress(navigation)}
-                onItemDeletePress = {onPersonDeletePress}
+                onItemDeletePress = {onPersonDeletePress(navigation)}
                 items = {people}
                 addButtonInfo= {{
                     icon: {
@@ -52,8 +53,15 @@ const onPersonEditPress = navigation => person => {
     navigation.push('Edit', {person : person})
 };
 
-const onPersonDeletePress = (person) => {
-    Alert.alert(`delete ${person.lastName}`)
+const onPersonDeletePress = (navigation) => (person) => {
+    let displayName = `${person.lastName} ${person.firstName}`;
+    showOkCancelDialog(
+        'Deleting person',
+        `You want to delete a person '${displayName}'. Are you sure?`,
+        'Delete',
+        'Cancel',
+        () => Alert.alert(`Delete '${displayName}'`)
+    );
 };
 
 const getTitle = (person) => {

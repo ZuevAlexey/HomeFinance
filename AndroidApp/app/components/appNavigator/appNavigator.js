@@ -71,4 +71,4 @@ export const AppNavigator = createDrawerNavigator({
     header: null,
     contentOptions: {
         activeTintColor: Theme.mainColor
-    }});
+}});

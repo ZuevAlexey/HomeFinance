@@ -31,7 +31,7 @@ module.exports = StyleSheet.create({
     },
     titleText: {
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 25,
         color: Theme.mainColor
     }
 });
