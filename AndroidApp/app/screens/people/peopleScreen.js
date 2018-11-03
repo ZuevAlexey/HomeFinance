@@ -24,7 +24,7 @@ export const PeopleScreen = (props) => {
                 avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
                 onItemPress = {onPersonPress(navigation)}
-                onItemEditPress = {onPersonEditPress}
+                onItemEditPress = {onPersonEditPress(navigation)}
                 onItemDeletePress = {onPersonDeletePress}
                 items = {people}
                 addButtonInfo= {{
@@ -33,23 +33,23 @@ export const PeopleScreen = (props) => {
                         type: 'ionicon'
                     },
                     title: 'Add new person',
-                    onPress: addPersonPress()
+                    onPress: addPersonPress(navigation)
                 }}
             />
         </Screen>
     );
 };
 
-const addPersonPress = () => () => {
-    Alert.alert(`add new person`)
+const addPersonPress = (navigation) => () => {
+    navigation.push('AddNew')
 };
 
 const onPersonPress = navigation => (person) => {
     navigation.push('Person', {person : person})
 };
 
-const onPersonEditPress = person => {
-    Alert.alert(`edit ${person.lastName}`)
+const onPersonEditPress = navigation => person => {
+    navigation.push('Edit', {person : person})
 };
 
 const onPersonDeletePress = (person) => {

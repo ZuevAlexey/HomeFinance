@@ -7,6 +7,7 @@ import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
 export const MoneyCellsScreen = (props) => {
+    let {navigation} = props;
     return (
         <Screen {...props}
                 headerTitle = 'MoneyCells'
@@ -22,10 +23,9 @@ export const MoneyCellsScreen = (props) => {
                 avatarFactory = {getAvatar}
                 avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
-                onItemPress = {onMoneyCellPress}
-                onItemEditPress = {onMoneyCellEditPress}
+                onItemPress = {onMoneyCellPress(navigation)}
+                onItemEditPress = {onMoneyCellEditPress(navigation)}
                 onItemDeletePress = {onMoneyCellDeletePress}
-                addItemPress = {addMoneyCellPress}
                 items = {moneyCells}
                 addButtonInfo= {{
                     icon: {
@@ -33,23 +33,23 @@ export const MoneyCellsScreen = (props) => {
                         type: 'material-community'
                     },
                     title: 'Add new moneyCell',
-                    onPress: addMoneyCellPress()
+                    onPress: addMoneyCellPress(navigation)
                 }}
             />
         </Screen>
     );
 };
 
-const addMoneyCellPress = (props) => () => {
-    Alert.alert(`add new moneyCell`)
+const addMoneyCellPress = (navigation) => () => {
+    navigation.push('AddNew');
 };
 
-const onMoneyCellPress = (moneyCell) => {
-    Alert.alert(`press ${moneyCell.name}`)
+const onMoneyCellPress = (navigation) => (moneyCell) => {
+    navigation.push('MoneyCell', {moneyCell});
 };
 
-const onMoneyCellEditPress = (moneyCell) => {
-    Alert.alert(`edit ${moneyCell.name}`)
+const onMoneyCellEditPress = (navigation) => (moneyCell) => {
+    navigation.push('Edit', {moneyCell});
 };
 
 const onMoneyCellDeletePress = (moneyCell) => {
