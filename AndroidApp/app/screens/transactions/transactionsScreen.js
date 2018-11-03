@@ -6,7 +6,7 @@ import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
-export const MoneyCellsScreen = (props) => {
+export const TransactionsScreen = (props) => {
     let {navigation} = props;
     return (
         <Screen {...props}
@@ -32,7 +32,7 @@ export const MoneyCellsScreen = (props) => {
                         name: 'credit-card-plus',
                         type: 'material-community'
                     },
-                    title: 'Add new moneyCell',
+                    title: 'Add new transaction',
                     onPress: addMoneyCellPress(navigation)
                 }}
             />
@@ -67,9 +67,9 @@ const getTitle = (moneyCell) => {
     );
 };
 
-const getAvatar = (moneyCell) => {
+const getAvatar = (transaction) => {
     let name;
-    switch (moneyCell.moneyCellType){
+    switch (transaction.moneyCellType){
         case MoneyCellType.CARD:{
             name = 'credit-card';
             break;
