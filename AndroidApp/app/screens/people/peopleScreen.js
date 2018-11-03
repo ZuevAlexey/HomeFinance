@@ -7,6 +7,7 @@ import {Screen} from "../../components/screen/screen";
 
 class PeopleScreen extends React.Component {
   render() {
+    let {navigation} = this.props;
     return (
         <Screen
             {...this.props}
@@ -23,7 +24,7 @@ class PeopleScreen extends React.Component {
                 avatarFactory = {getAvatar}
                 avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
-                onItemPress = {onPersonPress}
+                onItemPress = {onPersonPress(navigation)}
                 onItemEditPress = {onPersonEditPress}
                 onItemDeletePress = {onPersonDeletePress}
                 items = {people}
@@ -45,11 +46,11 @@ const addPersonPress = () => () => {
     Alert.alert(`add new person`)
 };
 
-const onPersonPress = (person) => {
-    Alert.alert(`press ${person.lastName}`)
+const onPersonPress = navigation => (person) => {
+    navigation.push('Person', {person : person})
 };
 
-const onPersonEditPress = (person) => {
+const onPersonEditPress = person => {
     Alert.alert(`edit ${person.lastName}`)
 };
 
