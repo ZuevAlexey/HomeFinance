@@ -1,11 +1,12 @@
 import React from 'react';
 import {List} from "../../components/list/list";
 import {MoneyCellType} from "../../constants/moneyCellType";
-import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 import {showOkCancelDialog} from "../../helpers/okCancelDialog";
+
+import state from '../../store/initialState';
 
 export const MoneyCellsScreen = (props) => {
     let {navigation} = props;
@@ -27,7 +28,7 @@ export const MoneyCellsScreen = (props) => {
                 onItemPress = {onMoneyCellPress(navigation)}
                 onItemEditPress = {onMoneyCellEditPress(navigation)}
                 onItemDeletePress = {onMoneyCellDeletePress}
-                items = {moneyCells}
+                items = {state.moneyCells}
                 addButtonInfo= {{
                     icon: {
                         name: 'credit-card-plus',
@@ -42,7 +43,7 @@ export const MoneyCellsScreen = (props) => {
 };
 
 const addMoneyCellPress = (navigation) => () => {
-    navigation.push('AddNew');
+    navigation.push('EditOrAddMoneyCell');
 };
 
 const onMoneyCellPress = (navigation) => (moneyCell) => {
@@ -50,7 +51,7 @@ const onMoneyCellPress = (navigation) => (moneyCell) => {
 };
 
 const onMoneyCellEditPress = (navigation) => (moneyCell) => {
-    navigation.push('Edit', {moneyCell});
+    navigation.push('EditOrAddMoneyCell', {moneyCell});
 };
 
 const onMoneyCellDeletePress = (moneyCell) => {
@@ -69,7 +70,7 @@ const getTitle = (moneyCell) => {
             {`${moneyCell.name}`}
         </Text>,
         <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
-            {`${moneyCell.amount}`}
+            {`${moneyCell.amount} RUB`}
         </Text>]
     );
 };
@@ -95,70 +96,3 @@ const getAvatar = (moneyCell) => {
         name
     };
 };
-
-let moneyCells = [
-    {
-        id: '1',
-        ownerId: '1',
-        moneyCellType: MoneyCellType.CARD,
-        amount: 1300,
-        startDate: '2018-11-01T12:20:00.000Z',
-        endDate: '2018-11-01T12:20:00.000Z',
-        name: "Зарплатная карта",
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null,
-        isValid: true,
-        roi: null,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '2',
-        ownerId: '1',
-        moneyCellType: MoneyCellType.CASH,
-        amount: 10500,
-        startDate: '2018-11-01T12:20:00.000Z',
-        endDate: '2018-11-01T12:20:00.000Z',
-        name: "Наличные",
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null,
-        isValid: true,
-        roi: null,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '3',
-        ownerId: '1',
-        moneyCellType: MoneyCellType.DEPOSIT,
-        amount: 1100000,
-        startDate: '2018-11-01T12:20:00.000Z',
-        endDate: '2018-11-01T12:20:00.000Z',
-        name: "Вклад Восточный",
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null,
-        isValid: true,
-        roi: null,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '4',
-        ownerId: '1',
-        moneyCellType: MoneyCellType.CARD,
-        amount: -14300,
-        startDate: '2018-11-01T12:20:00.000Z',
-        endDate: '2018-11-01T12:20:00.000Z',
-        name: "Кредитка",
-        status: MoneyCellStatus.ACTIVE,
-        parentId: null,
-        isValid: true,
-        roi: null,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    }
-];

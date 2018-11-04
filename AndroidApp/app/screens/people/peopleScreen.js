@@ -1,10 +1,12 @@
 import React from 'react';
-import {List} from "../../components/list/list";
-import {Sex} from "../../constants/sex";
-import {Alert, Text} from "react-native";
-import {Theme} from "../../components/theme";
-import {Screen} from "../../components/screen/screen";
-import {showOkCancelDialog} from "../../helpers/okCancelDialog";
+import {List} from '../../components/list/list';
+import {Sex} from '../../constants/sex';
+import {Alert, Text} from 'react-native';
+import {Theme} from '../../components/theme';
+import {Screen} from '../../components/screen/screen';
+import {showOkCancelDialog} from '../../helpers/okCancelDialog';
+
+import state from '../../store/initialState';
 
 export const PeopleScreen = (props) => {
     let {navigation} = props;
@@ -27,7 +29,7 @@ export const PeopleScreen = (props) => {
                 onItemPress = {onPersonPress(navigation)}
                 onItemEditPress = {onPersonEditPress(navigation)}
                 onItemDeletePress = {onPersonDeletePress(navigation)}
-                items = {people}
+                items = {state.people}
                 addButtonInfo= {{
                     icon: {
                         name: 'md-person-add',
@@ -42,19 +44,25 @@ export const PeopleScreen = (props) => {
 };
 
 const addPersonPress = (navigation) => () => {
-    navigation.push('AddNew')
+    navigation.push('EditOrAddPerson', {
+        action: (newPerson) => Alert.alert(`Save new ${getDisplayName(newPerson)}`)
+    })
 };
 
 const onPersonPress = navigation => (person) => {
-    navigation.push('Person', {person : person})
+    navigation.push('Person', {person})
 };
 
 const onPersonEditPress = navigation => person => {
-    navigation.push('Edit', {person : person})
+    navigation.push('EditOrAddPerson', {
+        person,
+        action: (newPerson) => Alert.alert(`Save ${getDisplayName(newPerson)}`)})
 };
 
+const getDisplayName = (person) => `${person.lastName} ${person.firstName}`;
+
 const onPersonDeletePress = (navigation) => (person) => {
-    let displayName = `${person.lastName} ${person.firstName}`;
+    let displayName = getDisplayName(person);
     showOkCancelDialog(
         'Deleting person',
         `You want to delete a person '${displayName}'. Are you sure?`,
@@ -83,78 +91,3 @@ const getAvatar = (person) => {
         name
     };
 };
-
-let people = [
-    {
-        id:'1',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'2',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'3',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'4',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'5',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'6',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'7',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'8',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'9',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'10',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    },
-    {
-        id:'11',
-        lastName: 'Зуев',
-        firstName: 'Алексей',
-        sex: Sex.MALE
-    },
-    {
-        id:'12',
-        lastName: 'Зуева',
-        firstName: 'Наталья',
-        sex: Sex.FEMALE
-    }
-];

@@ -30,6 +30,7 @@
     "react-navigation": "^2.18.2",
     "react-router-native": "^4.3.0",
     "redux": "^4.0.0",
+    "tcomb-form-native": "^0.6.20",
     "uuid-v4": "^0.1.0"
   }
 }

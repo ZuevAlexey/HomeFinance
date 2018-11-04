@@ -20,7 +20,9 @@ module.exports = StyleSheet.create({
         justifyContent: 'center'
     },
     headerRight: {
-        flex:2
+        flex:2,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     contentContainer: {
         borderWidth:1,

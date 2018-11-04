@@ -5,6 +5,8 @@ import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 import {showOkCancelDialog} from "../../helpers/okCancelDialog";
 
+import state from '../../store/initialState';
+
 const TRANSFER = 'transfer';
 const TRANSFER_IN = 'transfer-in';
 const TRANSFER_OUT = 'transfer-out';
@@ -29,7 +31,7 @@ export const TransactionsScreen = (props) => {
                 onItemPress = {onTransactionPress(navigation)}
                 onItemEditPress = {onTransactionEditPress(navigation)}
                 onItemDeletePress = {onTransactionDeletePress}
-                items = {transactions}
+                items = {state.transactions}
                 addButtonInfo= {{
                     icon: {
                         name: 'credit-card-plus',
@@ -44,7 +46,7 @@ export const TransactionsScreen = (props) => {
 };
 
 const addTransactionPress = (navigation) => () => {
-    navigation.push('AddNew');
+    navigation.push('EditOrAddTransaction');
 };
 
 const onTransactionPress = (navigation) => (transaction) => {
@@ -52,7 +54,7 @@ const onTransactionPress = (navigation) => (transaction) => {
 };
 
 const onTransactionEditPress = (navigation) => (transaction) => {
-    navigation.push('Edit', {transaction});
+    navigation.push('EditOrAddTransaction', {transaction});
 };
 
 const onTransactionDeletePress = (transaction) => {
@@ -141,71 +143,3 @@ const getAvatar = (transaction) => {
         name
     };
 };
-
-let transactions = [
-    {
-        id: '1',
-        fromId: '1',
-        toId: '2',
-        articleId: '101',
-        amount: 1300,
-        date: '2018-11-01T12:20:00.000Z',
-        description: 'Покупка колбасы',
-        isValid: true,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '2',
-        fromId: '2',
-        toId: '1',
-        articleId: '201',
-        amount: 30000,
-        date: '2018-11-01T12:20:00.000Z',
-        description: 'Перечисление з/п',
-        isValid: true,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '3',
-        fromId: '1',
-        toId: '2',
-        articleId: '102',
-        amount: 450,
-        date: '2018-11-01T12:20:00.000Z',
-        description: 'Покупка эспумизана',
-        isValid: true,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '4',
-        fromId: '1',
-        toId: '2',
-        articleId: '202',
-        amount: 1450,
-        date: '2018-11-01T12:20:00.000Z',
-        description: 'Проценты с вклада',
-        isValid: true,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    },
-    {
-        id: '4',
-        fromId: '1',
-        toId: '2',
-        articleId: '300',
-        amount: 2000,
-        date: '2018-11-01T12:20:00.000Z',
-        description: 'Перевод Наташке',
-        isValid: true,
-        lastModificationTime: '2018-11-01T12:20:00.000Z',
-        creationTime: '2018-11-01T12:20:00.000Z',
-        isDeleted: false
-    }
-];
