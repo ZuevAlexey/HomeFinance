@@ -7,7 +7,7 @@ import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
 let Form = t.form.Form;
 
-export default class EditOrAddPersonScreen extends React.Component {
+export default class EditPersonScreen extends React.Component {
     constructor(props){
         super(props);
         this.onPress = this.onPress.bind(this);
@@ -32,7 +32,7 @@ export default class EditOrAddPersonScreen extends React.Component {
 
     render() {
         let {person} = this.props.navigation.state.params;
-        let headerTitle = person === undefined ? 'Add New Person' : `Edit ${person.lastName}`;
+        let headerTitle = person === undefined ? 'Add New Person' : `Edit ${person.lastName} ${person.firstName}`;
         return (
             <Screen
                 {...this.props}
@@ -45,7 +45,7 @@ export default class EditOrAddPersonScreen extends React.Component {
                         value = {this.state.value}
                         options={options}
                     />
-                    <View style={{flexDirection: 'column', flex:1, alignItems: 'center'}}>
+                    <View style={styles.buttonContainer}>
                         <Button
                             buttonStyle = {styles.button}
                             title = 'Save'
@@ -62,20 +62,25 @@ let Person = t.struct({
     lastName: t.String,
     firstName: t.String,
     sex: t.enums({
-        [Sex.MALE]: Sex.MALE,
-        [Sex.FEMALE]: Sex.FEMALE
+        [Sex.MALE]: 'MALE',
+        [Sex.FEMALE]: 'FEMALE'
     }, 'Sex')
 });
 
 let options = {
-    firstName: {
-        label: 'Enter first name'
-    },
-    lastName: {
-        label: 'Enter last name'
-    },
-    sex: {
-        label: 'Enter sex'
+    fields:{
+        firstName: {
+            label: 'First name',
+            placeholder: 'Enter first name'
+        },
+        lastName: {
+            label: 'Last name',
+            placeholder: 'Enter last name'
+        },
+        sex: {
+            label: 'Sex',
+            placeholder: 'Enter sex'
+        }
     }
 };
 
@@ -85,6 +90,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignContent: 'center',
         padding: 20
+    },
+    buttonContainer: {
+        flexDirection: 'column',
+        flex:1,
+        alignItems: 'center'
     },
     button: {
         height: 36,

@@ -44,7 +44,7 @@ export const PeopleScreen = (props) => {
 };
 
 const addPersonPress = (navigation) => () => {
-    navigation.push('EditOrAddPerson', {
+    navigation.push('EditPerson', {
         action: (newPerson) => Alert.alert(`Save new ${getDisplayName(newPerson)}`)
     })
 };
@@ -54,7 +54,7 @@ const onPersonPress = navigation => (person) => {
 };
 
 const onPersonEditPress = navigation => person => {
-    navigation.push('EditOrAddPerson', {
+    navigation.push('EditPerson', {
         person,
         action: (newPerson) => Alert.alert(`Save ${getDisplayName(newPerson)}`)})
 };

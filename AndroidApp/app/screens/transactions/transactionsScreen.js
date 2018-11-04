@@ -46,7 +46,7 @@ export const TransactionsScreen = (props) => {
 };
 
 const addTransactionPress = (navigation) => () => {
-    navigation.push('EditOrAddTransaction');
+    navigation.push('EditTransaction');
 };
 
 const onTransactionPress = (navigation) => (transaction) => {
@@ -54,7 +54,7 @@ const onTransactionPress = (navigation) => (transaction) => {
 };
 
 const onTransactionEditPress = (navigation) => (transaction) => {
-    navigation.push('EditOrAddTransaction', {transaction});
+    navigation.push('EditTransaction', {transaction});
 };
 
 const onTransactionDeletePress = (transaction) => {

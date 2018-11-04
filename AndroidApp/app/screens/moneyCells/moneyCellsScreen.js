@@ -43,7 +43,7 @@ export const MoneyCellsScreen = (props) => {
 };
 
 const addMoneyCellPress = (navigation) => () => {
-    navigation.push('EditOrAddMoneyCell');
+    navigation.push('EditMoneyCell', {});
 };
 
 const onMoneyCellPress = (navigation) => (moneyCell) => {
@@ -51,7 +51,7 @@ const onMoneyCellPress = (navigation) => (moneyCell) => {
 };
 
 const onMoneyCellEditPress = (navigation) => (moneyCell) => {
-    navigation.push('EditOrAddMoneyCell', {moneyCell});
+    navigation.push('EditMoneyCell', {moneyCell});
 };
 
 const onMoneyCellDeletePress = (moneyCell) => {

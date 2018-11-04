@@ -78,22 +78,6 @@ module.exports = {
         isDeleted:'false'
       },
       {
-        id: 'c7b36102-8fb9-47f6-8e39-81f9bc83e2dd',
-        ownerId: 'c22797c0-ba8d-41d7-b1ae-191865a3b00d',
-        moneyCellType: 'deposit',
-        amount: 800000,
-        startDate: '2018-10-06T21:00:00.000Z',
-        endDate: '2018-11-06T21:00:00.000Z',
-        name: 'Вклад банк восточный',
-        status: 'active',
-        parentId: null,
-        isValid: true,
-        roi: null,
-		lastModificationTime: '2018-10-09T12:20:00.000Z',
-        creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
-      },
-      {
         id: 'a2323767-0ccc-4dcb-85ca-539bbeb03425',
         ownerId: '89d2214a-a4da-4bd5-8651-fbb4f6d9ba8a',
         moneyCellType: 'deposit',
