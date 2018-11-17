@@ -7,27 +7,24 @@ module.exports = StyleSheet.create({
     },
     headerContainer: {
         marginTop: StatusBar.currentHeight,
-        borderWidth:1,
+        borderWidth: 1,
         backgroundColor: 'white',
         borderColor: Theme.borderColor,
-        borderLeftColor: Theme.borderColor,
-        borderRightColor: Theme.borderColor,
-        borderBottomColor: Theme.borderColor
     },
     headerBody: {
-        flex:5,
+        flex: 5,
         alignItems: 'center',
         justifyContent: 'center'
     },
     headerRight: {
-        flex:2,
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     contentContainer: {
-        borderWidth:1,
+        borderWidth: 1,
         borderColor: Theme.borderColor,
-        flex:1,
+        flex: 1,
         alignContent: 'center',
         justifyContent: 'center'
     },

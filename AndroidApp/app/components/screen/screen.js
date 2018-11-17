@@ -12,11 +12,9 @@ export const Screen = (props) => {
         headerStatus
     } = props;
     return (
-        <Container style={Styles.container}>
-            <StatusBar
-                barStyle={Theme.statusBarStyle}
-            />
-            <Header style={Styles.headerContainer}>
+        <Container style={Styles.container} >
+            <StatusBar barStyle={Theme.statusBarStyle} />
+            <Header style={Styles.headerContainer} >
                 <Left>
                     <Icon
                         name='menu'
@@ -24,16 +22,16 @@ export const Screen = (props) => {
                         onPress = {() => navigation.openDrawer()}
                     />
                 </Left>
-                <Body style={Styles.headerBody}>
-                    <Text style = {Styles.titleText}>{headerTitle}</Text>
+                <Body style={Styles.headerBody} >
+                    <Text style = {Styles.titleText} >{headerTitle}</Text>
                 </Body>
-                {headerStatus && <Right style={Styles.headerRight}>
+                {headerStatus && <Right style={Styles.headerRight} >
                     {headerStatus}
                 </Right>}
             </Header>
-            <Container style = {Styles.contentContainer}>
-                {children}
-            </Container>
+            <Container style = {Styles.contentContainer} >
+            {children}
+        </Container>
         </Container>
     );
 };

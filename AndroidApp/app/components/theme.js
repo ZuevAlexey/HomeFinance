@@ -2,7 +2,6 @@ export const Theme = {
     mainColor: 'teal',
     borderColor: 'gray',
     fontColor: 'black',
-    noBorderColor: 'white',
     goodColor: 'orange',
     badColor: 'red',
     normalColor: 'blue',
@@ -12,5 +11,6 @@ export const Theme = {
         borderColor: 'teal',
         width: 50,
         height: 50
-    }
+    },
+    mainPaddingLeft: 5
 };

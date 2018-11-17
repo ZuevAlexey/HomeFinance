@@ -1,5 +1,5 @@
 export const MoneyCellType = {
-    CASH : 'cash',
-    DEPOSIT : 'deposit',
-    CARD : 'card'
+    CASH : 'Cash',
+    DEPOSIT : 'Deposit',
+    CARD : 'Card'
 };

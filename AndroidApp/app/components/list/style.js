@@ -7,14 +7,17 @@ module.exports = StyleSheet.create({
         flex: 1
     },
     buttonContainer: {
-        flex: 1,
-        borderWidth:1,
-        borderTopColor: Theme.borderColor,
-        borderColor: Theme.noBorderColor,
+        height: 80,
+        marginTop: 1,
+        borderTopWidth: 1,
+        borderWidth: 0,
         alignItems: 'center',
         justifyContent : 'center'
     },
     listContainer: {
-        flex:7
+        flex: 1,
+        borderTopWidth: 1,
+        borderWidth: 0,
+        borderTopColor: Theme.borderColor,
     }
 });

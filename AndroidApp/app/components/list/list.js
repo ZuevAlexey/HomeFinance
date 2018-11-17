@@ -38,15 +38,16 @@ export const List = (props) => {
                 </ScrollView>
             </View>
             {addButtonInfo && <View
-                style = {Styles.buttonContainer}
-            >
-                <Button
-                    icon={addButtonInfo.icon}
-                    title = {addButtonInfo.title}
-                    backgroundColor = {Theme.mainColor}
-                    onPress={() => addButtonInfo.onPress()}
-                />
-            </View>}
+                    style = {Styles.buttonContainer}
+                >
+                    <Button
+                        icon={addButtonInfo.icon}
+                        title = {addButtonInfo.title}
+                        backgroundColor = {Theme.mainColor}
+                        onPress={() => addButtonInfo.onPress()}
+                    />
+                </View>
+            }
         </View>
     )
 };

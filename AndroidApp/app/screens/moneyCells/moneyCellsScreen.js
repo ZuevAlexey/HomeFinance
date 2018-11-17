@@ -1,12 +1,12 @@
 import React from 'react';
 import {List} from "../../components/list/list";
-import {MoneyCellType} from "../../constants/moneyCellType";
 import {Alert, Text} from "react-native";
 import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 import {showOkCancelDialog} from "../../helpers/okCancelDialog";
 
 import state from '../../store/initialState';
+import {getAvatar} from "../../helpers/moneyCellsHelper";
 
 export const MoneyCellsScreen = (props) => {
     let {navigation} = props;
@@ -73,26 +73,4 @@ const getTitle = (moneyCell) => {
             {`${moneyCell.amount} RUB`}
         </Text>]
     );
-};
-
-const getAvatar = (moneyCell) => {
-    let name;
-    switch (moneyCell.moneyCellType){
-        case MoneyCellType.CARD:{
-            name = 'credit-card';
-            break;
-        }
-        case MoneyCellType.CASH:{
-            name = 'cash-100';
-            break;
-        }
-        case MoneyCellType.DEPOSIT:{
-            name = 'bank';
-        }
-    }
-
-    return {
-        type: 'material-community',
-        name
-    };
 };

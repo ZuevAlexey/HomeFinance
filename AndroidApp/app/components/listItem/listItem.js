@@ -15,24 +15,16 @@ export const ListItem = (props) => {
           onDeletePress
       } = props;
       return (
-          <TouchableNativeFeedback
-              onPress = {onPress}
-          >
-              <View
-                  style = {Styles.container}
-              >
+          <TouchableNativeFeedback onPress = {onPress} >
+              <View style = {Styles.container} >
                   <Avatar
                       avatar = {avatar}
                       style = {avatarStyle}
                   />
-                  <View
-                      style={Styles.titleContainer}
-                  >
+                  <View style={Styles.titleContainer} >
                       {title}
                   </View>
-                  <View
-                      style={Styles.editContainer}
-                  >
+                  <View style={Styles.editContainer} >
                       <Icon
                           name = 'edit'
                           color = {Theme.mainColor}

@@ -1,0 +1,1 @@
+export const GetFullName = person => person.lastName + ' ' + person.firstName;

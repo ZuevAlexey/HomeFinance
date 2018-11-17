@@ -10,4 +10,4 @@ export const showOkCancelDialog = (title, message, okTitle, cancelTitle, onOkPre
         ],
         { cancelable: true }
     );
-}
+};

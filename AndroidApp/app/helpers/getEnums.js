@@ -8,4 +8,4 @@ export const getEnumsFromList = (objects, valueFactory, displayValueFactory, nam
     return tcomb.enums(enumObject, name)
 };
 
-export const getEnumsFromObject = (object, name) => getEnumsFromList(Object.keys(object), key => object[key], key => key, name);
+export const getEnumsFromObject = (object, name) => getEnumsFromList(Object.keys(object), key => object[key], key => object[key], name);

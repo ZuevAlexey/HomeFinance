@@ -8,14 +8,12 @@ module.exports = StyleSheet.create({
         marginTop: 1,
         paddingTop: 0,
         paddingBottom: 0,
-        borderTopColor: Theme.borderColor,
-        borderBottomColor: Theme.borderColor,
-        borderColor: Theme.noBorderColor,
-        borderWidth: 1,
+        borderColor: Theme.borderColor,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderWidth: 0,
         alignItems: 'center',
-    },
-    avatarContainer:{
-        flex: 1
+        paddingLeft: Theme.mainPaddingLeft
     },
     titleContainer: {
         flex: 3,

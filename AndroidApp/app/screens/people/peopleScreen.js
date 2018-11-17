@@ -7,6 +7,7 @@ import {Screen} from '../../components/screen/screen';
 import {showOkCancelDialog} from '../../helpers/okCancelDialog';
 
 import state from '../../store/initialState';
+import {GetFullName} from "../../helpers/peopleHelper";
 
 export const PeopleScreen = (props) => {
     let {navigation} = props;
@@ -74,7 +75,7 @@ const onPersonDeletePress = (navigation) => (person) => {
 
 const getTitle = (person) => {
     return (
-        <Text>{person.lastName + ' ' + person.firstName}</Text>
+        <Text>{GetFullName(person)}</Text>
     );
 };
 
