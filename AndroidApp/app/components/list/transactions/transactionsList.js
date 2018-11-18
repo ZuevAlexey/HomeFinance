@@ -16,7 +16,7 @@ export const TransactionsList = (props) => {
                 avatarFactory = {getAvatar}
                 avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
-                onItemPress = {onTransactionPress(navigation)}
+                onItemPress = {onTransactionEditPress(navigation)}
                 onItemEditPress = {onTransactionEditPress(navigation)}
                 onItemDeletePress = {onTransactionDeletePress}
                 items = {State.transactions}
@@ -33,11 +33,7 @@ export const TransactionsList = (props) => {
 };
 
 const addTransactionPress = (navigation) => () => {
-    navigation.push('EditTransaction');
-};
-
-const onTransactionPress = (navigation) => (transaction) => {
-    navigation.push('Transaction', {transaction});
+    navigation.push('EditTransaction', {});
 };
 
 const onTransactionEditPress = (navigation) => (transaction) => {

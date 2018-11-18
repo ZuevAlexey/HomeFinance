@@ -1,20 +1,16 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
-import {ScrollView, StyleSheet, View} from 'react-native';
 import {MoneyCellType} from '../../constants/moneyCellType';
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
 import state from '../../store/initialState';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
+import {EditForm} from "../../components/editForm/editForm";
 
 let t = require('tcomb-form-native');
-let Form = t.form.Form;
 
 export default class EditMoneyCellScreen extends React.Component {
     constructor(props){
         super(props);
-        this.onPress = this.onPress.bind(this);
         this.getType = this.getType.bind(this);
         let {moneyCell} = this.props.navigation.state.params;
         let defaultValue = moneyCell === undefined
@@ -37,14 +33,6 @@ export default class EditMoneyCellScreen extends React.Component {
         this.state = {value: defaultValue};
     }
 
-    onPress = () => {
-        let value = this.refs.form.getValue();
-        if (value) {
-            let action = this.props.navigation.state.params.action;
-            action && action(value);
-        }
-    };
-
     getType = () => {
         return t.struct({
             ownerId: getEnumsFromList(state.people, p => p.id, p => `${p.lastName} ${p.firstName}`, 'People'),
@@ -60,38 +48,25 @@ export default class EditMoneyCellScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {moneyCell} = this.props.navigation.state.params;
-        let headerTitle = moneyCell === undefined ? 'Add new money cell' : `Edit ${moneyCell.name}`;
+        let {moneyCell, action} = this.props.navigation.state.params;
+        let headerTitle = moneyCell === undefined ? 'Add new money cell' : moneyCell.name;
         return (
             <Screen
                 {...this.props}
                 headerTitle={headerTitle}
             >
-                <View style = {{flex:1}}>
-                    <ScrollView>
-                        <View style={styles.container}>
-                            <Form
-                                ref="form"
-                                type={type}
-                                value = {this.state.value}
-                                options={options}
-                            />
-                            <View style={styles.buttonContainer}>
-                                <Button
-                                    buttonStyle = {styles.button}
-                                    title = 'Save'
-                                    onPress={() => this.onPress()}
-                                />
-                            </View>
-                        </View>
-                    </ScrollView>
-                </View>
+                <EditForm
+                    type={type}
+                    options={options}
+                    startValue={this.state.value}
+                    action={action}
+                />
             </Screen>
         );
     }
 };
 
-let options = {
+const options = {
     fields: {
         ownerId: {
             label: 'Owner'
@@ -100,7 +75,8 @@ let options = {
             label: 'Type'
         },
         amount: {
-            label: 'Amount'
+            label: 'Amount',
+            placeholder: 'Enter current money cell\'s amount'
         },
         name: {
             label: 'Name',
@@ -128,24 +104,3 @@ let options = {
         }
     }
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignContent: 'center',
-        padding: 20
-    },
-    buttonContainer: {
-        flexDirection: 'column',
-        flex:1,
-        alignItems: 'center'
-    },
-    button: {
-        height: 36,
-        width: 140,
-        backgroundColor: Theme.mainColor,
-        marginBottom: 10,
-        justifyContent: 'center'
-    }
-});

@@ -1,16 +1,12 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
 let t = require('tcomb-form-native');
-import { StyleSheet, View } from 'react-native';
 import {Sex} from '../../constants/sex';
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
-let Form = t.form.Form;
+import {EditForm} from "../../components/editForm/editForm";
 
 export default class EditPersonScreen extends React.Component {
     constructor(props){
         super(props);
-        this.onPress = this.onPress.bind(this);
         let {person} = this.props.navigation.state.params;
         let defaultValue = person === undefined
             ? null
@@ -23,36 +19,20 @@ export default class EditPersonScreen extends React.Component {
         this.state = {value: defaultValue};
     }
 
-    onPress = () => {
-        let value = this.refs.form.getValue();
-        if (value) {
-            this.props.navigation.state.params.action(value);
-        }
-    };
-
     render() {
-        let {person} = this.props.navigation.state.params;
-        let headerTitle = person === undefined ? 'Add New Person' : `Edit ${person.lastName} ${person.firstName}`;
+        let {person, action} = this.props.navigation.state.params;
+        let headerTitle = person === undefined ? 'Add New Person' : `${person.lastName} ${person.firstName}`;
         return (
             <Screen
                 {...this.props}
                 headerTitle={headerTitle}
             >
-                <View style={styles.container}>
-                    <Form
-                        ref="form"
-                        type={Person}
-                        value = {this.state.value}
-                        options={options}
-                    />
-                    <View style={styles.buttonContainer}>
-                        <Button
-                            buttonStyle = {styles.button}
-                            title = 'Save'
-                            onPress={() => this.onPress()}
-                        />
-                    </View>
-                </View>
+                <EditForm
+                    type={Person}
+                    options={options}
+                    startValue={this.state.value}
+                    action={action}
+                />
             </Screen>
         );
     }
@@ -83,24 +63,3 @@ let options = {
         }
     }
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignContent: 'center',
-        padding: 20
-    },
-    buttonContainer: {
-        flexDirection: 'column',
-        flex:1,
-        alignItems: 'center'
-    },
-    button: {
-        height: 36,
-        width: 140,
-        backgroundColor: Theme.mainColor,
-        marginBottom: 10,
-        justifyContent: 'center'
-    }
-});

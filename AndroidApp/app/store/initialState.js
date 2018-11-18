@@ -128,8 +128,8 @@ module.exports = {
     ],
     transactions: [{
         id: '1',
-        fromId: '1',
-        toId: '2',
+        fromId: '0c8529da-08c7-41db-b723-005de47985a1',
+        toId: '00000000-0000-0000-0000-000000000001',
         articleId: '101',
         amount: 1300,
         date: '2018-11-01T12:20:00.000Z',
@@ -139,85 +139,112 @@ module.exports = {
         creationTime: '2018-11-01T12:20:00.000Z',
         isDeleted: false
     },
-        {
-            id: '2',
-            fromId: '2',
-            toId: '1',
-            articleId: '201',
-            amount: 30000,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Перечисление з/п',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        },
-        {
-            id: '3',
-            fromId: '1',
-            toId: '2',
-            articleId: '102',
-            amount: 450,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Покупка эспумизана',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        },
-        {
-            id: '4',
-            fromId: '1',
-            toId: '2',
-            articleId: '202',
-            amount: 1450,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Проценты с вклада',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        },
-        {
-            id: '5',
-            fromId: '1',
-            toId: '2',
-            articleId: '300',
-            amount: 2000,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Перевод Наташке',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        },
-        {
-            id: '6',
-            fromId: '1',
-            toId: '2',
-            articleId: '202',
-            amount: 1450,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Проценты с вклада',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        },
-        {
-            id: '7',
-            fromId: '1',
-            toId: '2',
-            articleId: '300',
-            amount: 2000,
-            date: '2018-11-01T12:20:00.000Z',
-            description: 'Перевод Наташке',
-            isValid: true,
-            lastModificationTime: '2018-11-01T12:20:00.000Z',
-            creationTime: '2018-11-01T12:20:00.000Z',
-            isDeleted: false
-        }],
-    articles: [],
+    {
+        id: '2',
+        fromId: '00000000-0000-0000-0000-000000000001',
+        toId: '0c8529da-08c7-41db-b723-005de47985a1',
+        articleId: '201',
+        amount: 30000,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Перечисление з/п',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    },
+    {
+        id: '3',
+        fromId: '0c8529da-08c7-41db-b723-005de47985a1',
+        toId: '00000000-0000-0000-0000-000000000001',
+        articleId: '102',
+        amount: 450,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Покупка эспумизана',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    },
+    {
+        id: '4',
+        fromId: '00000000-0000-0000-0000-000000000001',
+        toId: '0c8529da-08c7-41db-b723-005de47985a1',
+        articleId: '202',
+        amount: 1450,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Проценты с вклада',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    },
+    {
+        id: '5',
+        fromId: '0c8529da-08c7-41db-b723-005de47985a1',
+        toId: '6ae9ee24-b213-4a86-8dff-2b5cf6c6f46b',
+        articleId: '300',
+        amount: 2000,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Перевод Наташке',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    },
+    {
+        id: '6',
+        fromId: '00000000-0000-0000-0000-000000000001',
+        toId: '0c8529da-08c7-41db-b723-005de47985a1',
+        articleId: '202',
+        amount: 1450,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Проценты с вклада',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    },
+    {
+        id: '7',
+        fromId: '0c8529da-08c7-41db-b723-005de47985a1',
+        toId: '6ae9ee24-b213-4a86-8dff-2b5cf6c6f46b',
+        articleId: '300',
+        amount: 2000,
+        date: '2018-11-01T12:20:00.000Z',
+        description: 'Перевод Наташке',
+        isValid: true,
+        lastModificationTime: '2018-11-01T12:20:00.000Z',
+        creationTime: '2018-11-01T12:20:00.000Z',
+        isDeleted: false
+    }],
+    articles: [{
+        id: 100,
+        name: 'Официальная з/п'
+    },{
+        id: 101,
+        name: 'Неофициальная з/п'
+    },{
+        id: 102,
+        name: 'Проценты по депозитам'
+    },{
+        id: 199,
+        name: 'Прочее'
+    },{
+        id: 201,
+        name: 'Квартплата'
+    },{
+        id: 202,
+        name: 'Продукты'
+    },{
+        id: 203,
+        name: 'Хозяйственные товары'
+    },{
+        id: 204,
+        name: 'Прочее'
+    },{
+        id: 300,
+        name: 'Перевод'
+    }],
     systemData: {
         lastSynchronizationTime: '2018-10-09T12:20:00.000Z',
         serverAddress : 'http://192.168.1.60:4698'
