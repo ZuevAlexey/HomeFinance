@@ -1,16 +1,18 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
-import {TransactionsList} from "../../components/list/transactions/transactionsList";
+import TransactionsList from "../../components/list/transactions/transactionsList";
 import {Text, View, StyleSheet, Dimensions} from "react-native";
-import State from "../../store/initialState";
+import {initialState} from "../../store/initialState";
 import {GetFullName} from "../../helpers/peopleHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
+import {connect} from "react-redux";
+import {isNullOrUndefined} from "../../helpers/internal";
 
-export const MoneyCellInfoScreen = (props) => {
+const MoneyCellInfoScreen = (props) => {
     let {moneyCell} = props.navigation.state.params;
-    let {navigation} = props;
-    let people = State.people;
+    let {navigation, getTransactions} = props;
+    let people = initialState.people;
     let owner = people.filter(e => e.id === moneyCell.ownerId)[0];
 
     return (
@@ -25,13 +27,13 @@ export const MoneyCellInfoScreen = (props) => {
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
                 <View style ={styles.halfInfoContainer} >
-                    {GetInfoText('Start date', moneyCell.startDate === null ? 'not set' : moneyCell.startDate, e => e.substring(0,10))}
-                    {GetInfoText('End date', moneyCell.endDate === null ? 'not set' : moneyCell.endDate, e => e.substring(0,10))}
+                    {GetInfoText('Start date', isNullOrUndefined(moneyCell.startDate) ? 'not set' : moneyCell.startDate, e => e.substring(0,10))}
+                    {GetInfoText('End date', isNullOrUndefined(moneyCell.endDate) ? 'not set' : moneyCell.endDate, e => e.substring(0,10))}
                     {GetInfoText('Status', moneyCell.status, null, e => e === MoneyCellStatus.ACTIVE)}
                 </View>
             </View>
             <Text style = {styles.transactionsListTitle} >Current moneycell's transactions:</Text>
-            <TransactionsList navigation={navigation} />
+            <TransactionsList navigation={navigation} transactions = {getTransactions(moneyCell.id)} />
         </Screen>
     );
 };
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
 });
 
 const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
-    let valueColor = colorPredicate === undefined || colorPredicate === null
+    let valueColor = isNullOrUndefined(colorPredicate)
         ? Theme.fontColor
         : colorPredicate(value)
             ? Theme.goodColor
@@ -68,9 +70,19 @@ const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
         <Text
             style={{color: valueColor}}
         >
-            {displayValueCreator === undefined || displayValueCreator === null
+            {isNullOrUndefined(displayValueCreator)
                 ? value
                 : displayValueCreator(value)}
             </Text>
     </Text>
 };
+
+const mapStateToProps = state => {
+    return {
+        getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+    }
+};
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellInfoScreen)

@@ -1,18 +1,20 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
-import {TransactionsList} from "../../components/list/transactions/transactionsList";
-import {MoneyCellsList} from "../../components/list/moneyCellList/moneyCellsList";
+import TransactionsList from "../../components/list/transactions/transactionsList";
+import MoneyCellsList from "../../components/list/moneyCellList/moneyCellsList";
 import {View} from "native-base";
 import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
 import {StyleSheet} from "react-native";
+import {GetFullName} from "../../helpers/peopleHelper";
+import {connect} from "react-redux";
 
 const INNER_PAGES = {
     TRANSACTIONS : 'Transactions',
     MONEY_CELLS : 'MoneyCells'
 };
 
-export default class PersonInfoScreen extends React.Component {
+class PersonInfoScreen extends React.Component {
     constructor(props){
         super(props);
         this.state = {innerPage: INNER_PAGES.MONEY_CELLS};
@@ -37,16 +39,20 @@ export default class PersonInfoScreen extends React.Component {
     };
 
     render() {
-        let {navigation} = this.props;
+        let {navigation, getMoneyCells, getTransactions} = this.props;
         let {person} = navigation.state.params;
+        let moneyCells = getMoneyCells(person.id);
+        let moneyCellsIds = moneyCells.map(e => e.id);
+        let transactions = moneyCellsIds.reduce((acc, el) => acc.concat(getTransactions(el)), []);
+
         return (
             <Screen
                 {...this.props}
-                headerTitle = {`${person.lastName} ${person.firstName}`}
+                headerTitle = {GetFullName(person)}
             >
                 <View style = {styles.listContainer}>
-                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} />}
-                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} />}
+                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells}/>}
+                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions}/>}
                 </View>
                 <View style = {styles.buttonsContainer}>
                     <View style = {styles.buttonContainer}>
@@ -77,3 +83,16 @@ const styles = StyleSheet.create({
         justifyContent : 'center'
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        getMoneyCells: (personId) => state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
+        getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonInfoScreen)

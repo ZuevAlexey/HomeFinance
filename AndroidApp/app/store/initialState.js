@@ -1,4 +1,4 @@
-module.exports = {
+export const initialState = {
     people: [
       {
         id: 'fe990918-87f0-4c23-84b4-b168ab0283c5',
@@ -7,7 +7,7 @@ module.exports = {
         sex: 'Male',
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
 		creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: '89d2214a-a4da-4bd5-8651-fbb4f6d9ba8a',
@@ -16,7 +16,7 @@ module.exports = {
         sex: 'Male',
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: 'c22797c0-ba8d-41d7-b1ae-191865a3b00d',
@@ -25,7 +25,7 @@ module.exports = {
         sex: 'Male',
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       }
     ],
     moneyCells: [
@@ -43,7 +43,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: 'b3bcb0c7-caa9-4105-9c52-22b83de3312f',
@@ -59,7 +59,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: '08d886eb-fd07-47e5-b8d4-491af5d98ef7',
@@ -75,7 +75,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: 'a2323767-0ccc-4dcb-85ca-539bbeb03425',
@@ -91,7 +91,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: '6ae9ee24-b213-4a86-8dff-2b5cf6c6f46b',
@@ -107,7 +107,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       },
       {
         id: '8c29c926-8f55-4f97-9531-a4f445200e58',
@@ -123,7 +123,7 @@ module.exports = {
         roi: null,
 		lastModificationTime: '2018-10-09T12:20:00.000Z',
         creationTime: '2018-10-09T12:20:00.000Z',
-        isDeleted:'false'
+        isDeleted: false
       }
     ],
     transactions: [{

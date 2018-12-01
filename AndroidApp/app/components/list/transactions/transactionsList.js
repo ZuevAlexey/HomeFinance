@@ -1,52 +1,64 @@
 import React from 'react';
-import {Alert, Text} from "react-native";
+import {Text} from "react-native";
 import {List} from "../list";
 import {Theme} from "../../theme";
 import {showOkCancelDialog} from "../../../helpers/okCancelDialog";
-import State from "../../../store/initialState";
+import {AddTransaction} from "../../../store/actions/addTransaction";
+import {EditTransaction} from "../../../store/actions/editTransaction";
+import {connect} from "react-redux";
+import {MarkDeleteTransaction} from "../../../store/actions/markDeleteTransaction";
 
 const TRANSFER = 'transfer';
 const TRANSFER_IN = 'transfer-in';
 const TRANSFER_OUT = 'transfer-out';
 
-export const TransactionsList = (props) => {
-    let {navigation} = props;
+const TransactionsList = (props) => {
+    let {navigation, transactions, add, save, articles, moneyCells} = props;
     return (
             <List
                 avatarFactory = {getAvatar}
                 avatarStyle = {Theme.listAvatarStyle}
                 titleFactory = {getTitle}
-                onItemPress = {onTransactionEditPress(navigation)}
-                onItemEditPress = {onTransactionEditPress(navigation)}
-                onItemDeletePress = {onTransactionDeletePress}
-                items = {State.transactions}
+                onItemPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
+                onItemEditPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
+                onItemDeletePress = {onTransactionDeletePress(props.delete)}
+                items = {transactions}
                 addButtonInfo= {{
                     icon: {
                         name: 'credit-card-plus',
                         type: 'material-community'
                     },
                     title: 'Add new transaction',
-                    onPress: addTransactionPress(navigation)
+                    onPress: addTransactionPress(navigation, add, articles, moneyCells)
                 }}
             />
     );
 };
 
-const addTransactionPress = (navigation) => () => {
-    navigation.push('EditTransaction', {});
+const addTransactionPress = (navigation, add, articles, moneyCells) => () => {
+    navigation.push('EditTransaction', {
+        articles,
+        moneyCells,
+        action: (transaction) => add(transaction)
+    });
 };
 
-const onTransactionEditPress = (navigation) => (transaction) => {
-    navigation.push('EditTransaction', {transaction});
+const onTransactionEditPress = (navigation, save, articles, moneyCells) => (transaction) => {
+    navigation.push('EditTransaction', {
+        transaction,
+        articles,
+        moneyCells,
+        action: (newTransaction) => save(newTransaction)
+    });
 };
 
-const onTransactionDeletePress = (transaction) => {
+const onTransactionDeletePress = (deleteAction) => (transaction) => {
     showOkCancelDialog(
         'Deleting transaction',
         `You want to delete a transaction '${transaction.description}'. Are you sure?`,
         'Delete',
         'Cancel',
-        () => Alert.alert(`Delete '${transaction.description}'`)
+        () => deleteAction(transaction)
     );
 };
 
@@ -124,3 +136,24 @@ const getAvatar = (transaction) => {
         name
     };
 };
+
+const mapStateToProps = state => ({
+    articles: state.articles,
+    moneyCells: state.moneyCells.filter(e => !e.isDeleted)
+});
+
+const mapDispatchToProps = dispatch => {
+    return {
+        add: (transaction) => {
+            dispatch(AddTransaction(transaction.fromId, transaction.toId, transaction.articleId, transaction.amount, transaction.description, transaction.date))
+        },
+        save: (transaction) => {
+            dispatch(EditTransaction(transaction.id, transaction.fromId, transaction.toId, transaction.articleId, transaction.amount, transaction.description, transaction.date))
+        },
+        delete: (transaction) => {
+            dispatch(MarkDeleteTransaction(transaction.id))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList)

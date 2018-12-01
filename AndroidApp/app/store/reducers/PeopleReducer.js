@@ -15,7 +15,8 @@ export const PeopleReducer = (state = [], action) => {
                     firstName: action.firstName,
                     lastName: action.lastName,
                     sex: action.sex,
-                    lastModificationTime: action.lastModificationTime
+                    lastModificationTime: action.lastModificationTime,
+                    isDeleted: false
                 }
             ];
         case ActionName.REMOVE_PEOPLE:

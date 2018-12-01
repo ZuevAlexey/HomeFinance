@@ -21,7 +21,8 @@ export const MoneyCellsReducer = (state = [], action) => {
                     parentId: action.parentId,
                     isValid: action.isValid,
                     roi: action.roi,
-                    lastModificationTime: action.lastModificationTime
+                    lastModificationTime: action.lastModificationTime,
+                    isDeleted: false
                 }
             ];
         case ActionName.REMOVE_MONEY_CELLS:

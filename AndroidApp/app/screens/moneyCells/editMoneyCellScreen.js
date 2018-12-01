@@ -1,10 +1,10 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
 import {MoneyCellType} from '../../constants/moneyCellType';
-import state from '../../store/initialState';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {EditForm} from "../../components/editForm/editForm";
+import {GetFullName} from "../../helpers/peopleHelper";
 
 let t = require('tcomb-form-native');
 
@@ -13,13 +13,15 @@ export default class EditMoneyCellScreen extends React.Component {
         super(props);
         this.getType = this.getType.bind(this);
         let {moneyCell} = this.props.navigation.state.params;
-        let defaultValue = moneyCell === undefined
+        var isNew = moneyCell === undefined;
+        let defaultValue = isNew
             ? {
                 status: MoneyCellStatus.ACTIVE,
                 startDate: new Date(),
                 status: MoneyCellStatus.ACTIVE
             }
             : {
+                id: moneyCell.id,
                 ownerId: moneyCell.ownerId,
                 moneyCellType: moneyCell.moneyCellType,
                 amount: moneyCell.amount,
@@ -30,20 +32,26 @@ export default class EditMoneyCellScreen extends React.Component {
                 parentId: moneyCell.parentId
             };
 
-        this.state = {value: defaultValue};
+        this.state = {value: defaultValue, isNew };
     }
 
-    getType = () => {
-        return t.struct({
-            ownerId: getEnumsFromList(state.people, p => p.id, p => `${p.lastName} ${p.firstName}`, 'People'),
-            moneyCellType: getEnumsFromObject(MoneyCellType, 'MoneyCellType'),
-            amount: t.maybe(t.Number),
+    getType() {
+        let options = {
+            id: t.maybe(t.String),
             name: t.String,
             status: getEnumsFromObject(MoneyCellStatus, 'MoneyCellStatus'),
-            parentId: t.maybe(getEnumsFromList(state.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells')),
-            startDate: t.maybe(t.Date),
-            endDate: t.maybe(t.Date)
-        });
+        };
+
+        if(this.state.isNew){
+            options['ownerId'] = getEnumsFromList(this.props.navigation.state.params.people, p => p.id, p => GetFullName(p), 'People');
+            options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
+            options['amount'] = t.maybe(t.Number);
+            options['parentId'] = t.maybe(getEnumsFromList(this.props.navigation.state.params.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells'));
+            options['startDate'] = t.maybe(t.Date);
+            options['endDate'] = t.maybe(t.Date);
+        }
+
+        return t.struct(options);
     };
 
     render() {
@@ -66,41 +74,30 @@ export default class EditMoneyCellScreen extends React.Component {
     }
 };
 
-const options = {
-    fields: {
-        ownerId: {
-            label: 'Owner'
-        },
-        moneyCellType: {
-            label: 'Type'
-        },
-        amount: {
-            label: 'Amount',
-            placeholder: 'Enter current money cell\'s amount'
-        },
-        name: {
-            label: 'Name',
-            placeholder: 'Enter money cell name'
-        },
-        status: {
-            label: 'Status'
-        },
-        parentId: {
-            label: 'Parent money cell'
-        },
-        startDate: {
-            label: 'Start date',
-            mode: 'date',
-            config: {
-                format: date => date.toLocaleDateString('ru-Ru')
-            }
-        },
-        endDate: {
-            label: 'End date',
-            mode: 'date',
-            config: {
-                format: date => date.toLocaleDateString('ru-Ru')
-            }
+const options = (isNew) => {
+    let result = {
+        fields: {
+            id: {
+                hidden: true,
+            },
+            name: {
+                label: 'Name',
+                placeholder: 'Enter money cell name'
+            },
+            status: {
+                label: 'Status'
+            },
         }
+    };
+
+    if(isNew){
+        result.fields['ownerId'] = {label: 'Owner'};
+        result.fields['moneyCellType'] = {label: 'Type'};
+        result.fields['amount'] = {label: 'Amount', placeholder: 'Enter current money cell\'s amount'};
+        result.fields['parentId'] = {label: 'Parent money cell'};
+        result.fields['startDate'] = {label: 'Start date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
+        result.fields['endDate'] = {label: 'End date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
     }
+
+    return result;
 };

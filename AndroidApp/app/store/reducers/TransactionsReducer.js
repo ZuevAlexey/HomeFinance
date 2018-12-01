@@ -19,7 +19,8 @@ export const TransactionsReducer = (state = [], action) => {
                     date: action.date,
                     description: action.description,
                     isValid: action.isValid,
-                    lastModificationTime: action.lastModificationTime
+                    lastModificationTime: action.lastModificationTime,
+                    isDeleted: false
                 }
             ];
         case ActionName.REMOVE_TRANSACTIONS:

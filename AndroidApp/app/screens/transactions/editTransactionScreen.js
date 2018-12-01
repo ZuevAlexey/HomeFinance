@@ -1,9 +1,9 @@
 import React from 'react';
 import {Screen} from "../../components/screen/screen";
-import state from '../../store/initialState';
 import {getEnumsFromList} from '../../helpers/getEnums';
 import {EditForm} from "../../components/editForm/editForm";
 import {CommonConstants} from "../../constants/commonConstants";
+import {isNullOrUndefined} from "../../helpers/internal";
 
 let t = require('tcomb-form-native');
 
@@ -13,11 +13,12 @@ export default class EditTransactionScreen extends React.Component {
         this.getType = this.getType.bind(this);
         this.getMoneyCellsEnums = this.getMoneyCellsEnums.bind(this);
         let {transaction} = this.props.navigation.state.params;
-        let startValue = transaction === undefined
+        let startValue = isNullOrUndefined(transaction)
             ? {
                 date: new Date()
             }
             : {
+                id: transaction.id,
                 fromId: transaction.fromId,
                 toId: transaction.toId,
                 articleId: transaction.articleId,
@@ -30,16 +31,17 @@ export default class EditTransactionScreen extends React.Component {
     }
 
     getMoneyCellsEnums = () => {
-        return getEnumsFromList(state.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells',
+        return getEnumsFromList(this.props.navigation.state.params.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells',
             {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: 'OUTSIDE'}
         );
     };
 
     getType = () => {
         return t.struct({
+            id: t.maybe(t.String),
             fromId: this.getMoneyCellsEnums(),
             toId: this.getMoneyCellsEnums(),
-            articleId: getEnumsFromList(state.articles, a => a.id, a => a.name, 'Articles'),
+            articleId: getEnumsFromList(this.props.navigation.state.params.articles, a => a.id, a => a.name, 'Articles'),
             amount: t.Number,
             date: t.Date,
             description: t.String
@@ -49,7 +51,7 @@ export default class EditTransactionScreen extends React.Component {
     render() {
         let type = this.getType();
         let {transaction, action} = this.props.navigation.state.params;
-        let headerTitle = transaction === undefined ? 'Add new transaction' : transaction.description;
+        let headerTitle = isNullOrUndefined(transaction) ? 'Add new transaction' : transaction.description;
         return (
             <Screen
                 {...this.props}
@@ -68,6 +70,9 @@ export default class EditTransactionScreen extends React.Component {
 
 const options = {
     fields: {
+        id: {
+            hidden: true,
+        },
         fromId: {
             label: 'From'
         },

@@ -76,7 +76,7 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     action.lastModificationTime = lastModificationTime;
     action.id = id;
     const newPerson = PeopleReducer(startState, action)[stateLength];
-    expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id});
+    expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id, isDeleted: false});
 });
 
 it(`MoneyCells reducer process action ${ActionName.REMOVE_PEOPLE}`, () => {

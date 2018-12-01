@@ -11,6 +11,7 @@ export default class EditPersonScreen extends React.Component {
         let defaultValue = person === undefined
             ? null
             : {
+                id: person.id,
                 firstName: person.firstName,
                 lastName: person.lastName,
                 sex: person.sex
@@ -39,6 +40,7 @@ export default class EditPersonScreen extends React.Component {
 };
 
 let Person = t.struct({
+    id: t.maybe(t.String),
     lastName: t.String,
     firstName: t.String,
     sex: t.enums({
@@ -49,6 +51,9 @@ let Person = t.struct({
 
 let options = {
     fields:{
+        id: {
+            hidden: true
+        },
         firstName: {
             label: 'First name',
             placeholder: 'Enter first name'
