@@ -5,7 +5,7 @@ import {CustomDrawerContentComponent} from "../customDrawerComponent/customDrawe
 import {MoneyCellsScreen} from "../../screens/moneyCells/moneyCellsScreen";
 import {Theme} from "../theme";
 import {SynchronizationScreen} from "../../screens/synchronization/synchronizationScreen";
-import {PersonInfoScreen} from "../../screens/people/personInfoScreen";
+import PersonInfoScreen from "../../screens/people/personInfoScreen";
 import EditPersonScreen from "../../screens/people/editPersonScreen";
 import {MoneyCellInfoScreen} from "../../screens/moneyCells/moneyCellInfoScreen";
 import EditMoneyCellScreen from "../../screens/moneyCells/editMoneyCellScreen";
