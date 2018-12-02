@@ -9,9 +9,18 @@ export const CollectionReduce = (state, action, collectionName) => {
                 return state;
             }
 
-            return state.map(e => {
+            state = state.map(e => {
                 return ItemReduce(e, action, collectionName);
-            })
+            });
+
+            let curentIds = state.map(e => e.id).reduce((acc, el) => {
+                acc[el] = true;
+                return acc
+            }, {});
+
+            let newElements = collectionDiff.filter(e => curentIds[e.id] !== true);
+            state = state.concat(newElements);
+            return state;
         }
         default:{
             return state;

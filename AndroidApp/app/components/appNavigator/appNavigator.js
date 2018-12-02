@@ -4,7 +4,7 @@ import PeopleScreen from "../../screens/people/peopleScreen";
 import {CustomDrawerContentComponent} from "../customDrawerComponent/customDrawerComponent";
 import MoneyCellsScreen from "../../screens/moneyCells/moneyCellsScreen";
 import {Theme} from "../theme";
-import {SynchronizationScreen} from "../../screens/synchronization/synchronizationScreen";
+import SynchronizationScreen from "../../screens/synchronization/synchronizationScreen";
 import PersonInfoScreen from "../../screens/people/personInfoScreen";
 import EditPersonScreen from "../../screens/people/editPersonScreen";
 import MoneyCellInfoScreen from "../../screens/moneyCells/moneyCellInfoScreen";
@@ -13,6 +13,7 @@ import TransactionsScreen from "../../screens/transactions/transactionsScreen";
 import EditTransactionScreen from "../../screens/transactions/editTransactionScreen";
 
 export const AppNavigator = createDrawerNavigator({
+    Synchronization: SynchronizationScreen,
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen
@@ -49,7 +50,6 @@ export const AppNavigator = createDrawerNavigator({
     }, {
         headerMode: 'none'
     }),
-    Synchronization: SynchronizationScreen
 },{
     contentComponent: CustomDrawerContentComponent,
     header: null,

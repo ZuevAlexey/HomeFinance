@@ -21,7 +21,12 @@ export const createStore = (storeName) => {
     let historyFolder = path.resolve(dataFolder, storeName, 'history');
     createFolderIfNeed(historyFolder);
     let storeFileName = path.resolve(rootFolder, `state.json`);
-    createFileIfNeed(storeFileName, {});
+    createFileIfNeed(storeFileName, {
+        people: [],
+        moneyCells: [],
+        transactions: [],
+        articles: []
+    });
 
     let state = readObjectFromFile(storeFileName);
     let logger = createLogger('storage');
