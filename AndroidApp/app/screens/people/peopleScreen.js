@@ -72,9 +72,8 @@ const onPersonDeletePress = (navigation, deleteAction) => (person) => {
     showOkCancelDialog(
         'Deleting person',
         `You want to delete a person '${displayName}'. Are you sure?`,
+        () => deleteAction(person),
         'Delete',
-        'Cancel',
-        () => deleteAction(person)
     );
 };
 

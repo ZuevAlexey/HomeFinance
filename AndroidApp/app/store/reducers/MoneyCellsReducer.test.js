@@ -4,7 +4,6 @@ import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {MoneyCellsReducer} from "./moneyCellsReducer";
 import {EditMoneyCell} from '../actions/editMoneyCell';
 import {MarkDeleteMoneyCell} from '../actions/markDeleteMoneyCell';
-import {RemoveMoneyCells} from '../actions/removeMoneyCells';
 import {AddMoneyCell} from '../actions/addMoneyCell';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 
@@ -46,7 +45,7 @@ const processedActions = [
     ActionName.EDIT_MONEY_CELL,
     ActionName.ADD_MONEY_CELL,
     ActionName.MARK_DELETE_MONEY_CELL,
-    ActionName.REMOVE_MONEY_CELLS
+    ActionName.SYNCHRONIZATION
 ];
 const lastModificationTime = new Date();
 
@@ -88,6 +87,7 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     const name = 'вклад';
     const status = MoneyCellStatus.ACTIVE;
     const parentId = 67;
+    const isDeleted = false;
     const isValid = true;
     const roi = 10;
     const id = 1;
@@ -96,16 +96,5 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     action.id = 1;
     action.lastModificationTime = lastModificationTime;
     const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
-    expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id});
-});
-
-it(`MoneyCells reducer process action ${ActionName.REMOVE_MONEY_CELLS}`, () => {
-    let action = RemoveMoneyCells([1,3]);
-    expect(MoneyCellsReducer(startState, action))
-        .toEqual([card]);
-});
-
-it(`MoneyCells reducer don\'t process action ${ActionName.REMOVE_MONEY_CELLS}`, () => {
-    expect(MoneyCellsReducer(startState, RemoveMoneyCells([32])))
-        .toEqual(startState);
+    expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id, isDeleted});
 });

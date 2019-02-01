@@ -7,7 +7,7 @@ import {GetFullName} from "../../helpers/peopleHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {connect} from "react-redux";
-import {isNullOrUndefined} from "../../helpers/internal";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCell} = props.navigation.state.params;

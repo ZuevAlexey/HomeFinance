@@ -56,9 +56,8 @@ const onMoneyCellDeletePress = (deleteAction) => (moneyCell) => {
     showOkCancelDialog(
         'Deleting money cell',
         `You want to delete a money cell '${moneyCell.name}'. Are you sure?`,
+        () => deleteAction(moneyCell),
         'Delete',
-        'Cancel',
-        () => deleteAction(moneyCell)
     );
 };
 

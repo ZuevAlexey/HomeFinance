@@ -1,17 +1,10 @@
 import {ActionName} from "../../constants/actionName";
-import {ArticleReducer} from './articleReducer';
+import {synchronize} from "../../helpers/synchronizationHelper";
 
 export const ArticlesReducer = (state = [], action) => {
     switch(action.type){
-        case ActionName.EDIT_ARTICLE:
-            return state.map(e => ArticleReducer(e, action));
-        case ActionName.REMOVE_ARTICLES:
-            return state.filter(e => !action.ids.has(e.id));
-        case ActionName.ADD_ARTICLES:
-            return [
-                ...state,
-                ...action.articles
-            ];
+        case ActionName.SYNCHRONIZATION:
+            return synchronize(state, action.data.articles);
         default:
             return state;
     }

@@ -3,7 +3,7 @@ import {Screen} from "../../components/screen/screen";
 import {getEnumsFromList} from '../../helpers/getEnums';
 import {EditForm} from "../../components/editForm/editForm";
 import {CommonConstants} from "../../constants/commonConstants";
-import {isNullOrUndefined} from "../../helpers/internal";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 let t = require('tcomb-form-native');
 

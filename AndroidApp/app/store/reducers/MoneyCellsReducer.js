@@ -1,5 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {MoneyCellReducer} from './moneyCellReducer';
+import {synchronize} from "../../helpers/synchronizationHelper";
 
 export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){
@@ -25,8 +26,8 @@ export const MoneyCellsReducer = (state = [], action) => {
                     isDeleted: false
                 }
             ];
-        case ActionName.REMOVE_MONEY_CELLS:
-            return state.filter(e => !action.ids.has(e.id));
+        case ActionName.SYNCHRONIZATION:
+            return synchronize(state, action.data.moneyCells);
         default:
             return state;
     }

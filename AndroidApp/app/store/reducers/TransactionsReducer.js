@@ -1,5 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {TransactionReducer} from './transactionReducer';
+import {synchronize} from "../../helpers/synchronizationHelper";
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
@@ -23,8 +24,8 @@ export const TransactionsReducer = (state = [], action) => {
                     isDeleted: false
                 }
             ];
-        case ActionName.REMOVE_TRANSACTIONS:
-            return state.filter(e => !action.ids.has(e.id));
+        case ActionName.SYNCHRONIZATION:
+            return synchronize(state, action.data.transactions);
         default:
             return state;
     }

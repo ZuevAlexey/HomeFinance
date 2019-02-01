@@ -1,13 +1,13 @@
 import React from 'react';
-import {Text, Alert, StyleSheet} from "react-native";
+import {Text, StyleSheet, Alert} from "react-native";
 import {Screen} from "../../components/screen/screen";
 import {View} from "native-base";
 import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
-import {EditMoneyCell} from "../../store/actions/editMoneyCell";
-import {MarkDeleteMoneyCell} from "../../store/actions/markDeleteMoneyCell";
 import {connect} from "react-redux";
-import {AddMoneyCell} from "../../store/actions/addMoneyCell";
+import {deserialyze, getInfoForSynchronize} from "../../helpers/synchronizationHelper";
+import {Synchronize} from "../../store/actions/synchronization";
+import {getDateDisplayString} from "../../helpers/dateTimeHelper";
 
 const CONNECTION_STATUS = {
     OK: 'OK',
@@ -15,61 +15,92 @@ const CONNECTION_STATUS = {
     FAILED: 'FAILED'
 };
 
+const branches = [
+  'people',
+  'moneyCells',
+  'transactions',
+  'articles'
+];
+
+function getCount(collectionGetter, data) {
+    return branches.reduce((acc, el) => {
+        let branch = data[el];
+        if(branch === null || branch === undefined){
+            return acc;
+        }
+
+        acc = acc + collectionGetter(branch).length;
+        return acc;
+    }, 0);
+}
+
 class SynchronizationScreen extends React.Component {
     constructor(props){
         super(props);
-        this.testConnection = this.testConnection.bind(this);
         this.synchronization = this.synchronization.bind(this);
         this.state = {
-            connectionStatus: CONNECTION_STATUS.UNKNOWN,
-            json: ''
+            connectionStatus: CONNECTION_STATUS.UNKNOWN
         }
     }
 
-
-    async testConnection(serverAddress){
-        try{
-            let response = await fetch(serverAddress + '/api/test');
-            let json = await response.json();
-            this.setState({json: JSON.stringify(json), connectionStatus: CONNECTION_STATUS.OK});
-        } catch (error){
-            this.setState({connectionStatus: CONNECTION_STATUS.FAILED})
-        }
-    };
-
     async synchronization(serverAddress){
-        try {
-            let response = await fetch(serverAddress + '/api/action', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
+    try {
+        let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
+        let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
+        let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
+        let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
+
+        let body = JSON.stringify({
+            type: 'sync',
+            data: {
+                systemData: {
+                    lastSynchronizationTime: lastSynchronizationTime
                 },
-                body: JSON.stringify({
-                    type: 'sync',
-                    data: {
-                        systemData: {
-                            lastSynchronizationTime: this.props.systemData.lastSynchronizationTime
-                        },
-                        people: this.props.people,
-                        moneyCells: this.props.moneyCells,
-                        transactions: this.props.transactions
-                    }
-                })
+                people: peopleForSynchronize,
+                moneyCells: moneyCellsForSynchronize,
+                transactions: transactionsForSynchronize
+            }
+        });
+
+        Alert.alert('', body);
+
+        let response = await fetch(serverAddress + '/api/action', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: body
+        });
+
+        let json = await response.json();
+        if(json.type !== 'sync'){
+            this.setState({
+                connectionStatus: CONNECTION_STATUS.FAILED
             });
 
-            let json = await response.json();
-            
-            this.setState({
-                json: JSON.stringify(json),
-                connectionStatus: CONNECTION_STATUS.OK
-            });
-        } catch (error) {
-            this.setState({
-                connectionStatus: CONNECTION_STATUS.FAILED,
-                json: JSON.stringify(error.stack)
-            })
+            return;
         }
+
+        let deserializedData = deserialyze(json.data);
+        this.props.sync(deserializedData);
+
+        let pushCount = peopleForSynchronize.length + moneyCellsForSynchronize.length + transactionsForSynchronize.length;
+        let editCount = getCount(p => p.edit, deserializedData);
+        let removeCount = getCount(p => p.remove, deserializedData);
+        let addCount = getCount(p => p.add, deserializedData);
+        Alert.alert(
+            "Синхронизация прошла успешно",
+            `Изменений отправлено ${pushCount}. Изменение получено ${editCount + removeCount + addCount}`
+        );
+        this.setState({
+            connectionStatus: CONNECTION_STATUS.OK
+        });
+    } catch (error) {
+        this.setState({
+            connectionStatus: CONNECTION_STATUS.FAILED
+        })
+    }
     }
 
     render() {
@@ -82,16 +113,8 @@ class SynchronizationScreen extends React.Component {
             >
                 <View style={styles.container}>
                     <Text>{serverAddress}</Text>
-                    <Text>{systemData.lastSynchronizationTime}</Text>
+                    <Text>{getDateDisplayString(systemData.lastSynchronizationTime)}</Text>
                     <Text>{this.state.connectionStatus}</Text>
-                    <Text>{this.state.json}</Text>
-                    <View style={styles.buttonContainer} >
-                        <Button
-                            title={'Test connection'}
-                            backgroundColor={Theme.mainColor}
-                            onPress={() => this.testConnection(serverAddress)}
-                        />
-                    </View>
                 </View>
                 <View
                     style={styles.buttonContainer}
@@ -105,7 +128,7 @@ class SynchronizationScreen extends React.Component {
             </Screen>
         );
     }
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -131,15 +154,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        add: (moneyCell) => {
-            dispatch(AddMoneyCell(moneyCell.ownerId, moneyCell.moneyCellType, moneyCell.name, moneyCell.status, moneyCell.amount, moneyCell.isValid, moneyCell.startDate,
-                moneyCell.endDate, moneyCell.roi, moneyCell.parentId))
-        },
-        save: (moneyCell) => {
-            dispatch(EditMoneyCell(moneyCell.id, moneyCell.name, moneyCell.status))
-        },
-        delete: (moneyCell) => {
-            dispatch(MarkDeleteMoneyCell(moneyCell.id))
+        sync: (data) => {
+            dispatch(Synchronize(data))
         }
     }
 };

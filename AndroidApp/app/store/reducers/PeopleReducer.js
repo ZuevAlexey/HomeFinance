@@ -1,5 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {PersonReducer} from './personReducer';
+import {synchronize} from "../../helpers/synchronizationHelper";
 
 export const PeopleReducer = (state = [], action) => {
     switch(action.type){
@@ -19,8 +20,8 @@ export const PeopleReducer = (state = [], action) => {
                     isDeleted: false
                 }
             ];
-        case ActionName.REMOVE_PEOPLE:
-            return state.filter(e => !action.ids.has(e.id));
+        case ActionName.SYNCHRONIZATION:
+            return synchronize(state, action.data.people);
         default:
             return state;
     }

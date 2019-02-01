@@ -22,7 +22,7 @@ const TransactionsList = (props) => {
                 onItemPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
                 onItemEditPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
                 onItemDeletePress = {onTransactionDeletePress(props.delete)}
-                items = {transactions}
+                items = {transactions.sort(e => e.date)}
                 addButtonInfo= {{
                     icon: {
                         name: 'credit-card-plus',
@@ -56,9 +56,8 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
     showOkCancelDialog(
         'Deleting transaction',
         `You want to delete a transaction '${transaction.description}'. Are you sure?`,
+        () => deleteAction(transaction),
         'Delete',
-        'Cancel',
-        () => deleteAction(transaction)
     );
 };
 

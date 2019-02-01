@@ -65,7 +65,6 @@ export const createStore = (storeName) => {
 };
 
 const getBranchDiff = (branch, lastSynchronizationTime) => {
-    console.log(lastSynchronizationTime);
     let branchDiff = {
         add: [],
         edit: [],
