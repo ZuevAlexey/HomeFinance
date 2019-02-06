@@ -134,6 +134,7 @@ class SynchronizationScreen extends React.Component {
                         options = {options}
                         startValue = {this.getFormValue(this.props)}
                         action = {(systemData) => this.props.saveSystemData(systemData)}
+                        alertData = {{title: 'Synchronization settings editing'}}
                     />
                 </View>
                 <View

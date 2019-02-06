@@ -67,6 +67,7 @@ export default class EditMoneyCellScreen extends React.Component {
                     options={options}
                     startValue={this.state.value}
                     action={action}
+                    alertData = {{title: 'MoneyCell editing'}}
                 />
             </Screen>
         );

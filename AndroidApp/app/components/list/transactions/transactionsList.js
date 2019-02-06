@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from "react-native";
 import {List} from "../list";
 import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/okCancelDialog";
+import {showOkCancelDialog} from "../../../helpers/dialog";
 import {AddTransaction} from "../../../store/actions/addTransaction";
 import {EditTransaction} from "../../../store/actions/editTransaction";
 import {connect} from "react-redux";

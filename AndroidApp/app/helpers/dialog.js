@@ -17,3 +17,7 @@ export const showOkCancelDialog = (title, message, onOkPress, okTitle, cancelTit
         { cancelable: true }
     );
 };
+
+export const showMessage = (title, message) => {
+  Alert.alert(title, message);
+};

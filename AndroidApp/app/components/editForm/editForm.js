@@ -2,19 +2,21 @@ import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
+import {showMessage} from "../../helpers/dialog";
 
 let t = require('tcomb-form-native');
 let Form = t.form.Form;
 
-const onPress = (form, action) => {
+const onPress = (form, action, alertData) => {
     let value = form.getValue();
     if (value) {
         action && action(value);
+        showMessage(alertData.title, alertData.message || 'Operation completed successfully');
     }
 };
 
 export const EditForm = (props) => {
-    let {type, options, startValue, action} = props;
+    let {type, options, startValue, action, alertData} = props;
     let form;
     return (
         <View style = {{flex:1}}>
@@ -30,7 +32,7 @@ export const EditForm = (props) => {
                         <Button
                             buttonStyle = {styles.button}
                             title = 'Save'
-                            onPress={() => onPress(form, action)}
+                            onPress={() => onPress(form, action, alertData)}
                         />
                     </View>
                 </View>

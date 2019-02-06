@@ -1,7 +1,7 @@
 import React from 'react';
 import {Alert, Text} from "react-native";
 import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/okCancelDialog";
+import {showOkCancelDialog} from "../../../helpers/dialog";
 
 import {List} from "../list";
 import {MoneyCellType} from "../../../constants/moneyCellType";

@@ -33,6 +33,7 @@ export default class EditPersonScreen extends React.Component {
                     options={options}
                     startValue={this.state.value}
                     action={action}
+                    alertData = {{title: 'Person editing'}}
                 />
             </Screen>
         );

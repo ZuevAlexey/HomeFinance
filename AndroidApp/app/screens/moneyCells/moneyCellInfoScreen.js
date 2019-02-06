@@ -2,7 +2,6 @@ import React from 'react';
 import {Screen} from "../../components/screen/screen";
 import TransactionsList from "../../components/list/transactions/transactionsList";
 import {Text, View, StyleSheet, Dimensions} from "react-native";
-import {initialState} from "../../store/initialState";
 import {GetFullName} from "../../helpers/peopleHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
@@ -11,9 +10,8 @@ import {isNullOrUndefined} from "../../helpers/maybe";
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCell} = props.navigation.state.params;
-    let {navigation, getTransactions} = props;
-    let people = initialState.people;
-    let owner = people.filter(e => e.id === moneyCell.ownerId)[0];
+    let {navigation, getTransactions, getOwner} = props;
+    let owner = getOwner(moneyCell.ownerId);
 
     return (
         <Screen
@@ -80,6 +78,7 @@ const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
 const mapStateToProps = state => {
     return {
         getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+        getOwner: (ownerId) => state.people.filter(e => e.id === ownerId)[0]
     }
 };
 

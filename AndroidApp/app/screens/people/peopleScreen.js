@@ -3,7 +3,7 @@ import {List} from '../../components/list/list';
 import {Text} from 'react-native';
 import {Theme} from '../../components/theme';
 import {Screen} from '../../components/screen/screen';
-import {showOkCancelDialog} from '../../helpers/okCancelDialog';
+import {showOkCancelDialog} from '../../helpers/dialog';
 import {Sex} from '../../constants/sex';
 import {connect} from 'react-redux';
 import {AddPerson} from '../../store/actions/addPerson';

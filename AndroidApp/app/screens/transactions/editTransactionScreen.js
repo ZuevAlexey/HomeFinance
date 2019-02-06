@@ -62,6 +62,7 @@ export default class EditTransactionScreen extends React.Component {
                     options={options}
                     startValue={this.state.value}
                     action={action}
+                    alertData = {{title: 'Transaction editing'}}
                 />
             </Screen>
         );
