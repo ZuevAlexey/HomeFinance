@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, Alert} from "react-native";
+import {StyleSheet} from "react-native";
 import {Screen} from "../../components/screen/screen";
 import {View} from "native-base";
 import {Theme} from "../../components/theme";
@@ -9,6 +9,7 @@ import {deserialyze, getInfoForSynchronize} from "../../helpers/synchronizationH
 import {Synchronize} from "../../store/actions/synchronization";
 import {EditForm} from "../../components/editForm/editForm";
 import {EditSystemData} from "../../store/actions/editSystemData";
+import {showMessage} from "../../helpers/dialog";
 
 let tcomb = require('tcomb-form-native');
 
@@ -97,17 +98,15 @@ class SynchronizationScreen extends React.Component {
             let editCount = getCount(p => p.edit, deserializedData);
             let removeCount = getCount(p => p.remove, deserializedData);
             let addCount = getCount(p => p.add, deserializedData);
-            Alert.alert(
+            showMessage(
                 "Синхронизация прошла успешно",
                 `Изменений отправлено ${pushCount}. Изменение получено ${editCount + removeCount + addCount}`
             );
-            this.setState({
-                connectionStatus: CONNECTION_STATUS.OK
-            });
         } catch (error) {
-            this.setState({
-                connectionStatus: CONNECTION_STATUS.FAILED
-            })
+            showMessage(
+                "Ошибка синхронизации",
+                `Произошла ошибка синхронизации. Проверь подключение к интернету и повтори попытку. В случае повторения ситуации обратитель в техническую поддержку.`
+            );
         }
     }
 
