@@ -4,24 +4,33 @@ import {MoneyCellsReducer} from "./reducers/moneyCellsReducer";
 import {PeopleReducer} from "./reducers/peopleReducer";
 import {TransactionsReducer} from "./reducers/transactionsReducer";
 import {SystemDataReducer} from "./reducers/systemDataReducer";
-import {initialState} from './initialState';
-import {fileStorage} from "../helpers/fileStorage";
-
-const stateName = 'state.json';
+import {defaultState} from './defaultState';
+import {storage} from "../helpers/storage";
+import {isNullOrUndefined} from "../helpers/maybe";
 
 const logger = ({getState}) => {
     return next => action => {
         const result = next(action);
-        fileStorage.save(stateName, getState());
+        storage.save(getState());
         return result;
     }
 };
 
-export const storeFactory = () => createStore(
-    combineReducers({
+
+
+export const storeFactory = () => {
+    let initialState = storage.load();
+    if(isNullOrUndefined(initialState)){
+        storage.save(defaultState);
+        initialState = storage.load();
+    }
+
+    return createStore(
+        combineReducers({
             "people": PeopleReducer,
             "moneyCells": MoneyCellsReducer,
             "transactions": TransactionsReducer,
             "articles": ArticlesReducer,
             "systemData": SystemDataReducer
         }), initialState, applyMiddleware(logger));
+}
