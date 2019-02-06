@@ -17,6 +17,7 @@ export const PeopleReducer = (state = [], action) => {
                     lastName: action.lastName,
                     sex: action.sex,
                     lastModificationTime: action.lastModificationTime,
+                    creationTime: action.creationTime,
                     isDeleted: false
                 }
             ];

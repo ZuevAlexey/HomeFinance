@@ -21,6 +21,7 @@ export const TransactionsReducer = (state = [], action) => {
                     description: action.description,
                     isValid: action.isValid,
                     lastModificationTime: action.lastModificationTime,
+                    creationTime: action.creationTime,
                     isDeleted: false
                 }
             ];

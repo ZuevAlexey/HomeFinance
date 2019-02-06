@@ -14,8 +14,8 @@ import TransactionsScreen from "../../screens/transactions/transactionsScreen";
 import EditTransactionScreen from "../../screens/transactions/editTransactionScreen";
 
 export const AppNavigator = createDrawerNavigator({
-    Debug: DebugScreen,
     Synchronization: SynchronizationScreen,
+    Debug: DebugScreen,
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen

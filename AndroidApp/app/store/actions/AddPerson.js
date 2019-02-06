@@ -9,6 +9,7 @@ export const AddPerson = (lastName, firstName, sex) => {
         firstName,
         sex,
         lastModificationTime: new Date(),
+        creationTime: new Date(),
         isDeleted: false
     }
 };

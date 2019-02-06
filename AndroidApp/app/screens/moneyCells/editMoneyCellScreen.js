@@ -18,7 +18,6 @@ export default class EditMoneyCellScreen extends React.Component {
             ? {
                 status: MoneyCellStatus.ACTIVE,
                 startDate: new Date(),
-                status: MoneyCellStatus.ACTIVE
             }
             : {
                 id: moneyCell.id,

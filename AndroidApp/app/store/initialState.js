@@ -32,6 +32,6 @@ export const initialState = {
     }],
     systemData: {
         lastSynchronizationTime: new Date('2011-10-09T12:20:00.000Z'),
-        serverAddress : 'http://192.168.1.60:4698'
+        serverAddress : 'http://192.168.1.43:4698'
     }
 };

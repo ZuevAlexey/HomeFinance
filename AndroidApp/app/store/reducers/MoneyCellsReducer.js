@@ -23,6 +23,7 @@ export const MoneyCellsReducer = (state = [], action) => {
                     isValid: action.isValid,
                     roi: action.roi,
                     lastModificationTime: action.lastModificationTime,
+                    creationTime: action.creationTime,
                     isDeleted: false
                 }
             ];

@@ -1,5 +1,6 @@
 import {getDateISO} from '../helpers/dateTimeHelper';
 import Actions from './actions';
+import uuid from 'uuid-v4';
 
 let path = require('path');
 import {createLogger} from '../helpers/logger';
@@ -12,6 +13,7 @@ import {
 } from '../helpers/fsHelpers';
 import {reduce} from './reducers/mainReducer';
 import StateBranches from './branches';
+import {hasAny, isNullOrUndefined} from "../helpers/maybe";
 
 export const createStore = (storeName) => {
     let dataFolder = path.resolve(getModuleDirectory(), 'data');
@@ -28,6 +30,7 @@ export const createStore = (storeName) => {
         articles: []
     });
 
+
     let state = readObjectFromFile(storeFileName);
     let logger = createLogger('storage');
     logger.info(`Проинициализировали хранилище ${JSON.stringify(state)}`)
@@ -36,12 +39,18 @@ export const createStore = (storeName) => {
             return {...state};
         },
         dispatch: (action) => {
-            logger.info(`Поступил запрос на диспетчеризацию события ${JSON.stringify(action)}`);
+            let guid = uuid();
+            logger.info(`${guid} Поступил запрос на диспетчеризацию события ${JSON.stringify(action)}`);
+            if(!hasInfoForState(action)){
+                logger.info(`${guid} Запрос на диспетчеризацию события не содержит данных для изменения`);
+                return;
+            }
+
             state = reduce(state, action);
             let historyFileName = path.resolve(historyFolder, `state_${getDateISO()}.json`);
             saveObjectToFile(state, historyFileName);
             saveObjectToFile(state, storeFileName);
-            logger.info(`Обработан запрос на диспетчеризацию события. Результирующее состояние cохранили в файл ${historyFileName}`);
+            logger.info(`${guid} Обработан запрос на диспетчеризацию события. Результирующее состояние cохранили в файл ${historyFileName}`);
         },
         getDiff: (action, reqDateTime) => {
             let diff = {
@@ -97,4 +106,16 @@ const getBranchDiff = (branch, lastSynchronizationTime) => {
     return isEmpty
         ? undefined
         : branchDiff;
+};
+
+const hasInfoForState = action => {
+    if(isNullOrUndefined(action) || isNullOrUndefined(action.data)){
+        return false;
+    }
+
+    if(isNullOrUndefined(action.data.systemData)|| isNullOrUndefined(action.data.systemData.lastSynchronizationTime)){
+        return false;
+    }
+
+    return hasAny(action.data, ['people', 'moneyCells', 'transactions'], e => !isNullOrUndefined(e) && !isNullOrUndefined(e.length) && e.length != 0);
 };

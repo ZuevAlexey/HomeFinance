@@ -62,7 +62,6 @@ const onPersonEditPress = (navigation, save) => person => {
         person,
         action: (newPerson) => {
             save(newPerson);
-            navigation.goBack();
         }
     })
 };
