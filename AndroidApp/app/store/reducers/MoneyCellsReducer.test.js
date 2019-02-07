@@ -45,7 +45,8 @@ const processedActions = [
     ActionName.EDIT_MONEY_CELL,
     ActionName.ADD_MONEY_CELL,
     ActionName.MARK_DELETE_MONEY_CELL,
-    ActionName.SYNCHRONIZATION
+    ActionName.SYNCHRONIZATION,
+    ActionName.RESET_STORAGE
 ];
 const lastModificationTime = new Date();
 

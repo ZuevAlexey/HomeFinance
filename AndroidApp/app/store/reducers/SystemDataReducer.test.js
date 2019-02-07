@@ -8,7 +8,7 @@ let startState = {
     serverAddress: "http://localhost:12345"
 };
 
-AssertUnprocessedActions([ActionName.EDIT_SYSTEM_DATA, ActionName.SYNCHRONIZATION], 'SystemData', SystemDataReducer);
+AssertUnprocessedActions([ActionName.EDIT_SYSTEM_DATA, ActionName.SYNCHRONIZATION, ActionName.RESET_STORAGE], 'SystemData', SystemDataReducer);
 
 it(`SystemData reducer process action ${ActionName.EDIT_SYSTEM_DATA}`, () => {
     const serverAddress = "http://myDomain.com";

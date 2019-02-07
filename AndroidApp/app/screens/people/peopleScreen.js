@@ -10,21 +10,17 @@ import {AddPerson} from '../../store/actions/addPerson';
 import {EditPerson} from '../../store/actions/editPerson';
 import {MarkDeletePerson} from '../../store/actions/markDeletePerson';
 
-import {GetFullName} from "../../helpers/peopleHelper";
+import {GetFullPersonName} from "../../helpers/displayStringHelper";
+import {getStatusFromSummary} from "../../helpers/statusHelper";
+import {getMoneyCellsSummary} from "../../helpers/calculator";
 
 const PeopleScreen = (props) => {
-    let {navigation} = props;
+    let {navigation, summary} = props;
     return (
         <Screen
             {...props}
             headerTitle = 'People'
-            headerStatus = {<Text style = {
-                {
-                    textAlign: 'center',
-                    fontSize: 30,
-                    color: Theme.goodColor
-                }}
-            >+400$</Text>}
+            headerStatus = {getStatusFromSummary(summary)}
         >
             <List
                 avatarFactory = {getAvatar}
@@ -67,7 +63,7 @@ const onPersonEditPress = (navigation, save) => person => {
 };
 
 const onPersonDeletePress = (navigation, deleteAction) => (person) => {
-    let displayName = GetFullName(person);
+    let displayName = GetFullPersonName(person);
     showOkCancelDialog(
         'Deleting person',
         `You want to delete a person '${displayName}'. Are you sure?`,
@@ -78,7 +74,7 @@ const onPersonDeletePress = (navigation, deleteAction) => (person) => {
 
 const getTitle = (person) => {
     return (
-        <Text>{GetFullName(person)}</Text>
+        <Text>{GetFullPersonName(person)}</Text>
     );
 };
 
@@ -98,7 +94,8 @@ const getAvatar = (person) => {
 
 const mapStateToProps = state => {
     return {
-        people: state.people.filter(e => !e.isDeleted)
+        people: state.people.filter(e => !e.isDeleted),
+        summary: getMoneyCellsSummary(state.moneyCells.filter(e => !e.isDeleted))
     }
 };
 

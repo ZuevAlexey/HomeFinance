@@ -80,15 +80,15 @@ const convertMoneyCells = (moneyCells) => {
 const convertTransactions = (transactions) => {
     return transactions.map(transaction => ({
         id: transaction.id,
-        fromId: transaction.id,
-        toId: transaction.id,
-        articleId: transaction.id,
-        amount: transaction.id,
-        date: transaction.id,
-        description: transaction.id,
-        isValid: transaction.id,
-        lastModificationTime: transaction.id,
-        creationTime: transaction.id,
-        isDeleted: transaction.id
+        fromId: transaction.fromId,
+        toId: transaction.toId,
+        articleId: transaction.articleId,
+        amount: transaction.amount,
+        date: transaction.date,
+        description: transaction.description,
+        isValid: transaction.isValid,
+        lastModificationTime: transaction.lastModificationTime,
+        creationTime: transaction.creationTime,
+        isDeleted: transaction.isDeleted
     }));
 };

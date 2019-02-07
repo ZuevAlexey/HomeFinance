@@ -30,7 +30,6 @@ export const createStore = (storeName) => {
         articles: []
     });
 
-
     let state = readObjectFromFile(storeFileName);
     let logger = createLogger('storage');
     logger.info(`Проинициализировали хранилище ${JSON.stringify(state)}`)

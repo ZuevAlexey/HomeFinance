@@ -14,5 +14,6 @@ export const Theme = {
         width: 50,
         height: 50
     },
-    mainPaddingLeft: 5
+    mainPaddingLeft: 5,
+    statusFontSize: 20
 };

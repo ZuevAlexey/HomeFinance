@@ -30,7 +30,8 @@ const processedActions = [
     ActionName.EDIT_PERSON,
     ActionName.ADD_PERSON,
     ActionName.MARK_DELETE_PERSON,
-    ActionName.SYNCHRONIZATION
+    ActionName.SYNCHRONIZATION,
+    ActionName.RESET_STORAGE
 ];
 AssertUnprocessedActions(processedActions, 'People', PeopleReducer);
 

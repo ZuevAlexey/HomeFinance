@@ -2,25 +2,28 @@ import React from 'react';
 import {Screen} from "../../components/screen/screen";
 import TransactionsList from "../../components/list/transactions/transactionsList";
 import {Text, View, StyleSheet, Dimensions} from "react-native";
-import {GetFullName} from "../../helpers/peopleHelper";
+import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {connect} from "react-redux";
 import {isNullOrUndefined} from "../../helpers/maybe";
+import {getStatusFromSummary} from "../../helpers/statusHelper";
+import {getTransactionsSummary} from "../../helpers/calculator";
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCell} = props.navigation.state.params;
-    let {navigation, getTransactions, getOwner} = props;
-    let owner = getOwner(moneyCell.ownerId);
-
+    let transactions = props.getTransactions(moneyCell.id);
+    let owner = props.getOwner(moneyCell.ownerId);
+    let summary = getTransactionsSummary(transactions, new Set([moneyCell.id]));
     return (
         <Screen
             {...props}
             headerTitle = {`${moneyCell.name}`}
+            headerStatus = {getStatusFromSummary(summary)}
         >
             <View style ={styles.infoContainer} >
                 <View style ={styles.halfInfoContainer} >
-                    {GetInfoText('Owner', GetFullName(owner))}
+                    {GetInfoText('Owner', GetFullPersonName(owner))}
                     {GetInfoText('Type', moneyCell.moneyCellType)}
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
@@ -31,7 +34,7 @@ const MoneyCellInfoScreen = (props) => {
                 </View>
             </View>
             <Text style = {styles.transactionsListTitle} >Current moneycell's transactions:</Text>
-            <TransactionsList navigation={navigation} transactions = {getTransactions(moneyCell.id)} />
+            <TransactionsList navigation={props.navigation} transactions = {transactions} />
         </Screen>
     );
 };
@@ -82,6 +85,4 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellInfoScreen)
+export default connect(mapStateToProps, undefined)(MoneyCellInfoScreen)

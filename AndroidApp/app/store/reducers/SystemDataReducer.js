@@ -1,4 +1,5 @@
 import {ActionName} from "../../constants/actionName";
+import {defaultState} from "../defaultState";
 
 export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
@@ -13,6 +14,8 @@ export const SystemDataReducer = (state = {}, action) => {
                 serverAddress: state.serverAddress
             };
         }
+        case ActionName.RESET_STORAGE:
+            return defaultState.systemData;
         default:
             return state;
     }

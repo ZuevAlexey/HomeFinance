@@ -6,8 +6,10 @@ import {View} from "native-base";
 import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
 import {StyleSheet} from "react-native";
-import {GetFullName} from "../../helpers/peopleHelper";
+import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {connect} from "react-redux";
+import {getStatusFromSummary} from "../../helpers/statusHelper";
+import {getMoneyCellsSummary, getTransactionsSummary} from "../../helpers/calculator";
 
 const INNER_PAGES = {
     TRANSACTIONS : 'Transactions',
@@ -42,13 +44,21 @@ class PersonInfoScreen extends React.Component {
         let {navigation, getMoneyCells, getTransactions} = this.props;
         let {person} = navigation.state.params;
         let moneyCells = getMoneyCells(person.id);
-        let moneyCellsIds = moneyCells.map(e => e.id);
-        let transactions = moneyCellsIds.reduce((acc, el) => acc.concat(getTransactions(el)), []);
+        let moneyCellIdsSet = new Set(moneyCells.map(e => e.id));
+        let transactions = getTransactions(moneyCellIdsSet);
+
+        let summary;
+        if(this.state.innerPage === INNER_PAGES.MONEY_CELLS){
+            summary = getMoneyCellsSummary(moneyCells);
+        } else {
+            summary = getTransactionsSummary(transactions, moneyCellIdsSet);
+        }
 
         return (
             <Screen
                 {...this.props}
-                headerTitle = {GetFullName(person)}
+                headerTitle = {GetFullPersonName(person)}
+                headerStatus = {getStatusFromSummary(summary)}
             >
                 <View style = {styles.listContainer}>
                     {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells}/>}
@@ -87,12 +97,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         getMoneyCells: (personId) => state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
-        getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+        getTransactions: (moneyCellIdsSet) => {
+            return state.transactions.reduce((acc, tran) => {
+                if(!tran.isDeleted && (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))){
+                    acc.push(tran);
+                }
+
+                return acc;
+            }, []);
+        },
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {}
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PersonInfoScreen)
+export default connect(mapStateToProps, undefined)(PersonInfoScreen)

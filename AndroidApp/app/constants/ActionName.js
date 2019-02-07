@@ -1,4 +1,5 @@
 export const ActionName = {
+    RESET_STORAGE: 'resetStorage',
     ADD_PERSON : 'addPerson',
     EDIT_PERSON : 'editPerson',
     MARK_DELETE_PERSON : 'markDeletePerson',
@@ -9,5 +10,5 @@ export const ActionName = {
     EDIT_TRANSACTION : 'editTransaction',
     MARK_DELETE_TRANSACTION : 'markDeleteTransaction',
     EDIT_SYSTEM_DATA : 'editSystemData',
-    SYNCHRONIZATION: 'synchronization'
+    SYNCHRONIZATION: 'synchronization',
 };

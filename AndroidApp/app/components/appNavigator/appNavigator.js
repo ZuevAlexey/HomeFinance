@@ -14,8 +14,6 @@ import TransactionsScreen from "../../screens/transactions/transactionsScreen";
 import EditTransactionScreen from "../../screens/transactions/editTransactionScreen";
 
 export const AppNavigator = createDrawerNavigator({
-    Debug: DebugScreen,
-    Synchronization: SynchronizationScreen,
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen
@@ -52,6 +50,8 @@ export const AppNavigator = createDrawerNavigator({
     }, {
         headerMode: 'none'
     }),
+    Synchronization: SynchronizationScreen,
+    Debug: DebugScreen,
 },{
     contentComponent: CustomDrawerContentComponent,
     header: null,

@@ -4,7 +4,7 @@ import {MoneyCellType} from '../../constants/moneyCellType';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {EditForm} from "../../components/editForm/editForm";
-import {GetFullName} from "../../helpers/peopleHelper";
+import {GetFullPersonName} from "../../helpers/displayStringHelper";
 
 let t = require('tcomb-form-native');
 
@@ -18,6 +18,7 @@ export default class EditMoneyCellScreen extends React.Component {
             ? {
                 status: MoneyCellStatus.ACTIVE,
                 startDate: new Date(),
+                amount: 0
             }
             : {
                 id: moneyCell.id,
@@ -42,7 +43,7 @@ export default class EditMoneyCellScreen extends React.Component {
         };
 
         if(this.state.isNew){
-            options['ownerId'] = getEnumsFromList(this.props.navigation.state.params.people, p => p.id, p => GetFullName(p), 'People');
+            options['ownerId'] = getEnumsFromList(this.props.navigation.state.params.people, p => p.id, p => GetFullPersonName(p), 'People');
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
             options['parentId'] = t.maybe(getEnumsFromList(this.props.navigation.state.params.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells'));

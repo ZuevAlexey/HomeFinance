@@ -1,6 +1,7 @@
 import {ActionName} from "../../constants/actionName";
 import {TransactionReducer} from './transactionReducer';
 import {synchronize} from "../../helpers/synchronizationHelper";
+import {defaultState} from "../defaultState";
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
@@ -27,6 +28,8 @@ export const TransactionsReducer = (state = [], action) => {
             ];
         case ActionName.SYNCHRONIZATION:
             return synchronize(state, action.data.transactions);
+        case ActionName.RESET_STORAGE:
+            return defaultState.transactions;
         default:
             return state;
     }

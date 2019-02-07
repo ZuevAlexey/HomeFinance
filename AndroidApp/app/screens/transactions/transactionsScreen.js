@@ -1,29 +1,22 @@
 import React from 'react';
-import {Text} from "react-native";
-import {Theme} from "../../components/theme";
 import {Screen} from "../../components/screen/screen";
 
 import TransactionsList from "../../components/list/transactions/transactionsList";
 import {connect} from "react-redux";
+import {getStatusFromSummary} from "../../helpers/statusHelper";
+import {getTransactionsSummary} from "../../helpers/calculator";
 
 const TransactionsScreen = (props) => {
-    let {navigation, transactions} = props;
-    let sum = transactions.reduce((acc, el) => acc + el, 0);
+    let summary = getTransactionsSummary(props.transactions, props.moneyCellsIdsSet);
     return (
         <Screen
             {...props}
                 headerTitle = 'Transactions'
-                headerStatus = {<Text style = {
-                {
-                    textAlign: 'center',
-                    fontSize: 30,
-                    color: sum > 0 ? Theme.goodColor : Theme.badColor
-                }}
-            >{sum}</Text>}
+                headerStatus = {getStatusFromSummary(summary)}
         >
             <TransactionsList
-                navigation = {navigation}
-                transactions = {transactions}
+                navigation = {props.navigation}
+                transactions = {props.transactions}
             />
         </Screen>
     );
@@ -32,9 +25,8 @@ const TransactionsScreen = (props) => {
 const mapStateToProps = state => {
     return {
         transactions: state.transactions.filter(e => !e.isDeleted),
+        moneyCellsIdsSet: new Set(state.moneyCells.filter(e => !e.isDeleted).map(e => e.id))
     }
 };
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsScreen)
+export default connect(mapStateToProps, undefined)(TransactionsScreen)
