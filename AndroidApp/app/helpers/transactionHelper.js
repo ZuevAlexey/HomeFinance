@@ -8,33 +8,39 @@ export const TRANSACTIONS_TYPES = {
     TRANSFER_OUT : 'transfer-out'
 };
 
-export const getTitle = (transaction) => {
+export const getTitle = (moneyCellsIdsSet) => (transaction) => {
+    let transactionType = getTransactionType(transaction, moneyCellsIdsSet);
     return (
         [<Text key = 'name'>
             {`${transaction.description}`}
         </Text>,
-            <Text key = 'amount' style={{color: getTransactionAmountColor(transaction.articleId)}}>
-                {`${getSign(transaction.articleId)}${transaction.amount}`}
+            <Text key = 'amount' style={{color: getTransactionAmountColor(transactionType)}}>
+                {`${getSign(transactionType)}${transaction.amount}`}
             </Text>]
     );
 };
 
-export const getTransactionTypeByArticleId = (articleId) => {
-    switch (articleId.charAt(0)){
-        case '1':{
-            return TRANSACTIONS_TYPES.TRANSFER_OUT;
-        }
-        case '2':{
-            return TRANSACTIONS_TYPES.TRANSFER_IN;
-        }
-        case '3':{
+export const getTransactionType = (transaction, moneyCellsIdsSet) => {
+    let hasTo = moneyCellsIdsSet.has(transaction.toId);
+    let hasFrom = moneyCellsIdsSet.has(transaction.fromId);
+
+    if(hasTo){
+        if(hasFrom){
             return TRANSACTIONS_TYPES.TRANSFER;
         }
+
+        return TRANSACTIONS_TYPES.TRANSFER_IN;
     }
+
+    if(hasFrom){
+        return TRANSACTIONS_TYPES.TRANSFER_OUT;
+    }
+
+    throw 'Transaction does not apply to context';
 };
 
-export const getSign = (articleId) => {
-    switch (getTransactionTypeByArticleId(articleId)){
+export const getSign = (transactionType) => {
+    switch (transactionType){
         case TRANSACTIONS_TYPES.TRANSFER_OUT:{
             return '-';
         }
@@ -47,9 +53,14 @@ export const getSign = (articleId) => {
     }
 };
 
-export const getAvatar = (transaction) => {
+export const createMoneyCellsIdsSet = (moneyCells) => {
+    return new Set(moneyCells.map(e => e.id));
+};
+
+export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
     let name;
-    switch (getTransactionTypeByArticleId(transaction.articleId)){
+
+    switch (getTransactionType(transaction, moneyCellsIdsSet)){
         case TRANSACTIONS_TYPES.TRANSFER_OUT:{
             name = 'arrow-circle-o-up';
             break;

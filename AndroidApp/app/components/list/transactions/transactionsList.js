@@ -9,14 +9,14 @@ import {MarkDeleteTransaction} from "../../../store/actions/markDeleteTransactio
 import {getAvatar, getTitle} from "../../../helpers/transactionHelper";
 
 const TransactionsList = (props) => {
-    let {navigation, transactions, add, save, articles, moneyCells} = props;
+    let {navigation, transactions, add, save, moneyCellsIdsSet} = props;
     return (
             <List
-                avatarFactory = {getAvatar}
+                avatarFactory = {getAvatar(moneyCellsIdsSet)}
                 avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle}
-                onItemPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
-                onItemEditPress = {onTransactionEditPress(navigation, save, articles, moneyCells)}
+                titleFactory = {getTitle(moneyCellsIdsSet)}
+                onItemPress = {onTransactionEditPress(navigation, save)}
+                onItemEditPress = {onTransactionEditPress(navigation, save)}
                 onItemDeletePress = {onTransactionDeletePress(props.delete)}
                 items = {transactions.sort(e => e.date)}
                 addButtonInfo= {{
@@ -25,25 +25,21 @@ const TransactionsList = (props) => {
                         type: 'material-community'
                     },
                     title: 'Add new transaction',
-                    onPress: addTransactionPress(navigation, add, articles, moneyCells)
+                    onPress: addTransactionPress(navigation, add)
                 }}
             />
     );
 };
 
-const addTransactionPress = (navigation, add, articles, moneyCells) => () => {
+const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
-        articles,
-        moneyCells,
         action: (transaction) => add(transaction)
     });
 };
 
-const onTransactionEditPress = (navigation, save, articles, moneyCells) => (transaction) => {
+const onTransactionEditPress = (navigation, save) => (transaction) => {
     navigation.push('EditTransaction', {
-        transaction,
-        articles,
-        moneyCells,
+        transactionId: transaction.id,
         action: (newTransaction) => save(newTransaction)
     });
 };
@@ -56,11 +52,6 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
         'Delete',
     );
 };
-
-const mapStateToProps = state => ({
-    articles: state.articles,
-    moneyCells: state.moneyCells.filter(e => !e.isDeleted)
-});
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -76,4 +67,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList)
+export default connect(undefined, mapDispatchToProps)(TransactionsList)

@@ -5,6 +5,7 @@ import TransactionsList from "../../components/list/transactions/transactionsLis
 import {connect} from "react-redux";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getTransactionsSummary} from "../../helpers/calculator";
+import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
 
 const TransactionsScreen = (props) => {
     let summary = getTransactionsSummary(props.transactions, props.moneyCellsIdsSet);
@@ -17,6 +18,7 @@ const TransactionsScreen = (props) => {
             <TransactionsList
                 navigation = {props.navigation}
                 transactions = {props.transactions}
+                moneyCellsIdsSet = {props.moneyCellsIdsSet}
             />
         </Screen>
     );
@@ -25,7 +27,7 @@ const TransactionsScreen = (props) => {
 const mapStateToProps = state => {
     return {
         transactions: state.transactions.filter(e => !e.isDeleted),
-        moneyCellsIdsSet: new Set(state.moneyCells.filter(e => !e.isDeleted).map(e => e.id))
+        moneyCellsIdsSet: createMoneyCellsIdsSet(state.moneyCells.filter(e => !e.isDeleted))
     }
 };
 

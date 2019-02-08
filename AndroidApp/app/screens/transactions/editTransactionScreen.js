@@ -4,16 +4,23 @@ import {getEnumsFromList} from '../../helpers/getEnums';
 import {EditForm} from "../../components/editForm/editForm";
 import {CommonConstants} from "../../constants/commonConstants";
 import {isNullOrUndefined} from "../../helpers/maybe";
+import {connect} from "react-redux";
 
 let t = require('tcomb-form-native');
 
-export default class EditTransactionScreen extends React.Component {
+class EditTransactionScreen extends React.Component {
     constructor(props){
         super(props);
         this.getType = this.getType.bind(this);
         this.getMoneyCellsEnums = this.getMoneyCellsEnums.bind(this);
-        let {transaction} = this.props.navigation.state.params;
-        let startValue = isNullOrUndefined(transaction)
+        let {transactionId} = this.props.navigation.state.params;
+        let isNew = isNullOrUndefined(transactionId);
+        let transaction;
+        if(!isNew){
+            transaction = props.getTransaction(transactionId);
+        }
+
+        let startValue = isNew
             ? {
                 date: new Date()
             }
@@ -31,7 +38,7 @@ export default class EditTransactionScreen extends React.Component {
     }
 
     getMoneyCellsEnums = () => {
-        return getEnumsFromList(this.props.navigation.state.params.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells',
+        return getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells',
             {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: 'OUTSIDE'}
         );
     };
@@ -41,7 +48,7 @@ export default class EditTransactionScreen extends React.Component {
             id: t.maybe(t.String),
             fromId: this.getMoneyCellsEnums(),
             toId: this.getMoneyCellsEnums(),
-            articleId: getEnumsFromList(this.props.navigation.state.params.articles, a => a.id, a => a.name, 'Articles'),
+            articleId: getEnumsFromList(this.props.articles, a => a.id, a => a.name, 'Articles'),
             amount: t.Number,
             date: t.Date,
             description: t.String
@@ -100,3 +107,11 @@ const options = {
         }
     }
 };
+
+const mapStateToProps = (state) => ({
+    moneyCells: state.moneyCells.filter(e => !e.isDeleted),
+    getTransaction: (transactionId) => state.transactions.filter(e => !e.isDeleted && e.id === transactionId)[0],
+    articles: state.articles
+});
+
+export default connect(mapStateToProps, undefined)(EditTransactionScreen);

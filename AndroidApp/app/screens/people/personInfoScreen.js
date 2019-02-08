@@ -10,6 +10,7 @@ import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {connect} from "react-redux";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getMoneyCellsSummary, getTransactionsSummary} from "../../helpers/calculator";
+import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
 
 const INNER_PAGES = {
     TRANSACTIONS : 'Transactions',
@@ -44,7 +45,7 @@ class PersonInfoScreen extends React.Component {
         let {navigation, getMoneyCells, getTransactions} = this.props;
         let {person} = navigation.state.params;
         let moneyCells = getMoneyCells(person.id);
-        let moneyCellIdsSet = new Set(moneyCells.map(e => e.id));
+        let moneyCellIdsSet = createMoneyCellsIdsSet(moneyCells);
         let transactions = getTransactions(moneyCellIdsSet);
 
         let summary;
@@ -62,7 +63,7 @@ class PersonInfoScreen extends React.Component {
             >
                 <View style = {styles.listContainer}>
                     {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells}/>}
-                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions}/>}
+                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions} moneyCellsIdsSet = {moneyCellIdsSet}/>}
                 </View>
                 <View style = {styles.buttonsContainer}>
                     <View style = {styles.buttonContainer}>

@@ -21,3 +21,7 @@ export const showOkCancelDialog = (title, message, onOkPress, okTitle, cancelTit
 export const showMessage = (title, message) => {
   Alert.alert(title, message);
 };
+
+export const debugObject = (object) => {
+    showMessage('', JSON.stringify(object));
+};

@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {isNullOrUndefined} from "../../helpers/maybe";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getTransactionsSummary} from "../../helpers/calculator";
+import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCell} = props.navigation.state.params;
@@ -34,7 +35,7 @@ const MoneyCellInfoScreen = (props) => {
                 </View>
             </View>
             <Text style = {styles.transactionsListTitle} >Current moneycell's transactions:</Text>
-            <TransactionsList navigation={props.navigation} transactions = {transactions} />
+            <TransactionsList navigation={props.navigation} transactions = {transactions} moneyCellsIdsSet = {createMoneyCellsIdsSet([moneyCell])} />
         </Screen>
     );
 };
