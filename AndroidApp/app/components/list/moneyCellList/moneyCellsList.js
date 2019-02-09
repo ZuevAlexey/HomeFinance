@@ -9,15 +9,17 @@ import {EditMoneyCell} from "../../../store/actions/editMoneyCell";
 import {connect} from "react-redux";
 import {MarkDeleteMoneyCell} from "../../../store/actions/markDeleteMoneyCell";
 import {AddMoneyCell} from "../../../store/actions/addMoneyCell";
+import {isNullOrUndefined} from "../../../helpers/maybe";
+import {GetShortPersonName} from "../../../helpers/displayStringHelper";
 
 const MoneyCellsList = (props) => {
-    let {navigation, moneyCells, add, save, people} = props;
+    let {navigation, moneyCells, add, save, getTitle} = props;
     return (
         <List
             avatarFactory = {getAvatar}
             avatarStyle = {Theme.listAvatarStyle}
-            titleFactory = {getTitle}
-            onItemPress = {onMoneyCellPress(navigation, moneyCells, people)}
+            titleFactory = {getTitle || getSimpleTitle()}
+            onItemPress = {onMoneyCellPress(navigation)}
             onItemEditPress = {onMoneyCellEditPress(navigation, save)}
             onItemDeletePress = {onMoneyCellDeletePress(props.delete)}
             items = {moneyCells}
@@ -27,27 +29,25 @@ const MoneyCellsList = (props) => {
                     type: 'material-community'
                 },
                 title: 'Add new moneyCell',
-                onPress: addMoneyCellPress(navigation, add, moneyCells, people)
+                onPress: addMoneyCellPress(navigation, add)
             }}
         />
     );
 };
 
-const addMoneyCellPress = (navigation, add, moneyCells, people) => () => {
+const addMoneyCellPress = (navigation, add) => () => {
     navigation.push('EditMoneyCell', {
-        moneyCells,
-        people,
         action: (moneyCell) => add(moneyCell)
     });
 };
 
-const onMoneyCellPress = (navigation, moneyCells, people) => (moneyCell) => {
-    navigation.push('MoneyCell', {moneyCell, moneyCells, people});
+const onMoneyCellPress = (navigation) => (moneyCell) => {
+    navigation.push('MoneyCell', {moneyCell});
 };
 
 const onMoneyCellEditPress = (navigation, save) => (moneyCell) => {
     navigation.push('EditMoneyCell', {
-        moneyCell,
+        moneyCellId: moneyCell.id,
         action: (newMoneyCell) => save(newMoneyCell)
     });
 };
@@ -58,17 +58,6 @@ const onMoneyCellDeletePress = (deleteAction) => (moneyCell) => {
         `You want to delete a money cell '${moneyCell.name}'. Are you sure?`,
         () => deleteAction(moneyCell),
         'Delete',
-    );
-};
-
-const getTitle = (moneyCell) => {
-    return (
-        [<Text key = 'name'>
-            {`${moneyCell.name}`}
-        </Text>,
-            <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
-                {`${moneyCell.amount} RUB`}
-            </Text>]
     );
 };
 
@@ -94,10 +83,6 @@ const getAvatar = (moneyCell) => {
     };
 };
 
-const mapStateToProps = state => ({
-    people: state.people.filter(e => !e.isDeleted),
-});
-
 const mapDispatchToProps = dispatch => {
     return {
         add: (moneyCell) => {
@@ -113,4 +98,30 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellsList)
+export default connect(undefined, mapDispatchToProps)(MoneyCellsList);
+
+export const getTitleWithOwner = (people) => (moneyCell) => {
+    let owner = null;
+    if(!isNullOrUndefined(people)){
+        owner = people.filter(e => e.id === moneyCell.ownerId)[0];
+    }
+
+    let result = [
+        <Text key = 'name'>
+            {`${moneyCell.name}`}
+        </Text>
+    ];
+    if(!isNullOrUndefined(owner)){
+        result.push(<Text key = 'ownerName'>
+            {`owner: ${GetShortPersonName(owner)}.`}
+        </Text>)
+    }
+
+    result.push(
+        <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
+            {`${moneyCell.amount} RUB`}
+        </Text>);
+    return result;
+};
+
+export const getSimpleTitle = () => getTitleWithOwner(undefined);

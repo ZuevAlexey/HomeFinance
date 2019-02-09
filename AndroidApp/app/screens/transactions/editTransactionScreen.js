@@ -57,7 +57,8 @@ class EditTransactionScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {transaction, action} = this.props.navigation.state.params;
+        let {action} = this.props.navigation.state.params;
+        let transaction = this.state.value;
         let headerTitle = isNullOrUndefined(transaction) ? 'Add new transaction' : transaction.description;
         return (
             <Screen

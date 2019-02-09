@@ -5,15 +5,23 @@ import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {EditForm} from "../../components/editForm/editForm";
 import {GetFullPersonName} from "../../helpers/displayStringHelper";
+import {connect} from "react-redux";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 let t = require('tcomb-form-native');
 
-export default class EditMoneyCellScreen extends React.Component {
+class EditMoneyCellScreen extends React.Component {
     constructor(props){
         super(props);
         this.getType = this.getType.bind(this);
-        let {moneyCell} = this.props.navigation.state.params;
-        var isNew = moneyCell === undefined;
+        let {moneyCellId} = this.props.navigation.state.params;
+        let isNew = isNullOrUndefined(moneyCellId);
+
+        let moneyCell;
+        if(!isNew){
+            moneyCell = props.moneyCells.filter(e => e.id === moneyCellId)[0];
+        }
+
         let defaultValue = isNew
             ? {
                 status: MoneyCellStatus.ACTIVE,
@@ -22,14 +30,9 @@ export default class EditMoneyCellScreen extends React.Component {
             }
             : {
                 id: moneyCell.id,
-                ownerId: moneyCell.ownerId,
-                moneyCellType: moneyCell.moneyCellType,
-                amount: moneyCell.amount,
-                startDate: moneyCell.startDate && new Date(moneyCell.startDate),
-                endDate: moneyCell.endDate && new Date(moneyCell.endDate),
+                owner: GetFullPersonName(props.people.filter(e => e.id === moneyCell.ownerId)[0]),
                 name: moneyCell.name,
                 status: moneyCell.status,
-                parentId: moneyCell.parentId
             };
 
         this.state = {value: defaultValue, isNew };
@@ -43,12 +46,14 @@ export default class EditMoneyCellScreen extends React.Component {
         };
 
         if(this.state.isNew){
-            options['ownerId'] = getEnumsFromList(this.props.navigation.state.params.people, p => p.id, p => GetFullPersonName(p), 'People');
+            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People');
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
-            options['parentId'] = t.maybe(getEnumsFromList(this.props.navigation.state.params.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells'));
+            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells'));
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
+        } else {
+            options['owner'] = t.String;
         }
 
         return t.struct(options);
@@ -56,8 +61,10 @@ export default class EditMoneyCellScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {moneyCell, action} = this.props.navigation.state.params;
-        let headerTitle = moneyCell === undefined ? 'Add new money cell' : moneyCell.name;
+        let isNew = this.state.isNew;
+        let {action} = this.props.navigation.state.params;
+        let moneyCell = this.state.value;
+        let headerTitle = isNew ? 'Add new money cell' : moneyCell.name;
         return (
             <Screen
                 {...this.props}
@@ -65,17 +72,17 @@ export default class EditMoneyCellScreen extends React.Component {
             >
                 <EditForm
                     type={type}
-                    options={options}
-                    startValue={this.state.value}
+                    options={getOptions(isNew)}
+                    startValue={moneyCell}
                     action={action}
                     alertData = {{title: 'MoneyCell editing'}}
                 />
             </Screen>
         );
     }
-};
+}
 
-const options = (isNew) => {
+const getOptions = (isNew) => {
     let result = {
         fields: {
             id: {
@@ -87,7 +94,7 @@ const options = (isNew) => {
             },
             status: {
                 label: 'Status'
-            },
+            }
         }
     };
 
@@ -98,7 +105,16 @@ const options = (isNew) => {
         result.fields['parentId'] = {label: 'Parent money cell'};
         result.fields['startDate'] = {label: 'Start date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
         result.fields['endDate'] = {label: 'End date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
+    } else {
+        result.fields['owner'] = {label: 'Owner', editable: false};
     }
 
     return result;
 };
+
+const mapStateToProps = (state) => ({
+    people: state.people.filter(e => !e.isDeleted),
+    moneyCells: state.moneyCells.filter(e => !e.isDeleted),
+});
+
+export default connect(mapStateToProps, undefined)(EditMoneyCellScreen);
