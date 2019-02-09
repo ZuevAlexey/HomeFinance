@@ -1,9 +1,10 @@
 import {withNullCheck} from "./maybe";
 
 export const synchronize = (state, diff) => {
-    let removeIds = diff.remove.map(e => e);
+    let removeIds = diff.remove;
     let editIds = diff.edit.map(e => e.id);
-    let deleteMap = removeIds.concat(editIds).reduce((acc, el) => {
+    let addIds = diff.add.map(e => e.id);
+    let deleteMap = removeIds.concat(editIds).concat(addIds).reduce((acc, el) => {
         acc[el] = true;
         return acc
     }, {});
