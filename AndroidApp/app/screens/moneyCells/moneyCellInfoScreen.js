@@ -2,7 +2,7 @@ import React from 'react';
 import {Screen} from "../../components/screen/screen";
 import TransactionsList from "../../components/list/transactions/transactionsList";
 import {Text, View, StyleSheet, Dimensions} from "react-native";
-import {GetFullPersonName} from "../../helpers/displayStringHelper";
+import {getDateDisplayString, GetFullPersonName} from "../../helpers/displayStringHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {connect} from "react-redux";
@@ -17,6 +17,7 @@ const MoneyCellInfoScreen = (props) => {
     let moneyCell = props.getMoneyCell(moneyCellId);
     let owner = props.getOwner(moneyCell.ownerId);
     let summary = getTransactionsSummary(transactions, new Set([moneyCell.id]));
+
     return (
         <Screen
             {...props}
@@ -30,8 +31,8 @@ const MoneyCellInfoScreen = (props) => {
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
                 <View style ={styles.halfInfoContainer} >
-                    {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, r => r.substring(0, 10), 'not set'))}
-                    {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, r => r.substring(0, 10), 'not set'))}
+                    {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
+                    {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
                     {GetInfoText('Status', moneyCell.status, null, e => e === MoneyCellStatus.ACTIVE)}
                 </View>
             </View>

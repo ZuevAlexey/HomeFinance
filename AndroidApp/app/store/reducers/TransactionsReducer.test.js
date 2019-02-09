@@ -42,7 +42,8 @@ const processedActions = [
     ActionName.MARK_DELETE_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
     ActionName.SYNCHRONIZATION,
-    ActionName.RESET_STORAGE
+    ActionName.RESET_STORAGE,
+    ActionName.MARK_DELETE_MONEY_CELL
 ];
 AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
 

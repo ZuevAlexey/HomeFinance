@@ -85,11 +85,11 @@ const convertTransactions = (transactions) => {
         toId: transaction.toId,
         articleId: transaction.articleId,
         amount: transaction.amount,
-        date: transaction.date,
+        date: new Date(transaction.date),
         description: transaction.description,
         isValid: transaction.isValid,
-        lastModificationTime: transaction.lastModificationTime,
-        creationTime: transaction.creationTime,
+        lastModificationTime: new Date(transaction.lastModificationTime),
+        creationTime: new Date(transaction.creationTime),
         isDeleted: transaction.isDeleted
     }));
 };

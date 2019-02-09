@@ -7,7 +7,7 @@ import {resetState} from "../../helpers/resetStorageHelper";
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.EDIT_TRANSACTION:
-            return state.map(e => TransactionReducer(e, action));
+        case ActionName.MARK_DELETE_MONEY_CELL:
         case ActionName.MARK_DELETE_TRANSACTION:
             return state.map(e => TransactionReducer(e, action));
         case ActionName.ADD_TRANSACTION:
