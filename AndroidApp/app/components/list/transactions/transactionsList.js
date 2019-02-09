@@ -38,9 +38,14 @@ const addTransactionPress = (navigation, add) => () => {
 };
 
 const onTransactionEditPress = (navigation, save) => (transaction) => {
+    let oldTransaction = {
+        fromId: transaction.fromId,
+        toId: transaction.toId,
+        amount: transaction.amount
+    };
     navigation.push('EditTransaction', {
         transactionId: transaction.id,
-        action: (newTransaction) => save(newTransaction)
+        action: (newTransaction) => save(newTransaction, oldTransaction)
     });
 };
 
@@ -58,11 +63,11 @@ const mapDispatchToProps = dispatch => {
         add: (transaction) => {
             dispatch(AddTransaction(transaction.fromId, transaction.toId, transaction.articleId, transaction.amount, transaction.description, transaction.date))
         },
-        save: (transaction) => {
-            dispatch(EditTransaction(transaction.id, transaction.fromId, transaction.toId, transaction.articleId, transaction.amount, transaction.description, transaction.date))
+        save: (transaction, oldTransaction) => {
+            dispatch(EditTransaction(transaction.id, transaction.fromId, transaction.toId, transaction.articleId, transaction.amount, transaction.description, transaction.date, oldTransaction.fromId, oldTransaction.toId, oldTransaction.amount))
         },
         delete: (transaction) => {
-            dispatch(MarkDeleteTransaction(transaction.id))
+            dispatch(MarkDeleteTransaction(transaction.id, transaction.fromId, transaction.toId, transaction.amount))
         }
     }
 };

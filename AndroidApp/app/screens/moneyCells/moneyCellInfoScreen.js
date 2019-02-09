@@ -6,14 +6,15 @@ import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {Theme} from "../../components/theme";
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {connect} from "react-redux";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {isNullOrUndefined, withNullCheck} from "../../helpers/maybe";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getTransactionsSummary} from "../../helpers/calculator";
 import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
 
 const MoneyCellInfoScreen = (props) => {
-    let {moneyCell} = props.navigation.state.params;
-    let transactions = props.getTransactions(moneyCell.id);
+    let {moneyCellId} = props.navigation.state.params;
+    let transactions = props.getTransactions(moneyCellId);
+    let moneyCell = props.getMoneyCell(moneyCellId);
     let owner = props.getOwner(moneyCell.ownerId);
     let summary = getTransactionsSummary(transactions, new Set([moneyCell.id]));
     return (
@@ -29,8 +30,8 @@ const MoneyCellInfoScreen = (props) => {
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
                 <View style ={styles.halfInfoContainer} >
-                    {GetInfoText('Start date', isNullOrUndefined(moneyCell.startDate) ? 'not set' : moneyCell.startDate, e => e.substring(0,10))}
-                    {GetInfoText('End date', isNullOrUndefined(moneyCell.endDate) ? 'not set' : moneyCell.endDate, e => e.substring(0,10))}
+                    {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, r => r.substring(0, 10), 'not set'))}
+                    {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, r => r.substring(0, 10), 'not set'))}
                     {GetInfoText('Status', moneyCell.status, null, e => e === MoneyCellStatus.ACTIVE)}
                 </View>
             </View>
@@ -82,6 +83,7 @@ const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
 const mapStateToProps = state => {
     return {
         getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+        getMoneyCell: (moneyCellId) => state.moneyCells.filter(e => e.id === moneyCellId)[0],
         getOwner: (ownerId) => state.people.filter(e => e.id === ownerId)[0]
     }
 };

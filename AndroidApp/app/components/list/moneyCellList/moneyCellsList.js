@@ -42,7 +42,7 @@ const addMoneyCellPress = (navigation, add) => () => {
 };
 
 const onMoneyCellPress = (navigation) => (moneyCell) => {
-    navigation.push('MoneyCell', {moneyCell});
+    navigation.push('MoneyCell', {moneyCellId: moneyCell.id});
 };
 
 const onMoneyCellEditPress = (navigation, save) => (moneyCell) => {

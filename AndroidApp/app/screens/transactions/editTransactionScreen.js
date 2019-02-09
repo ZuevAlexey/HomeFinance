@@ -5,6 +5,7 @@ import {EditForm} from "../../components/editForm/editForm";
 import {CommonConstants} from "../../constants/commonConstants";
 import {isNullOrUndefined} from "../../helpers/maybe";
 import {connect} from "react-redux";
+import {GetShortPersonName} from "../../helpers/displayStringHelper";
 
 let t = require('tcomb-form-native');
 
@@ -38,7 +39,7 @@ class EditTransactionScreen extends React.Component {
     }
 
     getMoneyCellsEnums = () => {
-        return getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells',
+        return getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.filter(e => e.id === mc.ownerId)[0])})`, 'MoneyCells',
             {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: 'OUTSIDE'}
         );
     };
@@ -112,7 +113,8 @@ const options = {
 const mapStateToProps = (state) => ({
     moneyCells: state.moneyCells.filter(e => !e.isDeleted),
     getTransaction: (transactionId) => state.transactions.filter(e => !e.isDeleted && e.id === transactionId)[0],
-    articles: state.articles
+    articles: state.articles,
+    people: state.people.filter(e => !e.isDeleted)
 });
 
 export default connect(mapStateToProps, undefined)(EditTransactionScreen);

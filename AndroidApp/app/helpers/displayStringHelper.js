@@ -1,3 +1,5 @@
+import {debugObject} from "./dialog";
+
 export const GetFullPersonName = person => `${person.lastName} ${person.firstName}`;
 
 export const GetShortPersonName = person => `${person.firstName} ${person.lastName && person.lastName.charAt(0)}`;
@@ -9,6 +11,8 @@ export const getDateDisplayString = (dateTime) => {
         let norm = Math.floor(Math.abs(num));
         return (norm < 10 ? '0' : '') + norm;
     };
+
+    debugObject(typeof dateTime);
 
     return dateTime.getFullYear() +
         '-' + pad(dateTime.getMonth() + 1) +

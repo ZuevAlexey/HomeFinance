@@ -4,9 +4,10 @@ import {MoneyCellType} from '../../constants/moneyCellType';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 import {EditForm} from "../../components/editForm/editForm";
-import {GetFullPersonName} from "../../helpers/displayStringHelper";
+import {GetFullPersonName, GetShortPersonName} from "../../helpers/displayStringHelper";
 import {connect} from "react-redux";
 import {isNullOrUndefined} from "../../helpers/maybe";
+import {debugObject} from "../../helpers/dialog";
 
 let t = require('tcomb-form-native');
 
@@ -46,10 +47,11 @@ class EditMoneyCellScreen extends React.Component {
         };
 
         if(this.state.isNew){
-            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People');
+            debugObject(this.props.people);
+            //options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People');
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
-            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => mc.name, 'MoneyCells'));
+            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.filter(e => e.id === mc.ownerId)[0])})`, 'MoneyCells'));
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
         } else {
