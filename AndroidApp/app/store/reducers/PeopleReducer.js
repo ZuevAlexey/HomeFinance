@@ -2,6 +2,7 @@ import {ActionName} from "../../constants/actionName";
 import {PersonReducer} from './personReducer';
 import {synchronize} from "../../helpers/synchronizationHelper";
 import {defaultState} from "../defaultState";
+import {resetState} from "../../helpers/resetStorageHelper";
 
 export const PeopleReducer = (state = [], action) => {
     switch(action.type){
@@ -25,7 +26,7 @@ export const PeopleReducer = (state = [], action) => {
         case ActionName.SYNCHRONIZATION:
             return synchronize(state, action.data.people);
         case ActionName.RESET_STORAGE:
-            return defaultState.people;
+            return resetState(state, action.syncDate, defaultState.people);
         default:
             return state;
     }

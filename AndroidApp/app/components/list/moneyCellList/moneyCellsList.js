@@ -57,7 +57,7 @@ const onMoneyCellDeletePress = (deleteAction) => (moneyCell) => {
         'Deleting money cell',
         `You want to delete a money cell '${moneyCell.name}'. Are you sure?`,
         () => deleteAction(moneyCell),
-        'Delete',
+        'Yes, I do',
     );
 };
 

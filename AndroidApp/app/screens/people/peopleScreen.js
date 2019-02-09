@@ -68,7 +68,7 @@ const onPersonDeletePress = (navigation, deleteAction) => (person) => {
         'Deleting person',
         `You want to delete a person '${displayName}'. Are you sure?`,
         () => deleteAction(person),
-        'Delete',
+        'Yes, I do',
     );
 };
 

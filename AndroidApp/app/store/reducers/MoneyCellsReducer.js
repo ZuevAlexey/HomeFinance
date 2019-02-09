@@ -2,6 +2,7 @@ import {ActionName} from "../../constants/actionName";
 import {MoneyCellReducer} from './moneyCellReducer';
 import {synchronize} from "../../helpers/synchronizationHelper";
 import {defaultState} from "../defaultState";
+import {resetState} from "../../helpers/resetStorageHelper";
 
 export const MoneyCellsReducer = (state = [], action) => {
     switch(action.type){
@@ -34,7 +35,7 @@ export const MoneyCellsReducer = (state = [], action) => {
         case ActionName.SYNCHRONIZATION:
             return synchronize(state, action.data.moneyCells);
         case ActionName.RESET_STORAGE:
-            return defaultState.moneyCells;
+            return resetState(state, action.syncDate, defaultState.moneyCells);
         default:
             return state;
     }

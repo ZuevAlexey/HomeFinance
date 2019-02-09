@@ -9,7 +9,8 @@ import {deserialyze, getInfoForSynchronize} from "../../helpers/synchronizationH
 import {Synchronize} from "../../store/actions/synchronization";
 import {EditForm} from "../../components/editForm/editForm";
 import {EditSystemData} from "../../store/actions/editSystemData";
-import {showMessage} from "../../helpers/dialog";
+import {showMessage, showOkCancelDialog} from "../../helpers/dialog";
+import {ResetStorage} from "../../store/actions/resetStorage";
 
 let tcomb = require('tcomb-form-native');
 
@@ -137,9 +138,23 @@ class SynchronizationScreen extends React.Component {
                     />
                 </View>
                 <View
-                    style={styles.buttonContainer}
+                    style={styles.buttonsContainer}
                 >
                     <Button
+                        buttonStyle={styles.buttonStyle}
+                        title={'Reset storage'}
+                        backgroundColor={Theme.mainColor}
+                        onPress={() => {
+                            showOkCancelDialog(
+                                'Reset storage',
+                                `You want to reset the storage to the last sync. Are you sure?`,
+                                () => this.props.resetStorage(systemData.lastSynchronizationTime),
+                                'Yes, I do',
+                            );
+                        }}
+                    />
+                    <Button
+                        buttonStyle={styles.buttonStyle}
                         title={'Synchronization'}
                         backgroundColor={Theme.mainColor}
                         onPress={() => this.synchronization(serverAddress)}
@@ -167,14 +182,18 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         flex: 1,
     },
-    buttonContainer: {
+    buttonsContainer: {
         height: 80,
         marginTop: 1,
         borderTopWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
         justifyContent : 'center',
+        flexDirection: 'row'
     },
+    buttonStyle: {
+        width: 130
+    }
 });
 
 const mapStateToProps = state => ({
@@ -192,6 +211,9 @@ const mapDispatchToProps = dispatch => {
         saveSystemData: (systemData) => {
             dispatch(EditSystemData(systemData.serverAddress));
         },
+        resetStorage: (dateString) => {
+            dispatch(ResetStorage(dateString))
+        }
     }
 };
 

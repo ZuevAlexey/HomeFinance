@@ -1,7 +1,8 @@
 import {ActionName} from "../../constants/actionName";
 
-export const resetStorage = () => {
+export const ResetStorage = (dateString) => {
     return {
-        type: ActionName.RESET_STORAGE
+        type: ActionName.RESET_STORAGE,
+        syncDate: dateString && new Date(dateString)
     }
 };

@@ -54,7 +54,7 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
         'Deleting transaction',
         `You want to delete a transaction '${transaction.description}'. Are you sure?`,
         () => deleteAction(transaction),
-        'Delete',
+        'Yes, I do',
     );
 };
 

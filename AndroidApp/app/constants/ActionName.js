@@ -1,5 +1,5 @@
 export const ActionName = {
-    RESET_STORAGE: 'resetStorage',
+    RESET_STORAGE: 'ResetStorage',
     ADD_PERSON : 'addPerson',
     EDIT_PERSON : 'editPerson',
     MARK_DELETE_PERSON : 'markDeletePerson',
