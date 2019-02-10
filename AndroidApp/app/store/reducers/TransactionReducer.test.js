@@ -15,7 +15,14 @@ const startState = {
     isValid: true
 };
 
-AssertUnprocessedActions([ActionName.EDIT_TRANSACTION, ActionName.MARK_DELETE_TRANSACTION, ActionName.MARK_DELETE_MONEY_CELL], 'Transaction', TransactionReducer);
+const processedActions = [
+    ActionName.EDIT_TRANSACTION,
+    ActionName.MARK_DELETE_TRANSACTION,
+    ActionName.MARK_DELETE_MONEY_CELL,
+    ActionName.MARK_DELETE_PERSON
+];
+
+AssertUnprocessedActions(processedActions, 'Transaction', TransactionReducer);
 
 const lastModificationTime = new Date();
 

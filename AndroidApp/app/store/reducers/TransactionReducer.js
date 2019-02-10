@@ -21,30 +21,43 @@ export const TransactionReducer = (state = {}, action) => {
                 isDeleted : true,
                 lastModificationTime: action.lastModificationTime
             } : state;
-        case ActionName.MARK_DELETE_MONEY_CELL: {
-            if(action.id !== state.toId && action.id !== state.fromId){
-                return state;
-            }
-
-            let result = {
-                ...state,
-                lastModificationTime: new Date()
-            };
-            if(action.id === state.toId){
-                result.toId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
-            }
-
-            if(action.id === state.fromId){
-                result.fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
-            }
-
-            if(result.fromId === CommonConstants.OUTSIDE_MONEY_CELL_ID && result.toId === CommonConstants.OUTSIDE_MONEY_CELL_ID){
-                result.isDeleted = true;
-            }
-
-            return result;
-        }
+        case ActionName.MARK_DELETE_MONEY_CELL:
+            return processMarkDeleteMoneyCellAction(state, action);
+        case ActionName.MARK_DELETE_PERSON:
+                return processMarkDeletePersonAction(state, action);
         default:
             return state;
     }
+};
+
+const processMarkDeletePersonAction = (state, action) => {
+    return processMarkDeleteAction(state, (id) => action.moneyCellsIdsSet.has(id));
+};
+
+const processMarkDeleteMoneyCellAction = (state, action) => {
+    return processMarkDeleteAction(state, (id) => action.id === id);
+};
+
+const processMarkDeleteAction = (state, predicate) => {
+    if(predicate(state.fromId) && predicate(state.toId)){
+        return state;
+    }
+
+    let result = {
+        ...state,
+        lastModificationTime: new Date()
+    };
+    if(predicate(state.fromId)){
+        result.fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
+    }
+
+    if(predicate(state.toId)){
+        result.toId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
+    }
+
+    if(result.fromId === CommonConstants.OUTSIDE_MONEY_CELL_ID && result.toId === CommonConstants.OUTSIDE_MONEY_CELL_ID){
+        result.isDeleted = true;
+    }
+
+    return result;
 };

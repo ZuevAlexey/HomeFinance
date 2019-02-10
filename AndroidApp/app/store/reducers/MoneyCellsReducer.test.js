@@ -50,6 +50,7 @@ const processedActions = [
     ActionName.ADD_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
     ActionName.MARK_DELETE_TRANSACTION,
+    ActionName.MARK_DELETE_PERSON,
 ];
 const lastModificationTime = new Date();
 

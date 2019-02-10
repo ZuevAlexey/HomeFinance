@@ -1,4 +1,5 @@
 import {withNullCheck} from "./maybe";
+import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "./convert";
 
 export const synchronize = (state, diff) => {
     let removeIds = diff.remove;
@@ -19,7 +20,7 @@ export const getInfoForSynchronize = (data, lastSynchronizationTime) => {
   return data.filter(e => e.lastModificationTime > lastSynchronizationTime);
 };
 
-export const deserialyze = (json) => {
+export const deserialyzeFromSync = (json) => {
     return {
         systemData: {
             lastSynchronizationTime: new Date(json.systemData.lastSynchronizationTime)
@@ -40,56 +41,9 @@ export const deserialyze = (json) => {
             remove: withNullCheck(json.transactions, p => p.remove, [])
         },
         articles: {
-            add: withNullCheck(json.articles, p => p.add, []),
-            edit: withNullCheck(json.articles, p => p.edit, []),
+            add: withNullCheck(json.articles, p => convertArticles(p.add), []),
+            edit: withNullCheck(json.articles, p => convertArticles(p.edit), []),
             remove: withNullCheck(json.articles, p => p.remove, [])
         }
     };
-};
-
-const convertPeople = (people) => {
-    return people.map(person => ({
-        id: person.id,
-        lastName: person.lastName,
-        firstName: person.firstName,
-        sex: person.sex,
-        lastModificationTime: new Date(person.lastModificationTime),
-        creationTime: new Date(person.creationTime),
-        isDeleted: person.isDeleted
-    }));
-};
-
-const convertMoneyCells = (moneyCells) => {
-    return moneyCells.map(moneyCell => ({
-        id: moneyCell.id,
-        ownerId: moneyCell.ownerId,
-        moneyCellType: moneyCell.moneyCellType,
-        amount: moneyCell.amount,
-        startDate: new Date(moneyCell.startDate),
-        endDate: new Date(moneyCell.endDate),
-        name: moneyCell.name,
-        status: moneyCell.status,
-        parentId: moneyCell.parentId,
-        isValid: moneyCell.isValid,
-        roi: moneyCell.roi,
-        lastModificationTime: new Date(moneyCell.lastModificationTime),
-        creationTime: new Date(moneyCell.creationTime),
-        isDeleted: moneyCell.isDeleted
-    }));
-};
-
-const convertTransactions = (transactions) => {
-    return transactions.map(transaction => ({
-        id: transaction.id,
-        fromId: transaction.fromId,
-        toId: transaction.toId,
-        articleId: transaction.articleId,
-        amount: transaction.amount,
-        date: new Date(transaction.date),
-        description: transaction.description,
-        isValid: transaction.isValid,
-        lastModificationTime: new Date(transaction.lastModificationTime),
-        creationTime: new Date(transaction.creationTime),
-        isDeleted: transaction.isDeleted
-    }));
 };

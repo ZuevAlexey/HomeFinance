@@ -5,7 +5,7 @@ import {View} from "native-base";
 import {Theme} from "../../components/theme";
 import {Button} from "react-native-elements";
 import {connect} from "react-redux";
-import {deserialyze, getInfoForSynchronize} from "../../helpers/synchronizationHelper";
+import {deserialyzeFromSync, getInfoForSynchronize} from "../../helpers/synchronizationHelper";
 import {Synchronize} from "../../store/actions/synchronization";
 import {EditForm} from "../../components/editForm/editForm";
 import {EditSystemData} from "../../store/actions/editSystemData";
@@ -92,7 +92,7 @@ class SynchronizationScreen extends React.Component {
                 return;
             }
 
-            let deserializedData = deserialyze(json.data);
+            let deserializedData = deserialyzeFromSync(json.data);
             this.props.sync(deserializedData);
 
             let pushCount = peopleForSynchronize.length + moneyCellsForSynchronize.length + transactionsForSynchronize.length;

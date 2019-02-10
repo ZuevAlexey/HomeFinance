@@ -9,6 +9,7 @@ export const TransactionsReducer = (state = [], action) => {
         case ActionName.EDIT_TRANSACTION:
         case ActionName.MARK_DELETE_MONEY_CELL:
         case ActionName.MARK_DELETE_TRANSACTION:
+        case ActionName.MARK_DELETE_PERSON:
             return state.map(e => TransactionReducer(e, action));
         case ActionName.ADD_TRANSACTION:
             return [

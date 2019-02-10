@@ -11,6 +11,7 @@ export const MoneyCellsReducer = (state = [], action) => {
         case ActionName.ADD_TRANSACTION:
         case ActionName.EDIT_TRANSACTION:
         case ActionName.MARK_DELETE_TRANSACTION:
+        case ActionName.MARK_DELETE_PERSON:
             return state.map(e => MoneyCellReducer(e, action));
         case ActionName.ADD_MONEY_CELL:
             return [

@@ -24,7 +24,8 @@ const processedActions = [
     ActionName.MARK_DELETE_MONEY_CELL,
     ActionName.ADD_TRANSACTION,
     ActionName.EDIT_TRANSACTION,
-    ActionName.MARK_DELETE_TRANSACTION
+    ActionName.MARK_DELETE_TRANSACTION,
+    ActionName.MARK_DELETE_PERSON,
 ];
 
 const lastModificationTime = new Date();

@@ -4,6 +4,7 @@ import {EditTransaction} from '../actions/editTransaction';
 import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
+import {ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS} from "expo/src/IntentLauncherAndroid";
 
 const trans1 = {
     id: 1,
@@ -43,7 +44,8 @@ const processedActions = [
     ActionName.EDIT_TRANSACTION,
     ActionName.SYNCHRONIZATION,
     ActionName.RESET_STORAGE,
-    ActionName.MARK_DELETE_MONEY_CELL
+    ActionName.MARK_DELETE_MONEY_CELL,
+    ActionName.MARK_DELETE_PERSON,
 ];
 AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
 

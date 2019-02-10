@@ -1,5 +1,37 @@
 import {ActionName} from "../../constants/actionName";
 
+export const MoneyCellReducer = (state = {}, action) => {
+    switch(action.type){
+        case ActionName.EDIT_MONEY_CELL:
+            return action.id === state.id ? {
+                ...state,
+                name: action.name,
+                status: action.status,
+                lastModificationTime: action.lastModificationTime
+            } : state;
+        case ActionName.MARK_DELETE_MONEY_CELL:
+            return action.id === state.id ? {
+                ...state,
+                isDeleted: true,
+                lastModificationTime: action.lastModificationTime
+            } : state;
+        case ActionName.MARK_DELETE_PERSON:
+            return action.moneyCellsIdsSet.has(state.id) ? {
+                ...state,
+                lastModificationTime: action.lastModificationTime,
+                isDeleted: true
+            } : state;
+        case ActionName.ADD_TRANSACTION:
+            return processAddTransaction(state, action);
+        case ActionName.EDIT_TRANSACTION:
+            return processEditTransaction(state, action);
+        case ActionName.MARK_DELETE_TRANSACTION:
+            return processMarkDeleteTransaction(state, action);
+        default:
+            return state;
+    }
+};
+
 function processTransactionAction(state, action, amountModifier) {
     let result = {
         ...state,
@@ -62,30 +94,4 @@ const processEditTransaction = (state, action) => {
     };
 
     return processTransactionAction(state, action, amountModifier);
-};
-
-export const MoneyCellReducer = (state = {}, action) => {
-    switch(action.type){
-        case ActionName.EDIT_MONEY_CELL:
-            return action.id === state.id ? {
-                ...state,
-                name: action.name,
-                status: action.status,
-                lastModificationTime: action.lastModificationTime
-            } : state;
-        case ActionName.MARK_DELETE_MONEY_CELL:
-            return action.id === state.id ? {
-                ...state,
-                isDeleted: true,
-                lastModificationTime: action.lastModificationTime
-            } : state;
-        case ActionName.ADD_TRANSACTION:
-            return processAddTransaction(state, action);
-        case ActionName.EDIT_TRANSACTION:
-            return processEditTransaction(state, action);
-        case ActionName.MARK_DELETE_TRANSACTION:
-            return processMarkDeleteTransaction(state, action);
-        default:
-            return state;
-    }
 };

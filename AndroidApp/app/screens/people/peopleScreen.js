@@ -13,6 +13,7 @@ import {MarkDeletePerson} from '../../store/actions/markDeletePerson';
 import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getMoneyCellsSummary} from "../../helpers/calculator";
+import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
 
 const PeopleScreen = (props) => {
     let {navigation, summary} = props;
@@ -28,7 +29,7 @@ const PeopleScreen = (props) => {
                 titleFactory = {getTitle}
                 onItemPress = {onPersonPress(navigation)}
                 onItemEditPress = {onPersonEditPress(navigation, props.save)}
-                onItemDeletePress = {onPersonDeletePress(navigation, props.delete)}
+                onItemDeletePress = {onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
                 items = {props.people}
                 addButtonInfo= {{
                     icon: {
@@ -62,12 +63,13 @@ const onPersonEditPress = (navigation, save) => person => {
     })
 };
 
-const onPersonDeletePress = (navigation, deleteAction) => (person) => {
+const onPersonDeletePress = (navigation, deleteAction, getMoneyCellsIds) => (person) => {
     let displayName = GetFullPersonName(person);
+    let moneyCellsIdsSet = getMoneyCellsIds(person.id);
     showOkCancelDialog(
         'Deleting person',
         `You want to delete a person '${displayName}'. Are you sure?`,
-        () => deleteAction(person),
+        () => deleteAction(person, moneyCellsIdsSet),
         'Yes, I do',
     );
 };
@@ -95,7 +97,8 @@ const getAvatar = (person) => {
 const mapStateToProps = state => {
     return {
         people: state.people.filter(e => !e.isDeleted),
-        summary: getMoneyCellsSummary(state.moneyCells.filter(e => !e.isDeleted))
+        summary: getMoneyCellsSummary(state.moneyCells.filter(e => !e.isDeleted)),
+        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
     }
 };
 
@@ -107,8 +110,8 @@ const mapDispatchToProps = dispatch => {
         save: (person) => {
             dispatch(EditPerson(person.id, person.lastName, person.firstName, person.sex))
         },
-        delete: (person) => {
-            dispatch(MarkDeletePerson(person.id))
+        delete: (person, moneyCellsIdsSet) => {
+            dispatch(MarkDeletePerson(person.id, moneyCellsIdsSet))
         }
     }
 };
