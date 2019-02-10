@@ -1,9 +1,17 @@
-import {isNullOrUndefined} from "./maybe";
+import {AsyncStorage} from 'react-native';
 
-export const resetState = (state, date, defaultState) => {
-    if(isNullOrUndefined(date)){
-        return defaultState;
-    }
+const KEY = '@HomeFinance:storeForReset';
 
-    return state.filter(e => e.lastModificationTime < date);
+export const saveSyncData = async (state) => {
+    await AsyncStorage.setItem(KEY, JSON.stringify({
+        people: state.people,
+        moneyCells: state.moneyCells,
+        transactions: state.transactions,
+        articles: state.articles,
+        systemData: state.systemData
+    }));
+};
+
+export const readLocalSyncData = async () => {
+    return await AsyncStorage.getItem(KEY, undefined);
 };

@@ -11,6 +11,7 @@ import {EditForm} from "../../components/editForm/editForm";
 import {EditSystemData} from "../../store/actions/editSystemData";
 import {showMessage, showOkCancelDialog} from "../../helpers/dialog";
 import {ResetStorage} from "../../store/actions/resetStorage";
+import {readLocalSyncData, saveSyncData} from "../../helpers/resetStorageHelper";
 
 let tcomb = require('tcomb-form-native');
 
@@ -44,14 +45,15 @@ class SynchronizationScreen extends React.Component {
     constructor(props){
         super(props);
         this.synchronization = this.synchronization.bind(this);
+        this.resetStorage = this.resetStorage.bind(this);
         this.getType = this.getType.bind(this);
         this.getFormValue = this.getFormValue.bind(this);
     }
 
-    getFormValue(props){
+    getFormValue(){
         return {
-            lastSynchronizationTime: props.systemData.lastSynchronizationTime.toLocaleString(),
-            serverAddress: props.systemData.serverAddress
+            lastSynchronizationTime: this.props.systemData.lastSynchronizationTime.toLocaleString(),
+            serverAddress: this.props.systemData.serverAddress
         }
     }
 
@@ -85,11 +87,7 @@ class SynchronizationScreen extends React.Component {
 
             let json = await response.json();
             if(json.type !== 'sync'){
-                this.setState({
-                    connectionStatus: CONNECTION_STATUS.FAILED
-                });
-
-                return;
+                throw 'Unknow response from server';
             }
 
             let deserializedData = deserialyzeFromSync(json.data);
@@ -103,12 +101,19 @@ class SynchronizationScreen extends React.Component {
                 "Синхронизация прошла успешно",
                 `Изменений отправлено ${pushCount}. Изменение получено ${editCount + removeCount + addCount}`
             );
+
+            await saveSyncData(this.props.getState());
         } catch (error) {
             showMessage(
                 "Ошибка синхронизации",
                 `Произошла ошибка синхронизации. Проверь подключение к интернету и повтори попытку. В случае повторения ситуации обратитель в техническую поддержку.`
             );
         }
+    }
+
+    async resetStorage(){
+        let data = await readLocalSyncData();
+        this.props.resetStorage(data);
     }
 
     getType() {
@@ -132,7 +137,7 @@ class SynchronizationScreen extends React.Component {
                     <EditForm
                         type = {this.getType()}
                         options = {options}
-                        startValue = {this.getFormValue(this.props)}
+                        startValue = {this.getFormValue()}
                         action = {(systemData) => this.props.saveSystemData(systemData)}
                         alertData = {{title: 'Synchronization settings editing'}}
                     />
@@ -148,7 +153,7 @@ class SynchronizationScreen extends React.Component {
                             showOkCancelDialog(
                                 'Reset storage',
                                 `You want to reset the storage to the last sync. Are you sure?`,
-                                () => this.props.resetStorage(systemData.lastSynchronizationTime),
+                                () => this.resetStorage(),
                                 'Yes, I do',
                             );
                         }}
@@ -201,6 +206,7 @@ const mapStateToProps = state => ({
     people: state.people,
     moneyCells: state.moneyCells,
     transactions: state.transactions,
+    getState: () => state
 });
 
 const mapDispatchToProps = dispatch => {
@@ -211,8 +217,8 @@ const mapDispatchToProps = dispatch => {
         saveSystemData: (systemData) => {
             dispatch(EditSystemData(systemData.serverAddress));
         },
-        resetStorage: (dateString) => {
-            dispatch(ResetStorage(dateString))
+        resetStorage: (serializedData) => {
+            dispatch(ResetStorage(serializedData))
         }
     }
 };

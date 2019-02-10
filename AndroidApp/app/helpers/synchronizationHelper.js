@@ -1,4 +1,4 @@
-import {withNullCheck} from "./maybe";
+import {DateWithNullCheck, withNullCheck} from "./maybe";
 import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "./convert";
 
 export const synchronize = (state, diff) => {
@@ -23,7 +23,7 @@ export const getInfoForSynchronize = (data, lastSynchronizationTime) => {
 export const deserialyzeFromSync = (json) => {
     return {
         systemData: {
-            lastSynchronizationTime: new Date(json.systemData.lastSynchronizationTime)
+            lastSynchronizationTime: DateWithNullCheck(json.systemData.lastSynchronizationTime)
         },
         people: {
             add: withNullCheck(json.people, p => convertPeople(p.add), []),

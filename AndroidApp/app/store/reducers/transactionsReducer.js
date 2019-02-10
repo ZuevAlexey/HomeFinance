@@ -3,6 +3,7 @@ import {TransactionReducer} from './transactionReducer';
 import {synchronize} from "../../helpers/synchronizationHelper";
 import {defaultState} from "../defaultState";
 import {resetState} from "../../helpers/resetStorageHelper";
+import {withNullCheck} from "../../helpers/maybe";
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
@@ -31,7 +32,7 @@ export const TransactionsReducer = (state = [], action) => {
         case ActionName.SYNCHRONIZATION:
             return synchronize(state, action.data.transactions);
         case ActionName.RESET_STORAGE:
-            return resetState(state, action.syncDate, defaultState.transactions);
+            return withNullCheck(action.syncData, e => e.transactions, defaultState.transactions);
         default:
             return state;
     }
