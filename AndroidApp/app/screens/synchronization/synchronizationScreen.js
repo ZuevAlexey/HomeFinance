@@ -12,6 +12,7 @@ import {EditSystemData} from "../../store/actions/editSystemData";
 import {showMessage, showOkCancelDialog} from "../../helpers/dialog";
 import {ResetStorage} from "../../store/actions/resetStorage";
 import {readLocalSyncData, saveSyncData} from "../../helpers/resetStorageHelper";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 let tcomb = require('tcomb-form-native');
 
@@ -32,7 +33,7 @@ const branches = [
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
         let branch = data[el];
-        if(branch === null || branch === undefined){
+        if(isNullOrUndefined(branch)){
             return acc;
         }
 
@@ -139,7 +140,6 @@ class SynchronizationScreen extends React.Component {
                         options = {options}
                         startValue = {this.getFormValue()}
                         action = {(systemData) => this.props.saveSystemData(systemData)}
-                        alertData = {{title: 'Synchronization settings editing'}}
                     />
                 </View>
                 <View

@@ -75,7 +75,6 @@ class EditMoneyCellScreen extends React.Component {
                     options={getOptions(isNew)}
                     startValue={moneyCell}
                     action={action}
-                    alertData = {{title: 'MoneyCell editing'}}
                 />
             </Screen>
         );

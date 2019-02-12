@@ -18,8 +18,8 @@ export const showOkCancelDialog = (title, message, onOkPress, okTitle, cancelTit
     );
 };
 
-export const showMessage = (title, message) => {
-  Alert.alert(title, message);
+export const showMessage = (title, message, okAction) => {
+  Alert.alert(title, message, [{text: 'Ok', onPress: () => okAction && okAction()}]);
 };
 
 export const debugObject = (object) => {

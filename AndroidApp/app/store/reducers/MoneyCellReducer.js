@@ -1,4 +1,5 @@
 import {ActionName} from "../../constants/actionName";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 export const MoneyCellReducer = (state = {}, action) => {
     switch(action.type){
@@ -33,16 +34,15 @@ export const MoneyCellReducer = (state = {}, action) => {
 };
 
 function processTransactionAction(state, action, amountModifier) {
-    let result = {
-        ...state,
-        lastModificationTime: action.lastModificationTime
-    };
-
-    if(amountModifier !== null){
-        result.amount = amountModifier(state, action);
+    if(isNullOrUndefined(amountModifier)){
+        return state;
     }
 
-    return result;
+    return {
+        ...state,
+        amount : amountModifier(state, action),
+        lastModificationTime: action.lastModificationTime
+    };
 }
 
 const processAddTransaction = (state, action) => {
@@ -72,26 +72,30 @@ const processMarkDeleteTransaction = (state, action) => {
 };
 
 const processEditTransaction = (state, action) => {
-    let amountModifier = (s, a) => {
-        let result = s.amount;
-        if(a.oldToId === s.id){
-            result -= a.oldAmount;
-        }
+    let amountModifier = null;
+    if(action.oldToId === state.id || action.oldFromId === state.id || action.toId === state.id || action.fromId === state.id) {
+        amountModifier = (s, a) => {
+            let result = s.amount;
 
-        if(a.oldFromId === s.id){
-            result += a.oldAmount;
-        }
+            if (a.oldToId === s.id) {
+                result -= a.oldAmount;
+            }
 
-        if(a.toId === s.id){
-            result += a.amount;
-        }
+            if (a.oldFromId === s.id) {
+                result += a.oldAmount;
+            }
 
-        if(a.fromId === s.id){
-            result -= a.amount;
-        }
+            if (a.toId === s.id) {
+                result += a.amount;
+            }
 
-        return result;
-    };
+            if (a.fromId === s.id) {
+                result -= a.amount;
+            }
+
+            return result;
+        };
+    }
 
     return processTransactionAction(state, action, amountModifier);
 };
