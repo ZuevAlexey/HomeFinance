@@ -14,13 +14,13 @@ var store = createStore('HomeFinanceStore');
 app.get(routing.api.getState, (req, res) => {
     safetyCall(req, res, (request, response) => {
         response.json(store.getState());
-    });
+    }, {isSuccess: false});
 });
 
 app.get(routing.api.test, (req, res) => {
     safetyCall(req, res, (request, response) => {
         response.json({isSuccess: true});
-    });
+    }, {isSuccess: false});
 });
 
 app.post(routing.api.action, (req, res) => {
@@ -29,19 +29,18 @@ app.post(routing.api.action, (req, res) => {
         let action = req.body;
         store.dispatch(action);
         response.json(store.getDiff(action, reqDateTime));
+    }, {
+        type: Actions.SYNC,
+        isSuccess: false
     });
 });
 
-const safetyCall = (req, res, action) => {
+const safetyCall = (req, res, action, defaultValue) => {
   try {
       action(req, res);
   } catch (error){
       appLog.error(`request = ${req} ; error = ${error}; stack = ${error.stack}`);
-      res.json({
-          type: Actions.SYNC,
-          isSuccess: false,
-          systemData : {}
-      });
+      res.json(defaultValue);
   }
 };
 

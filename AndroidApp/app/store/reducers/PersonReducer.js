@@ -8,7 +8,7 @@ export const PersonReducer = (state = {}, action) => {
                 lastName: action.lastName,
                 firstName: action.firstName,
                 sex: action.sex,
-                lastModificationTime: action.lastModificationTime
+                lastModificationTime: action.lastModificationTime,
             } : state;
         case ActionName.MARK_DELETE_PERSON:
             return action.id === state.id ? {
@@ -19,4 +19,4 @@ export const PersonReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+};

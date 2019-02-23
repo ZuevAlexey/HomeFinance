@@ -13,9 +13,16 @@ const startState = {
     date: new Date(2018, 8, 1, 14, 55),
     description: "Оплата комуналки",
     isValid: true
-}
+};
 
-AssertUnprocessedActions([ActionName.EDIT_TRANSACTION, ActionName.MARK_DELETE_TRANSACTION], 'Transaction', TransactionReducer);
+const processedActions = [
+    ActionName.EDIT_TRANSACTION,
+    ActionName.MARK_DELETE_TRANSACTION,
+    ActionName.MARK_DELETE_MONEY_CELL,
+    ActionName.MARK_DELETE_PERSON
+];
+
+AssertUnprocessedActions(processedActions, 'Transaction', TransactionReducer);
 
 const lastModificationTime = new Date();
 

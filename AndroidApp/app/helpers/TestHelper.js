@@ -1,4 +1,4 @@
-import {ActionName} from '../constants/ActionName';
+import {ActionName} from '../constants/actionName';
 
 export const AssertUnprocessedActions = (processedActions, reducerName, reducer) => {
     const startState = {};
@@ -10,4 +10,4 @@ export const AssertUnprocessedActions = (processedActions, reducerName, reducer)
             }
         }
     );
-}
+};

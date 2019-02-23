@@ -10,7 +10,7 @@ const startState = {
     lastName: 'Petrov',
     firstName: 'Petya',
     sex: Sex.MALE
-}
+};
 
 AssertUnprocessedActions([ActionName.EDIT_PERSON, ActionName.MARK_DELETE_PERSON], 'Person', PersonReducer);
 

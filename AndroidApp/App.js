@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {AppNavigator} from "./app/components/appNavigator/appNavigator";
+import {Provider} from 'react-redux';
+import {storeFactory} from './app/store/storefactory';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-export default class App extends React.Component {
+let {store, persistor} = storeFactory();
 
-  render() {
-    let data = [1,2,3,4,5].map(e => e * 2);
-    return (
-        <View>
-            {data.map((el, index) =>{
-              return <Text key={index}>{el}</Text>
-            })}
-        </View>
-    );
-  }
-}
+const App = (props) => (
+    <Provider store = {store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <AppNavigator {...props}/>
+        </PersistGate>
+    </Provider>
+);
+
+export default App;

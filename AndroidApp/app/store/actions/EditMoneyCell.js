@@ -8,4 +8,4 @@ export const EditMoneyCell = (id, name, status) => {
         status,
         lastModificationTime: new Date()
     }
-}
+};
