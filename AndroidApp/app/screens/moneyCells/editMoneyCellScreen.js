@@ -26,8 +26,7 @@ class EditMoneyCellScreen extends React.Component {
         let defaultValue = isNew
             ? {
                 status: MoneyCellStatus.ACTIVE,
-                startDate: new Date(),
-                amount: 0
+                startDate: new Date()
             }
             : {
                 id: moneyCell.id,
