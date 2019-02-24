@@ -6,7 +6,7 @@ export const EditTransaction = (id, fromId, toId, articleId, amount, description
         id,
         fromId,
         toId,
-        articleId,
+        articleId : + articleId,
         amount,
         description,
         date,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text} from "react-native";
 import {getTransactionAmountColor} from "./colorHelper";
+import {withNullCheck} from "./maybe";
 
 export const TRANSACTIONS_TYPES = {
     TRANSFER : 'transfer',
@@ -8,11 +9,13 @@ export const TRANSACTIONS_TYPES = {
     TRANSFER_OUT : 'transfer-out'
 };
 
-export const getTitle = (moneyCellsIdsSet) => (transaction) => {
+export const getTitle = (moneyCellsIdsSet, articles) => (transaction) => {
     let transactionType = getTransactionType(transaction, moneyCellsIdsSet);
+    let defaultValue = articles.first(e => e.id === transaction.articleId).name;
+
     return (
         [<Text key = 'name'>
-            {`${transaction.description}`}
+            {`${withNullCheck(transaction.description, e => e, defaultValue)}`}
         </Text>,
             <Text key = 'amount' style={{color: getTransactionAmountColor(transactionType)}}>
                 {`${getSign(transactionType)}${transaction.amount}`}

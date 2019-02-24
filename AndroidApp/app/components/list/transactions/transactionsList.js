@@ -10,12 +10,12 @@ import {getAvatar, getTitle} from "../../../helpers/transactionHelper";
 import {transactionComparer} from "../../../helpers/sorter";
 
 const TransactionsList = (props) => {
-    let {navigation, transactions, add, save, moneyCellsIdsSet} = props;
+    let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
     return (
             <List
                 avatarFactory = {getAvatar(moneyCellsIdsSet)}
                 avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle(moneyCellsIdsSet)}
+                titleFactory = {getTitle(moneyCellsIdsSet, articles)}
                 onItemPress = {onTransactionEditPress(navigation, save)}
                 onItemEditPress = {onTransactionEditPress(navigation, save)}
                 onItemDeletePress = {onTransactionDeletePress(props.delete)}
@@ -60,6 +60,17 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
     );
 };
 
+const mapStateToProps = state => {
+    return {
+        articles: state.articles.map(e => (
+                {
+                    id: e.id,
+                    name: e.name}
+            )
+        )
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         add: (transaction) => {
@@ -74,4 +85,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(undefined, mapDispatchToProps)(TransactionsList)
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList)

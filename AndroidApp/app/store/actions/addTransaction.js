@@ -7,7 +7,7 @@ export const AddTransaction = (fromId, toId, articleId, amount, description, dat
         id: uuid(),
         fromId,
         toId,
-        articleId,
+        articleId : +articleId,
         amount,
         description,
         date,

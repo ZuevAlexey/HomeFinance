@@ -52,12 +52,12 @@ class EditTransactionScreen extends React.Component {
     getType = () => {
         return t.struct({
             id: t.maybe(t.String),
+            amount: t.Number,
+            description: t.maybe(t.String),
             fromId: this.getMoneyCellsEnums(),
             toId: this.getMoneyCellsEnums(),
             articleId: getEnumsFromList(this.props.articles, a => a.id, a => a.name, 'Articles', null, articleComparer),
-            amount: t.Number,
             date: t.Date,
-            description: t.String
         });
     };
 
@@ -87,6 +87,14 @@ const options = {
         id: {
             hidden: true,
         },
+        amount: {
+            label: 'Amount',
+            placeholder: 'Enter transaction\'s amount'
+        },
+        description: {
+            label: 'Description',
+            placeholder: 'Enter transaction\'s description'
+        },
         fromId: {
             label: 'From'
         },
@@ -96,20 +104,12 @@ const options = {
         articleId: {
             label: 'Article'
         },
-        amount: {
-            label: 'Amount',
-            placeholder: 'Enter transaction\'s amount'
-        },
         date: {
             label: 'Transaction\'s date',
             mode: 'date',
             config: {
                 format: date => date.toLocaleDateString('ru-Ru')
             }
-        },
-        description: {
-            label: 'Description',
-            placeholder: 'Enter transaction\'s description'
         }
     }
 };
