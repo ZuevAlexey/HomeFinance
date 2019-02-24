@@ -7,6 +7,7 @@ import {EditForm} from "../../components/editForm/editForm";
 import {GetFullPersonName, GetShortPersonName} from "../../helpers/displayStringHelper";
 import {connect} from "react-redux";
 import {isNullOrUndefined} from "../../helpers/maybe";
+import {peopleSorter} from "../../helpers/sorter";
 
 let t = require('tcomb-form-native');
 
@@ -46,7 +47,7 @@ class EditMoneyCellScreen extends React.Component {
         };
 
         if(this.state.isNew){
-            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People');
+            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People', null, peopleSorter);
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
             options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.filter(e => e.id === mc.ownerId)[0])})`, 'MoneyCells'));

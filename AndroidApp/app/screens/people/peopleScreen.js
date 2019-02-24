@@ -14,6 +14,7 @@ import {GetFullPersonName} from "../../helpers/displayStringHelper";
 import {getStatusFromSummary} from "../../helpers/statusHelper";
 import {getMoneyCellsSummary} from "../../helpers/calculator";
 import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
+import {peopleSorter} from "../../helpers/sorter";
 
 const PeopleScreen = (props) => {
     let {navigation, summary} = props;
@@ -31,6 +32,7 @@ const PeopleScreen = (props) => {
                 onItemEditPress = {onPersonEditPress(navigation, props.save)}
                 onItemDeletePress = {onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
                 items = {props.people}
+                sortFunc = {peopleSorter}
                 addButtonInfo= {{
                     icon: {
                         name: 'md-person-add',

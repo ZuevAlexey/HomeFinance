@@ -4,6 +4,7 @@ import {ListItem} from "../listItem/listItem";
 import {View, ScrollView} from "react-native";
 import Styles from './style';
 import {Theme} from "../theme";
+import {isNullOrUndefined} from "../../helpers/maybe";
 
 export const List = (props) => {
     let {items,
@@ -13,8 +14,14 @@ export const List = (props) => {
         onItemPress,
         onItemEditPress,
         onItemDeletePress,
-        addButtonInfo
+        addButtonInfo,
+        sortFunc
     } = props;
+
+    let sortedItems = isNullOrUndefined(sortFunc)
+        ? items
+        : items.sort(sortFunc);
+
     return (
         <View
             style = {Styles.container}
@@ -24,7 +31,7 @@ export const List = (props) => {
             >
                 <ScrollView>
                    {
-                        items.map((item) => (
+                       sortedItems.map((item) => (
                             <ListItem
                                 title={titleFactory(item)}
                                 key={item.id}

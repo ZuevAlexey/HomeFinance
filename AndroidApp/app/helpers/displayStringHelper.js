@@ -1,8 +1,10 @@
-export const GetFullPersonName = person => `${person.lastName} ${person.firstName}`;
+import {stringWithNullCheck, withNullCheck} from "./maybe";
 
-export const GetShortPersonName = person => `${person.firstName} ${person.lastName && person.lastName.charAt(0)}`;
+export const GetFullPersonName = person => `${stringWithNullCheck(person.lastName)} ${stringWithNullCheck(person.firstName)}`;
 
-export const GetFullMoneyCellName = (owner, moneyCell) => `${moneyCell.Name} (${owner.firstName} ${owner.lastName.charAt(0)})`;
+export const GetShortPersonName = person => `${stringWithNullCheck(person.firstName)}${withNullCheck(person.lastName, p => ' ' + p.charAt(0) + '.', '')}`;
+
+export const GetFullMoneyCellName = (owner, moneyCell) => `${moneyCell.Name} (${GetShortPersonName(owner)})`;
 
 export const getDateDisplayString = (dateTime) => {
     let pad = (num) => {

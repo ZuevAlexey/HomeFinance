@@ -1,5 +1,5 @@
 import {ActionName} from "../../constants/actionName";
-import {DateWithNullCheck, withNullCheck} from "../../helpers/maybe";
+import {dateWithNullCheck, withNullCheck} from "../../helpers/maybe";
 import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "../../helpers/convert";
 
 export const ResetStorage = (serializedData) => {
@@ -18,7 +18,7 @@ const deserializeFromJson = (serializedData) => {
         transactions: convertTransactions(data.transactions),
         articles: convertArticles(data.articles),
         systemData: {
-            lastSynchronizationTime: DateWithNullCheck(data.systemData.lastSynchronizationTime),
+            lastSynchronizationTime: dateWithNullCheck(data.systemData.lastSynchronizationTime),
             serverAddress: data.systemData.serverAddress
         },
     };
