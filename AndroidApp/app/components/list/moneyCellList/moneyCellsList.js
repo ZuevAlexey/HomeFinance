@@ -24,7 +24,7 @@ const MoneyCellsList = (props) => {
             onItemEditPress = {onMoneyCellEditPress(navigation, save)}
             onItemDeletePress = {onMoneyCellDeletePress(props.delete)}
             items = {moneyCells}
-            sortFunc = {getMoneyCellsComparer(people)}
+            comparer = {getMoneyCellsComparer(people)}
             addButtonInfo= {{
                 icon: {
                     name: 'credit-card-plus',
@@ -121,7 +121,7 @@ export const getTitleWithOwner = (people) => (moneyCell) => {
     ];
     if(!isNullOrUndefined(owner)){
         result.push(<Text key = 'ownerName'>
-            {`owner: ${GetShortPersonName(owner)}.`}
+            {`owner: ${GetShortPersonName(owner)}`}
         </Text>)
     }
 

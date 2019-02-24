@@ -6,7 +6,7 @@ import {CommonConstants} from "../../constants/commonConstants";
 import {isNullOrUndefined} from "../../helpers/maybe";
 import {connect} from "react-redux";
 import {GetShortPersonName} from "../../helpers/displayStringHelper";
-import {getMoneyCellsComparer} from "../../helpers/sorter";
+import {articleComparer, getMoneyCellsComparer} from "../../helpers/sorter";
 
 let t = require('tcomb-form-native');
 
@@ -54,7 +54,7 @@ class EditTransactionScreen extends React.Component {
             id: t.maybe(t.String),
             fromId: this.getMoneyCellsEnums(),
             toId: this.getMoneyCellsEnums(),
-            articleId: getEnumsFromList(this.props.articles, a => a.id, a => a.name, 'Articles'),
+            articleId: getEnumsFromList(this.props.articles, a => a.id, a => a.name, 'Articles', null, articleComparer),
             amount: t.Number,
             date: t.Date,
             description: t.String

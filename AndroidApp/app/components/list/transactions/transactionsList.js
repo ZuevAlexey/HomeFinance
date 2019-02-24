@@ -7,6 +7,7 @@ import {EditTransaction} from "../../../store/actions/editTransaction";
 import {connect} from "react-redux";
 import {MarkDeleteTransaction} from "../../../store/actions/markDeleteTransaction";
 import {getAvatar, getTitle} from "../../../helpers/transactionHelper";
+import {transactionComparer} from "../../../helpers/sorter";
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet} = props;
@@ -19,6 +20,7 @@ const TransactionsList = (props) => {
                 onItemEditPress = {onTransactionEditPress(navigation, save)}
                 onItemDeletePress = {onTransactionDeletePress(props.delete)}
                 items = {transactions.sort(e => e.date)}
+                comparer = {transactionComparer}
                 addButtonInfo= {{
                     icon: {
                         name: 'credit-card-plus',

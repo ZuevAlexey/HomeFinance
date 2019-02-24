@@ -32,7 +32,7 @@ const PeopleScreen = (props) => {
                 onItemEditPress = {onPersonEditPress(navigation, props.save)}
                 onItemDeletePress = {onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
                 items = {props.people}
-                sortFunc = {peopleComparer}
+                comparer = {peopleComparer}
                 addButtonInfo= {{
                     icon: {
                         name: 'md-person-add',

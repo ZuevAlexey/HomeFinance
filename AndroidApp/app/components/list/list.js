@@ -15,12 +15,12 @@ export const List = (props) => {
         onItemEditPress,
         onItemDeletePress,
         addButtonInfo,
-        sortFunc
+        comparer
     } = props;
 
-    let sortedItems = isNullOrUndefined(sortFunc)
+    let sortedItems = isNullOrUndefined(comparer)
         ? items
-        : items.sort(sortFunc);
+        : items.sort(comparer);
 
     return (
         <View
