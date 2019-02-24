@@ -14,7 +14,7 @@ import {GetShortPersonName} from "../../../helpers/displayStringHelper";
 import {getMoneyCellsComparer} from "../../../helpers/sorter";
 
 const MoneyCellsList = (props) => {
-    let {navigation, moneyCells, add, save, getTitle, people} = props;
+    let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
     return (
         <List
             avatarFactory = {getAvatar}
@@ -31,15 +31,16 @@ const MoneyCellsList = (props) => {
                     type: 'material-community'
                 },
                 title: 'Add new moneyCell',
-                onPress: addMoneyCellPress(navigation, add)
+                onPress: addMoneyCellPress(navigation, add, ownerId)
             }}
         />
     );
 };
 
-const addMoneyCellPress = (navigation, add) => () => {
+const addMoneyCellPress = (navigation, add, ownerId) => () => {
     navigation.push('EditMoneyCell', {
-        action: (moneyCell) => add(moneyCell)
+        action: (moneyCell) => add(moneyCell),
+        ownerId: ownerId
     });
 };
 

@@ -15,7 +15,7 @@ class EditMoneyCellScreen extends React.Component {
     constructor(props){
         super(props);
         this.getType = this.getType.bind(this);
-        let {moneyCellId} = this.props.navigation.state.params;
+        let {moneyCellId, ownerId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(moneyCellId);
 
         let moneyCell;
@@ -23,17 +23,25 @@ class EditMoneyCellScreen extends React.Component {
             moneyCell = props.moneyCells.filter(e => e.id === moneyCellId)[0];
         }
 
-        let defaultValue = isNew
-            ? {
+        let defaultValue;
+
+        if(isNew){
+            defaultValue = {
                 status: MoneyCellStatus.ACTIVE,
-                startDate: new Date()
+                    startDate: new Date(),
+                ownerId: ownerId
+            };
+            if(!isNullOrUndefined(ownerId)){
+                defaultValue['ownerId'] = ownerId;
             }
-            : {
+        } else {
+            defaultValue = {
                 id: moneyCell.id,
-                owner: GetFullPersonName(props.people.filter(e => e.id === moneyCell.ownerId)[0]),
+                owner: GetFullPersonName(props.people.first(e => e.id === moneyCell.ownerId)),
                 name: moneyCell.name,
                 status: moneyCell.status,
-            };
+            }
+        }
 
         this.state = {value: defaultValue, isNew };
     }

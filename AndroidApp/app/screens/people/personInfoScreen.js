@@ -62,7 +62,7 @@ class PersonInfoScreen extends React.Component {
                 headerStatus = {getStatusFromSummary(summary)}
             >
                 <View style = {styles.listContainer}>
-                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells} />}
+                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells} ownerId = {person.id} />}
                     {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions} moneyCellsIdsSet = {moneyCellIdsSet}/>}
                 </View>
                 <View style = {styles.buttonsContainer}>
