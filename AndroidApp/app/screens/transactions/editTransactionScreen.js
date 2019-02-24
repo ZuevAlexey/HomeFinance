@@ -6,6 +6,7 @@ import {CommonConstants} from "../../constants/commonConstants";
 import {isNullOrUndefined} from "../../helpers/maybe";
 import {connect} from "react-redux";
 import {GetShortPersonName} from "../../helpers/displayStringHelper";
+import {getMoneyCellsComparer} from "../../helpers/sorter";
 
 let t = require('tcomb-form-native');
 
@@ -39,8 +40,12 @@ class EditTransactionScreen extends React.Component {
     }
 
     getMoneyCellsEnums = () => {
-        return getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.filter(e => e.id === mc.ownerId)[0])})`, 'MoneyCells',
-            {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: 'OUTSIDE'}
+        return getEnumsFromList(this.props.moneyCells,
+            mc => mc.id,
+            mc => `${mc.name} (${GetShortPersonName(this.props.people.first(e => e.id === mc.ownerId))})`,
+            'MoneyCells',
+            {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: 'OUTSIDE'},
+            getMoneyCellsComparer(this.props.people)
         );
     };
 

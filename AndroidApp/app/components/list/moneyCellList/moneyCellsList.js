@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Text} from "react-native";
+import {Text} from "react-native";
 import {Theme} from "../../theme";
 import {showOkCancelDialog} from "../../../helpers/dialog";
 
@@ -11,9 +11,10 @@ import {MarkDeleteMoneyCell} from "../../../store/actions/markDeleteMoneyCell";
 import {AddMoneyCell} from "../../../store/actions/addMoneyCell";
 import {isNullOrUndefined} from "../../../helpers/maybe";
 import {GetShortPersonName} from "../../../helpers/displayStringHelper";
+import {getMoneyCellsComparer} from "../../../helpers/sorter";
 
 const MoneyCellsList = (props) => {
-    let {navigation, moneyCells, add, save, getTitle} = props;
+    let {navigation, moneyCells, add, save, getTitle, people} = props;
     return (
         <List
             avatarFactory = {getAvatar}
@@ -23,6 +24,7 @@ const MoneyCellsList = (props) => {
             onItemEditPress = {onMoneyCellEditPress(navigation, save)}
             onItemDeletePress = {onMoneyCellDeletePress(props.delete)}
             items = {moneyCells}
+            sortFunc = {getMoneyCellsComparer(people)}
             addButtonInfo= {{
                 icon: {
                     name: 'credit-card-plus',
@@ -83,6 +85,12 @@ const getAvatar = (moneyCell) => {
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        people: state.people
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         add: (moneyCell) => {
@@ -98,7 +106,7 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(undefined, mapDispatchToProps)(MoneyCellsList);
+export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellsList);
 
 export const getTitleWithOwner = (people) => (moneyCell) => {
     let owner = null;
