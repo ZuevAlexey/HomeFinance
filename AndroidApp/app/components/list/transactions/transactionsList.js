@@ -12,24 +12,24 @@ import {transactionComparer} from '../../../helpers/sorter';
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
     return (
-            <List
-                avatarFactory = {getAvatar(moneyCellsIdsSet)}
-                avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle(moneyCellsIdsSet, articles)}
-                onItemPress = {onTransactionEditPress(navigation, save)}
-                onItemEditPress = {onTransactionEditPress(navigation, save)}
-                onItemDeletePress = {onTransactionDeletePress(props.delete)}
-                items = {transactions.sort(e => e.date)}
-                comparer = {transactionComparer}
-                addButtonInfo= {{
-                    icon: {
-                        name: 'credit-card-plus',
-                        type: 'material-community'
-                    },
-                    title: 'Add new transaction',
-                    onPress: addTransactionPress(navigation, add)
-                }}
-            />
+        <List
+            avatarFactory = {getAvatar(moneyCellsIdsSet)}
+            avatarStyle = {Theme.listAvatarStyle}
+            titleFactory = {getTitle(moneyCellsIdsSet, articles)}
+            onItemPress = {onTransactionEditPress(navigation, save)}
+            onItemEditPress = {onTransactionEditPress(navigation, save)}
+            onItemDeletePress = {onTransactionDeletePress(props.delete)}
+            items = {transactions.sort(e => e.date)}
+            comparer = {transactionComparer}
+            addButtonInfo= {{
+                icon: {
+                    name: 'credit-card-plus',
+                    type: 'material-community'
+                },
+                title: 'Add new transaction',
+                onPress: addTransactionPress(navigation, add)
+            }}
+        />
     );
 };
 

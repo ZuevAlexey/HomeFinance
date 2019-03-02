@@ -1,10 +1,6 @@
-import {combineReducers, createStore} from 'redux';
+import {createStore} from 'redux';
 import {persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import {MoneyCellsReducer} from './reducers/moneyCellsReducer';
-import {PeopleReducer} from './reducers/peopleReducer';
-import {TransactionsReducer} from './reducers/transactionsReducer';
-import {SystemDataReducer} from './reducers/systemDataReducer';
 import {defaultState} from './defaultState';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
@@ -14,7 +10,7 @@ import {
     systemDataTransform,
     transactionsTransform
 } from './transform';
-import {ArticlesReducer} from './reducers/articlesReducer';
+import {MainReducer} from "./reducers/mainReducer";
 
 const persistConfig = {
     key: 'root',
@@ -24,15 +20,7 @@ const persistConfig = {
     stateReconciler: autoMergeLevel2
 };
 
-const rootReducer = combineReducers({
-    'people': PeopleReducer,
-    'moneyCells': MoneyCellsReducer,
-    'transactions': TransactionsReducer,
-    'articles': ArticlesReducer,
-    'systemData': SystemDataReducer
-});
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, MainReducer)
 
 export const storeFactory = () => {
     let store = createStore(persistedReducer, defaultState);

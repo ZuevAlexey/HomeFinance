@@ -6,10 +6,11 @@ import {getDateDisplayString, GetFullPersonName} from '../../helpers/displayStri
 import {Theme} from '../../components/theme';
 import {MoneyCellStatus} from '../../constants/moneyCellStatus';
 import {connect} from 'react-redux';
-import {isNullOrUndefined, withNullCheck} from '../../helpers/maybe';
+import {withNullCheck} from '../../helpers/maybe';
 import {getStatusFromSummary} from '../../helpers/statusHelper';
 import {getTransactionsSummary} from '../../helpers/calculator';
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
+import {GetInfoText} from "../../helpers/moneyCellsHelper";
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCellId} = props.navigation.state.params;

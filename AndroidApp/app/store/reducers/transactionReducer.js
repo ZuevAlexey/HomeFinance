@@ -46,7 +46,8 @@ const processMarkDeleteAction = (state, predicate) => {
     let result = {
         ...state,
         lastModificationTime: new Date()
-    };
+    }
+
     if(predicate(state.fromId)){
         result.fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
     }
