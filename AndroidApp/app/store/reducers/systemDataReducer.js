@@ -1,7 +1,6 @@
 import {ActionName} from "../../constants/actionName";
 import {defaultState} from "../defaultState";
-import {resetState} from "../../helpers/resetStorageHelper";
-import {isNullOrUndefined, withNullCheck} from "../../helpers/maybe";
+import {withNullCheck} from "../../helpers/maybe";
 
 export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
