@@ -39,7 +39,7 @@ const processMarkDeleteMoneyCellAction = (state, action) => {
 };
 
 const processMarkDeleteAction = (state, predicate) => {
-    if(predicate(state.fromId) && predicate(state.toId)){
+    if(!predicate(state.fromId) && !predicate(state.toId)){
         return state;
     }
 
