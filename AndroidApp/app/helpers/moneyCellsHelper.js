@@ -1,3 +1,4 @@
+import React from 'react';
 import {isNullOrUndefined} from "./maybe";
 import {Text} from "react-native";
 import {GetShortPersonName} from "./displayStringHelper";
