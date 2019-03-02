@@ -50,6 +50,7 @@ const processedActions = [
 AssertUnprocessedActions(processedActions, 'Transactions', TransactionsReducer);
 
 const lastModificationTime = new Date();
+const creationTime = lastModificationTime;
 
 it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const id = 1;
@@ -59,11 +60,10 @@ it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const amount = 3000;
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
-    const isValid = false;
-    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
+    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
-        .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime}, trans2, trans3]);
+        .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid: true, lastModificationTime}, trans2, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
@@ -96,7 +96,8 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     const id = 1;
     const action = AddTransaction(fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
+    action.creationTime = creationTime;
     action.id = id;
     const newTransaction = TransactionsReducer(startState, action)[stateLength];
-    expect(newTransaction).toEqual({fromId, toId, articleId, amount, description, date, isDeleted, isValid, lastModificationTime, id});
+    expect(newTransaction).toEqual({creationTime, fromId, toId, articleId, amount, description, date, isDeleted, isValid, lastModificationTime, id});
 });

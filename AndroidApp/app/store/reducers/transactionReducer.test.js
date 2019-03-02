@@ -34,11 +34,10 @@ it(`Transaction reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const amount = 3000;
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
-    const isValid = false;
-    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
+    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionReducer(startState, action))
-    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime});
+    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid : true, lastModificationTime});
 });
 
 it(`Transaction reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {

@@ -2,6 +2,7 @@ import {ActionName} from '../../constants/actionName';
 import uuid from 'uuid-v4';
 
 export const AddTransaction = (fromId, toId, articleId, amount, description, date) => {
+    let now = new Date();
     return {
         type : ActionName.ADD_TRANSACTION,
         id: uuid(),
@@ -12,7 +13,7 @@ export const AddTransaction = (fromId, toId, articleId, amount, description, dat
         description,
         date,
         isValid: true,
-        lastModificationTime: new Date(),
-        creationTime: new Date(),
+        lastModificationTime: now,
+        creationTime: now,
     }
 };

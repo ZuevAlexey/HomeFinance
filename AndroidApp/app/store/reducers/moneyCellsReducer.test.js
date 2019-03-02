@@ -53,6 +53,7 @@ const processedActions = [
     ActionName.MARK_DELETE_PERSON,
 ];
 const lastModificationTime = new Date();
+const creationTime = lastModificationTime;
 
 AssertUnprocessedActions(processedActions, 'MoneyCells', MoneyCellsReducer);
 
@@ -100,6 +101,7 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     const action = AddMoneyCell(ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId);
     action.id = 1;
     action.lastModificationTime = lastModificationTime;
+    action.creationTime = creationTime;
     const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
-    expect(newMoneyCell).toEqual({ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id, isDeleted});
+    expect(newMoneyCell).toEqual({creationTime, ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id, isDeleted});
 });
