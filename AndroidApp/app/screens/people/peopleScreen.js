@@ -10,11 +10,11 @@ import {AddPerson} from '../../store/actions/addPerson';
 import {EditPerson} from '../../store/actions/editPerson';
 import {MarkDeletePerson} from '../../store/actions/markDeletePerson';
 
-import {GetFullPersonName} from "../../helpers/displayStringHelper";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
-import {getMoneyCellsSummary} from "../../helpers/calculator";
-import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
-import {peopleComparer} from "../../helpers/sorter";
+import {GetFullPersonName} from '../../helpers/displayStringHelper';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getMoneyCellsSummary} from '../../helpers/calculator';
+import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
+import {peopleComparer} from '../../helpers/sorter';
 
 const PeopleScreen = (props) => {
     let {navigation, summary} = props;

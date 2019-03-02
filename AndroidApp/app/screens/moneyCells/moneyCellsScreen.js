@@ -1,10 +1,10 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 
-import MoneyCellsList, {getTitleWithOwner} from "../../components/list/moneyCellList/moneyCellsList";
-import {connect} from "react-redux";
-import {getMoneyCellsSummary} from "../../helpers/calculator";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
+import MoneyCellsList, {getTitleWithOwner} from '../../components/list/moneyCellList/moneyCellsList';
+import {connect} from 'react-redux';
+import {getMoneyCellsSummary} from '../../helpers/calculator';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
 
 const MoneyCellsScreen = (props) => {
     let {moneyCells} = props;

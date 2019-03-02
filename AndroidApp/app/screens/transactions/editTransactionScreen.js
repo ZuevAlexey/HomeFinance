@@ -1,12 +1,12 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 import {getEnumsFromList} from '../../helpers/getEnums';
-import {EditForm} from "../../components/editForm/editForm";
-import {CommonConstants} from "../../constants/commonConstants";
-import {isNullOrUndefined} from "../../helpers/maybe";
-import {connect} from "react-redux";
-import {GetShortPersonName} from "../../helpers/displayStringHelper";
-import {articleComparer, getMoneyCellsComparer} from "../../helpers/sorter";
+import {EditForm} from '../../components/editForm/editForm';
+import {CommonConstants} from '../../constants/commonConstants';
+import {isNullOrUndefined} from '../../helpers/maybe';
+import {connect} from 'react-redux';
+import {GetShortPersonName} from '../../helpers/displayStringHelper';
+import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
 

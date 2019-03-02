@@ -1,5 +1,5 @@
 import * as tcomb from 'tcomb-form-native';
-import {isNullOrUndefined} from "./maybe";
+import {isNullOrUndefined} from './maybe';
 
 export const getEnumsFromList = (objects, valueFactory, displayValueFactory, name, defaultValue, sortFunc) => {
     let result = {};

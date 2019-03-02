@@ -1,10 +1,10 @@
-import {ActionName} from "../../constants/actionName";
-import {TransactionsReducer} from "./transactionsReducer";
+import {ActionName} from '../../constants/actionName';
+import {TransactionsReducer} from './transactionsReducer';
 import {EditTransaction} from '../actions/editTransaction';
 import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 import {AddTransaction} from '../actions/addTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS} from "expo/src/IntentLauncherAndroid";
+import {ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS} from 'expo/src/IntentLauncherAndroid';
 
 const trans1 = {
     id: 1,
@@ -13,7 +13,7 @@ const trans1 = {
     articleId: 100,
     amount: 1500,
     date: new Date(2018, 8, 1, 14, 55),
-    description: "Оплата комуналки",
+    description: 'Оплата комуналки',
     isValid: true
 };
 const trans2 = {
@@ -23,7 +23,7 @@ const trans2 = {
     articleId: 100500,
     amount: 70,
     date: new Date(2018, 9, 8, 14, 55),
-    description: "Молоко",
+    description: 'Молоко',
     isValid: true
 };
 const trans3 = {
@@ -33,7 +33,7 @@ const trans3 = {
     articleId: 250,
     amount: 3700,
     date: new Date(2018, 8, 1, 14, 55),
-    description: "Лечение зубов",
+    description: 'Лечение зубов',
     isValid: false
 };
 const startState = [trans1, trans2, trans3];

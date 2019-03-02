@@ -1,5 +1,5 @@
-import {ActionName} from "../../constants/actionName";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {ActionName} from '../../constants/actionName';
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 export const MoneyCellReducer = (state = {}, action) => {
     switch(action.type){

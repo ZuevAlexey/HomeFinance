@@ -1,10 +1,10 @@
-import {ActionName} from "../../constants/actionName";
+import {ActionName} from '../../constants/actionName';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {MoneyCellType} from "../../constants/moneyCellType";
-import {MoneyCellStatus} from "../../constants/moneyCellStatus";
-import {MoneyCellReducer} from "./moneyCellReducer";
+import {MoneyCellType} from '../../constants/moneyCellType';
+import {MoneyCellStatus} from '../../constants/moneyCellStatus';
+import {MoneyCellReducer} from './moneyCellReducer';
 import {EditMoneyCell} from '../actions/editMoneyCell';
-import {MarkDeleteMoneyCell} from "../actions/markDeleteMoneyCell";
+import {MarkDeleteMoneyCell} from '../actions/markDeleteMoneyCell';
 
 const startState = {
     id: 1,

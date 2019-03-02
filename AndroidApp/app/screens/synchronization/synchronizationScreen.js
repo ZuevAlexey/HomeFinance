@@ -1,18 +1,18 @@
 import React from 'react';
-import {StyleSheet} from "react-native";
-import {Screen} from "../../components/screen/screen";
-import {View} from "native-base";
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
-import {connect} from "react-redux";
-import {deserialyzeFromSync, getInfoForSynchronize} from "../../helpers/synchronizationHelper";
-import {Synchronize} from "../../store/actions/synchronization";
-import {EditForm} from "../../components/editForm/editForm";
-import {EditSystemData} from "../../store/actions/editSystemData";
-import {showMessage, showOkCancelDialog} from "../../helpers/dialog";
-import {ResetStorage} from "../../store/actions/resetStorage";
-import {readLocalSyncData, saveSyncData} from "../../helpers/resetStorageHelper";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {StyleSheet} from 'react-native';
+import {Screen} from '../../components/screen/screen';
+import {View} from 'native-base';
+import {Theme} from '../../components/theme';
+import {Button} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchronizationHelper';
+import {Synchronize} from '../../store/actions/synchronization';
+import {EditForm} from '../../components/editForm/editForm';
+import {EditSystemData} from '../../store/actions/editSystemData';
+import {showMessage, showOkCancelDialog} from '../../helpers/dialog';
+import {ResetStorage} from '../../store/actions/resetStorage';
+import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 let tcomb = require('tcomb-form-native');
 

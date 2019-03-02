@@ -1,5 +1,5 @@
-import {dateWithNullCheck, withNullCheck} from "./maybe";
-import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "./convert";
+import {dateWithNullCheck, withNullCheck} from './maybe';
+import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from './convert';
 
 export const synchronize = (state, diff) => {
     let removeIds = diff.remove;

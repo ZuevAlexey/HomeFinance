@@ -1,5 +1,5 @@
-import createTransform from "redux-persist/es/createTransform";
-import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "../helpers/convert";
+import createTransform from 'redux-persist/es/createTransform';
+import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from '../helpers/convert';
 
 export const articlesTransform = createTransform(
     (inboundState, key) => {

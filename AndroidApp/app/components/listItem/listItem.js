@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableNativeFeedback, View} from 'react-native';
-import {Icon} from "react-native-elements";
+import {Icon} from 'react-native-elements';
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
 import {Theme} from '../theme';

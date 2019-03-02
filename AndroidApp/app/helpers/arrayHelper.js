@@ -1,4 +1,4 @@
-import {debugObject} from "./dialog";
+import {debugObject} from './dialog';
 
 Array.prototype.firstOrDefault = function(predicate, defaultValue = null) {
     for (let i = 0; i < this.length; i++) {

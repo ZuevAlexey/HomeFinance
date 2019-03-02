@@ -1,5 +1,5 @@
-import {Alert} from "react-native";
-import {isNullOrUndefined} from "./maybe";
+import {Alert} from 'react-native';
+import {isNullOrUndefined} from './maybe';
 
 export const showOkCancelDialog = (title, message, onOkPress, okTitle, cancelTitle) => {
     Alert.alert(

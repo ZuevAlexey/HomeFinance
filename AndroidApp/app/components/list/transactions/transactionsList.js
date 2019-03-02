@@ -1,13 +1,13 @@
 import React from 'react';
-import {List} from "../list";
-import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/dialog";
-import {AddTransaction} from "../../../store/actions/addTransaction";
-import {EditTransaction} from "../../../store/actions/editTransaction";
-import {connect} from "react-redux";
-import {MarkDeleteTransaction} from "../../../store/actions/markDeleteTransaction";
-import {getAvatar, getTitle} from "../../../helpers/transactionHelper";
-import {transactionComparer} from "../../../helpers/sorter";
+import {List} from '../list';
+import {Theme} from '../../theme';
+import {showOkCancelDialog} from '../../../helpers/dialog';
+import {AddTransaction} from '../../../store/actions/addTransaction';
+import {EditTransaction} from '../../../store/actions/editTransaction';
+import {connect} from 'react-redux';
+import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransaction';
+import {getAvatar, getTitle} from '../../../helpers/transactionHelper';
+import {transactionComparer} from '../../../helpers/sorter';
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;

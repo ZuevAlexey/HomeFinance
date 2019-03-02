@@ -1,17 +1,17 @@
 import React from 'react';
-import {Text} from "react-native";
-import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/dialog";
+import {Text} from 'react-native';
+import {Theme} from '../../theme';
+import {showOkCancelDialog} from '../../../helpers/dialog';
 
-import {List} from "../list";
-import {MoneyCellType} from "../../../constants/moneyCellType";
-import {EditMoneyCell} from "../../../store/actions/editMoneyCell";
-import {connect} from "react-redux";
-import {MarkDeleteMoneyCell} from "../../../store/actions/markDeleteMoneyCell";
-import {AddMoneyCell} from "../../../store/actions/addMoneyCell";
-import {isNullOrUndefined} from "../../../helpers/maybe";
-import {GetShortPersonName} from "../../../helpers/displayStringHelper";
-import {getMoneyCellsComparer} from "../../../helpers/sorter";
+import {List} from '../list';
+import {MoneyCellType} from '../../../constants/moneyCellType';
+import {EditMoneyCell} from '../../../store/actions/editMoneyCell';
+import {connect} from 'react-redux';
+import {MarkDeleteMoneyCell} from '../../../store/actions/markDeleteMoneyCell';
+import {AddMoneyCell} from '../../../store/actions/addMoneyCell';
+import {isNullOrUndefined} from '../../../helpers/maybe';
+import {GetShortPersonName} from '../../../helpers/displayStringHelper';
+import {getMoneyCellsComparer} from '../../../helpers/sorter';
 
 const MoneyCellsList = (props) => {
     let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;

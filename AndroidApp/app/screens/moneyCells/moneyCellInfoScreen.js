@@ -1,21 +1,21 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
-import TransactionsList from "../../components/list/transactions/transactionsList";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
-import {getDateDisplayString, GetFullPersonName} from "../../helpers/displayStringHelper";
-import {Theme} from "../../components/theme";
-import {MoneyCellStatus} from "../../constants/moneyCellStatus";
-import {connect} from "react-redux";
-import {isNullOrUndefined, withNullCheck} from "../../helpers/maybe";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
-import {getTransactionsSummary} from "../../helpers/calculator";
-import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
+import {Screen} from '../../components/screen/screen';
+import TransactionsList from '../../components/list/transactions/transactionsList';
+import {Text, View, StyleSheet, Dimensions} from 'react-native';
+import {getDateDisplayString, GetFullPersonName} from '../../helpers/displayStringHelper';
+import {Theme} from '../../components/theme';
+import {MoneyCellStatus} from '../../constants/moneyCellStatus';
+import {connect} from 'react-redux';
+import {isNullOrUndefined, withNullCheck} from '../../helpers/maybe';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getTransactionsSummary} from '../../helpers/calculator';
+import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 
 const MoneyCellInfoScreen = (props) => {
     let {moneyCellId} = props.navigation.state.params;
     let transactions = props.getTransactions(moneyCellId);
     let moneyCell = props.getMoneyCell(moneyCellId);
-    let owner = props.getOwner(moneyCell.ownerId);
+    let owner = props.getPerson(moneyCell.ownerId);
     let summary = getTransactionsSummary(transactions, new Set([moneyCell.id]));
 
     return (
@@ -84,8 +84,8 @@ const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
 const mapStateToProps = state => {
     return {
         getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
-        getMoneyCell: (moneyCellId) => state.moneyCells.filter(e => e.id === moneyCellId)[0],
-        getOwner: (ownerId) => state.people.filter(e => e.id === ownerId)[0]
+        getMoneyCell: (moneyCellId) => state.moneyCells.first(e => e.id === moneyCellId),
+        getPerson: (personId) => state.people.first(e => e.id === personId)
     }
 };
 

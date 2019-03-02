@@ -1,15 +1,15 @@
-import {synchronize, getInfoForSynchronize} from "./synchronizationHelper";
+import {synchronize, getInfoForSynchronize} from './synchronizationHelper';
 
 it(`Synchronization function test`, () => {
-    const elem1 = {id:1, data: "data1"};
-    const elem2 = {id:2, data: "data2"};
-    const elem3 = {id:3, data: "data3"};
-    const elem4 = {id:4, data: "data4"};
-    const elem5 = {id:5, data: "data5"};
-    const elem6 = {id:6, data: "data6"};
-    const elem7 = {id:7, data: "data7"};
-    const anotherElem4 = {id:4, data: "anotherData4"};
-    const anotherElem5 = {id:5, data: "anotherData5"};
+    const elem1 = {id:1, data: 'data1'};
+    const elem2 = {id:2, data: 'data2'};
+    const elem3 = {id:3, data: 'data3'};
+    const elem4 = {id:4, data: 'data4'};
+    const elem5 = {id:5, data: 'data5'};
+    const elem6 = {id:6, data: 'data6'};
+    const elem7 = {id:7, data: 'data7'};
+    const anotherElem4 = {id:4, data: 'anotherData4'};
+    const anotherElem5 = {id:5, data: 'anotherData5'};
 
     const startState = [elem1, elem2, elem3, elem4, elem5];
     const diff = {

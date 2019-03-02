@@ -1,8 +1,8 @@
-import {ActionName} from "../../constants/actionName";
+import {ActionName} from '../../constants/actionName';
 import {TransactionReducer} from './transactionReducer';
-import {synchronize} from "../../helpers/synchronizationHelper";
-import {defaultState} from "../defaultState";
-import {withNullCheck} from "../../helpers/maybe";
+import {synchronize} from '../../helpers/synchronizationHelper';
+import {defaultState} from '../defaultState';
+import {withNullCheck} from '../../helpers/maybe';
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){

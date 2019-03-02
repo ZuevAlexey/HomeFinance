@@ -1,4 +1,4 @@
-import {stringWithNullCheck, withNullCheck} from "./maybe";
+import {stringWithNullCheck, withNullCheck} from './maybe';
 
 export const GetFullPersonName = person => `${stringWithNullCheck(person.lastName)} ${stringWithNullCheck(person.firstName)}`;
 

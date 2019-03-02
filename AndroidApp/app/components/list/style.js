@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native';
 import {Theme} from '../theme';
 
 module.exports = StyleSheet.create({

@@ -1,13 +1,13 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 import {MoneyCellType} from '../../constants/moneyCellType';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
-import {MoneyCellStatus} from "../../constants/moneyCellStatus";
-import {EditForm} from "../../components/editForm/editForm";
-import {GetFullPersonName, GetShortPersonName} from "../../helpers/displayStringHelper";
-import {connect} from "react-redux";
-import {isNullOrUndefined} from "../../helpers/maybe";
-import {getMoneyCellsComparer, peopleComparer} from "../../helpers/sorter";
+import {MoneyCellStatus} from '../../constants/moneyCellStatus';
+import {EditForm} from '../../components/editForm/editForm';
+import {GetFullPersonName, GetShortPersonName} from '../../helpers/displayStringHelper';
+import {connect} from 'react-redux';
+import {isNullOrUndefined} from '../../helpers/maybe';
+import {getMoneyCellsComparer, peopleComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
 
@@ -20,7 +20,7 @@ class EditMoneyCellScreen extends React.Component {
 
         let moneyCell;
         if(!isNew){
-            moneyCell = props.moneyCells.filter(e => e.id === moneyCellId)[0];
+            moneyCell = props.moneyCells.first(e => e.id === moneyCellId);
         }
 
         let defaultValue;

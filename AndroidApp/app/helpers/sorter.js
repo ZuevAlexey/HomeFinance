@@ -1,4 +1,4 @@
-import {GetFullPersonName} from "./displayStringHelper";
+import {GetFullPersonName} from './displayStringHelper';
 
 export const peopleComparer = (person1, person2) => stringComparer(GetFullPersonName(person1), GetFullPersonName(person2));
 

@@ -1,6 +1,6 @@
-import {ActionName} from "../../constants/actionName";
-import {defaultState} from "../defaultState";
-import {withNullCheck} from "../../helpers/maybe";
+import {ActionName} from '../../constants/actionName';
+import {defaultState} from '../defaultState';
+import {withNullCheck} from '../../helpers/maybe';
 
 export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){

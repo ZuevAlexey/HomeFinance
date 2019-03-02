@@ -1,5 +1,5 @@
-import {Theme} from "../components/theme";
-import {TRANSACTIONS_TYPES} from "./transactionHelper";
+import {Theme} from '../components/theme';
+import {TRANSACTIONS_TYPES} from './transactionHelper';
 
 export const getColorForAmount = (amount) => {
     if(amount < 0){

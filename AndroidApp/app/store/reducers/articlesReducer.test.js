@@ -1,4 +1,4 @@
-import {ActionName} from "../../constants/actionName";
+import {ActionName} from '../../constants/actionName';
 import {ArticlesReducer} from './articlesReducer';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
 

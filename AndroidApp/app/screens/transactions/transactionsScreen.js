@@ -1,11 +1,11 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 
-import TransactionsList from "../../components/list/transactions/transactionsList";
-import {connect} from "react-redux";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
-import {getTransactionsSummary} from "../../helpers/calculator";
-import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
+import TransactionsList from '../../components/list/transactions/transactionsList';
+import {connect} from 'react-redux';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getTransactionsSummary} from '../../helpers/calculator';
+import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 
 const TransactionsScreen = (props) => {
     let summary = getTransactionsSummary(props.transactions, props.moneyCellsIdsSet);

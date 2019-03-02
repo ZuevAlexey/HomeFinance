@@ -1,6 +1,6 @@
-import {ActionName} from "../../constants/actionName";
-import {dateWithNullCheck, withNullCheck} from "../../helpers/maybe";
-import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from "../../helpers/convert";
+import {ActionName} from '../../constants/actionName';
+import {dateWithNullCheck, withNullCheck} from '../../helpers/maybe';
+import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} from '../../helpers/convert';
 
 export const ResetStorage = (serializedData) => {
     return {

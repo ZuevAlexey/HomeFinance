@@ -1,8 +1,8 @@
-import {ActionName} from "../../constants/actionName";
-import {TransactionReducer} from "./transactionReducer";
+import {ActionName} from '../../constants/actionName';
+import {TransactionReducer} from './transactionReducer';
 import {EditTransaction} from '../actions/editTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {MarkDeleteTransaction} from "../actions/markDeleteTransaction";
+import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 
 const startState = {
     id: 1,
@@ -11,7 +11,7 @@ const startState = {
     articleId: 100,
     amount: 1500,
     date: new Date(2018, 8, 1, 14, 55),
-    description: "Оплата комуналки",
+    description: 'Оплата комуналки',
     isValid: true
 };
 

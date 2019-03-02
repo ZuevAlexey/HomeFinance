@@ -1,16 +1,16 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
-import TransactionsList from "../../components/list/transactions/transactionsList";
-import MoneyCellsList from "../../components/list/moneyCellList/moneyCellsList";
-import {View} from "native-base";
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
-import {StyleSheet} from "react-native";
-import {GetFullPersonName} from "../../helpers/displayStringHelper";
-import {connect} from "react-redux";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
-import {getMoneyCellsSummary, getTransactionsSummary} from "../../helpers/calculator";
-import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
+import {Screen} from '../../components/screen/screen';
+import TransactionsList from '../../components/list/transactions/transactionsList';
+import MoneyCellsList from '../../components/list/moneyCellList/moneyCellsList';
+import {View} from 'native-base';
+import {Theme} from '../../components/theme';
+import {Button} from 'react-native-elements';
+import {StyleSheet} from 'react-native';
+import {GetFullPersonName} from '../../helpers/displayStringHelper';
+import {connect} from 'react-redux';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getMoneyCellsSummary, getTransactionsSummary} from '../../helpers/calculator';
+import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 
 const INNER_PAGES = {
     TRANSACTIONS : 'Transactions',

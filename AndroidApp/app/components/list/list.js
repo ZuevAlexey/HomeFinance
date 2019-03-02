@@ -1,10 +1,10 @@
 import React from 'react';
 import {Button} from 'react-native-elements';
-import {ListItem} from "../listItem/listItem";
-import {View, ScrollView} from "react-native";
+import {ListItem} from '../listItem/listItem';
+import {View, ScrollView} from 'react-native';
 import Styles from './style';
-import {Theme} from "../theme";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {Theme} from '../theme';
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 export const List = (props) => {
     let {items,

@@ -1,11 +1,11 @@
 import {combineReducers, createStore} from 'redux';
 import {persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import {MoneyCellsReducer} from "./reducers/moneyCellsReducer";
-import {PeopleReducer} from "./reducers/peopleReducer";
-import {TransactionsReducer} from "./reducers/transactionsReducer";
-import {SystemDataReducer} from "./reducers/systemDataReducer";
-import {defaultState} from "./defaultState";
+import {MoneyCellsReducer} from './reducers/moneyCellsReducer';
+import {PeopleReducer} from './reducers/peopleReducer';
+import {TransactionsReducer} from './reducers/transactionsReducer';
+import {SystemDataReducer} from './reducers/systemDataReducer';
+import {defaultState} from './defaultState';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     articlesTransform,
@@ -13,8 +13,8 @@ import {
     peopleTransform,
     systemDataTransform,
     transactionsTransform
-} from "./transform";
-import {ArticlesReducer} from "./reducers/articlesReducer";
+} from './transform';
+import {ArticlesReducer} from './reducers/articlesReducer';
 
 const persistConfig = {
     key: 'root',
@@ -25,11 +25,11 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    "people": PeopleReducer,
-    "moneyCells": MoneyCellsReducer,
-    "transactions": TransactionsReducer,
-    "articles": ArticlesReducer,
-    "systemData": SystemDataReducer
+    'people': PeopleReducer,
+    'moneyCells': MoneyCellsReducer,
+    'transactions': TransactionsReducer,
+    'articles': ArticlesReducer,
+    'systemData': SystemDataReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

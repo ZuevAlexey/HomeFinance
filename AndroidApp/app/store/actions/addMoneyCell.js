@@ -1,6 +1,6 @@
 import {ActionName} from '../../constants/actionName';
 import uuid from 'uuid-v4';
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 export const AddMoneyCell = (ownerId, moneyCellType, name, status, amount = 0, isValid = true, startDate = null,
                                endDate = null, roi = null, parentId = null) => {

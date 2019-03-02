@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text} from "react-native";
-import {getTransactionAmountColor} from "./colorHelper";
-import {withNullCheck} from "./maybe";
+import {Text} from 'react-native';
+import {getTransactionAmountColor} from './colorHelper';
+import {withNullCheck} from './maybe';
 
 export const TRANSACTIONS_TYPES = {
     TRANSFER : 'transfer',

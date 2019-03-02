@@ -1,8 +1,8 @@
-import {ActionName} from "../../constants/actionName";
-import {synchronize} from "../../helpers/synchronizationHelper";
-import {defaultState} from "../defaultState";
-import {resetState} from "../../helpers/resetStorageHelper";
-import {withNullCheck} from "../../helpers/maybe";
+import {ActionName} from '../../constants/actionName';
+import {synchronize} from '../../helpers/synchronizationHelper';
+import {defaultState} from '../defaultState';
+import {resetState} from '../../helpers/resetStorageHelper';
+import {withNullCheck} from '../../helpers/maybe';
 
 export const ArticlesReducer = (state = [], action) => {
     switch(action.type){

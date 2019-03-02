@@ -1,4 +1,4 @@
-import {dateWithNullCheck} from "./maybe";
+import {dateWithNullCheck} from './maybe';
 
 
 export const convertPeople = (people) => {
