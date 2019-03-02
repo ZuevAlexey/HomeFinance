@@ -17,16 +17,15 @@ class EditTransactionScreen extends React.Component {
         this.getMoneyCellsEnums = this.getMoneyCellsEnums.bind(this);
         let {transactionId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(transactionId);
-        let transaction;
-        if(!isNew){
-            transaction = props.getTransaction(transactionId);
-        }
 
-        let startValue = isNew
-            ? {
+        let startValue;
+        if(isNew) {
+            startValue = {
                 date: new Date()
-            }
-            : {
+            };
+        } else {
+            let transaction = props.getTransaction(transactionId);
+            startValue = {
                 id: transaction.id,
                 fromId: transaction.fromId,
                 toId: transaction.toId,
@@ -34,7 +33,8 @@ class EditTransactionScreen extends React.Component {
                 amount: transaction.amount,
                 date: transaction.date && new Date(transaction.date),
                 description: transaction.description
-            };
+            }
+        }
 
         this.state = {value: startValue};
     }
@@ -63,9 +63,9 @@ class EditTransactionScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {action} = this.props.navigation.state.params;
+        let {action, transactionId} = this.props.navigation.state.params;
         let transaction = this.state.value;
-        let headerTitle = isNullOrUndefined(transaction) ? 'Add new transaction' : transaction.description;
+        let headerTitle = isNullOrUndefined(transactionId) ? 'Add new transaction' : transaction.description;
         return (
             <Screen
                 {...this.props}
@@ -80,7 +80,7 @@ class EditTransactionScreen extends React.Component {
             </Screen>
         );
     }
-};
+}
 
 const options = {
     fields: {
@@ -116,7 +116,7 @@ const options = {
 
 const mapStateToProps = (state) => ({
     moneyCells: state.moneyCells.filter(e => !e.isDeleted),
-    getTransaction: (transactionId) => state.transactions.filter(e => !e.isDeleted && e.id === transactionId)[0],
+    getTransaction: (transactionId) => state.transactions.first(e => !e.isDeleted && e.id === transactionId),
     articles: state.articles,
     people: state.people.filter(e => !e.isDeleted)
 });

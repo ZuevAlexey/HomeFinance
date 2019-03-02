@@ -59,28 +59,6 @@ const styles = StyleSheet.create({
     }
 });
 
-const GetInfoText = (title, value, displayValueCreator, colorPredicate) =>{
-    let valueColor = isNullOrUndefined(colorPredicate)
-        ? Theme.fontColor
-        : colorPredicate(value)
-            ? Theme.goodColor
-            : Theme.badColor;
-    return <Text
-        style = {{
-            color: Theme.fontColor,
-            fontSize: 16
-        }}
-    >{title}:{' '}
-        <Text
-            style={{color: valueColor}}
-        >
-            {isNullOrUndefined(displayValueCreator)
-                ? value
-                : displayValueCreator(value)}
-            </Text>
-    </Text>
-};
-
 const mapStateToProps = state => {
     return {
         getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),

@@ -42,9 +42,9 @@ class PersonInfoScreen extends React.Component {
     };
 
     render() {
-        let {navigation, getMoneyCells, getTransactions} = this.props;
-        let {person} = navigation.state.params;
-        let moneyCells = getMoneyCells(person.id);
+        let {navigation, getMoneyCells, getTransactions, getPerson} = this.props;
+        let {personId} = navigation.state.params;
+        let moneyCells = getMoneyCells(personId);
         let moneyCellIdsSet = createMoneyCellsIdsSet(moneyCells);
         let transactions = getTransactions(moneyCellIdsSet);
 
@@ -54,6 +54,8 @@ class PersonInfoScreen extends React.Component {
         } else {
             summary = getTransactionsSummary(transactions, moneyCellIdsSet);
         }
+
+        let person = getPerson(personId);
 
         return (
             <Screen
@@ -76,7 +78,7 @@ class PersonInfoScreen extends React.Component {
             </Screen>
         );
     }
-};
+}
 
 const styles = StyleSheet.create({
     listContainer: {
@@ -97,16 +99,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
+        getPerson: (personId) =>  state.people.first(e => e.id === personId),
         getMoneyCells: (personId) => state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
         getTransactions: (moneyCellIdsSet) => {
-            return state.transactions.reduce((acc, tran) => {
-                if(!tran.isDeleted && (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))){
-                    acc.push(tran);
-                }
-
-                return acc;
-            }, []);
-        },
+            return state.transactions.filter(tran =>
+                !tran.isDeleted &&
+                (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))
+            )
+        }
     }
 };
 

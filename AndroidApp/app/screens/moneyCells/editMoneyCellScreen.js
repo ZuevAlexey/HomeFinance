@@ -18,13 +18,7 @@ class EditMoneyCellScreen extends React.Component {
         let {moneyCellId, ownerId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(moneyCellId);
 
-        let moneyCell;
-        if(!isNew){
-            moneyCell = props.moneyCells.first(e => e.id === moneyCellId);
-        }
-
         let defaultValue;
-
         if(isNew){
             defaultValue = {
                 status: MoneyCellStatus.ACTIVE,
@@ -35,6 +29,7 @@ class EditMoneyCellScreen extends React.Component {
                 defaultValue['ownerId'] = ownerId;
             }
         } else {
+            let moneyCell = props.moneyCells.first(e => e.id === moneyCellId);
             defaultValue = {
                 id: moneyCell.id,
                 owner: GetFullPersonName(props.people.first(e => e.id === moneyCell.ownerId)),

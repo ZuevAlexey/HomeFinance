@@ -1,17 +1,14 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {Theme} from '../../theme';
 import {showOkCancelDialog} from '../../../helpers/dialog';
-
 import {List} from '../list';
 import {MoneyCellType} from '../../../constants/moneyCellType';
 import {EditMoneyCell} from '../../../store/actions/editMoneyCell';
 import {connect} from 'react-redux';
 import {MarkDeleteMoneyCell} from '../../../store/actions/markDeleteMoneyCell';
 import {AddMoneyCell} from '../../../store/actions/addMoneyCell';
-import {isNullOrUndefined} from '../../../helpers/maybe';
-import {GetShortPersonName} from '../../../helpers/displayStringHelper';
 import {getMoneyCellsComparer} from '../../../helpers/sorter';
+import {getSimpleTitle} from "../../../helpers/moneyCellsHelper";
 
 const MoneyCellsList = (props) => {
     let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
@@ -108,29 +105,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellsList);
-
-export const getTitleWithOwner = (people) => (moneyCell) => {
-    let owner = null;
-    if(!isNullOrUndefined(people)){
-        owner = people.filter(e => e.id === moneyCell.ownerId)[0];
-    }
-
-    let result = [
-        <Text key = 'name'>
-            {`${moneyCell.name}`}
-        </Text>
-    ];
-    if(!isNullOrUndefined(owner)){
-        result.push(<Text key = 'ownerName'>
-            {`owner: ${GetShortPersonName(owner)}`}
-        </Text>)
-    }
-
-    result.push(
-        <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
-            {`${moneyCell.amount} RUB`}
-        </Text>);
-    return result;
-};
-
-export const getSimpleTitle = () => getTitleWithOwner(undefined);

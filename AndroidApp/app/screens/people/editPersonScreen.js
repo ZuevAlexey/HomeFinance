@@ -31,12 +31,14 @@ class EditPersonScreen extends React.Component {
     render() {
         let {personId, action} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(personId);
-        let person;
-        if(!isNew){
-            person = props.gerPerson(personId);
+        let headerTitle;
+        if(isNew){
+            headerTitle = 'Add New Person';
+        } else {
+            let person = props.gerPerson(personId);
+            headerTitle = `${person.lastName} ${person.firstName}`;
         }
 
-        let headerTitle = isNew ? 'Add New Person' : `${person.lastName} ${person.firstName}`;
         return (
             <Screen
                 {...this.props}

@@ -53,12 +53,12 @@ const addPersonPress = (navigation, add) => () => {
 };
 
 const onPersonPress = (navigation) => (person) => {
-    navigation.push('Person', {person})
+    navigation.push('Person', {personId: person.id})
 };
 
 const onPersonEditPress = (navigation, save) => person => {
     navigation.push('EditPerson', {
-        person,
+        personId: person.id,
         action: (newPerson) => {
             save(newPerson);
         }

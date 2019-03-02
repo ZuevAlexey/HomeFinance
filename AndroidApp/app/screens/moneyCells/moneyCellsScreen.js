@@ -1,10 +1,11 @@
 import React from 'react';
 import {Screen} from '../../components/screen/screen';
 
-import MoneyCellsList, {getTitleWithOwner} from '../../components/list/moneyCellList/moneyCellsList';
+import MoneyCellsList from '../../components/list/moneyCellList/moneyCellsList';
 import {connect} from 'react-redux';
 import {getMoneyCellsSummary} from '../../helpers/calculator';
 import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getTitleWithOwner} from "../../helpers/moneyCellsHelper";
 
 const MoneyCellsScreen = (props) => {
     let {moneyCells} = props;
@@ -14,7 +15,11 @@ const MoneyCellsScreen = (props) => {
                 headerTitle = 'MoneyCells'
                 headerStatus = {getStatusFromSummary(summary)}
         >
-            <MoneyCellsList navigation = {props.navigation} moneyCells = {moneyCells} getTitle = {getTitleWithOwner(props.people)}/>
+            <MoneyCellsList
+                navigation = {props.navigation}
+                moneyCells = {moneyCells}
+                getTitle = {getTitleWithOwner(props.people)}
+            />
         </Screen>
     );
 };
