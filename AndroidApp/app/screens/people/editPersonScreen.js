@@ -35,7 +35,7 @@ class EditPersonScreen extends React.Component {
         if(isNew){
             headerTitle = 'Add New Person';
         } else {
-            let person = props.gerPerson(personId);
+            let person = this.props.gerPerson(personId);
             headerTitle = `${person.lastName} ${person.firstName}`;
         }
 

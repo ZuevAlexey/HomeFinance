@@ -11,4 +11,5 @@ export const ActionName = {
     MARK_DELETE_TRANSACTION : 'markDeleteTransaction',
     EDIT_SYSTEM_DATA : 'editSystemData',
     SYNCHRONIZATION: 'synchronization',
+    AGGREGATE: 'aggregate'
 };
