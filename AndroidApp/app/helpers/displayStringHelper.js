@@ -1,10 +1,17 @@
-import {stringWithNullCheck, withNullCheck} from './maybe';
+import {isNullOrUndefined, stringWithNullCheck, withNullCheck} from './maybe';
 
 export const GetFullPersonName = person => `${stringWithNullCheck(person.lastName)} ${stringWithNullCheck(person.firstName)}`;
 
 export const GetShortPersonName = person => `${stringWithNullCheck(person.firstName)}${withNullCheck(person.lastName, p => ' ' + p.charAt(0) + '.', '')}`;
 
-export const GetFullMoneyCellName = (owner, moneyCell) => `${moneyCell.Name} (${GetShortPersonName(owner)})`;
+export const GetFullMoneyCellName = (owner, moneyCell) => {
+    let result = moneyCell.name;
+    if(!isNullOrUndefined(owner)) {
+        result += ` (${GetShortPersonName(owner)})`;
+    }
+
+    return result;
+};
 
 export const getDateTimeDisplayString = (dateTime) => {
     return getDateDisplayString(dateTime) +

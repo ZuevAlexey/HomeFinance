@@ -4,7 +4,7 @@ import {MoneyCellType} from '../../constants/moneyCellType';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
 import {MoneyCellStatus} from '../../constants/moneyCellStatus';
 import {EditForm} from '../../components/editForm/editForm';
-import {GetFullPersonName, GetShortPersonName} from '../../helpers/displayStringHelper';
+import {GetFullMoneyCellName, GetFullPersonName, GetShortPersonName} from '../../helpers/displayStringHelper';
 import {connect} from 'react-redux';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {getMoneyCellsComparer, peopleComparer} from '../../helpers/sorter';
@@ -48,11 +48,11 @@ class EditMoneyCellScreen extends React.Component {
             status: getEnumsFromObject(MoneyCellStatus, 'MoneyCellStatus'),
         };
 
-        if(this.state.isNew){
+        if(this.state.isNew) {
             options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People', null, peopleComparer);
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
-            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.first(e => e.id === mc.ownerId))})`, 'MoneyCells', null, getMoneyCellsComparer(this.props.people)));
+            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => GetFullMoneyCellName(this.props.people.first(e => e.id === mc.ownerId), mc), 'MoneyCells', null, getMoneyCellsComparer(this.props.people)));
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
         } else {

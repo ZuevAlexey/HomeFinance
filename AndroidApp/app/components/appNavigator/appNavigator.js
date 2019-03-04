@@ -11,19 +11,10 @@ import EditPersonScreen from '../../screens/people/editPersonScreen';
 import MoneyCellInfoScreen from '../../screens/moneyCells/moneyCellInfoScreen';
 import EditMoneyCellScreen from '../../screens/moneyCells/editMoneyCellScreen';
 import TransactionsScreen from '../../screens/transactions/transactionsScreen';
+import TransactionInfoScreen from '../../screens/transactions/transactionInfoScreen';
 import EditTransactionScreen from '../../screens/transactions/editTransactionScreen';
 
 export const AppNavigator = createDrawerNavigator({
-    Transactions: createStackNavigator({
-        TransactionsList: {
-            screen: TransactionsScreen
-        },
-        EditTransaction: {
-            screen: EditTransactionScreen
-        }
-    }, {
-        headerMode: 'none'
-    }),
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen
@@ -46,6 +37,19 @@ export const AppNavigator = createDrawerNavigator({
         },
         EditMoneyCell: {
             screen: EditMoneyCellScreen
+        }
+    }, {
+        headerMode: 'none'
+    }),
+    Transactions: createStackNavigator({
+        TransactionsList: {
+            screen: TransactionsScreen
+        },
+        EditTransaction: {
+            screen: EditTransactionScreen
+        },
+        Transaction: {
+            screen: TransactionInfoScreen
         }
     }, {
         headerMode: 'none'

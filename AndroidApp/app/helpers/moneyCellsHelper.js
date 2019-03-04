@@ -1,7 +1,7 @@
 import React from 'react';
 import {isNullOrUndefined} from "./maybe";
 import {Text} from "react-native";
-import {GetShortPersonName} from "./displayStringHelper";
+import {GetFullMoneyCellName, GetShortPersonName} from "./displayStringHelper";
 import {Theme} from "../components/theme";
 
 export const getTitleWithOwner = (people) => (moneyCell) => {
@@ -10,24 +10,16 @@ export const getTitleWithOwner = (people) => (moneyCell) => {
         owner = people.first(e => e.id === moneyCell.ownerId);
     }
 
-    let result = [
+    return [
         <Text key = 'name' style = {{textAlign: 'center'}}>
-            {`${moneyCell.name}`}
-        </Text>
-    ];
-    if(!isNullOrUndefined(owner)){
-        result.push(<Text key = 'ownerName' style = {{textAlign: 'center'}}>
-            {`owner: ${GetShortPersonName(owner)}`}
-        </Text>)
-    }
-
-    result.push(
+            {GetFullMoneyCellName(owner, moneyCell)}
+        </Text>,
         <Text key = 'amount' style={{
             color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor,
             textAlign: 'center'}}>
             {`${moneyCell.amount} RUB`}
-        </Text>);
-    return result;
+        </Text>
+    ];
 };
 
 export const getSimpleTitle = () => getTitleWithOwner(undefined);
@@ -41,12 +33,11 @@ export const GetInfoText = (title, value, displayValueCreator, colorPredicate) =
     return <Text
         style = {{
             color: Theme.fontColor,
-            fontSize: 16,
-            textAlign: 'center'
+            fontSize: 16
         }}
     >{title}:{' '}
         <Text
-            style={{color: valueColor, textAlign: 'center'}}
+            style={{color: valueColor}}
         >
             {isNullOrUndefined(displayValueCreator)
                 ? value

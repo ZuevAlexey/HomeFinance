@@ -16,7 +16,7 @@ const TransactionsList = (props) => {
             avatarFactory = {getAvatar(moneyCellsIdsSet)}
             avatarStyle = {Theme.listAvatarStyle}
             titleFactory = {getTransactionTitle(moneyCellsIdsSet, articlesMap)}
-            onItemPress = {onTransactionEditPress(navigation, save)}
+            onItemPress = {onTransactionPress(navigation)}
             onItemEditPress = {onTransactionEditPress(navigation, save)}
             onItemDeletePress = {onTransactionDeletePress(props.delete)}
             items = {transactions.sort(e => e.date)}
@@ -37,6 +37,10 @@ const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
         action: (transaction) => add(transaction)
     });
+};
+
+const onTransactionPress = (navigation) => (transaction) => {
+    navigation.push('Transaction', {transactionId: transaction.id});
 };
 
 const onTransactionEditPress = (navigation, save) => (transaction) => {
