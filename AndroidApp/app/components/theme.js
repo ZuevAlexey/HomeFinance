@@ -9,11 +9,13 @@ export const Theme = {
     statusBarStyle: 'light-content',
     selectedButtonBackgroundColor: '#FFCC99',
     listAvatarStyle: {
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: 'teal',
-        width: 50,
-        height: 50
+        width: 40,
+        height: 40
     },
     mainPaddingLeft: 5,
-    statusFontSize: 20
+    statusFontSize: 20,
+    listItemButtonSize: 18,
+    itemListAvatarIconSize: 30
 };

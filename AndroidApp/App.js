@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {storeFactory} from './app/store/storefactory';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
-//Load extension to prototype
+//Load extension to Array's prototype
 import ArrayHelper from './app/helpers/arrayHelper';
 
 let {store, persistor} = storeFactory();

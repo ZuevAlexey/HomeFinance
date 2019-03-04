@@ -2,7 +2,7 @@ import React from 'react';
 import {Screen} from '../../components/screen/screen';
 import TransactionsList from '../../components/list/transactions/transactionsList';
 import {Text, View, StyleSheet, Dimensions} from 'react-native';
-import {getDateDisplayString, GetFullPersonName} from '../../helpers/displayStringHelper';
+import {getDateTimeDisplayString, GetFullPersonName} from '../../helpers/displayStringHelper';
 import {Theme} from '../../components/theme';
 import {MoneyCellStatus} from '../../constants/moneyCellStatus';
 import {connect} from 'react-redux';
@@ -32,8 +32,8 @@ const MoneyCellInfoScreen = (props) => {
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
                 <View style ={styles.halfInfoContainer} >
-                    {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
-                    {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
+                    {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, getDateTimeDisplayString, 'not set'))}
+                    {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, getDateTimeDisplayString, 'not set'))}
                     {GetInfoText('Status', moneyCell.status, null, e => e === MoneyCellStatus.ACTIVE)}
                 </View>
             </View>
@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        getTransactions: (moneyCellId) => state.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
-        getMoneyCell: (moneyCellId) => state.moneyCells.first(e => e.id === moneyCellId),
-        getPerson: (personId) => state.people.first(e => e.id === personId)
+        getTransactions: (moneyCellId) => state.main.transactions.filter(e => !e.isDeleted && (e.toId === moneyCellId || e.fromId === moneyCellId)),
+        getMoneyCell: (moneyCellId) => state.main.moneyCells.first(e => e.id === moneyCellId),
+        getPerson: (personId) => state.main.people.first(e => e.id === personId)
     }
 };
 

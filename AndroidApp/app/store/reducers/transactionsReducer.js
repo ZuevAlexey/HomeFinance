@@ -29,9 +29,9 @@ export const TransactionsReducer = (state = [], action) => {
                 }
             ];
         case ActionName.SYNCHRONIZATION:
-            return synchronize(state, action.data.transactions);
+            return synchronize(state, action.data.main.transactions);
         case ActionName.RESET_STORAGE:
-            return withNullCheck(action.syncData, e => e.transactions, defaultState.transactions);
+            return withNullCheck(action.resetData, e => e.main.transactions, defaultState.main.transactions);
         default:
             return state;
     }

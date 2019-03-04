@@ -10,7 +10,6 @@ export const List = (props) => {
     let {items,
         titleFactory,
         avatarFactory,
-        avatarStyle,
         onItemPress,
         onItemEditPress,
         onItemDeletePress,
@@ -36,7 +35,7 @@ export const List = (props) => {
                                 title={titleFactory(item)}
                                 key={item.id}
                                 avatar = {avatarFactory(item)}
-                                avatarStyle = {avatarStyle}
+                                avatarStyle = {Theme.listAvatarStyle}
                                 onPress={() => onItemPress(item)}
                                 onEditPress={() => onItemEditPress(item)}
                                 onDeletePress={() => onItemDeletePress(item)}

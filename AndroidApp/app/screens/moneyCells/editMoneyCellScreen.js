@@ -115,8 +115,8 @@ const getOptions = (isNew) => {
 };
 
 const mapStateToProps = (state) => ({
-    people: state.people.filter(e => !e.isDeleted),
-    moneyCells: state.moneyCells.filter(e => !e.isDeleted),
+    people: state.main.people.filter(e => !e.isDeleted),
+    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
 });
 
 export default connect(mapStateToProps, undefined)(EditMoneyCellScreen);

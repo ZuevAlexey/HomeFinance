@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableNativeFeedback, View} from 'react-native';
+import {StyleSheet, TouchableNativeFeedback, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
@@ -19,7 +19,7 @@ export const ListItem = (props) => {
               <View style = {Styles.container} >
                   <Avatar
                       avatar = {avatar}
-                      style = {avatarStyle}
+                      style = {StyleSheet.flatten(avatarStyle, Styles.avatarContainer)}
                   />
                   <View style={Styles.titleContainer} >
                       {title}
@@ -30,12 +30,14 @@ export const ListItem = (props) => {
                           color = {Theme.mainColor}
                           onPress = {onEditPress}
                           reverse
+                          size = {Theme.listItemButtonSize}
                       />
                       <Icon
                           name = 'delete'
                           color = {Theme.mainColor}
                           onPress = {onDeletePress}
                           reverse
+                          size = {Theme.listItemButtonSize}
                       />
                   </View>
               </View>

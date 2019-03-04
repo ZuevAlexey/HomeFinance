@@ -87,7 +87,7 @@ let options = {
 
 const mapStateToProps = (state) => {
     return {
-        gerPerson: (personId) => state.people.first(e => e.id === personId)
+        gerPerson: (personId) => state.main.people.first(e => e.id === personId)
     };
 };
 

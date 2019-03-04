@@ -6,16 +6,16 @@ import {AddTransaction} from '../../../store/actions/addTransaction';
 import {EditTransaction} from '../../../store/actions/editTransaction';
 import {connect} from 'react-redux';
 import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransaction';
-import {getAvatar, getTitle} from '../../../helpers/transactionHelper';
+import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper';
 import {transactionComparer} from '../../../helpers/sorter';
 
 const TransactionsList = (props) => {
-    let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
+    let {navigation, transactions, add, save, moneyCellsIdsSet, articlesMap} = props;
     return (
         <List
             avatarFactory = {getAvatar(moneyCellsIdsSet)}
             avatarStyle = {Theme.listAvatarStyle}
-            titleFactory = {getTitle(moneyCellsIdsSet, articles)}
+            titleFactory = {getTransactionTitle(moneyCellsIdsSet, articlesMap)}
             onItemPress = {onTransactionEditPress(navigation, save)}
             onItemEditPress = {onTransactionEditPress(navigation, save)}
             onItemDeletePress = {onTransactionDeletePress(props.delete)}
@@ -62,12 +62,14 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
 
 const mapStateToProps = state => {
     return {
-        articles: state.articles.map(e => (
-                {
-                    id: e.id,
-                    name: e.name}
-            )
-        )
+        articlesMap: state.main.articles.reduce((acc, el) => {
+                acc[el.id] = el.name;
+                return acc;
+            }, {}),
+        moneyCellsMap: state.main.moneyCells.reduce((acc, el) => {
+            acc[el.id] = el.name;
+            return acc;
+        }, {})
     }
 };
 

@@ -22,28 +22,30 @@ export const getInfoForSynchronize = (data, lastSynchronizationTime) => {
 
 export const deserialyzeFromSync = (json) => {
     return {
-        systemData: {
-            lastSynchronizationTime: dateWithNullCheck(json.systemData.lastSynchronizationTime)
-        },
-        people: {
-            add: withNullCheck(json.people, p => convertPeople(p.add), []),
-            edit: withNullCheck(json.people, p => convertPeople(p.edit), []),
-            remove: withNullCheck(json.people, p => p.remove, [])
-        },
-        moneyCells: {
-            add: withNullCheck(json.moneyCells, p => convertMoneyCells(p.add), []),
-            edit: withNullCheck(json.moneyCells, p => convertMoneyCells(p.edit), []),
-            remove: withNullCheck(json.moneyCells, p => p.remove, [])
-        },
-        transactions: {
-            add: withNullCheck(json.transactions, p => convertTransactions(p.add), []),
-            edit: withNullCheck(json.transactions, p => convertTransactions(p.edit), []),
-            remove: withNullCheck(json.transactions, p => p.remove, [])
-        },
-        articles: {
-            add: withNullCheck(json.articles, p => convertArticles(p.add), []),
-            edit: withNullCheck(json.articles, p => convertArticles(p.edit), []),
-            remove: withNullCheck(json.articles, p => p.remove, [])
+        main: {
+            systemData: {
+                lastSynchronizationTime: dateWithNullCheck(json.systemData.lastSynchronizationTime)
+            },
+            people: {
+                add: withNullCheck(json.people, p => convertPeople(p.add), []),
+                edit: withNullCheck(json.people, p => convertPeople(p.edit), []),
+                remove: withNullCheck(json.people, p => p.remove, [])
+            },
+            moneyCells: {
+                add: withNullCheck(json.moneyCells, p => convertMoneyCells(p.add), []),
+                edit: withNullCheck(json.moneyCells, p => convertMoneyCells(p.edit), []),
+                remove: withNullCheck(json.moneyCells, p => p.remove, [])
+            },
+            transactions: {
+                add: withNullCheck(json.transactions, p => convertTransactions(p.add), []),
+                edit: withNullCheck(json.transactions, p => convertTransactions(p.edit), []),
+                remove: withNullCheck(json.transactions, p => p.remove, [])
+            },
+            articles: {
+                add: withNullCheck(json.articles, p => convertArticles(p.add), []),
+                edit: withNullCheck(json.articles, p => convertArticles(p.edit), []),
+                remove: withNullCheck(json.articles, p => p.remove, [])
+            }
         }
     };
 };

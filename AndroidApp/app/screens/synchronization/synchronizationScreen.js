@@ -25,7 +25,7 @@ const branches = [
 
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
-        let branch = data[el];
+        let branch = data.main[el];
         if(isNullOrUndefined(branch)){
             return acc;
         }
@@ -100,7 +100,8 @@ class SynchronizationScreen extends React.Component {
         } catch (error) {
             showMessage(
                 'Sync error',
-                `Check your internet connection and try again. In case of repetition of the situation in technical support.`
+                // `Check your internet connection and try again. In case of repetition of the situation in technical support.`,
+                error.toString()
             );
         }
     }
@@ -195,10 +196,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    systemData: state.systemData,
-    people: state.people,
-    moneyCells: state.moneyCells,
-    transactions: state.transactions,
+    systemData: state.main.systemData,
+    people: state.main.people,
+    moneyCells: state.main.moneyCells,
+    transactions: state.main.transactions,
     getState: () => state
 });
 

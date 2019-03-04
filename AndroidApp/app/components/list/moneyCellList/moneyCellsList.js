@@ -1,5 +1,4 @@
 import React from 'react';
-import {Theme} from '../../theme';
 import {showOkCancelDialog} from '../../../helpers/dialog';
 import {List} from '../list';
 import {MoneyCellType} from '../../../constants/moneyCellType';
@@ -15,7 +14,6 @@ const MoneyCellsList = (props) => {
     return (
         <List
             avatarFactory = {getAvatar}
-            avatarStyle = {Theme.listAvatarStyle}
             titleFactory = {getTitle || getSimpleTitle()}
             onItemPress = {onMoneyCellPress(navigation)}
             onItemEditPress = {onMoneyCellEditPress(navigation, save)}
@@ -85,7 +83,7 @@ const getAvatar = (moneyCell) => {
 
 const mapStateToProps = state => {
     return {
-        people: state.people
+        people: state.main.people
     }
 };
 

@@ -78,7 +78,7 @@ const onPersonDeletePress = (navigation, deleteAction, getMoneyCellsIds) => (per
 
 const getTitle = (person) => {
     return (
-        <Text>{GetFullPersonName(person)}</Text>
+        <Text style = {{textAlign: 'center'}}>{GetFullPersonName(person)}</Text>
     );
 };
 
@@ -98,9 +98,9 @@ const getAvatar = (person) => {
 
 const mapStateToProps = state => {
     return {
-        people: state.people.filter(e => !e.isDeleted),
-        summary: getMoneyCellsSummary(state.moneyCells.filter(e => !e.isDeleted)),
-        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
+        people: state.main.people.filter(e => !e.isDeleted),
+        summary: getMoneyCellsSummary(state.main.moneyCells.filter(e => !e.isDeleted)),
+        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
     }
 };
 

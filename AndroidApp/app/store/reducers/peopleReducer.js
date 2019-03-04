@@ -24,9 +24,9 @@ export const PeopleReducer = (state = [], action) => {
                 }
             ];
         case ActionName.SYNCHRONIZATION:
-            return synchronize(state, action.data.people);
+            return synchronize(state, action.data.main.people);
         case ActionName.RESET_STORAGE:
-            return withNullCheck(action.syncData, e => e.people, defaultState.people);
+            return withNullCheck(action.resetData, e => e.main.people, defaultState.main.people);
         default:
             return state;
     }

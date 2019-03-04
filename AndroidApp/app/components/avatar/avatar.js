@@ -18,7 +18,7 @@ export const Avatar = (props) => {
             >
             <Icon
                 color = {Theme.mainColor}
-                size = {35}
+                size = {Theme.itemListAvatarIconSize}
                 {...avatar}
                 onPress = {onPress}
             />

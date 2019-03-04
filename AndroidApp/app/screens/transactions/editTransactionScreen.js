@@ -115,10 +115,10 @@ const options = {
 };
 
 const mapStateToProps = (state) => ({
-    moneyCells: state.moneyCells.filter(e => !e.isDeleted),
-    getTransaction: (transactionId) => state.transactions.first(e => !e.isDeleted && e.id === transactionId),
-    articles: state.articles,
-    people: state.people.filter(e => !e.isDeleted)
+    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
+    getTransaction: (transactionId) => state.main.transactions.first(e => !e.isDeleted && e.id === transactionId),
+    articles: state.main.articles,
+    people: state.main.people.filter(e => !e.isDeleted)
 });
 
 export default connect(mapStateToProps, undefined)(EditTransactionScreen);

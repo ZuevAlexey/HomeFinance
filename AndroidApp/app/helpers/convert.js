@@ -1,5 +1,14 @@
 import {dateWithNullCheck} from './maybe';
 
+export const convertMain = (main) => {
+    return {
+        people: convertPeople(main.people),
+        moneyCells: convertMoneyCells(main.moneyCells),
+        transactions: convertTransactions(main.transactions),
+        articles: convertArticles(main.articles),
+        systemData: convertSystemData(main.systemData)
+    };
+};
 
 export const convertPeople = (people) => {
     return people.map(person => ({
@@ -56,4 +65,11 @@ export const convertArticles = (articles) => {
         lastModificationTime: dateWithNullCheck(article.lastModificationTime),
         creationTime: dateWithNullCheck(article.creationTime),
     }));
+};
+
+const convertSystemData = (systemData) => {
+    return {
+        lastSynchronizationTime: new Date(systemData.lastSynchronizationTime),
+        serverAddress: systemData.serverAddress
+    };
 };

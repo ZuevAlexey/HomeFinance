@@ -6,9 +6,9 @@ import {withNullCheck} from '../../helpers/maybe';
 export const ArticlesReducer = (state = [], action) => {
     switch(action.type){
         case ActionName.SYNCHRONIZATION:
-            return synchronize(state, action.data.articles);
+            return synchronize(state, action.data.main.articles);
         case ActionName.RESET_STORAGE:
-            return withNullCheck(action.syncData, e => e.articles, defaultState.articles);
+            return withNullCheck(action.resetData, e => e.main.articles, defaultState.main.articles);
         default:
             return state;
     }

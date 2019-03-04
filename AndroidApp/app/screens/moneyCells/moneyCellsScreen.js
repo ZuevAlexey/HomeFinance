@@ -26,8 +26,8 @@ const MoneyCellsScreen = (props) => {
 
 const mapStateToProps = state => {
     return {
-        moneyCells: state.moneyCells.filter(e => !e.isDeleted),
-        people: state.people.filter(e => !e.isDeleted),
+        moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
+        people: state.main.people.filter(e => !e.isDeleted),
     }
 };
 

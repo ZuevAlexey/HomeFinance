@@ -11,18 +11,20 @@ export const getTitleWithOwner = (people) => (moneyCell) => {
     }
 
     let result = [
-        <Text key = 'name'>
+        <Text key = 'name' style = {{textAlign: 'center'}}>
             {`${moneyCell.name}`}
         </Text>
     ];
     if(!isNullOrUndefined(owner)){
-        result.push(<Text key = 'ownerName'>
+        result.push(<Text key = 'ownerName' style = {{textAlign: 'center'}}>
             {`owner: ${GetShortPersonName(owner)}`}
         </Text>)
     }
 
     result.push(
-        <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
+        <Text key = 'amount' style={{
+            color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor,
+            textAlign: 'center'}}>
             {`${moneyCell.amount} RUB`}
         </Text>);
     return result;
@@ -39,11 +41,12 @@ export const GetInfoText = (title, value, displayValueCreator, colorPredicate) =
     return <Text
         style = {{
             color: Theme.fontColor,
-            fontSize: 16
+            fontSize: 16,
+            textAlign: 'center'
         }}
     >{title}:{' '}
         <Text
-            style={{color: valueColor}}
+            style={{color: valueColor, textAlign: 'center'}}
         >
             {isNullOrUndefined(displayValueCreator)
                 ? value

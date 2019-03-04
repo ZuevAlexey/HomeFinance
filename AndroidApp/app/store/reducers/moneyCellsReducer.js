@@ -34,9 +34,9 @@ export const MoneyCellsReducer = (state = [], action) => {
                 }
             ];
         case ActionName.SYNCHRONIZATION:
-            return synchronize(state, action.data.moneyCells);
+            return synchronize(state, action.data.main.moneyCells);
         case ActionName.RESET_STORAGE:
-            return withNullCheck(action.syncData, e => e.moneyCells, defaultState.moneyCells);
+            return withNullCheck(action.resetData, e => e.main.moneyCells, defaultState.main.moneyCells);
         default:
             return state;
     }

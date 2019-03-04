@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        getPerson: (personId) =>  state.people.first(e => e.id === personId),
-        getMoneyCells: (personId) => state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
+        getPerson: (personId) =>  state.main.people.first(e => e.id === personId),
+        getMoneyCells: (personId) => state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
         getTransactions: (moneyCellIdsSet) => {
-            return state.transactions.filter(tran =>
+            return state.main.transactions.filter(tran =>
                 !tran.isDeleted &&
                 (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))
             )

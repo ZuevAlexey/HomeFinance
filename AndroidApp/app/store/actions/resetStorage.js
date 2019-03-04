@@ -5,7 +5,7 @@ import {convertArticles, convertMoneyCells, convertPeople, convertTransactions} 
 export const ResetStorage = (serializedData) => {
     return {
         type: ActionName.RESET_STORAGE,
-        syncData: withNullCheck(serializedData, deserializeFromJson)
+        resetData: withNullCheck(serializedData, deserializeFromJson)
     }
 };
 
@@ -13,13 +13,15 @@ const deserializeFromJson = (serializedData) => {
     let data = JSON.parse(serializedData);
 
     return {
-        people: convertPeople(data.people),
-        moneyCells: convertMoneyCells(data.moneyCells),
-        transactions: convertTransactions(data.transactions),
-        articles: convertArticles(data.articles),
-        systemData: {
-            lastSynchronizationTime: dateWithNullCheck(data.systemData.lastSynchronizationTime),
-            serverAddress: data.systemData.serverAddress
-        },
+        main: {
+            people: convertPeople(data.main.people),
+            moneyCells: convertMoneyCells(data.main.moneyCells),
+            transactions: convertTransactions(data.main.transactions),
+            articles: convertArticles(data.main.articles),
+            systemData: {
+                lastSynchronizationTime: dateWithNullCheck(data.main.systemData.lastSynchronizationTime),
+                serverAddress: data.main.systemData.serverAddress
+            },
+        }
     };
 };

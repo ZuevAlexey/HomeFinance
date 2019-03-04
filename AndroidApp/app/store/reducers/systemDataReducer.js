@@ -12,12 +12,12 @@ export const SystemDataReducer = (state = {}, action) => {
         }
         case ActionName.SYNCHRONIZATION: {
             return {
-                lastSynchronizationTime: action.data.systemData.lastSynchronizationTime,
+                lastSynchronizationTime: action.data.main.systemData.lastSynchronizationTime,
                 serverAddress: state.serverAddress
             };
         }
         case ActionName.RESET_STORAGE: {
-            return withNullCheck(action.syncData, e => e.systemData, defaultState.systemData);
+            return withNullCheck(action.resetData, e => e.main.systemData, defaultState.main.systemData);
         }
         default:
             return state;
