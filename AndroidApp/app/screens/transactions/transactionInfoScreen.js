@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Screen} from '../../components/screen/screen';
 import {View, StyleSheet} from 'react-native';
-import {getDateDisplayString, GetFullMoneyCellName} from '../../helpers/displayStringHelper';
+import {getDateDisplayString, getFullArticleName, GetFullMoneyCellName} from '../../helpers/displayStringHelper';
 import {Theme} from '../../components/theme';
 import {connect} from 'react-redux';
 import {GetInfoText} from "../../helpers/moneyCellsHelper";
@@ -26,7 +26,7 @@ class TransactionInfoScreen extends Component {
     render() {
         let {transactionId} = this.props.navigation.state.params;
         let transaction = this.props.getTransaction(transactionId);
-        let articleName = this.props.getArticleName(transaction.articleId);
+        let articleName = getFullArticleName(this.props.getArticle(transaction.articleId));
         let fromMcDs = this.getMoneyCellDisplayString(transaction.fromId);
         let toMcDs = this.getMoneyCellDisplayString(transaction.toId);
 
@@ -61,7 +61,7 @@ const mapStateToProps = state => {
         getTransaction: (transactionId) => state.main.transactions.first(e => e.id === transactionId),
         getMoneyCell: (moneyCellId) => state.main.moneyCells.first(e => e.id === moneyCellId),
         getPerson: (personId) => state.main.people.first(e => e.id === personId),
-        getArticleName: (articleId) => state.main.articles.first(e => e.id === articleId).name
+        getArticle: (articleId) => state.main.articles.first(e => e.id === articleId)
     }
 };
 

@@ -1,4 +1,5 @@
 import {GetFullPersonName} from './displayStringHelper';
+import {getTransactionTypeByArticle} from "./transactionHelper";
 
 export const peopleComparer = (person1, person2) => stringComparer(GetFullPersonName(person1), GetFullPersonName(person2));
 
@@ -17,19 +18,11 @@ export const getMoneyCellsComparer = (people) => {
 };
 
 export const articleComparer = (article1, article2) => {
-    let remainder1 = article1.id % 100;
-    let remainder2 = article2.id % 100;
-    let idComparer = remainder1 - remainder2;
-    if(idComparer !== 0){
-        return idComparer;
-    }
-
-    if(remainder1 === 0){
-        return 1;
-    }
-
-    if(remainder2 === 0){
-        return -1;
+    let type1 = getTransactionTypeByArticle(article1.id);
+    let type2 = getTransactionTypeByArticle(article2.id);
+    let typeComparer = type1 - type2;
+    if(typeComparer !== 0){
+        return typeComparer;
     }
 
     return stringComparer(article1.name, article2.name);

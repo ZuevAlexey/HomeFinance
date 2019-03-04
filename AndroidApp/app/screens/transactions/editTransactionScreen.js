@@ -5,7 +5,7 @@ import {EditForm} from '../../components/editForm/editForm';
 import {CommonConstants} from '../../constants/commonConstants';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {connect} from 'react-redux';
-import {GetFullMoneyCellName, GetShortPersonName} from '../../helpers/displayStringHelper';
+import {getFullArticleName, GetFullMoneyCellName, GetShortPersonName} from '../../helpers/displayStringHelper';
 import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
@@ -56,7 +56,7 @@ class EditTransactionScreen extends React.Component {
             description: t.maybe(t.String),
             fromId: this.getMoneyCellsEnums(),
             toId: this.getMoneyCellsEnums(),
-            articleId: getEnumsFromList(this.props.articles, a => a.id, a => a.name, 'Articles', null, articleComparer),
+            articleId: getEnumsFromList(this.props.articles, a => a.id, a => getFullArticleName(a), 'Articles', null, articleComparer),
             date: t.Date,
         });
     };

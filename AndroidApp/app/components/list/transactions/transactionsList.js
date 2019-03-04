@@ -10,12 +10,12 @@ import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper
 import {transactionComparer} from '../../../helpers/sorter';
 
 const TransactionsList = (props) => {
-    let {navigation, transactions, add, save, moneyCellsIdsSet, articlesMap} = props;
+    let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
     return (
         <List
             avatarFactory = {getAvatar(moneyCellsIdsSet)}
             avatarStyle = {Theme.listAvatarStyle}
-            titleFactory = {getTransactionTitle(moneyCellsIdsSet, articlesMap)}
+            titleFactory = {getTransactionTitle(moneyCellsIdsSet, articles)}
             onItemPress = {onTransactionPress(navigation)}
             onItemEditPress = {onTransactionEditPress(navigation, save)}
             onItemDeletePress = {onTransactionDeletePress(props.delete)}
@@ -66,10 +66,7 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
 
 const mapStateToProps = state => {
     return {
-        articlesMap: state.main.articles.reduce((acc, el) => {
-                acc[el.id] = el.name;
-                return acc;
-            }, {}),
+        articles: state.main.articles,
         moneyCellsMap: state.main.moneyCells.reduce((acc, el) => {
             acc[el.id] = el.name;
             return acc;

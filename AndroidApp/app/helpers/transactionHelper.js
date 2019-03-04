@@ -2,17 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import {getTransactionAmountColor} from './colorHelper';
 import {withNullCheck} from './maybe';
-import {WithCheckLength} from "./displayStringHelper";
+import {getFullArticleName, WithCheckLength} from "./displayStringHelper";
+import {TransactionType} from "../constants/transactionType";
 
-export const TRANSACTIONS_TYPES = {
-    TRANSFER : 'transfer',
-    TRANSFER_IN : 'transfer-in',
-    TRANSFER_OUT : 'transfer-out'
-};
-
-export const getTransactionTitle = (moneyCellsIdsSet, articlesMap) => (transaction) => {
+export const getTransactionTitle = (moneyCellsIdsSet, articles) => (transaction) => {
     let transactionType = getTransactionType(transaction, moneyCellsIdsSet);
-    let defaultValue = articlesMap[transaction.articleId].name;
+    let defaultValue = getFullArticleName(articles.first(e => e.id === transaction.articleId));
 
     return (
         [
@@ -32,14 +27,14 @@ export const getTransactionType = (transaction, moneyCellsIdsSet) => {
 
     if(hasTo){
         if(hasFrom){
-            return TRANSACTIONS_TYPES.TRANSFER;
+            return TransactionType.TRANSFER;
         }
 
-        return TRANSACTIONS_TYPES.TRANSFER_IN;
+        return TransactionType.INCOME;
     }
 
     if(hasFrom){
-        return TRANSACTIONS_TYPES.TRANSFER_OUT;
+        return TransactionType.EXPENSE;
     }
 
     throw 'Transaction does not apply to context';
@@ -47,13 +42,13 @@ export const getTransactionType = (transaction, moneyCellsIdsSet) => {
 
 export const getSign = (transactionType) => {
     switch (transactionType){
-        case TRANSACTIONS_TYPES.TRANSFER_OUT:{
+        case TransactionType.EXPENSE:{
             return '-';
         }
-        case TRANSACTIONS_TYPES.TRANSFER_IN:{
+        case TransactionType.INCOME:{
             return '+';
         }
-        case TRANSACTIONS_TYPES.TRANSFER:{
+        case TransactionType.TRANSFER:{
             return '';
         }
     }
@@ -67,15 +62,15 @@ export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
     let name;
 
     switch (getTransactionType(transaction, moneyCellsIdsSet)){
-        case TRANSACTIONS_TYPES.TRANSFER_OUT:{
+        case TransactionType.EXPENSE:{
             name = 'arrow-circle-o-up';
             break;
         }
-        case TRANSACTIONS_TYPES.TRANSFER_IN:{
+        case TransactionType.INCOME:{
             name = 'arrow-circle-o-down';
             break;
         }
-        case TRANSACTIONS_TYPES.TRANSFER:{
+        case TransactionType.TRANSFER:{
             name = 'arrow-circle-o-right';
         }
     }
@@ -84,4 +79,22 @@ export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
         type: 'font-awesome',
         name
     };
+};
+
+export const getTransactionTypeByArticle = (articleId) => {
+    let result = div(articleId, 100);
+    switch (result) {
+        case 1:
+            return TransactionType.EXPENSE;
+        case 2:
+            return TransactionType.INCOME;
+        case 3:
+            return TransactionType.TRANSFER;
+        default:
+            throw `This article (${articleId}) is not expected`;
+    }
+};
+
+const div = (val, by) => {
+    return (val - val % by) / by;
 };

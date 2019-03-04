@@ -1,8 +1,21 @@
 import {isNullOrUndefined, stringWithNullCheck, withNullCheck} from './maybe';
+import {getTransactionTypeByArticle} from "./transactionHelper";
+import {TransactionType} from "../constants/transactionType";
 
 export const GetFullPersonName = person => `${stringWithNullCheck(person.lastName)} ${stringWithNullCheck(person.firstName)}`;
 
 export const GetShortPersonName = person => `${stringWithNullCheck(person.firstName)}${withNullCheck(person.lastName, p => ' ' + p.charAt(0) + '.', '')}`;
+
+export const getFullArticleName = article => {
+    switch (getTransactionTypeByArticle(article.id)) {
+        case TransactionType.INCOME:
+            return `${article.name} (income)`;
+        case TransactionType.EXPENSE:
+            return `${article.name} (expense)`;
+        case TransactionType.TRANSFER:
+            return article.name;
+    }
+};
 
 export const GetFullMoneyCellName = (owner, moneyCell) => {
     let result = moneyCell.name;
