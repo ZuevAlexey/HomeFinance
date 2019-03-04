@@ -2,7 +2,7 @@
   "expo": {
 	"name": "HomeFinance",
     "icon": "./icons/web_hi_res_512.png",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "slug": "home-finance",
     "sdkVersion": "27.0.0",
     "orientation": "portrait",
