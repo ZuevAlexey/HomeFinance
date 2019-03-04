@@ -10,4 +10,6 @@ export const isNullOrUndefined = object => {
     return object === null || object === undefined;
 };
 
-export const DateWithNullCheck = (dateString) => withNullCheck(dateString, e => new Date(e));
+export const dateWithNullCheck = (dateString) => withNullCheck(dateString, e => new Date(e));
+
+export const stringWithNullCheck = (string) => withNullCheck(string, e => e, '');

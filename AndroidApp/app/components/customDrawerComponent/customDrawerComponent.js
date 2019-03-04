@@ -1,8 +1,8 @@
-import React from "react";
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from "react-native";
-import {Theme} from "../theme";
-import {Text} from "native-base";
-import {DrawerItems} from "react-navigation";
+import React from 'react';
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {Theme} from '../theme';
+import {Text} from 'native-base';
+import {DrawerItems} from 'react-navigation';
 
 export const CustomDrawerContentComponent = (props) => (
     <ScrollView>

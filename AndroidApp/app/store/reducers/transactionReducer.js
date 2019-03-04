@@ -1,5 +1,5 @@
-import {ActionName} from "../../constants/actionName";
-import {CommonConstants} from "../../constants/commonConstants";
+import {ActionName} from '../../constants/actionName';
+import {CommonConstants} from '../../constants/commonConstants';
 
 export const TransactionReducer = (state = {}, action) => {
     switch(action.type){
@@ -39,14 +39,15 @@ const processMarkDeleteMoneyCellAction = (state, action) => {
 };
 
 const processMarkDeleteAction = (state, predicate) => {
-    if(predicate(state.fromId) && predicate(state.toId)){
+    if(!predicate(state.fromId) && !predicate(state.toId)){
         return state;
     }
 
     let result = {
         ...state,
         lastModificationTime: new Date()
-    };
+    }
+
     if(predicate(state.fromId)){
         result.fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
     }

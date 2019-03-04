@@ -1,28 +1,44 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 let t = require('tcomb-form-native');
 import {Sex} from '../../constants/sex';
-import {EditForm} from "../../components/editForm/editForm";
+import {EditForm} from '../../components/editForm/editForm';
+import {isNullOrUndefined} from '../../helpers/maybe';
+import {connect} from 'react-redux';
 
-export default class EditPersonScreen extends React.Component {
+class EditPersonScreen extends React.Component {
     constructor(props){
         super(props);
-        let {person} = this.props.navigation.state.params;
-        let defaultValue = person === undefined
-            ? null
-            : {
+        let {personId} = this.props.navigation.state.params;
+        let isNew = isNullOrUndefined(personId);
+
+        let defaultValue;
+        if(isNew){
+            defaultValue = null;
+        } else {
+            let person = props.gerPerson(personId);
+            defaultValue = {
                 id: person.id,
                 firstName: person.firstName,
                 lastName: person.lastName,
                 sex: person.sex
             };
+        }
 
         this.state = {value: defaultValue};
     }
 
     render() {
-        let {person, action} = this.props.navigation.state.params;
-        let headerTitle = person === undefined ? 'Add New Person' : `${person.lastName} ${person.firstName}`;
+        let {personId, action} = this.props.navigation.state.params;
+        let isNew = isNullOrUndefined(personId);
+        let headerTitle;
+        if(isNew){
+            headerTitle = 'Add New Person';
+        } else {
+            let person = this.props.gerPerson(personId);
+            headerTitle = `${person.lastName} ${person.firstName}`;
+        }
+
         return (
             <Screen
                 {...this.props}
@@ -37,7 +53,7 @@ export default class EditPersonScreen extends React.Component {
             </Screen>
         );
     }
-};
+}
 
 let Person = t.struct({
     id: t.maybe(t.String),
@@ -68,3 +84,11 @@ let options = {
         }
     }
 };
+
+const mapStateToProps = (state) => {
+    return {
+        gerPerson: (personId) => state.main.people.first(e => e.id === personId)
+    };
+};
+
+export default connect(mapStateToProps, null)(EditPersonScreen)

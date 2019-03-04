@@ -4,11 +4,7 @@ const KEY = '@HomeFinance:storeForReset';
 
 export const saveSyncData = async (state) => {
     await AsyncStorage.setItem(KEY, JSON.stringify({
-        people: state.people,
-        moneyCells: state.moneyCells,
-        transactions: state.transactions,
-        articles: state.articles,
-        systemData: state.systemData
+        main: state.main
     }));
 };
 

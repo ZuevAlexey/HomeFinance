@@ -1,5 +1,5 @@
-import {Theme} from "../components/theme";
-import {TRANSACTIONS_TYPES} from "./transactionHelper";
+import {Theme} from '../components/theme';
+import {TransactionType} from "../constants/transactionType";
 
 export const getColorForAmount = (amount) => {
     if(amount < 0){
@@ -16,13 +16,13 @@ export const getColorForAmount = (amount) => {
 
 export const getTransactionAmountColor = (transactionType) => {
     switch (transactionType){
-        case TRANSACTIONS_TYPES.TRANSFER_OUT:{
+        case TransactionType.EXPENSE:{
             return Theme.badColor;
         }
-        case TRANSACTIONS_TYPES.TRANSFER_IN:{
+        case TransactionType.INCOME:{
             return Theme.goodColor;
         }
-        case TRANSACTIONS_TYPES.TRANSFER:{
+        case TransactionType.TRANSFER:{
             return Theme.normalColor;
         }
     }

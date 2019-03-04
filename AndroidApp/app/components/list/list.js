@@ -1,20 +1,26 @@
 import React from 'react';
 import {Button} from 'react-native-elements';
-import {ListItem} from "../listItem/listItem";
-import {View, ScrollView} from "react-native";
+import {ListItem} from '../listItem/listItem';
+import {View, ScrollView} from 'react-native';
 import Styles from './style';
-import {Theme} from "../theme";
+import {Theme} from '../theme';
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 export const List = (props) => {
     let {items,
         titleFactory,
         avatarFactory,
-        avatarStyle,
         onItemPress,
         onItemEditPress,
         onItemDeletePress,
-        addButtonInfo
+        addButtonInfo,
+        comparer
     } = props;
+
+    let sortedItems = isNullOrUndefined(comparer)
+        ? items
+        : items.sort(comparer);
+
     return (
         <View
             style = {Styles.container}
@@ -24,12 +30,12 @@ export const List = (props) => {
             >
                 <ScrollView>
                    {
-                        items.map((item) => (
+                       sortedItems.map((item) => (
                             <ListItem
                                 title={titleFactory(item)}
                                 key={item.id}
                                 avatar = {avatarFactory(item)}
-                                avatarStyle = {avatarStyle}
+                                avatarStyle = {Theme.listAvatarStyle}
                                 onPress={() => onItemPress(item)}
                                 onEditPress={() => onItemEditPress(item)}
                                 onDeletePress={() => onItemDeletePress(item)}

@@ -1,5 +1,5 @@
-import {StyleSheet} from "react-native";
-import {Theme} from "../theme";
+import {StyleSheet} from 'react-native';
+import {Theme} from '../theme';
 
 module.exports = StyleSheet.create({
     container: {
@@ -13,12 +13,15 @@ module.exports = StyleSheet.create({
         borderBottomWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
-        paddingLeft: Theme.mainPaddingLeft
+        paddingLeft: Theme.mainPaddingLeft,
+    },
+    avatarContainer: {
+      flex:1
     },
     titleContainer: {
         flex: 3,
         alignItems: 'center',
-        justifyContent : 'center'
+        justifyContent : 'center',
     },
     editContainer: {
         marginLeft: 'auto',

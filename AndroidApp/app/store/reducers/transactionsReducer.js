@@ -1,9 +1,8 @@
-import {ActionName} from "../../constants/actionName";
+import {ActionName} from '../../constants/actionName';
 import {TransactionReducer} from './transactionReducer';
-import {synchronize} from "../../helpers/synchronizationHelper";
-import {defaultState} from "../defaultState";
-import {resetState} from "../../helpers/resetStorageHelper";
-import {withNullCheck} from "../../helpers/maybe";
+import {synchronize} from '../../helpers/synchronizationHelper';
+import {defaultState} from '../defaultState';
+import {withNullCheck} from '../../helpers/maybe';
 
 export const TransactionsReducer = (state = [], action) => {
     switch(action.type){
@@ -30,9 +29,9 @@ export const TransactionsReducer = (state = [], action) => {
                 }
             ];
         case ActionName.SYNCHRONIZATION:
-            return synchronize(state, action.data.transactions);
+            return synchronize(state, action.data.main.transactions);
         case ActionName.RESET_STORAGE:
-            return withNullCheck(action.syncData, e => e.transactions, defaultState.transactions);
+            return withNullCheck(action.resetData, e => e.main.transactions, defaultState.main.transactions);
         default:
             return state;
     }

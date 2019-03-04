@@ -1,27 +1,20 @@
 import React from 'react';
-import {StyleSheet} from "react-native";
-import {Screen} from "../../components/screen/screen";
-import {View} from "native-base";
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
-import {connect} from "react-redux";
-import {deserialyzeFromSync, getInfoForSynchronize} from "../../helpers/synchronizationHelper";
-import {Synchronize} from "../../store/actions/synchronization";
-import {EditForm} from "../../components/editForm/editForm";
-import {EditSystemData} from "../../store/actions/editSystemData";
-import {showMessage, showOkCancelDialog} from "../../helpers/dialog";
-import {ResetStorage} from "../../store/actions/resetStorage";
-import {readLocalSyncData, saveSyncData} from "../../helpers/resetStorageHelper";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {StyleSheet} from 'react-native';
+import {Screen} from '../../components/screen/screen';
+import {View} from 'native-base';
+import {Theme} from '../../components/theme';
+import {Button} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchronizationHelper';
+import {Synchronize} from '../../store/actions/synchronization';
+import {EditForm} from '../../components/editForm/editForm';
+import {EditSystemData} from '../../store/actions/editSystemData';
+import {showMessage, showOkCancelDialog} from '../../helpers/dialog';
+import {ResetStorage} from '../../store/actions/resetStorage';
+import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
+import {isNullOrUndefined} from '../../helpers/maybe';
 
 let tcomb = require('tcomb-form-native');
-
-
-const CONNECTION_STATUS = {
-    OK: 'OK',
-    UNKNOWN: 'UNKNOWN',
-    FAILED: 'FAILED'
-};
 
 const branches = [
   'people',
@@ -32,7 +25,7 @@ const branches = [
 
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
-        let branch = data[el];
+        let branch = data.main[el];
         if(isNullOrUndefined(branch)){
             return acc;
         }
@@ -88,7 +81,7 @@ class SynchronizationScreen extends React.Component {
 
             let json = await response.json();
             if(json.type !== 'sync'){
-                throw 'Unknow response from server';
+                throw 'Unknown response from server';
             }
 
             let deserializedData = deserialyzeFromSync(json.data);
@@ -99,15 +92,16 @@ class SynchronizationScreen extends React.Component {
             let removeCount = getCount(p => p.remove, deserializedData);
             let addCount = getCount(p => p.add, deserializedData);
             showMessage(
-                "Синхронизация прошла успешно",
-                `Изменений отправлено ${pushCount}. Изменение получено ${editCount + removeCount + addCount}`
+                'Synchronization successful',
+                `Сhanges sent ${pushCount}. Сhanges received ${editCount + removeCount + addCount}`
             );
 
             await saveSyncData(this.props.getState());
         } catch (error) {
             showMessage(
-                "Ошибка синхронизации",
-                `Произошла ошибка синхронизации. Проверь подключение к интернету и повтори попытку. В случае повторения ситуации обратитель в техническую поддержку.`
+                'Sync error',
+                // `Check your internet connection and try again. In case of repetition of the situation in technical support.`,
+                error.toString()
             );
         }
     }
@@ -202,10 +196,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    systemData: state.systemData,
-    people: state.people,
-    moneyCells: state.moneyCells,
-    transactions: state.transactions,
+    systemData: state.main.systemData,
+    people: state.main.people,
+    moneyCells: state.main.moneyCells,
+    transactions: state.main.transactions,
     getState: () => state
 });
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
-import TransactionsList from "../../components/list/transactions/transactionsList";
-import MoneyCellsList from "../../components/list/moneyCellList/moneyCellsList";
-import {View} from "native-base";
-import {Theme} from "../../components/theme";
-import {Button} from "react-native-elements";
-import {StyleSheet} from "react-native";
-import {GetFullPersonName} from "../../helpers/displayStringHelper";
-import {connect} from "react-redux";
-import {getStatusFromSummary} from "../../helpers/statusHelper";
-import {getMoneyCellsSummary, getTransactionsSummary} from "../../helpers/calculator";
-import {createMoneyCellsIdsSet} from "../../helpers/transactionHelper";
+import {Screen} from '../../components/screen/screen';
+import TransactionsList from '../../components/list/transactions/transactionsList';
+import MoneyCellsList from '../../components/list/moneyCellList/moneyCellsList';
+import {View} from 'native-base';
+import {Theme} from '../../components/theme';
+import {Button} from 'react-native-elements';
+import {StyleSheet} from 'react-native';
+import {GetFullPersonName} from '../../helpers/displayStringHelper';
+import {connect} from 'react-redux';
+import {getStatusFromSummary} from '../../helpers/statusHelper';
+import {getMoneyCellsSummary, getTransactionsSummary} from '../../helpers/calculator';
+import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 
 const INNER_PAGES = {
     TRANSACTIONS : 'Transactions',
@@ -42,9 +42,9 @@ class PersonInfoScreen extends React.Component {
     };
 
     render() {
-        let {navigation, getMoneyCells, getTransactions} = this.props;
-        let {person} = navigation.state.params;
-        let moneyCells = getMoneyCells(person.id);
+        let {navigation, getMoneyCells, getTransactions, getPerson} = this.props;
+        let {personId} = navigation.state.params;
+        let moneyCells = getMoneyCells(personId);
         let moneyCellIdsSet = createMoneyCellsIdsSet(moneyCells);
         let transactions = getTransactions(moneyCellIdsSet);
 
@@ -55,6 +55,8 @@ class PersonInfoScreen extends React.Component {
             summary = getTransactionsSummary(transactions, moneyCellIdsSet);
         }
 
+        let person = getPerson(personId);
+
         return (
             <Screen
                 {...this.props}
@@ -62,7 +64,7 @@ class PersonInfoScreen extends React.Component {
                 headerStatus = {getStatusFromSummary(summary)}
             >
                 <View style = {styles.listContainer}>
-                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells} />}
+                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells} ownerId = {person.id} />}
                     {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions} moneyCellsIdsSet = {moneyCellIdsSet}/>}
                 </View>
                 <View style = {styles.buttonsContainer}>
@@ -76,7 +78,7 @@ class PersonInfoScreen extends React.Component {
             </Screen>
         );
     }
-};
+}
 
 const styles = StyleSheet.create({
     listContainer: {
@@ -97,16 +99,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        getMoneyCells: (personId) => state.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
+        getPerson: (personId) =>  state.main.people.first(e => e.id === personId),
+        getMoneyCells: (personId) => state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
         getTransactions: (moneyCellIdsSet) => {
-            return state.transactions.reduce((acc, tran) => {
-                if(!tran.isDeleted && (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))){
-                    acc.push(tran);
-                }
-
-                return acc;
-            }, []);
-        },
+            return state.main.transactions.filter(tran =>
+                !tran.isDeleted &&
+                (moneyCellIdsSet.has(tran.toId) || moneyCellIdsSet.has(tran.fromId))
+            )
+        }
     }
 };
 

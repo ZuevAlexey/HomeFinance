@@ -1,7 +1,6 @@
-import {ActionName} from "../../constants/actionName";
-import {defaultState} from "../defaultState";
-import {resetState} from "../../helpers/resetStorageHelper";
-import {isNullOrUndefined, withNullCheck} from "../../helpers/maybe";
+import {ActionName} from '../../constants/actionName';
+import {defaultState} from '../defaultState';
+import {withNullCheck} from '../../helpers/maybe';
 
 export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
@@ -13,12 +12,12 @@ export const SystemDataReducer = (state = {}, action) => {
         }
         case ActionName.SYNCHRONIZATION: {
             return {
-                lastSynchronizationTime: action.data.systemData.lastSynchronizationTime,
+                lastSynchronizationTime: action.data.main.systemData.lastSynchronizationTime,
                 serverAddress: state.serverAddress
             };
         }
         case ActionName.RESET_STORAGE: {
-            return withNullCheck(action.syncData, e => e.systemData, defaultState.systemData);
+            return withNullCheck(action.resetData, e => e.main.systemData, defaultState.main.systemData);
         }
         default:
             return state;

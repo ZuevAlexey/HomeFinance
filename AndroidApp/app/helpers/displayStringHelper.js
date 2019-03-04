@@ -1,25 +1,58 @@
-export const GetFullPersonName = person => `${person.lastName} ${person.firstName}`;
+import {isNullOrUndefined, stringWithNullCheck, withNullCheck} from './maybe';
+import {getTransactionTypeByArticle} from "./transactionHelper";
+import {TransactionType} from "../constants/transactionType";
 
-export const GetShortPersonName = person => `${person.firstName} ${person.lastName && person.lastName.charAt(0)}`;
+export const GetFullPersonName = person => `${stringWithNullCheck(person.lastName)} ${stringWithNullCheck(person.firstName)}`;
 
-export const GetFullMoneyCellName = (owner, moneyCell) => `${moneyCell.Name} (${owner.firstName} ${owner.lastName.charAt(0)})`;
+export const GetShortPersonName = person => `${stringWithNullCheck(person.firstName)}${withNullCheck(person.lastName, p => ' ' + p.charAt(0) + '.', '')}`;
 
-export const getDateDisplayString = (dateTime) => {
-    let pad = (num) => {
-        let norm = Math.floor(Math.abs(num));
-        return (norm < 10 ? '0' : '') + norm;
-    };
+export const getFullArticleName = article => {
+    switch (getTransactionTypeByArticle(article.id)) {
+        case TransactionType.INCOME:
+            return `${article.name} (income)`;
+        case TransactionType.EXPENSE:
+            return `${article.name} (expense)`;
+        case TransactionType.TRANSFER:
+            return article.name;
+    }
+};
 
+export const GetFullMoneyCellName = (owner, moneyCell) => {
+    let result = moneyCell.name;
+    if(!isNullOrUndefined(owner)) {
+        result += ` (${GetShortPersonName(owner)})`;
+    }
 
-    return dateTime.getFullYear() +
-        '-' + pad(dateTime.getMonth() + 1) +
-        '-' + pad(dateTime.getDate()) +
+    return result;
+};
+
+export const getDateTimeDisplayString = (dateTime) => {
+    return getDateDisplayString(dateTime) +
         'T' + pad(dateTime.getHours()) +
         '.' + pad(dateTime.getMinutes()) +
         '.' + pad(dateTime.getSeconds());
 };
 
+export const getDateDisplayString = (dateTime) => {
+    return dateTime.getFullYear() +
+        '-' + pad(dateTime.getMonth() + 1) +
+        '-' + pad(dateTime.getDate());
+};
+
 export const getSummaryDisplayString = (summary) => {
     let sign = summary > 0 ? '+' : '';
     return `${sign}${summary}`;
+};
+
+export const WithCheckLength = (str, maxLength, substitute = '...') => {
+    if(str.length > maxLength){
+        return `${str.substring(0, maxLength - 3)}${substitute}`;
+    }
+
+    return str;
+};
+
+const pad = (num) => {
+    let norm = Math.floor(Math.abs(num));
+    return (norm < 10 ? '0' : '') + norm;
 };

@@ -1,6 +1,6 @@
-import {ActionName} from "../../constants/actionName";
-import {Sex} from "../../constants/sex";
-import {PeopleReducer} from "./peopleReducer";
+import {ActionName} from '../../constants/actionName';
+import {Sex} from '../../constants/sex';
+import {PeopleReducer} from './peopleReducer';
 import {EditPerson} from '../actions/editPerson';
 import {MarkDeletePerson} from '../actions/markDeletePerson';
 import {AddPerson} from '../actions/addPerson';
@@ -71,10 +71,12 @@ it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {
     const firstName = 'Sveta';
     const sex = Sex.FEMALE;
     const lastModificationTime = new Date();
+    const creationTime = lastModificationTime;
     const id = 1;
     let action = AddPerson(lastName, firstName, sex);
     action.lastModificationTime = lastModificationTime;
+    action.creationTime = creationTime;
     action.id = id;
     const newPerson = PeopleReducer(startState, action)[stateLength];
-    expect(newPerson).toEqual({lastName, firstName, sex, lastModificationTime, id, isDeleted: false});
+    expect(newPerson).toEqual({creationTime, lastName, firstName, sex, lastModificationTime, id, isDeleted: false});
 });

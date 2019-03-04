@@ -1,33 +1,35 @@
 import React from 'react';
-import {List} from "../list";
-import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/dialog";
-import {AddTransaction} from "../../../store/actions/addTransaction";
-import {EditTransaction} from "../../../store/actions/editTransaction";
-import {connect} from "react-redux";
-import {MarkDeleteTransaction} from "../../../store/actions/markDeleteTransaction";
-import {getAvatar, getTitle} from "../../../helpers/transactionHelper";
+import {List} from '../list';
+import {Theme} from '../../theme';
+import {showOkCancelDialog} from '../../../helpers/dialog';
+import {AddTransaction} from '../../../store/actions/addTransaction';
+import {EditTransaction} from '../../../store/actions/editTransaction';
+import {connect} from 'react-redux';
+import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransaction';
+import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper';
+import {transactionComparer} from '../../../helpers/sorter';
 
 const TransactionsList = (props) => {
-    let {navigation, transactions, add, save, moneyCellsIdsSet} = props;
+    let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
     return (
-            <List
-                avatarFactory = {getAvatar(moneyCellsIdsSet)}
-                avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle(moneyCellsIdsSet)}
-                onItemPress = {onTransactionEditPress(navigation, save)}
-                onItemEditPress = {onTransactionEditPress(navigation, save)}
-                onItemDeletePress = {onTransactionDeletePress(props.delete)}
-                items = {transactions.sort(e => e.date)}
-                addButtonInfo= {{
-                    icon: {
-                        name: 'credit-card-plus',
-                        type: 'material-community'
-                    },
-                    title: 'Add new transaction',
-                    onPress: addTransactionPress(navigation, add)
-                }}
-            />
+        <List
+            avatarFactory = {getAvatar(moneyCellsIdsSet)}
+            avatarStyle = {Theme.listAvatarStyle}
+            titleFactory = {getTransactionTitle(moneyCellsIdsSet, articles)}
+            onItemPress = {onTransactionPress(navigation)}
+            onItemEditPress = {onTransactionEditPress(navigation, save)}
+            onItemDeletePress = {onTransactionDeletePress(props.delete)}
+            items = {transactions.sort(e => e.date)}
+            comparer = {transactionComparer}
+            addButtonInfo= {{
+                icon: {
+                    name: 'credit-card-plus',
+                    type: 'material-community'
+                },
+                title: 'Add new transaction',
+                onPress: addTransactionPress(navigation, add)
+            }}
+        />
     );
 };
 
@@ -35,6 +37,10 @@ const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
         action: (transaction) => add(transaction)
     });
+};
+
+const onTransactionPress = (navigation) => (transaction) => {
+    navigation.push('Transaction', {transactionId: transaction.id});
 };
 
 const onTransactionEditPress = (navigation, save) => (transaction) => {
@@ -58,6 +64,16 @@ const onTransactionDeletePress = (deleteAction) => (transaction) => {
     );
 };
 
+const mapStateToProps = state => {
+    return {
+        articles: state.main.articles,
+        moneyCellsMap: state.main.moneyCells.reduce((acc, el) => {
+            acc[el.id] = el.name;
+            return acc;
+        }, {})
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         add: (transaction) => {
@@ -72,4 +88,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(undefined, mapDispatchToProps)(TransactionsList)
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList)

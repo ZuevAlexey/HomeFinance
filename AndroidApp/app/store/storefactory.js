@@ -1,41 +1,30 @@
 import {combineReducers, createStore} from 'redux';
-import {persistStore, persistReducer } from 'redux-persist'
+import {persistStore, persistReducer , createMigrate} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import {MoneyCellsReducer} from "./reducers/moneyCellsReducer";
-import {PeopleReducer} from "./reducers/peopleReducer";
-import {TransactionsReducer} from "./reducers/transactionsReducer";
-import {SystemDataReducer} from "./reducers/systemDataReducer";
-import {defaultState} from "./defaultState";
+import {defaultState} from './defaultState';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
-import {
-    articlesTransform,
-    moneyCellsTransform,
-    peopleTransform,
-    systemDataTransform,
-    transactionsTransform
-} from "./transform";
-import {ArticlesReducer} from "./reducers/articlesReducer";
+import {mainTransform} from './transform';
+import {MainReducer} from "./reducers/mainReducer";
+import {migrationsManifest} from "./migrations";
 
 const persistConfig = {
     key: 'root',
+    version: 0,
     storage,
-    transforms: [systemDataTransform, peopleTransform, moneyCellsTransform, transactionsTransform, articlesTransform],
-    whitelist: ['people', 'moneyCells', 'transactions', 'articles', 'systemData'],
-    stateReconciler: autoMergeLevel2
+    transforms: [mainTransform],
+    whitelist: ['main'],
+    stateReconciler: autoMergeLevel2,
+    migrate: createMigrate(migrationsManifest)
 };
 
 const rootReducer = combineReducers({
-    "people": PeopleReducer,
-    "moneyCells": MoneyCellsReducer,
-    "transactions": TransactionsReducer,
-    "articles": ArticlesReducer,
-    "systemData": SystemDataReducer
+    'main': MainReducer
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const storeFactory = () => {
     let store = createStore(persistedReducer, defaultState);
-    let persistor = persistStore(store)
+    let persistor = persistStore(store);
     return { store, persistor }
-}
+};

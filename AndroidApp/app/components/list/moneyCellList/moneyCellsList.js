@@ -1,43 +1,41 @@
 import React from 'react';
-import {Alert, Text} from "react-native";
-import {Theme} from "../../theme";
-import {showOkCancelDialog} from "../../../helpers/dialog";
-
-import {List} from "../list";
-import {MoneyCellType} from "../../../constants/moneyCellType";
-import {EditMoneyCell} from "../../../store/actions/editMoneyCell";
-import {connect} from "react-redux";
-import {MarkDeleteMoneyCell} from "../../../store/actions/markDeleteMoneyCell";
-import {AddMoneyCell} from "../../../store/actions/addMoneyCell";
-import {isNullOrUndefined} from "../../../helpers/maybe";
-import {GetShortPersonName} from "../../../helpers/displayStringHelper";
+import {showOkCancelDialog} from '../../../helpers/dialog';
+import {List} from '../list';
+import {MoneyCellType} from '../../../constants/moneyCellType';
+import {EditMoneyCell} from '../../../store/actions/editMoneyCell';
+import {connect} from 'react-redux';
+import {MarkDeleteMoneyCell} from '../../../store/actions/markDeleteMoneyCell';
+import {AddMoneyCell} from '../../../store/actions/addMoneyCell';
+import {getMoneyCellsComparer} from '../../../helpers/sorter';
+import {getSimpleTitle} from "../../../helpers/moneyCellsHelper";
 
 const MoneyCellsList = (props) => {
-    let {navigation, moneyCells, add, save, getTitle} = props;
+    let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
     return (
         <List
             avatarFactory = {getAvatar}
-            avatarStyle = {Theme.listAvatarStyle}
             titleFactory = {getTitle || getSimpleTitle()}
             onItemPress = {onMoneyCellPress(navigation)}
             onItemEditPress = {onMoneyCellEditPress(navigation, save)}
             onItemDeletePress = {onMoneyCellDeletePress(props.delete)}
             items = {moneyCells}
+            comparer = {getMoneyCellsComparer(people)}
             addButtonInfo= {{
                 icon: {
                     name: 'credit-card-plus',
                     type: 'material-community'
                 },
                 title: 'Add new moneyCell',
-                onPress: addMoneyCellPress(navigation, add)
+                onPress: addMoneyCellPress(navigation, add, ownerId)
             }}
         />
     );
 };
 
-const addMoneyCellPress = (navigation, add) => () => {
+const addMoneyCellPress = (navigation, add, ownerId) => () => {
     navigation.push('EditMoneyCell', {
-        action: (moneyCell) => add(moneyCell)
+        action: (moneyCell) => add(moneyCell),
+        ownerId: ownerId
     });
 };
 
@@ -83,6 +81,12 @@ const getAvatar = (moneyCell) => {
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        people: state.main.people
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         add: (moneyCell) => {
@@ -98,30 +102,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(undefined, mapDispatchToProps)(MoneyCellsList);
-
-export const getTitleWithOwner = (people) => (moneyCell) => {
-    let owner = null;
-    if(!isNullOrUndefined(people)){
-        owner = people.filter(e => e.id === moneyCell.ownerId)[0];
-    }
-
-    let result = [
-        <Text key = 'name'>
-            {`${moneyCell.name}`}
-        </Text>
-    ];
-    if(!isNullOrUndefined(owner)){
-        result.push(<Text key = 'ownerName'>
-            {`owner: ${GetShortPersonName(owner)}.`}
-        </Text>)
-    }
-
-    result.push(
-        <Text key = 'amount' style={{color: moneyCell.amount < 0 ? Theme.badColor : Theme.goodColor}}>
-            {`${moneyCell.amount} RUB`}
-        </Text>);
-    return result;
-};
-
-export const getSimpleTitle = () => getTitleWithOwner(undefined);
+export default connect(mapStateToProps, mapDispatchToProps)(MoneyCellsList);

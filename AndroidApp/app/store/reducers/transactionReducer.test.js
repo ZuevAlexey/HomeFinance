@@ -1,8 +1,8 @@
-import {ActionName} from "../../constants/actionName";
-import {TransactionReducer} from "./transactionReducer";
+import {ActionName} from '../../constants/actionName';
+import {TransactionReducer} from './transactionReducer';
 import {EditTransaction} from '../actions/editTransaction';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {MarkDeleteTransaction} from "../actions/markDeleteTransaction";
+import {MarkDeleteTransaction} from '../actions/markDeleteTransaction';
 
 const startState = {
     id: 1,
@@ -11,7 +11,7 @@ const startState = {
     articleId: 100,
     amount: 1500,
     date: new Date(2018, 8, 1, 14, 55),
-    description: "Оплата комуналки",
+    description: 'Оплата комуналки',
     isValid: true
 };
 
@@ -34,11 +34,10 @@ it(`Transaction reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const amount = 3000;
     const description = 'зарплата';
     const date = new Date(2018, 10, 10);
-    const isValid = false;
-    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date, isValid);
+    const action = EditTransaction(id, fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionReducer(startState, action))
-    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid, lastModificationTime});
+    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid : true, lastModificationTime});
 });
 
 it(`Transaction reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {

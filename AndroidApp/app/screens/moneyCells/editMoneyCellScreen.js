@@ -1,12 +1,13 @@
 import React from 'react';
-import {Screen} from "../../components/screen/screen";
+import {Screen} from '../../components/screen/screen';
 import {MoneyCellType} from '../../constants/moneyCellType';
 import {getEnumsFromList, getEnumsFromObject} from '../../helpers/getEnums';
-import {MoneyCellStatus} from "../../constants/moneyCellStatus";
-import {EditForm} from "../../components/editForm/editForm";
-import {GetFullPersonName, GetShortPersonName} from "../../helpers/displayStringHelper";
-import {connect} from "react-redux";
-import {isNullOrUndefined} from "../../helpers/maybe";
+import {MoneyCellStatus} from '../../constants/moneyCellStatus';
+import {EditForm} from '../../components/editForm/editForm';
+import {GetFullMoneyCellName, GetFullPersonName, GetShortPersonName} from '../../helpers/displayStringHelper';
+import {connect} from 'react-redux';
+import {isNullOrUndefined} from '../../helpers/maybe';
+import {getMoneyCellsComparer, peopleComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
 
@@ -14,26 +15,28 @@ class EditMoneyCellScreen extends React.Component {
     constructor(props){
         super(props);
         this.getType = this.getType.bind(this);
-        let {moneyCellId} = this.props.navigation.state.params;
+        let {moneyCellId, ownerId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(moneyCellId);
 
-        let moneyCell;
-        if(!isNew){
-            moneyCell = props.moneyCells.filter(e => e.id === moneyCellId)[0];
-        }
-
-        let defaultValue = isNew
-            ? {
+        let defaultValue;
+        if(isNew){
+            defaultValue = {
                 status: MoneyCellStatus.ACTIVE,
-                startDate: new Date(),
-                amount: 0
+                    startDate: new Date(),
+                ownerId: ownerId
+            };
+            if(!isNullOrUndefined(ownerId)){
+                defaultValue['ownerId'] = ownerId;
             }
-            : {
+        } else {
+            let moneyCell = props.moneyCells.first(e => e.id === moneyCellId);
+            defaultValue = {
                 id: moneyCell.id,
-                owner: GetFullPersonName(props.people.filter(e => e.id === moneyCell.ownerId)[0]),
+                owner: GetFullPersonName(props.people.first(e => e.id === moneyCell.ownerId)),
                 name: moneyCell.name,
                 status: moneyCell.status,
-            };
+            }
+        }
 
         this.state = {value: defaultValue, isNew };
     }
@@ -45,11 +48,11 @@ class EditMoneyCellScreen extends React.Component {
             status: getEnumsFromObject(MoneyCellStatus, 'MoneyCellStatus'),
         };
 
-        if(this.state.isNew){
-            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People');
+        if(this.state.isNew) {
+            options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People', null, peopleComparer);
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
-            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => `${mc.name} (${GetShortPersonName(this.props.people.filter(e => e.id === mc.ownerId)[0])})`, 'MoneyCells'));
+            options['parentId'] = t.maybe(getEnumsFromList(this.props.moneyCells, mc => mc.id, mc => GetFullMoneyCellName(this.props.people.first(e => e.id === mc.ownerId), mc), 'MoneyCells', null, getMoneyCellsComparer(this.props.people)));
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
         } else {
@@ -112,8 +115,8 @@ const getOptions = (isNew) => {
 };
 
 const mapStateToProps = (state) => ({
-    people: state.people.filter(e => !e.isDeleted),
-    moneyCells: state.moneyCells.filter(e => !e.isDeleted),
+    people: state.main.people.filter(e => !e.isDeleted),
+    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
 });
 
 export default connect(mapStateToProps, undefined)(EditMoneyCellScreen);

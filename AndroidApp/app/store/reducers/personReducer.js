@@ -1,4 +1,4 @@
-import {ActionName} from "../../constants/actionName";
+import {ActionName} from '../../constants/actionName';
 
 export const PersonReducer = (state = {}, action) => {
     switch(action.type){

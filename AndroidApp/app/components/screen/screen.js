@@ -1,7 +1,7 @@
-import React from "react";
-import Styles from "./style";
-import {Body, Container, Header, Icon, Left, Right, Text} from "native-base";
-import {StatusBar} from "react-native";
+import React from 'react';
+import Styles from './style';
+import {Body, Container, Header, Icon, Left, Right, Text} from 'native-base';
+import {StatusBar} from 'react-native';
 import {Theme} from '../theme';
 
 export const Screen = (props) => {

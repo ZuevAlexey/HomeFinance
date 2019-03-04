@@ -1,9 +1,9 @@
-import {ActionName} from "../../constants/actionName";
-import {Sex} from "../../constants/sex";
-import {PersonReducer} from "./personReducer";
+import {ActionName} from '../../constants/actionName';
+import {Sex} from '../../constants/sex';
+import {PersonReducer} from './personReducer';
 import {EditPerson} from '../actions/editPerson';
 import {AssertUnprocessedActions} from '../../helpers/testHelper';
-import {MarkDeletePerson} from "../actions/markDeletePerson";
+import {MarkDeletePerson} from '../actions/markDeletePerson';
 
 const startState = {
     id: 1,
