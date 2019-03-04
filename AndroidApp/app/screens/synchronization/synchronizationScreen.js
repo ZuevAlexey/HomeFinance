@@ -100,8 +100,7 @@ class SynchronizationScreen extends React.Component {
         } catch (error) {
             showMessage(
                 'Sync error',
-                // `Check your internet connection and try again. In case of repetition of the situation in technical support.`,
-                error.toString()
+                `Check your internet connection and try again. In case of repetition of the situation in technical support.`
             );
         }
     }
