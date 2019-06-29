@@ -3,80 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MoneyCellsService", "MoneyCellsService", "{CD00FB96-7B34-4C34-99F6-117044F02981}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PeopleService", "PeopleService", "{754E9AE5-366D-4A89-8B8B-139940BD74F0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{11FB2A7F-9CE9-4CCE-AFE4-D389B16A28ED}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GroupService", "GroupService", "{25DEC448-03AF-439A-84D3-0514495CF1BD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupServiceContracts", "GroupService\GroupServiceContracts\GroupServiceContracts.csproj", "{81BB7DC3-7D91-460D-9852-26E82D1FD7C4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyCellsContracts", "MoneyCells\MoneyCellsContracts\MoneyCellsContracts.csproj", "{C6B19791-753A-47A6-8809-4567BFB555C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyCellsService", "MoneyCells\MoneyCellsService\MoneyCellsService.csproj", "{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleService", "People\PeopleService\PeopleService.csproj", "{DB657EE0-AB78-4FED-9757-1DEFF5B88418}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleServiceContracts", "People\PeopleServiceContracts\PeopleServiceContracts.csproj", "{3D553994-C93B-49FC-9B0E-61083E3AFAFD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupService", "GroupService\GroupService\GroupService.csproj", "{8048B394-47FC-4306-8F08-092BCB86B3CB}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SyncBackendApi", "SyncBackendApi", "{88174799-90B7-405F-ACDA-029B486FED76}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncServer", "SyncServer\SyncServer.csproj", "{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{11FB2A7F-9CE9-4CCE-AFE4-D389B16A28ED}.Debug|x64.ActiveCfg = Debug|x64
-		{11FB2A7F-9CE9-4CCE-AFE4-D389B16A28ED}.Debug|x64.Build.0 = Debug|x64
-		{11FB2A7F-9CE9-4CCE-AFE4-D389B16A28ED}.Release|x64.ActiveCfg = Release|x64
-		{11FB2A7F-9CE9-4CCE-AFE4-D389B16A28ED}.Release|x64.Build.0 = Release|x64
-		{81BB7DC3-7D91-460D-9852-26E82D1FD7C4}.Debug|x64.ActiveCfg = Debug|x64
-		{81BB7DC3-7D91-460D-9852-26E82D1FD7C4}.Debug|x64.Build.0 = Debug|x64
-		{81BB7DC3-7D91-460D-9852-26E82D1FD7C4}.Release|x64.ActiveCfg = Release|x64
-		{81BB7DC3-7D91-460D-9852-26E82D1FD7C4}.Release|x64.Build.0 = Release|x64
-		{C6B19791-753A-47A6-8809-4567BFB555C3}.Debug|x64.ActiveCfg = Debug|x64
-		{C6B19791-753A-47A6-8809-4567BFB555C3}.Debug|x64.Build.0 = Debug|x64
-		{C6B19791-753A-47A6-8809-4567BFB555C3}.Release|x64.ActiveCfg = Release|x64
-		{C6B19791-753A-47A6-8809-4567BFB555C3}.Release|x64.Build.0 = Release|x64
-		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}.Debug|x64.ActiveCfg = Debug|x64
-		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}.Debug|x64.Build.0 = Debug|x64
-		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}.Release|x64.ActiveCfg = Release|x64
-		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918}.Release|x64.Build.0 = Release|x64
-		{DB657EE0-AB78-4FED-9757-1DEFF5B88418}.Debug|x64.ActiveCfg = Debug|x64
-		{DB657EE0-AB78-4FED-9757-1DEFF5B88418}.Debug|x64.Build.0 = Debug|x64
-		{DB657EE0-AB78-4FED-9757-1DEFF5B88418}.Release|x64.ActiveCfg = Release|x64
-		{DB657EE0-AB78-4FED-9757-1DEFF5B88418}.Release|x64.Build.0 = Release|x64
-		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Debug|x64.ActiveCfg = Debug|x64
-		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Debug|x64.Build.0 = Debug|x64
-		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Release|x64.ActiveCfg = Release|x64
-		{3D553994-C93B-49FC-9B0E-61083E3AFAFD}.Release|x64.Build.0 = Release|x64
-		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|x64.ActiveCfg = Debug|x64
-		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Debug|x64.Build.0 = Debug|x64
-		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|x64.ActiveCfg = Release|x64
-		{8048B394-47FC-4306-8F08-092BCB86B3CB}.Release|x64.Build.0 = Release|x64
-		{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4}.Debug|x64.ActiveCfg = Debug|x64
-		{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4}.Debug|x64.Build.0 = Debug|x64
-		{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4}.Release|x64.ActiveCfg = Release|x64
-		{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{81BB7DC3-7D91-460D-9852-26E82D1FD7C4} = {25DEC448-03AF-439A-84D3-0514495CF1BD}
-		{C6B19791-753A-47A6-8809-4567BFB555C3} = {CD00FB96-7B34-4C34-99F6-117044F02981}
-		{8FD5CB9E-2146-4E4E-B0ED-30DCCE0C4918} = {CD00FB96-7B34-4C34-99F6-117044F02981}
-		{DB657EE0-AB78-4FED-9757-1DEFF5B88418} = {754E9AE5-366D-4A89-8B8B-139940BD74F0}
-		{3D553994-C93B-49FC-9B0E-61083E3AFAFD} = {754E9AE5-366D-4A89-8B8B-139940BD74F0}
-		{8048B394-47FC-4306-8F08-092BCB86B3CB} = {25DEC448-03AF-439A-84D3-0514495CF1BD}
-		{AE9AAFC1-8FAF-409B-A518-67BBD592F9B4} = {88174799-90B7-405F-ACDA-029B486FED76}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7573B631-0596-47B5-9289-698AEF2768B4}
