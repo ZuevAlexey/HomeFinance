@@ -17,7 +17,7 @@ export const SystemDataReducer = (state = {}, action) => {
             };
         }
         case ActionName.RESET_STORAGE: {
-            return withNullCheck(action.resetData, e => e.main.systemData, defaultState.main.systemData);
+            return withNullCheck(action.resetData, e => e.main.systemData, {...defaultState.main.systemData, serverAddress: state.main.systemData.serverAddress});
         }
         default:
             return state;
