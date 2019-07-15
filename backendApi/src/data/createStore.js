@@ -37,7 +37,7 @@ export const createStore = (storeName) => {
         getState: () => {
             return {...state};
         },
-        dispatch: (action) => {
+        dispatch: (action, requestTime) => {
             let guid = uuid();
             logger.info(`${guid} Поступил запрос на диспетчеризацию события ${JSON.stringify(action)}`);
             if(!hasInfoForState(action)){
@@ -45,19 +45,19 @@ export const createStore = (storeName) => {
                 return;
             }
 
-            state = reduce(state, action);
+            state = reduce(state, action, requestTime);
             let historyFileName = path.resolve(historyFolder, `state_${getDateISO()}.json`);
             saveObjectToFile(state, historyFileName);
             saveObjectToFile(state, storeFileName);
             logger.info(`${guid} Обработан запрос на диспетчеризацию события. Результирующее состояние cохранили в файл ${historyFileName}`);
         },
-        getDiff: (action, reqDateTime) => {
+        getDiff: (action, requestTime) => {
             let diff = {
                 type: Actions.SYNC,
                 isSuccess: true,
                 data: {
                     systemData: {
-                        lastSynchronizationTime: reqDateTime
+                        lastSynchronizationTime: requestTime
                     }
                 }
             };

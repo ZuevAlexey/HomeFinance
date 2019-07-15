@@ -1,7 +1,7 @@
 import Actions from "../actions";
 import {ItemReduce} from "../reducers/ItemReduce";
 
-export const CollectionReduce = (state, action, collectionName) => {
+export const CollectionReduce = (state, action, collectionName, requestTime) => {
     switch(action.type){
         case Actions.SYNC:{
             let collectionDiff = action.data[collectionName];
@@ -9,17 +9,20 @@ export const CollectionReduce = (state, action, collectionName) => {
                 return state;
             }
 
-            let newState = state.map(e => {
-                return ItemReduce(e, action, collectionName);
+            let currentIds = {};
+            let newState = [];
+            state.forEach(e => {
+                newState.push(ItemReduce(e, action, collectionName, requestTime));
+                currentIds[e.id] = true;
             });
 
-            let curentIds = newState.map(e => e.id).reduce((acc, el) => {
-                acc[el] = true;
-                return acc
-            }, {});
+            collectionDiff.forEach(e => {
+                if(currentIds[e.id] !== true){
+                    e.lastModificationTime = requestTime;
+                    newState.push(e);
+                }
+            });
 
-            let newElements = collectionDiff.filter(e => curentIds[e.id] !== true);
-            newState = newState.concat(newElements);
             return newState;
         }
         default:{
