@@ -1,5 +1,5 @@
 import React from 'react';
-import {List} from '../../components/list/list';
+import List from '../../components/list/list';
 import {Text} from 'react-native';
 import {Theme} from '../../components/theme';
 import {Screen} from '../../components/screen/screen';

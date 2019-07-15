@@ -1,6 +1,6 @@
 import React from 'react';
 import {showOkCancelDialog} from '../../../helpers/dialog';
-import {List} from '../list';
+import List from '../list';
 import {MoneyCellType} from '../../../constants/moneyCellType';
 import {EditMoneyCell} from '../../../store/actions/editMoneyCell';
 import {connect} from 'react-redux';

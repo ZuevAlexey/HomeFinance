@@ -1,5 +1,5 @@
 import React from 'react';
-import {List} from '../list';
+import List from '../list';
 import {Theme} from '../../theme';
 import {showOkCancelDialog} from '../../../helpers/dialog';
 import {AddTransaction} from '../../../store/actions/addTransaction';

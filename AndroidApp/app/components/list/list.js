@@ -1,59 +1,79 @@
 import React from 'react';
 import {Button} from 'react-native-elements';
 import {ListItem} from '../listItem/listItem';
-import {View, ScrollView} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Styles from './style';
 import {Theme} from '../theme';
 import {isNullOrUndefined} from '../../helpers/maybe';
 
-export const List = (props) => {
-    let {items,
-        titleFactory,
-        avatarFactory,
-        onItemPress,
-        onItemEditPress,
-        onItemDeletePress,
-        addButtonInfo,
-        comparer
-    } = props;
+const startPageSize = 20;
+const offset = 50;
 
-    let sortedItems = isNullOrUndefined(comparer)
-        ? items
-        : items.sort(comparer);
+export default class List extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {count : startPageSize}
+        this.onEndReachedHandler = this.onEndReachedHandler.bind(this);
+    }
 
-    return (
-        <View
-            style = {Styles.container}
-        >
+    onEndReachedHandler = () => {
+        if(this.state.count >= this.props.items.length){
+            return;
+        }
+
+        this.setState({count: this.state.count + offset});
+    }
+
+    render() {
+        let {items,
+            titleFactory,
+            avatarFactory,
+            onItemPress,
+            onItemEditPress,
+            onItemDeletePress,
+            addButtonInfo,
+            comparer
+        } = this.props;
+    
+        let sortedItems = (isNullOrUndefined(comparer)
+            ? items
+            : items.sort(comparer)).slice(0, this.state.count);
+
+        return (
             <View
-                style={Styles.listContainer}
+                style = {Styles.container}
             >
-                <ScrollView>
-                   {
-                       sortedItems.map((item) => (
-                            <ListItem
-                                title={titleFactory(item)}
-                                key={item.id}
-                                avatar = {avatarFactory(item)}
-                                avatarStyle = {Theme.listAvatarStyle}
-                                onPress={() => onItemPress(item)}
-                                onEditPress={() => onItemEditPress(item)}
-                                onDeletePress={() => onItemDeletePress(item)}
-                            />))
-                   }
-                </ScrollView>
-            </View>
-            {addButtonInfo && <View
-                    style = {Styles.buttonContainer}
+                <View
+                    style={Styles.listContainer}
                 >
-                    <Button
-                        icon={addButtonInfo.icon}
-                        title = {addButtonInfo.title}
-                        buttonStyle = {Styles.addButton}
-                        onPress={() => addButtonInfo.onPress()}
+                    <FlatList
+                        data = {sortedItems}
+                        onEndReached = {this.onEndReachedHandler}
+                        onEndReachedThreshold = {0.1}
+                        keyExtractor = {(item) => item.id}
+                        renderItem = {(item) => (
+                            <ListItem
+                                title={titleFactory(item.item)}
+                                avatar = {avatarFactory(item.item)}
+                                avatarStyle = {Theme.listAvatarStyle}
+                                onPress={() => onItemPress(item.item)}
+                                onEditPress={() => onItemEditPress(item.item)}
+                                onDeletePress={() => onItemDeletePress(item.item)}
+                            />)}
                     />
                 </View>
-            }
-        </View>
-    )
-};
+                {addButtonInfo && <View
+                        style = {Styles.buttonContainer}
+                    >
+                        <Button
+                            icon={addButtonInfo.icon}
+                            title = {addButtonInfo.title}
+                            buttonStyle = {Styles.addButton}
+                            onPress={() => addButtonInfo.onPress()}
+                        />
+                    </View>
+                }
+            </View>
+        )
+    }
+}
