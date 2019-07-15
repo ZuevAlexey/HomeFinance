@@ -51,6 +51,7 @@
     ],
     "systemData": {
         "lastSynchronizationTime": "DateTime",
+        "lastClientSynchronizationTime": "DateTime",
         "serverAddress": "Url"
     }
 }

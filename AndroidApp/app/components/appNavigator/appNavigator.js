@@ -1,5 +1,5 @@
 import React from 'react';
-import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
+import {createAppContainer, createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import DebugScreen from '../../screens/debug/debugScreen';
 import PeopleScreen from '../../screens/people/peopleScreen';
 import {CustomDrawerContentComponent} from '../customDrawerComponent/customDrawerComponent';
@@ -14,7 +14,7 @@ import TransactionsScreen from '../../screens/transactions/transactionsScreen';
 import TransactionInfoScreen from '../../screens/transactions/transactionInfoScreen';
 import EditTransactionScreen from '../../screens/transactions/editTransactionScreen';
 
-export const AppNavigator = createDrawerNavigator({
+export const AppNavigator = createAppContainer(createDrawerNavigator({
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen
@@ -61,4 +61,4 @@ export const AppNavigator = createDrawerNavigator({
     header: null,
     contentOptions: {
         activeTintColor: Theme.mainColor
-}});
+}}));

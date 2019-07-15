@@ -49,7 +49,7 @@ export const List = (props) => {
                     <Button
                         icon={addButtonInfo.icon}
                         title = {addButtonInfo.title}
-                        backgroundColor = {Theme.mainColor}
+                        buttonStyle = {Styles.addButton}
                         onPress={() => addButtonInfo.onPress()}
                     />
                 </View>

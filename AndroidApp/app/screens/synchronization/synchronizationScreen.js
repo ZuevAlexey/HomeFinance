@@ -51,12 +51,13 @@ class SynchronizationScreen extends React.Component {
         }
     }
 
-    async synchronization(serverAddress){
+    async synchronization(){
         try {
             let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
-            let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
-            let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
-            let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
+            let lastClientSynchronizationTime = this.props.systemData.lastClientSynchronizationTime;
+            let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastClientSynchronizationTime);
+            let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastClientSynchronizationTime);
+            let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastClientSynchronizationTime);
 
             let body = JSON.stringify({
                 type: 'sync',
@@ -70,7 +71,7 @@ class SynchronizationScreen extends React.Component {
                 }
             });
 
-            let response = await fetch(serverAddress + '/api/action', {
+            let response = await fetch(this.props.systemData.serverAddress + '/api/action', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -120,8 +121,6 @@ class SynchronizationScreen extends React.Component {
     };
 
     render() {
-        let {systemData} = this.props;
-        let {serverAddress} = systemData;
         return (
             <Screen
                 {...this.props}
@@ -155,7 +154,7 @@ class SynchronizationScreen extends React.Component {
                         buttonStyle={styles.buttonStyle}
                         title={'Synchronization'}
                         backgroundColor={Theme.mainColor}
-                        onPress={() => this.synchronization(serverAddress)}
+                        onPress={() => this.synchronization()}
                     />
                 </View>
             </Screen>
@@ -169,7 +168,11 @@ let options = {
             label: 'Server address',
         },
         lastSynchronizationTime: {
-            label: 'Last sync time',
+            label: 'Last server sync time',
+            editable: false,
+        },
+        lastClientSynchronizationTime: {
+            label: 'Last client sync time',
             editable: false,
         }
     }

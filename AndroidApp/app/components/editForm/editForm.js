@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Theme} from '../../components/theme';
 import {Button} from 'react-native-elements';
-import withNavigation from 'react-navigation/src/views/withNavigation';
+import {withNavigation} from 'react-navigation';
 
 let t = require('tcomb-form-native');
 let Form = t.form.Form;

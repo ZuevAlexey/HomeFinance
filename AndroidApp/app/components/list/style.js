@@ -19,5 +19,8 @@ module.exports = StyleSheet.create({
         borderTopWidth: 1,
         borderWidth: 0,
         borderTopColor: Theme.borderColor,
+    },
+    addButton: {
+        backgroundColor : Theme.mainColor
     }
 });
