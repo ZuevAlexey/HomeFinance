@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../../components/list/list';
 import {Text} from 'react-native';
-import {Theme} from '../../components/theme';
+import Theme from '../../components/theme';
 import {Screen} from '../../components/screen/screen';
 import {showOkCancelDialog} from '../../helpers/dialog';
 import {Sex} from '../../constants/sex';
@@ -12,22 +12,22 @@ import {MarkDeletePerson} from '../../store/actions/markDeletePerson';
 
 import {GetFullPersonName} from '../../helpers/displayStringHelper';
 import {getStatusFromSummary} from '../../helpers/statusHelper';
-import {getMoneyCellsSummary} from '../../helpers/calculator';
+import {getPeopleSummary} from '../../helpers/calculator';
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 import {peopleComparer} from '../../helpers/sorter';
 
 const PeopleScreen = (props) => {
-    let {navigation, summary} = props;
+    let {navigation, peopleSummary} = props;
     return (
         <Screen
             {...props}
             headerTitle = 'People'
-            headerStatus = {getStatusFromSummary(summary)}
+            headerStatus = {getStatusFromSummary(Object.keys(peopleSummary).reduce((acc, el) => acc += peopleSummary[el], 0))}
         >
             <List
                 avatarFactory = {getAvatar}
                 avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle}
+                titleFactory = {getTitle(peopleSummary)}
                 onItemPress = {onPersonPress(navigation)}
                 onItemEditPress = {onPersonEditPress(navigation, props.save)}
                 onItemDeletePress = {onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
@@ -36,7 +36,8 @@ const PeopleScreen = (props) => {
                 addButtonInfo= {{
                     icon: {
                         name: 'md-person-add',
-                        type: 'ionicon'
+                        type: 'ionicon',
+                        color: Theme.buttonIconColor
                     },
                     title: 'Add new person',
                     onPress: addPersonPress(navigation, props.add)
@@ -76,10 +77,15 @@ const onPersonDeletePress = (navigation, deleteAction, getMoneyCellsIds) => (per
     );
 };
 
-const getTitle = (person) => {
-    return (
-        <Text style = {{textAlign: 'center'}}>{GetFullPersonName(person)}</Text>
-    );
+const getTitle = (peopleSummary) => (person) => {
+    return [
+        <Text key='name' style = {{textAlign: 'center'}}>{GetFullPersonName(person)}</Text>,
+        <Text key = 'amount' style={{
+            color: peopleSummary[person.id] < 0 ? Theme.badColor : Theme.goodColor,
+            textAlign: 'center'}}>
+            {`${peopleSummary[person.id]} RUB`}
+        </Text>
+    ];
 };
 
 const getAvatar = (person) => {
@@ -99,8 +105,8 @@ const getAvatar = (person) => {
 const mapStateToProps = state => {
     return {
         people: state.main.people.filter(e => !e.isDeleted),
-        summary: getMoneyCellsSummary(state.main.moneyCells.filter(e => !e.isDeleted)),
         getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
+        peopleSummary: getPeopleSummary(state.main.moneyCells.filter(e => !e.isDeleted))
     }
 };
 

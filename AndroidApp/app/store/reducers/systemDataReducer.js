@@ -13,7 +13,6 @@ export const SystemDataReducer = (state = {}, action) => {
         case ActionName.SYNCHRONIZATION: {
             return {
                 lastSynchronizationTime: action.data.main.systemData.lastSynchronizationTime,
-                lastClientSynchroniationTime: new Date(),
                 serverAddress: state.serverAddress
             };
         }

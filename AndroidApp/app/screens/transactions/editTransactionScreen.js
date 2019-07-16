@@ -5,7 +5,7 @@ import {EditForm} from '../../components/editForm/editForm';
 import {CommonConstants} from '../../constants/commonConstants';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {connect} from 'react-redux';
-import {getFullArticleName, GetFullMoneyCellName, GetShortPersonName} from '../../helpers/displayStringHelper';
+import {getFullArticleName, GetDropdownMoneyCellInfo} from '../../helpers/displayStringHelper';
 import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
@@ -42,7 +42,7 @@ class EditTransactionScreen extends React.Component {
     getMoneyCellsEnums = () => {
         return getEnumsFromList(this.props.moneyCells,
             mc => mc.id,
-            mc => GetFullMoneyCellName(this.props.people.first(e => e.id === mc.ownerId), mc),
+            mc => GetDropdownMoneyCellInfo(this.props.people.first(e => e.id === mc.ownerId), mc),
             'MoneyCells',
             {key: CommonConstants.OUTSIDE_MONEY_CELL_ID, value: CommonConstants.OUTSIDE_MONEY_CELL_NAME},
             getMoneyCellsComparer(this.props.people)

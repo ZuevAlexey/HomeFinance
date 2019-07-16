@@ -15,3 +15,15 @@ export const getTransactionsSummary = (transactions, moneyCellIdsSet) => {
         return acc;
     }, 0);
 };
+
+export const getPeopleSummary = (moneyCells) => {
+    return moneyCells.reduce((acc, el) => {
+        if(acc[el.ownerId] === undefined){
+            acc[el.ownerId] = el.amount;
+        } else {
+            acc[el.ownerId] = acc[el.ownerId] + el.amount;
+        }
+
+        return acc;
+    }, {});
+}

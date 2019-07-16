@@ -1,8 +1,8 @@
 import React from 'react';
 import {isNullOrUndefined} from "./maybe";
 import {Text} from "react-native";
-import {GetFullMoneyCellName, GetShortPersonName} from "./displayStringHelper";
-import {Theme} from "../components/theme";
+import {GetFullMoneyCellName} from "./displayStringHelper";
+import Theme from "../components/theme";
 
 export const getTitleWithOwner = (people) => (moneyCell) => {
     let owner = null;

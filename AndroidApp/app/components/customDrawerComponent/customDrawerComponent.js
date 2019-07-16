@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from 'react-native';
-import {Theme} from '../theme';
+import Theme from '../theme';
 import {Text} from 'native-base';
 import {DrawerItems} from 'react-navigation';
 

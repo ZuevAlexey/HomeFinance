@@ -3,7 +3,7 @@ import {StyleSheet, TouchableNativeFeedback, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
-import {Theme} from '../theme';
+import Theme from '../theme';
 
 export const ListItem = (props) => {
       let {

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Screen} from '../../components/screen/screen';
 import {View} from 'native-base';
-import {Theme} from '../../components/theme';
+import Theme from '../../components/theme';
 import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchronizationHelper';
@@ -54,10 +54,9 @@ class SynchronizationScreen extends React.Component {
     async synchronization(){
         try {
             let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
-            let lastClientSynchronizationTime = this.props.systemData.lastClientSynchronizationTime;
-            let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastClientSynchronizationTime);
-            let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastClientSynchronizationTime);
-            let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastClientSynchronizationTime);
+            let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
+            let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
+            let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
 
             let body = JSON.stringify({
                 type: 'sync',
@@ -137,25 +136,32 @@ class SynchronizationScreen extends React.Component {
                 <View
                     style={styles.buttonsContainer}
                 >
-                    <Button
-                        buttonStyle={styles.buttonStyle}
-                        title={'Reset storage'}
-                        backgroundColor={Theme.mainColor}
-                        onPress={() => {
-                            showOkCancelDialog(
-                                'Reset storage',
-                                `You want to reset the storage to the last sync. Are you sure?`,
-                                () => this.resetStorage(),
-                                'Yes, I do',
-                            );
-                        }}
-                    />
-                    <Button
-                        buttonStyle={styles.buttonStyle}
-                        title={'Synchronization'}
-                        backgroundColor={Theme.mainColor}
-                        onPress={() => this.synchronization()}
-                    />
+                    <View
+                        style = {styles.buttonContainer}
+                    >
+                        <Button
+                            buttonStyle={styles.buttonStyle}
+                            title={'Reset storage'}
+                            backgroundColor={Theme.mainColor}
+                            onPress={() => {
+                                showOkCancelDialog(
+                                    'Reset storage',
+                                    `You want to reset the storage to the last sync. Are you sure?`,
+                                    () => this.resetStorage(),
+                                    'Yes, I do',
+                                );
+                            }}
+                        />
+                    </View>
+                    <View
+                        style = {styles.buttonContainer}
+                    >
+                        <Button
+                            buttonStyle={styles.buttonStyle}
+                            title={'Synchronization'}
+                            onPress={() => this.synchronization()}
+                        />
+                    </View>
                 </View>
             </Screen>
         );
@@ -192,8 +198,13 @@ const styles = StyleSheet.create({
         justifyContent : 'center',
         flexDirection: 'row'
     },
+    buttonContainer:{
+        flex: 1,
+        alignItems: 'center'
+    },
     buttonStyle: {
-        width: 130
+       ...Theme.mainButtonStyle,
+       width: 140
     }
 });
 

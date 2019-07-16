@@ -3,7 +3,7 @@ import {Screen} from '../../components/screen/screen';
 import TransactionsList from '../../components/list/transactions/transactionsList';
 import {Text, View, StyleSheet, Dimensions} from 'react-native';
 import {getDateDisplayString, GetFullPersonName} from '../../helpers/displayStringHelper';
-import {Theme} from '../../components/theme';
+import Theme from '../../components/theme';
 import {MoneyCellStatus} from '../../constants/moneyCellStatus';
 import {connect} from 'react-redux';
 import {withNullCheck} from '../../helpers/maybe';

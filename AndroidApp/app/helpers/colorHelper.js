@@ -1,4 +1,4 @@
-import {Theme} from '../components/theme';
+import Theme from '../components/theme';
 import {TransactionType} from "../constants/transactionType";
 
 export const getColorForAmount = (amount) => {

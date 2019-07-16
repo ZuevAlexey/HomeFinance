@@ -3,7 +3,7 @@ import {Button} from 'react-native-elements';
 import {ListItem} from '../listItem/listItem';
 import {View, FlatList} from 'react-native';
 import Styles from './style';
-import {Theme} from '../theme';
+import Theme from '../theme';
 import {isNullOrUndefined} from '../../helpers/maybe';
 
 const startPageSize = 20;
@@ -68,7 +68,7 @@ export default class List extends React.Component {
                         <Button
                             icon={addButtonInfo.icon}
                             title = {addButtonInfo.title}
-                            buttonStyle = {Styles.addButton}
+                            buttonStyle = {Theme.mainButtonStyle}
                             onPress={() => addButtonInfo.onPress()}
                         />
                     </View>

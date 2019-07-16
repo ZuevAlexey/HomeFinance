@@ -2,7 +2,7 @@ import Styles from './style';
 import {Icon} from 'react-native-elements';
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {Theme} from '../theme';
+import Theme from '../theme';
 
 export const Avatar = (props) => {
     let {

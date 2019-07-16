@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Theme} from '../theme';
+import Theme from '../theme';
 
 module.exports = StyleSheet.create({
     container: {
@@ -18,9 +18,6 @@ module.exports = StyleSheet.create({
         flex: 1,
         borderTopWidth: 1,
         borderWidth: 0,
-        borderTopColor: Theme.borderColor,
-    },
-    addButton: {
-        backgroundColor : Theme.mainColor
+        borderTopColor: Theme.borderColor
     }
 });

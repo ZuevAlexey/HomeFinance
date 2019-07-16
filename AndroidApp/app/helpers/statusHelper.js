@@ -1,5 +1,5 @@
 import React from 'react';
-import {Theme} from '../components/theme';
+import Theme from '../components/theme';
 import {getColorForAmount} from './colorHelper';
 import {Text} from 'react-native';
 import {getSummaryDisplayString} from './displayStringHelper';

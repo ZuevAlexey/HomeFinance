@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Theme} from '../../components/theme';
+import Theme from '../../components/theme';
 import {Button} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {showOkCancelDialog} from '../../../helpers/dialog';
 import List from '../list';
+import Theme from '../../theme';
 import {MoneyCellType} from '../../../constants/moneyCellType';
 import {EditMoneyCell} from '../../../store/actions/editMoneyCell';
 import {connect} from 'react-redux';
@@ -23,7 +24,8 @@ const MoneyCellsList = (props) => {
             addButtonInfo= {{
                 icon: {
                     name: 'credit-card-plus',
-                    type: 'material-community'
+                    type: 'material-community',
+                    color: Theme.buttonIconColor
                 },
                 title: 'Add new moneyCell',
                 onPress: addMoneyCellPress(navigation, add, ownerId)

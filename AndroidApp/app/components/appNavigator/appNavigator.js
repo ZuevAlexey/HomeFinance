@@ -4,7 +4,7 @@ import DebugScreen from '../../screens/debug/debugScreen';
 import PeopleScreen from '../../screens/people/peopleScreen';
 import {CustomDrawerContentComponent} from '../customDrawerComponent/customDrawerComponent';
 import MoneyCellsScreen from '../../screens/moneyCells/moneyCellsScreen';
-import {Theme} from '../theme';
+import Theme from '../theme';
 import SynchronizationScreen from '../../screens/synchronization/synchronizationScreen';
 import PersonInfoScreen from '../../screens/people/personInfoScreen';
 import EditPersonScreen from '../../screens/people/editPersonScreen';

@@ -17,6 +17,12 @@ export const getFullArticleName = article => {
     }
 };
 
+export const GetDropdownMoneyCellInfo = (owner, moneyCell) => {
+    let result = GetFullMoneyCellName(owner, moneyCell);
+    result += ` (${getSummaryDisplayString(moneyCell.amount)})`;
+    return result;
+}
+
 export const GetFullMoneyCellName = (owner, moneyCell) => {
     let result = moneyCell.name;
     if(!isNullOrUndefined(owner)) {

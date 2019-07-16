@@ -3,7 +3,7 @@ import {Screen} from '../../components/screen/screen';
 import TransactionsList from '../../components/list/transactions/transactionsList';
 import MoneyCellsList from '../../components/list/moneyCellList/moneyCellsList';
 import {View} from 'native-base';
-import {Theme} from '../../components/theme';
+import Theme from '../../components/theme';
 import {Button} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 import {GetFullPersonName} from '../../helpers/displayStringHelper';
@@ -34,9 +34,10 @@ class PersonInfoScreen extends React.Component {
     }
 
     renderPageButton(page){
+        backgroundColor = this.state.innerPage === page ? Theme.selectedButtonBackgroundColor : Theme.mainColor;
         return <Button
             title = {page}
-            backgroundColor = {this.state.innerPage === page ? Theme.selectedButtonBackgroundColor : undefined}
+            buttonStyle = {{backgroundColor: backgroundColor}}
             onPress={() => this.setInnerPage(page)}
         />
     };
