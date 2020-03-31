@@ -1,6 +1,7 @@
 import React from 'react';
 import {createAppContainer, createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import DebugScreen from '../../screens/debug/debugScreen';
+import TestScreen from '../../screens/test/testScreen';
 import PeopleScreen from '../../screens/people/peopleScreen';
 import {CustomDrawerContentComponent} from '../customDrawerComponent/customDrawerComponent';
 import MoneyCellsScreen from '../../screens/moneyCells/moneyCellsScreen';
@@ -15,6 +16,7 @@ import TransactionInfoScreen from '../../screens/transactions/transactionInfoScr
 import EditTransactionScreen from '../../screens/transactions/editTransactionScreen';
 
 export const AppNavigator = createAppContainer(createDrawerNavigator({
+    // Test: TestScreen,
     People: createStackNavigator({
         PeopleList: {
             screen: PeopleScreen

@@ -22,7 +22,7 @@ class EditMoneyCellScreen extends React.Component {
         if(isNew){
             defaultValue = {
                 status: MoneyCellStatus.ACTIVE,
-                    startDate: new Date(),
+                startDate: new Date(),
                 ownerId: ownerId
             };
             if(!isNullOrUndefined(ownerId)){
@@ -35,13 +35,15 @@ class EditMoneyCellScreen extends React.Component {
                 owner: GetFullPersonName(props.people.first(e => e.id === moneyCell.ownerId)),
                 name: moneyCell.name,
                 status: moneyCell.status,
+                moneyCellType: moneyCell.moneyCellType,
+                amount: moneyCell.amount
             }
         }
 
         this.state = {value: defaultValue, isNew };
     }
 
-    getType() {
+    getType(moneyCellType) {
         let options = {
             id: t.maybe(t.String),
             name: t.String,
@@ -56,6 +58,9 @@ class EditMoneyCellScreen extends React.Component {
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
         } else {
+            if(moneyCellType === MoneyCellType.BROKER) {
+                options['amount'] = t.maybe(t.Number);
+            }
             options['owner'] = t.String;
         }
 
@@ -63,7 +68,8 @@ class EditMoneyCellScreen extends React.Component {
     };
 
     render() {
-        let type = this.getType();
+        let moneyCellType = this.state.value.moneyCellType;
+        let type = this.getType(moneyCellType);
         let isNew = this.state.isNew;
         let {action} = this.props.navigation.state.params;
         let moneyCell = this.state.value;
@@ -75,7 +81,7 @@ class EditMoneyCellScreen extends React.Component {
             >
                 <EditForm
                     type={type}
-                    options={getOptions(isNew)}
+                    options={getOptions(isNew, moneyCellType)}
                     startValue={moneyCell}
                     action={action}
                 />
@@ -84,7 +90,7 @@ class EditMoneyCellScreen extends React.Component {
     }
 }
 
-const getOptions = (isNew) => {
+const getOptions = (isNew, moneyCellType) => {
     let result = {
         fields: {
             id: {
@@ -108,6 +114,9 @@ const getOptions = (isNew) => {
         result.fields['startDate'] = {label: 'Start date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
         result.fields['endDate'] = {label: 'End date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
     } else {
+        if(moneyCellType === MoneyCellType.BROKER) {
+            result.fields['amount'] = {label: 'Amount', placeholder: 'Enter current money cell\'s amount'};
+        }
         result.fields['owner'] = {label: 'Owner', editable: false};
     }
 

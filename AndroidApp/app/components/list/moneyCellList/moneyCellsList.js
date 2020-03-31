@@ -46,9 +46,13 @@ const onMoneyCellPress = (navigation) => (moneyCell) => {
 };
 
 const onMoneyCellEditPress = (navigation, save) => (moneyCell) => {
+    let oldMoneyCell = {
+        amount: moneyCell.amount,
+        moneyCellType: moneyCell.moneyCellType,
+    };
     navigation.push('EditMoneyCell', {
         moneyCellId: moneyCell.id,
-        action: (newMoneyCell) => save(newMoneyCell)
+        action: (newMoneyCell) => save(newMoneyCell, oldMoneyCell)
     });
 };
 
@@ -74,6 +78,11 @@ const getAvatar = (moneyCell) => {
         }
         case MoneyCellType.DEPOSIT:{
             name = 'bank';
+            break;
+        }
+        case MoneyCellType.BROKER:{
+            name = 'finance'
+            break;
         }
     }
 
@@ -95,8 +104,8 @@ const mapDispatchToProps = dispatch => {
             dispatch(AddMoneyCell(moneyCell.ownerId, moneyCell.moneyCellType, moneyCell.name, moneyCell.status, moneyCell.amount, moneyCell.isValid, moneyCell.startDate,
                 moneyCell.endDate, moneyCell.roi, moneyCell.parentId))
         },
-        save: (moneyCell) => {
-            dispatch(EditMoneyCell(moneyCell.id, moneyCell.name, moneyCell.status))
+        save: (newMoneyCell, oldMoneyCell) => {
+            dispatch(EditMoneyCell(newMoneyCell.id, newMoneyCell.name, newMoneyCell.status, newMoneyCell.amount, oldMoneyCell.amount, oldMoneyCell.moneyCellType))
         },
         delete: (moneyCell) => {
             dispatch(MarkDeleteMoneyCell(moneyCell.id))
