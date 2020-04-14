@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {Button} from 'react-native-elements';
 import Theme from '../../components/theme';
 import {ResetStorage} from '../../store/actions/resetStorage';
+import {getContentFromDrive} from "../../helpers/gdrive/gdriveConnector";
 
 class TestScreen extends React.Component {
     constructor(props){
@@ -15,7 +16,7 @@ class TestScreen extends React.Component {
         return (
             <Screen
                 {...this.props}
-                headerTitle='Debug'
+                headerTitle='Test'
             >
                 <ScrollView>
                     <View style={styles.container}>
@@ -28,7 +29,9 @@ class TestScreen extends React.Component {
                     <Button
                         title={'Test button'}
                         buttonStyle = {Theme.mainButtonStyle}
-                        onPress={() =>{}}
+                        onPress={() =>{
+                            getContentFromDrive()
+                        }}
                     />
                 </View>
             </Screen>
