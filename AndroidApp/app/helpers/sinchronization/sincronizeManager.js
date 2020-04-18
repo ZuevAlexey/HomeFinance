@@ -10,17 +10,19 @@ const MAIN_FILE_NAME = 'state';
 const FILE_EXTENSION = '.txt';
 
 
-export const synchornizeWithGDrive = async (actionJson) => {
-    let env = await initializeStore();
+export const synchornizeWithGDrive = async (gDriveEnv, token, credentials, actionJson) => {
+    await debugObjectAsync(gDriveEnv)
+    await debugObjectAsync(token)
+    await debugObjectAsync(credentials)
     let action = JSON.parse(actionJson);
-    let state = JSON.parse(await getFileContent(env.fileId));
+    let state = JSON.parse(await getFileContent(gDriveEnv.fileId, token, credentials));
     let requestTime = new Date();
-    let newState = await synchronize(env, state, action, requestTime);
+    let newState = await synchronize(gDriveEnv, state, action, requestTime, token, credentials);
     let newVar = await getDiff(newState, action, requestTime);
     return newVar;
 };
 
-export const initializeStore = async () => {
+export const initializeStore = async (token, credentials) => {
     return await initializeGDriveEnvironment(MAIN_FOLDER_NAME, BACKUP_FILE_NAME, MAIN_FILE_NAME + FILE_EXTENSION, () => {
         let defaultState = {
             people: [],
@@ -29,10 +31,10 @@ export const initializeStore = async () => {
             articles: []
         };
         return JSON.stringify(defaultState);
-    });
+    }, token, credentials);
 };
 
-const synchronize = async (gdriveEnv, state, action, requestTime) => {
+const synchronize = async (gDriveEnv, state, action, requestTime, token, credentials) => {
     if (!hasInfoForState(action)) {
         return state;
     }
@@ -40,8 +42,8 @@ const synchronize = async (gdriveEnv, state, action, requestTime) => {
     let resultState = mergeState(state, action, requestTime);
     let resultStateString = JSON.stringify(resultState);
     let historyFileName = MAIN_FILE_NAME + new Date().toISOString() + FILE_EXTENSION;
-    await createFile(gdriveEnv.backupFolderId, historyFileName, resultStateString);
-    await updateFile(gdriveEnv.fileId, resultStateString);
+    await createFile(gDriveEnv.backupFolderId, historyFileName, resultStateString, token, credentials);
+    await updateFile(gDriveEnv.fileId, resultStateString, token, credentials);
     return resultState;
 };
 

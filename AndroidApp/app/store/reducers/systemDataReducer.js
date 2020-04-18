@@ -6,14 +6,16 @@ export const SystemDataReducer = (state = {}, action) => {
     switch(action.type){
         case ActionName.EDIT_SYSTEM_DATA: {
             return {
-                lastSynchronizationTime: state.lastSynchronizationTime,
-                serverAddress: action.serverAddress
+                ...state,
+                credentials: action.credentials,
+                token: action.token,
+                gDriveEnv: action.gDriveEnv
             };
         }
         case ActionName.SYNCHRONIZATION: {
             return {
-                lastSynchronizationTime: action.data.main.systemData.lastSynchronizationTime,
-                serverAddress: state.serverAddress
+                ...state,
+                lastSynchronizationTime: action.data.main.systemData.lastSynchronizationTime
             };
         }
         case ActionName.RESET_STORAGE: {

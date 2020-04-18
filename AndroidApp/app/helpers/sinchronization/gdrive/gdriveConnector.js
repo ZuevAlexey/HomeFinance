@@ -1,15 +1,14 @@
-import accessToken from './token';
-import credentials from "./credentials";
+import {isNullOrUndefined} from "../../maybe";
+import {debugObjectAsync} from "../../dialog";
 
-
-export const updateFile = async (fileId, fileContent) => {
+export const updateFile = async (fileId, fileContent, token, credentials) => {
     let exportFileUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + fileId
         + '?uploadType=media';
 
-    let response = await fetch(exportFileUrl, {
+    let response = await fetchWithRefreshToken(token, credentials, exportFileUrl, {
         method: 'PATCH',
         headers: {
-            'Authorization': 'Bearer ' + accessToken.access_token,
+            'Authorization': 'Bearer ' + token.access_token,
             'Content-Type': 'plain/text'
         },
         body: fileContent
@@ -17,28 +16,28 @@ export const updateFile = async (fileId, fileContent) => {
     return await response.text();
 };
 
-export const getFileContent = async (fileId) => {
+export const getFileContent = async (fileId, token, credentials) => {
     let exportFileUrl = 'https://www.googleapis.com/drive/v3/files/' + fileId
         + '?alt=media';
 
-    let response = await fetch(exportFileUrl, {
+    let response = await fetchWithRefreshToken(token ,credentials, exportFileUrl, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + accessToken.access_token
+            'Authorization': 'Bearer ' + token.access_token
         }
     });
     return await response.text();
 };
 
-export const initializeGDriveEnvironment = async (mainFolderName, backupFolderName, fileName, getFileContent) => {
-    let mainFolderId = await initializeFolder(mainFolderName);
-    let backupFolderId = await initializeFolder(backupFolderName, mainFolderId);
+export const initializeGDriveEnvironment = async (mainFolderName, backupFolderName, fileName, getFileContent, token, credentials) => {
+    let mainFolderId = await initializeFolder(mainFolderName, null, token, credentials);
+    let backupFolderId = await initializeFolder(backupFolderName, mainFolderId, token, credentials);
 
-    let filesResponse = await getChildFile(mainFolderId, fileName);
+    let filesResponse = await getChildFile(mainFolderId, fileName, token, credentials);
     let filesJson = await filesResponse.json();
     let fileId = null;
     if (filesJson.files.length === 0) {
-        let createFileResponse = await createFile(mainFolderId, fileName, getFileContent());
+        let createFileResponse = await createFile(mainFolderId, fileName, getFileContent(), token, credentials);
         let createdFile = await createFileResponse.json();
         fileId = createdFile.id
     } else {
@@ -52,7 +51,7 @@ export const initializeGDriveEnvironment = async (mainFolderName, backupFolderNa
     };
 };
 
-export const createFile = async (folderId, fileName, fileContent) => {
+export const createFile = async (folderId, fileName, fileContent, token, credentials) => {
     let filesUrl = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart";
     const MULTIPART_DELIMITER = "fadf6c78-1026-4e43-862f-4e07fe9d397d";
     let body = "--" + MULTIPART_DELIMITER + "\n" +
@@ -66,27 +65,24 @@ export const createFile = async (folderId, fileName, fileContent) => {
         "Content-Type: plain/text\n" +
         "\n" +
         fileContent + "\n" +
-        "--" + MULTIPART_DELIMITER + "--"
+        "--" + MULTIPART_DELIMITER + "--";
 
-    return await fetch(filesUrl, {
+    return await fetchWithRefreshToken(token, credentials, filesUrl, {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + accessToken.access_token,
+            'Authorization': 'Bearer ' + token.access_token,
             'Content-Type': 'multipart/related; boundary=' + MULTIPART_DELIMITER
         },
         body: body
     });
 };
 
-const initializeFolder = async (folderName, parentFolderId) => {
-    let folderResponse = await getFolder(folderName, parentFolderId);
-    if (folderResponse.status === 401) {
-        if (!await refresh_token()) {
-            throw Error("Couldn't refresh a access token. Change the token manually and try again")
-        }
+const initializeFolder = async (folderName, parentFolderId, token, credentials) => {
+    let q = "mimeType='application/vnd.google-apps.folder' and name='" + folderName + "'";
+    if (!isNullOrUndefined(parentFolderId)) {
+        q = q + " and '" + parentFolderId + "' in parents";
     }
-
-    folderResponse = await getFolder(folderName, parentFolderId);
+    let folderResponse = await getList(q, token, credentials);
     let folderJson = await folderResponse.json();
     if (folderJson.files.length === 0) {
         throw Error("The folder '" + folderName + "' doesn't exist. Create a folder with name '" + folderName + "' in your Google Drive and try again")
@@ -94,48 +90,54 @@ const initializeFolder = async (folderName, parentFolderId) => {
     return folderJson.files[0].id;
 };
 
-const getFolder = async (folderName, parentFolderId) => {
-    let q = "mimeType='application/vnd.google-apps.folder' and name='" + folderName + "'";
-    if (parentFolderId !== undefined) {
-        q = q + " and '" + parentFolderId + "' in parents";
-    }
-    return getList(q);
-};
-
-const getChildFile = async (folderId, fileName) => {
+const getChildFile = async (folderId, fileName, token, credentials) => {
     let q = "name='" + fileName + "' and '" + folderId + "' in parents"
-    return getList(q);
+    return getList(q, token, credentials);
 };
 
-const getList = async (q) => {
+const getList = async (q, token, credentials) => {
     let filesUrl = 'https://www.googleapis.com/drive/v3/files'
         + "?q=" + q
         + '&corpora=user'
         + '&pageSize=10'
         + '&fields=nextPageToken, files(id, name)';
 
-    return await fetch(filesUrl, {
+    return await fetchWithRefreshToken(token, credentials, filesUrl, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + accessToken.access_token
+            'Authorization': 'Bearer ' + token.access_token
         }
     });
 };
 
-const refresh_token = async () => {
+const refresh_token = async (token, credentials) => {
     let tokenUrl = 'https://oauth2.googleapis.com/token'
         + '?grant_type=refresh_token'
-        + '&refresh_token=' + accessToken.refresh_token
+        + '&refresh_token=' + token.refresh_token
         + '&client_id=' + credentials.installed.client_id
         + '&client_secret=' + credentials.installed.client_secret;
+
     let response = await fetch(tokenUrl, {
         method: 'POST'
     });
 
     if (response.status === 200) {
-        accessToken.access_token = (await response.json()).access_token;
+        token.access_token = (await response.json()).access_token;
         return true;
     }
 
     return false;
+};
+
+const fetchWithRefreshToken = async (token, credentials, url, fetchSettings) => {
+    let response = await fetch(url, fetchSettings);
+    if (response.status === 401) {
+        if (!await refresh_token(token, credentials)) {
+            throw Error("Couldn't refresh an access token. Change the token manually and try again")
+        }
+    }
+
+    //set new access token
+    fetchSettings.headers.Authorization = 'Bearer ' + token.access_token;
+    return await fetch(url, fetchSettings)
 };

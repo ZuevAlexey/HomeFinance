@@ -51,6 +51,12 @@
     ],
     "systemData": {
         "lastSynchronizationTime": "DateTime",
-        "serverAddress": "Url"
+        "credentials": "json",
+        "token": "json",
+        "gDriveEnv": {
+            "fileId" :  "string",
+            "mainFolderId":  "string",
+            "backupFolderId": "string"
+        }
     }
 }

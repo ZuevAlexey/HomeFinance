@@ -9,11 +9,11 @@ import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchron
 import {Synchronize} from '../../store/actions/synchronization';
 import {EditForm} from '../../components/editForm/editForm';
 import {EditSystemData} from '../../store/actions/editSystemData';
-import {debugObject, debugObjectAsync, showMessage, showOkCancelDialog} from '../../helpers/dialog';
+import {debugObjectAsync, showMessage, showOkCancelDialog} from '../../helpers/dialog';
 import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
-import {synchornizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
+import {initializeStore, synchornizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
 
 let tcomb = require('tcomb-form-native');
 
@@ -43,13 +43,26 @@ class SynchronizationScreen extends React.Component {
         this.resetStorage = this.resetStorage.bind(this);
         this.getType = this.getType.bind(this);
         this.getFormValue = this.getFormValue.bind(this);
+        this.save = this.save.bind(this);
     }
 
     getFormValue() {
         return {
             lastSynchronizationTime: this.props.systemData.lastSynchronizationTime.toLocaleString(),
-            serverAddress: this.props.systemData.serverAddress
+            credentials: this.props.systemData.credentials,
+            token: this.props.systemData.token,
         }
+    }
+
+    async save(tokenString, credentialsString) {
+        let token = JSON.parse(tokenString);
+        let credentials = JSON.parse(credentialsString);
+        let gDriveEnv = await initializeStore(token, credentials);
+        this.props.saveSystemData(tokenString, credentialsString, gDriveEnv)
+        showMessage(
+            'Synchronization successful',
+            `Google Drive environment was successful initialized`
+        );
     }
 
     async synchronization() {
@@ -68,7 +81,9 @@ class SynchronizationScreen extends React.Component {
                 transactions: transactionsForSynchronize
             };
 
-            let json = await synchornizeWithGDrive(JSON.stringify(action));
+            let token = JSON.parse(this.props.systemData.token);
+            let credentials = JSON.parse(this.props.systemData.credentials);
+            let json = await synchornizeWithGDrive(this.props.systemData.gDriveEnv, token, credentials, JSON.stringify(action));
             let deserializedData = deserialyzeFromSync(json);
             this.props.sync(deserializedData);
 
@@ -99,7 +114,8 @@ class SynchronizationScreen extends React.Component {
     getType() {
         let options = {
             lastSynchronizationTime: tcomb.String,
-            serverAddress: tcomb.String,
+            credentials: tcomb.String,
+            token: tcomb.String
         };
 
         return tcomb.struct(options);
@@ -116,7 +132,9 @@ class SynchronizationScreen extends React.Component {
                         type = {this.getType()}
                         options = {options}
                         startValue = {this.getFormValue()}
-                        action = {(systemData) => this.props.saveSystemData(systemData)}
+                        action = {async (systemData) => {
+                            await this.save(systemData.token, systemData.credentials)
+                        }}
                     />
                 </View>
                 <View
@@ -207,8 +225,8 @@ const mapDispatchToProps = dispatch => {
         sync: (data) => {
             dispatch(Synchronize(data));
         },
-        saveSystemData: (systemData) => {
-            dispatch(EditSystemData(systemData.serverAddress));
+        saveSystemData: (token, credentials, gDriveEnv) => {
+            dispatch(EditSystemData(token, credentials, gDriveEnv));
         },
         resetStorage: (serializedData) => {
             dispatch(ResetStorage(serializedData))
