@@ -25,3 +25,11 @@ export const showMessage = (title, message, okAction) => {
 export const debugObject = (object) => {
     showMessage('', JSON.stringify(object));
 };
+
+export const debugObjectAsync = (object) => {
+    return new Promise((resolve, reject) => {
+        Alert.alert('', JSON.stringify(object), [
+            {text: 'OK', onPress: () => resolve('YES')},
+        ], {cancelable: false})
+    })
+};

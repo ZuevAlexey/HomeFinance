@@ -1,4 +1,4 @@
-import {debugObject} from "../dialog";
+import {debugObjectAsync} from "../../dialog";
 
 const {google} = require('googleapis');
 
@@ -31,9 +31,7 @@ function listFiles(auth) {
         if (files.length === 1) {
             const file = files[0]
             folderId = file.id
-            debugObject(`${file.name} (${file.id})`);
         } else {
-            debugObject('No files found or many ' + files.length);
         }
 
         if(folderId){
@@ -44,7 +42,6 @@ function listFiles(auth) {
 
 function createFile(auth, folderId) {
     const drive = google.drive({version: 'v3', auth});
-    debugObject(folderId)
     let fileMetadata = {
         name: 'state1.json',
         parents: [folderId]
@@ -60,9 +57,7 @@ function createFile(auth, folderId) {
     }, function (err, file) {
         if (err) {
             // Handle error
-            debugObject(err);
         } else {
-            debugObject('File Id: ', file.data.id);
         }
     });
 }

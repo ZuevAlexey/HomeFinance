@@ -9,24 +9,25 @@ import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchron
 import {Synchronize} from '../../store/actions/synchronization';
 import {EditForm} from '../../components/editForm/editForm';
 import {EditSystemData} from '../../store/actions/editSystemData';
-import {showMessage, showOkCancelDialog} from '../../helpers/dialog';
+import {debugObject, debugObjectAsync, showMessage, showOkCancelDialog} from '../../helpers/dialog';
 import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
+import {synchornizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
 
 let tcomb = require('tcomb-form-native');
 
 const branches = [
-  'people',
-  'moneyCells',
-  'transactions',
-  'articles'
+    'people',
+    'moneyCells',
+    'transactions',
+    'articles'
 ];
 
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
         let branch = data.main[el];
-        if(isNullOrUndefined(branch)){
+        if (isNullOrUndefined(branch)) {
             return acc;
         }
 
@@ -36,7 +37,7 @@ function getCount(collectionGetter, data) {
 }
 
 class SynchronizationScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.synchronization = this.synchronization.bind(this);
         this.resetStorage = this.resetStorage.bind(this);
@@ -44,47 +45,31 @@ class SynchronizationScreen extends React.Component {
         this.getFormValue = this.getFormValue.bind(this);
     }
 
-    getFormValue(){
+    getFormValue() {
         return {
             lastSynchronizationTime: this.props.systemData.lastSynchronizationTime.toLocaleString(),
             serverAddress: this.props.systemData.serverAddress
         }
     }
 
-    async synchronization(){
+    async synchronization() {
         try {
             let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
             let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
             let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
             let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
 
-            let body = JSON.stringify({
-                type: 'sync',
-                data: {
-                    systemData: {
-                        lastSynchronizationTime: lastSynchronizationTime
-                    },
-                    people: peopleForSynchronize,
-                    moneyCells: moneyCellsForSynchronize,
-                    transactions: transactionsForSynchronize
-                }
-            });
-
-            let response = await fetch(this.props.systemData.serverAddress + '/api/action', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
+            let action = {
+                systemData: {
+                    lastSynchronizationTime: lastSynchronizationTime
                 },
-                body: body
-            });
+                people: peopleForSynchronize,
+                moneyCells: moneyCellsForSynchronize,
+                transactions: transactionsForSynchronize
+            };
 
-            let json = await response.json();
-            if(json.type !== 'sync'){
-                throw 'Unknown response from server';
-            }
-
-            let deserializedData = deserialyzeFromSync(json.data);
+            let json = await synchornizeWithGDrive(JSON.stringify(action));
+            let deserializedData = deserialyzeFromSync(json);
             this.props.sync(deserializedData);
 
             let pushCount = peopleForSynchronize.length + moneyCellsForSynchronize.length + transactionsForSynchronize.length;
@@ -98,6 +83,7 @@ class SynchronizationScreen extends React.Component {
 
             await saveSyncData(this.props.getState());
         } catch (error) {
+            await debugObjectAsync(error.message);
             showMessage(
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`
@@ -105,7 +91,7 @@ class SynchronizationScreen extends React.Component {
         }
     }
 
-    async resetStorage(){
+    async resetStorage() {
         let data = await readLocalSyncData();
         this.props.resetStorage(data);
     }
@@ -186,7 +172,7 @@ let options = {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent : 'center',
+        justifyContent: 'center',
         flex: 1,
     },
     buttonsContainer: {
@@ -195,16 +181,16 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
-        justifyContent : 'center',
+        justifyContent: 'center',
         flexDirection: 'row'
     },
-    buttonContainer:{
+    buttonContainer: {
         flex: 1,
         alignItems: 'center'
     },
     buttonStyle: {
-       ...Theme.mainButtonStyle,
-       width: 140
+        ...Theme.mainButtonStyle,
+        width: 140
     }
 });
 

@@ -89,7 +89,7 @@ const initializeFolder = async (folderName, parentFolderId) => {
     folderResponse = await getFolder(folderName, parentFolderId);
     let folderJson = await folderResponse.json();
     if (folderJson.files.length === 0) {
-        throw Error("The folder " + folderName + " doesn't exist. Create a folder with name HomeFinance in your Google Drive and try again")
+        throw Error("The folder '" + folderName + "' doesn't exist. Create a folder with name '" + folderName + "' in your Google Drive and try again")
     }
     return folderJson.files[0].id;
 };

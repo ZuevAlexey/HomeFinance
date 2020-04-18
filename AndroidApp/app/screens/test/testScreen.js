@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Button} from 'react-native-elements';
 import Theme from '../../components/theme';
 import {ResetStorage} from '../../store/actions/resetStorage';
-import {initializeGDriveEnvironment, getFileContent, createFile, updateFile} from "../../helpers/gdrive/gdriveConnector";
+import {initializeGDriveEnvironment, getFileContent, createFile, updateFile} from "../../helpers/sinchronization/gdrive/gdriveConnector";
 
 class TestScreen extends React.Component {
     constructor(props){

@@ -13,3 +13,17 @@ export const isNullOrUndefined = object => {
 export const dateWithNullCheck = (dateString) => withNullCheck(dateString, e => new Date(e));
 
 export const stringWithNullCheck = (string) => withNullCheck(string, e => e, '');
+
+export const hasAny = (object, props, predicate) => {
+    if(isNullOrUndefined(predicate)){
+        predicate = obj => !isNullOrUndefined(obj);
+    }
+
+    return props.reduce((acc, el) => {
+        if(acc){
+            return true;
+        }
+
+        return predicate(object[el]);
+    }, false);
+};

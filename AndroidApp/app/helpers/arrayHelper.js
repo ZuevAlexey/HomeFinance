@@ -18,3 +18,9 @@ Array.prototype.first = function(predicate) {
 
     throw new Error('array doesn\'t have element for this predicate');
 };
+
+Array.prototype.asyncForEach = async function(callback) {
+    for (let index = 0; index < this.length; index++) {
+        await callback(this[index], index, this);
+    }
+}
