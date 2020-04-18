@@ -4,11 +4,11 @@ export const getMoneyCellsSummary = (moneyCells) => {
 
 export const getTransactionsSummary = (transactions, moneyCellIdsSet) => {
     return transactions.reduce((acc, tran) => {
-        if(moneyCellIdsSet.has(tran.toId)){
+        if (moneyCellIdsSet.has(tran.toId)) {
             acc = acc + tran.amount;
         }
 
-        if(moneyCellIdsSet.has(tran.fromId)){
+        if (moneyCellIdsSet.has(tran.fromId)) {
             acc = acc - tran.amount;
         }
 
@@ -18,7 +18,7 @@ export const getTransactionsSummary = (transactions, moneyCellIdsSet) => {
 
 export const getPeopleSummary = (moneyCells) => {
     return moneyCells.reduce((acc, el) => {
-        if(acc[el.ownerId] === undefined){
+        if (acc[el.ownerId] === undefined) {
             acc[el.ownerId] = el.amount;
         } else {
             acc[el.ownerId] = acc[el.ownerId] + el.amount;

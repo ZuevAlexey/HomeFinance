@@ -1,6 +1,6 @@
 export const mergeItem = (state, action, collectionName, requestTime) => {
     let newState = action[collectionName].find(e => e.id === state.id);
-    if(newState === undefined){
+    if (newState === undefined) {
         return state;
     }
 

@@ -1,10 +1,9 @@
 import {ActionName} from '../../constants/actionName';
 
-export const EditSystemData = (newToken, newCredentials, gDriveEnv) => {
+export const EditSystemData = (newKey, gDriveEnv) => {
     return {
-        type : ActionName.EDIT_SYSTEM_DATA,
-        token: newToken,
-        credentials: newCredentials,
+        type: ActionName.EDIT_SYSTEM_DATA,
+        key: newKey,
         gDriveEnv: gDriveEnv
     }
 };

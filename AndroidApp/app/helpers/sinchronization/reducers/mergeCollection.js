@@ -16,7 +16,7 @@ export const mergeCollection = (state, action, collectionName, requestTime) => {
     collectionDiff.forEach(e => {
         if (currentIds[e.id] !== true) {
             //deep copy
-            e = {... e};
+            e = {...e};
             e.lastModificationTime = requestTime;
             newState.push(e);
         }

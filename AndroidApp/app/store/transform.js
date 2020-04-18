@@ -8,5 +8,5 @@ export const mainTransform = createTransform(
     (outboundState, key) => {
         return convertMain(outboundState);
     },
-    { whitelist: ['main'] }
+    {whitelist: ['main']}
 );

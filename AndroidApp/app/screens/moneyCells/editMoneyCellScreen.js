@@ -12,20 +12,20 @@ import {getMoneyCellsComparer, peopleComparer} from '../../helpers/sorter';
 let t = require('tcomb-form-native');
 
 class EditMoneyCellScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getType = this.getType.bind(this);
         let {moneyCellId, ownerId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(moneyCellId);
 
         let defaultValue;
-        if(isNew){
+        if (isNew) {
             defaultValue = {
                 status: MoneyCellStatus.ACTIVE,
                 startDate: new Date(),
                 ownerId: ownerId
             };
-            if(!isNullOrUndefined(ownerId)){
+            if (!isNullOrUndefined(ownerId)) {
                 defaultValue['ownerId'] = ownerId;
             }
         } else {
@@ -40,7 +40,7 @@ class EditMoneyCellScreen extends React.Component {
             }
         }
 
-        this.state = {value: defaultValue, isNew };
+        this.state = {value: defaultValue, isNew};
     }
 
     getType(moneyCellType) {
@@ -50,7 +50,7 @@ class EditMoneyCellScreen extends React.Component {
             status: getEnumsFromObject(MoneyCellStatus, 'MoneyCellStatus'),
         };
 
-        if(this.state.isNew) {
+        if (this.state.isNew) {
             options['ownerId'] = getEnumsFromList(this.props.people, p => p.id, p => GetFullPersonName(p), 'People', null, peopleComparer);
             options['moneyCellType'] = getEnumsFromObject(MoneyCellType, 'MoneyCellType');
             options['amount'] = t.maybe(t.Number);
@@ -58,7 +58,7 @@ class EditMoneyCellScreen extends React.Component {
             options['startDate'] = t.maybe(t.Date);
             options['endDate'] = t.maybe(t.Date);
         } else {
-            if(moneyCellType === MoneyCellType.BROKER) {
+            if (moneyCellType === MoneyCellType.BROKER) {
                 options['amount'] = t.maybe(t.Number);
             }
             options['owner'] = t.String;
@@ -106,15 +106,23 @@ const getOptions = (isNew, moneyCellType) => {
         }
     };
 
-    if(isNew){
+    if (isNew) {
         result.fields['ownerId'] = {label: 'Owner'};
         result.fields['moneyCellType'] = {label: 'Type'};
         result.fields['amount'] = {label: 'Amount', placeholder: 'Enter current money cell\'s amount'};
         result.fields['parentId'] = {label: 'Parent money cell'};
-        result.fields['startDate'] = {label: 'Start date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
-        result.fields['endDate'] = {label: 'End date',mode: 'date',config: {format: date => date.toLocaleDateString('ru-Ru')}};
+        result.fields['startDate'] = {
+            label: 'Start date',
+            mode: 'date',
+            config: {format: date => date.toLocaleDateString('ru-Ru')}
+        };
+        result.fields['endDate'] = {
+            label: 'End date',
+            mode: 'date',
+            config: {format: date => date.toLocaleDateString('ru-Ru')}
+        };
     } else {
-        if(moneyCellType === MoneyCellType.BROKER) {
+        if (moneyCellType === MoneyCellType.BROKER) {
             result.fields['amount'] = {label: 'Amount', placeholder: 'Enter current money cell\'s amount'};
         }
         result.fields['owner'] = {label: 'Owner', editable: false};

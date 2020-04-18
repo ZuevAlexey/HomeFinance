@@ -5,7 +5,7 @@ import {defaultState} from '../defaultState';
 import {withNullCheck} from '../../helpers/maybe';
 
 export const PeopleReducer = (state = [], action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.EDIT_PERSON:
             return state.map(e => PersonReducer(e, action));
         case ActionName.MARK_DELETE_PERSON:

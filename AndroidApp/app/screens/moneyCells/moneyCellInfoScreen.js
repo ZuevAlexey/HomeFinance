@@ -1,7 +1,7 @@
 import React from 'react';
 import {Screen} from '../../components/screen/screen';
 import TransactionsList from '../../components/list/transactions/transactionsList';
-import {Text, View, StyleSheet, Dimensions} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {getDateDisplayString, GetFullPersonName} from '../../helpers/displayStringHelper';
 import Theme from '../../components/theme';
 import {MoneyCellStatus} from '../../constants/moneyCellStatus';
@@ -22,23 +22,24 @@ const MoneyCellInfoScreen = (props) => {
     return (
         <Screen
             {...props}
-            headerTitle = {`${moneyCell.name}`}
-            headerStatus = {getStatusFromSummary(summary)}
+            headerTitle={`${moneyCell.name}`}
+            headerStatus={getStatusFromSummary(summary)}
         >
-            <View style ={styles.infoContainer} >
-                <View style ={styles.halfInfoContainer} >
+            <View style={styles.infoContainer}>
+                <View style={styles.halfInfoContainer}>
                     {GetInfoText('Owner', GetFullPersonName(owner))}
                     {GetInfoText('Type', moneyCell.moneyCellType)}
                     {GetInfoText('Amount', moneyCell.amount, e => `${e} RUB`, e => e > 0)}
                 </View>
-                <View style ={styles.halfInfoContainer} >
+                <View style={styles.halfInfoContainer}>
                     {GetInfoText('Start date', moneyCell.startDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
                     {GetInfoText('End date', moneyCell.endDate, e => withNullCheck(e, getDateDisplayString, 'not set'))}
                     {GetInfoText('Status', moneyCell.status, null, e => e === MoneyCellStatus.ACTIVE)}
                 </View>
             </View>
-            <Text style = {styles.transactionsListTitle} >Current moneycell's transactions:</Text>
-            <TransactionsList navigation={props.navigation} transactions = {transactions} moneyCellsIdsSet = {createMoneyCellsIdsSet([moneyCell])} />
+            <Text style={styles.transactionsListTitle}>Current moneycell's transactions:</Text>
+            <TransactionsList navigation={props.navigation} transactions={transactions}
+                              moneyCellsIdsSet={createMoneyCellsIdsSet([moneyCell])}/>
         </Screen>
     );
 };

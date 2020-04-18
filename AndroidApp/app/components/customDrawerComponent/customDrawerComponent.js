@@ -10,9 +10,10 @@ export const CustomDrawerContentComponent = (props) => (
         <Text style={{
             textAlign: 'center',
             fontSize: 30,
-            color: Theme.mainColor}
+            color: Theme.mainColor
+        }
         }>Home Finance</Text>
-        <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
+        <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
             <DrawerItems {...props} />
         </SafeAreaView>
     </ScrollView>

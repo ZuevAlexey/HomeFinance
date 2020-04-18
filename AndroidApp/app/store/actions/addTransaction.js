@@ -4,11 +4,11 @@ import uuid from 'uuid-v4';
 export const AddTransaction = (fromId, toId, articleId, amount, description, date) => {
     let now = new Date();
     return {
-        type : ActionName.ADD_TRANSACTION,
+        type: ActionName.ADD_TRANSACTION,
         id: uuid(),
         fromId,
         toId,
-        articleId : +articleId,
+        articleId: +articleId,
         amount,
         description,
         date,

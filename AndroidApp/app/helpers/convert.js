@@ -70,6 +70,11 @@ export const convertArticles = (articles) => {
 const convertSystemData = (systemData) => {
     return {
         lastSynchronizationTime: new Date(systemData.lastSynchronizationTime),
-        serverAddress: systemData.serverAddress
+        key: systemData.key,
+        gDriveEnv: {
+            mainFolderId: systemData.gDriveEnv.mainFolderId,
+            backupFolderId: systemData.gDriveEnv.backupFolderId,
+            fileId: systemData.gDriveEnv.fileId
+        }
     };
 };

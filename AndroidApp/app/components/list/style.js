@@ -3,7 +3,7 @@ import Theme from '../theme';
 
 module.exports = StyleSheet.create({
     container: {
-        justifyContent : 'center',
+        justifyContent: 'center',
         flex: 1
     },
     buttonContainer: {
@@ -12,7 +12,7 @@ module.exports = StyleSheet.create({
         borderTopWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
-        justifyContent : 'center'
+        justifyContent: 'center'
     },
     listContainer: {
         flex: 1,

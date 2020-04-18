@@ -9,11 +9,11 @@ import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchron
 import {Synchronize} from '../../store/actions/synchronization';
 import {EditForm} from '../../components/editForm/editForm';
 import {EditSystemData} from '../../store/actions/editSystemData';
-import {debugObjectAsync, showMessage, showOkCancelDialog} from '../../helpers/dialog';
 import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
-import {initializeStore, synchornizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
+import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
+import {showMessage} from "../../helpers/dialog";
 
 let tcomb = require('tcomb-form-native');
 
@@ -49,16 +49,13 @@ class SynchronizationScreen extends React.Component {
     getFormValue() {
         return {
             lastSynchronizationTime: this.props.systemData.lastSynchronizationTime.toLocaleString(),
-            credentials: this.props.systemData.credentials,
-            token: this.props.systemData.token,
+            key: this.props.systemData.key
         }
     }
 
-    async save(tokenString, credentialsString) {
-        let token = JSON.parse(tokenString);
-        let credentials = JSON.parse(credentialsString);
-        let gDriveEnv = await initializeStore(token, credentials);
-        this.props.saveSystemData(tokenString, credentialsString, gDriveEnv)
+    async save(key) {
+        let gDriveEnv = await initializeStore(key);
+        this.props.saveSystemData(key, gDriveEnv)
         showMessage(
             'Synchronization successful',
             `Google Drive environment was successful initialized`
@@ -81,9 +78,7 @@ class SynchronizationScreen extends React.Component {
                 transactions: transactionsForSynchronize
             };
 
-            let token = JSON.parse(this.props.systemData.token);
-            let credentials = JSON.parse(this.props.systemData.credentials);
-            let json = await synchornizeWithGDrive(this.props.systemData.gDriveEnv, token, credentials, JSON.stringify(action));
+            let json = await synchronizeWithGDrive(this.props.systemData.gDriveEnv, this.props.systemData.key, JSON.stringify(action));
             let deserializedData = deserialyzeFromSync(json);
             this.props.sync(deserializedData);
 
@@ -98,7 +93,6 @@ class SynchronizationScreen extends React.Component {
 
             await saveSyncData(this.props.getState());
         } catch (error) {
-            await debugObjectAsync(error.message);
             showMessage(
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`
@@ -114,8 +108,7 @@ class SynchronizationScreen extends React.Component {
     getType() {
         let options = {
             lastSynchronizationTime: tcomb.String,
-            credentials: tcomb.String,
-            token: tcomb.String
+            key: tcomb.String
         };
 
         return tcomb.struct(options);
@@ -129,11 +122,11 @@ class SynchronizationScreen extends React.Component {
             >
                 <View style={styles.container}>
                     <EditForm
-                        type = {this.getType()}
-                        options = {options}
-                        startValue = {this.getFormValue()}
-                        action = {async (systemData) => {
-                            await this.save(systemData.token, systemData.credentials)
+                        type={this.getType()}
+                        options={options}
+                        startValue={this.getFormValue()}
+                        action={async (systemData) => {
+                            await this.save(systemData.key)
                         }}
                     />
                 </View>
@@ -141,7 +134,7 @@ class SynchronizationScreen extends React.Component {
                     style={styles.buttonsContainer}
                 >
                     <View
-                        style = {styles.buttonContainer}
+                        style={styles.buttonContainer}
                     >
                         <Button
                             buttonStyle={styles.buttonStyle}
@@ -158,7 +151,7 @@ class SynchronizationScreen extends React.Component {
                         />
                     </View>
                     <View
-                        style = {styles.buttonContainer}
+                        style={styles.buttonContainer}
                     >
                         <Button
                             buttonStyle={styles.buttonStyle}

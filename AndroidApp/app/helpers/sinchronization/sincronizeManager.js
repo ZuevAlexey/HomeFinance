@@ -1,40 +1,37 @@
 import StateBranches from './branches';
 import {hasAny, isNullOrUndefined} from "../maybe";
-import {initializeGDriveEnvironment, updateFile, createFile, getFileContent} from "./gdrive/gdriveConnector";
-import {debugObjectAsync} from "../dialog";
+import {createFile, getFileContent, initializeGDriveEnvironment, updateFile} from "./gdrive/gdriveConnector";
 import {mergeCollection} from "./reducers/mergeCollection";
+import {DATA_TYPE, decrypt, encrypt} from "../coder"
 
 const MAIN_FOLDER_NAME = 'HomeFinance';
 const BACKUP_FILE_NAME = 'history';
 const MAIN_FILE_NAME = 'state';
 const FILE_EXTENSION = '.txt';
 
-
-export const synchornizeWithGDrive = async (gDriveEnv, token, credentials, actionJson) => {
-    await debugObjectAsync(gDriveEnv)
-    await debugObjectAsync(token)
-    await debugObjectAsync(credentials)
+export const synchronizeWithGDrive = async (gDriveEnv, key, actionJson) => {
     let action = JSON.parse(actionJson);
-    let state = JSON.parse(await getFileContent(gDriveEnv.fileId, token, credentials));
+    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY);
+    let state = JSON.parse(await decrypt(await getFileContent(gDriveEnv.fileId, jsonKey.token, jsonKey.credentials), key, DATA_TYPE.DATA));
     let requestTime = new Date();
-    let newState = await synchronize(gDriveEnv, state, action, requestTime, token, credentials);
-    let newVar = await getDiff(newState, action, requestTime);
-    return newVar;
+    let newState = await synchronize(gDriveEnv, state, action, requestTime, key, jsonKey.token, jsonKey.credentials);
+    return await getDiff(newState, action, requestTime);
 };
 
-export const initializeStore = async (token, credentials) => {
-    return await initializeGDriveEnvironment(MAIN_FOLDER_NAME, BACKUP_FILE_NAME, MAIN_FILE_NAME + FILE_EXTENSION, () => {
+export const initializeStore = async (key) => {
+    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY);
+    return await initializeGDriveEnvironment(MAIN_FOLDER_NAME, BACKUP_FILE_NAME, MAIN_FILE_NAME + FILE_EXTENSION, async () => {
         let defaultState = {
             people: [],
             moneyCells: [],
             transactions: [],
             articles: []
         };
-        return JSON.stringify(defaultState);
-    }, token, credentials);
+        return await encrypt(JSON.stringify(defaultState), key, DATA_TYPE.DATA);
+    }, jsonKey.token, jsonKey.credentials);
 };
 
-const synchronize = async (gDriveEnv, state, action, requestTime, token, credentials) => {
+const synchronize = async (gDriveEnv, state, action, requestTime, key, token, credentials) => {
     if (!hasInfoForState(action)) {
         return state;
     }
@@ -42,8 +39,8 @@ const synchronize = async (gDriveEnv, state, action, requestTime, token, credent
     let resultState = mergeState(state, action, requestTime);
     let resultStateString = JSON.stringify(resultState);
     let historyFileName = MAIN_FILE_NAME + new Date().toISOString() + FILE_EXTENSION;
-    await createFile(gDriveEnv.backupFolderId, historyFileName, resultStateString, token, credentials);
-    await updateFile(gDriveEnv.fileId, resultStateString, token, credentials);
+    await createFile(gDriveEnv.backupFolderId, historyFileName, await encrypt(resultStateString, key, DATA_TYPE.DATA), token, credentials);
+    await updateFile(gDriveEnv.fileId, await encrypt(resultStateString, key, DATA_TYPE.DATA), token, credentials);
     return resultState;
 };
 

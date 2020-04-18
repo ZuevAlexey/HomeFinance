@@ -25,7 +25,7 @@ export const GetDropdownMoneyCellInfo = (owner, moneyCell) => {
 
 export const GetFullMoneyCellName = (owner, moneyCell) => {
     let result = moneyCell.name;
-    if(!isNullOrUndefined(owner)) {
+    if (!isNullOrUndefined(owner)) {
         result += ` (${GetShortPersonName(owner)})`;
     }
 
@@ -51,7 +51,7 @@ export const getSummaryDisplayString = (summary) => {
 };
 
 export const WithCheckLength = (str, maxLength, substitute = '...') => {
-    if(str.length > maxLength){
+    if (str.length > maxLength) {
         return `${str.substring(0, maxLength - 3)}${substitute}`;
     }
 

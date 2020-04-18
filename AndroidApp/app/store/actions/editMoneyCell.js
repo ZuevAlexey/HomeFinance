@@ -18,7 +18,7 @@ export const EditMoneyCell = (id, name, status, newAmount, oldAmount, moneyCellT
 
     let transactionArticleId, fromId, toId, transactionAmount;
 
-    if(newAmount > oldAmount) {
+    if (newAmount > oldAmount) {
         transactionArticleId = CommonConstants.PORTFOLIO_GROWTH_ARTICLE_ID;
         fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
         transactionAmount = newAmount - oldAmount;

@@ -1,5 +1,4 @@
 import {isNullOrUndefined} from "../../maybe";
-import {debugObjectAsync} from "../../dialog";
 
 export const updateFile = async (fileId, fileContent, token, credentials) => {
     let exportFileUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + fileId
@@ -20,7 +19,7 @@ export const getFileContent = async (fileId, token, credentials) => {
     let exportFileUrl = 'https://www.googleapis.com/drive/v3/files/' + fileId
         + '?alt=media';
 
-    let response = await fetchWithRefreshToken(token ,credentials, exportFileUrl, {
+    let response = await fetchWithRefreshToken(token, credentials, exportFileUrl, {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token.access_token
@@ -37,7 +36,7 @@ export const initializeGDriveEnvironment = async (mainFolderName, backupFolderNa
     let filesJson = await filesResponse.json();
     let fileId = null;
     if (filesJson.files.length === 0) {
-        let createFileResponse = await createFile(mainFolderId, fileName, getFileContent(), token, credentials);
+        let createFileResponse = await createFile(mainFolderId, fileName, await getFileContent(), token, credentials);
         let createdFile = await createFileResponse.json();
         fileId = createdFile.id
     } else {
@@ -131,13 +130,14 @@ const refresh_token = async (token, credentials) => {
 
 const fetchWithRefreshToken = async (token, credentials, url, fetchSettings) => {
     let response = await fetch(url, fetchSettings);
-    if (response.status === 401) {
-        if (!await refresh_token(token, credentials)) {
-            throw Error("Couldn't refresh an access token. Change the token manually and try again")
-        }
+    if (response.status !== 401) {
+        return response;
     }
 
+    if (!await refresh_token(token, credentials)) {
+        throw Error("Couldn't refresh an access token. Change the token manually and try again")
+    }
     //set new access token
     fetchSettings.headers.Authorization = 'Bearer ' + token.access_token;
-    return await fetch(url, fetchSettings)
+    return await fetch(url, fetchSettings);
 };

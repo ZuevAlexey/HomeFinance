@@ -62,24 +62,34 @@ it(`Transactions reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const action = EditTransaction(id, fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
-        .toEqual([{id, fromId, toId, articleId, amount, description, date, isValid: true, lastModificationTime}, trans2, trans3]);
+        .toEqual([{
+            id,
+            fromId,
+            toId,
+            articleId,
+            amount,
+            description,
+            date,
+            isValid: true,
+            lastModificationTime
+        }, trans2, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
     expect(TransactionsReducer(startState, EditTransaction(67, 34, 45, 234, 300, 'оплата', null, true)))
-    .toEqual(startState);
+        .toEqual(startState);
 });
 
 it(`Transactions reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     let action = MarkDeleteTransaction(2);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionsReducer(startState, action))
-    .toEqual([trans1, {...trans2, isDeleted: true, lastModificationTime}, trans3]);
+        .toEqual([trans1, {...trans2, isDeleted: true, lastModificationTime}, trans3]);
 });
 
 it(`Transactions reducer don\'t process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {
     expect(TransactionsReducer(startState, MarkDeleteTransaction(5)))
-    .toEqual(startState);
+        .toEqual(startState);
 });
 
 it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
@@ -98,5 +108,17 @@ it(`Transactions reducer process action ${ActionName.ADD_TRANSACTION}`, () => {
     action.creationTime = creationTime;
     action.id = id;
     const newTransaction = TransactionsReducer(startState, action)[stateLength];
-    expect(newTransaction).toEqual({creationTime, fromId, toId, articleId, amount, description, date, isDeleted, isValid, lastModificationTime, id});
+    expect(newTransaction).toEqual({
+        creationTime,
+        fromId,
+        toId,
+        articleId,
+        amount,
+        description,
+        date,
+        isDeleted,
+        isValid,
+        lastModificationTime,
+        id
+    });
 });

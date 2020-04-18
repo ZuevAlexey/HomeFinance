@@ -2,7 +2,7 @@ import {ActionName} from '../../constants/actionName';
 import {isNullOrUndefined} from '../../helpers/maybe';
 
 export const MoneyCellReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.EDIT_MONEY_CELL:
             return action.id === state.id ? {
                 ...state,
@@ -34,13 +34,13 @@ export const MoneyCellReducer = (state = {}, action) => {
 };
 
 function processTransactionAction(state, action, amountModifier) {
-    if(isNullOrUndefined(amountModifier)){
+    if (isNullOrUndefined(amountModifier)) {
         return state;
     }
 
     return {
         ...state,
-        amount : amountModifier(state, action),
+        amount: amountModifier(state, action),
         lastModificationTime: action.lastModificationTime
     };
 }
@@ -48,11 +48,11 @@ function processTransactionAction(state, action, amountModifier) {
 const processAddTransaction = (state, action) => {
     let amountModifier = null;
     if (state.id === action.toId) {
-        amountModifier = (s,a) => s.amount + a.amount;
+        amountModifier = (s, a) => s.amount + a.amount;
     }
 
     if (state.id === action.fromId) {
-        amountModifier = (s,a) => s.amount - a.amount;
+        amountModifier = (s, a) => s.amount - a.amount;
     }
 
     return processTransactionAction(state, action, amountModifier);
@@ -61,11 +61,11 @@ const processAddTransaction = (state, action) => {
 const processMarkDeleteTransaction = (state, action) => {
     let amountModifier = null;
     if (state.id === action.toId) {
-        amountModifier = (s,a) => s.amount - a.amount;
+        amountModifier = (s, a) => s.amount - a.amount;
     }
 
     if (state.id === action.fromId) {
-        amountModifier = (s,a) => s.amount + a.amount;
+        amountModifier = (s, a) => s.amount + a.amount;
     }
 
     return processTransactionAction(state, action, amountModifier);
@@ -73,7 +73,7 @@ const processMarkDeleteTransaction = (state, action) => {
 
 const processEditTransaction = (state, action) => {
     let amountModifier = null;
-    if(action.oldToId === state.id || action.oldFromId === state.id || action.toId === state.id || action.fromId === state.id) {
+    if (action.oldToId === state.id || action.oldFromId === state.id || action.toId === state.id || action.fromId === state.id) {
         amountModifier = (s, a) => {
             let result = s.amount;
 

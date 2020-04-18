@@ -21,19 +21,19 @@ const PeopleScreen = (props) => {
     return (
         <Screen
             {...props}
-            headerTitle = 'People'
-            headerStatus = {getStatusFromSummary(Object.keys(peopleSummary).reduce((acc, el) => acc += peopleSummary[el], 0))}
+            headerTitle='People'
+            headerStatus={getStatusFromSummary(Object.keys(peopleSummary).reduce((acc, el) => acc += peopleSummary[el], 0))}
         >
             <List
-                avatarFactory = {getAvatar}
-                avatarStyle = {Theme.listAvatarStyle}
-                titleFactory = {getTitle(peopleSummary)}
-                onItemPress = {onPersonPress(navigation)}
-                onItemEditPress = {onPersonEditPress(navigation, props.save)}
-                onItemDeletePress = {onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
-                items = {props.people}
-                comparer = {peopleComparer}
-                addButtonInfo= {{
+                avatarFactory={getAvatar}
+                avatarStyle={Theme.listAvatarStyle}
+                titleFactory={getTitle(peopleSummary)}
+                onItemPress={onPersonPress(navigation)}
+                onItemEditPress={onPersonEditPress(navigation, props.save)}
+                onItemDeletePress={onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
+                items={props.people}
+                comparer={peopleComparer}
+                addButtonInfo={{
                     icon: {
                         name: 'md-person-add',
                         type: 'ionicon',
@@ -79,10 +79,11 @@ const onPersonDeletePress = (navigation, deleteAction, getMoneyCellsIds) => (per
 
 const getTitle = (peopleSummary) => (person) => {
     return [
-        <Text key='name' style = {{textAlign: 'center'}}>{GetFullPersonName(person)}</Text>,
-        <Text key = 'amount' style={{
+        <Text key='name' style={{textAlign: 'center'}}>{GetFullPersonName(person)}</Text>,
+        <Text key='amount' style={{
             color: peopleSummary[person.id] < 0 ? Theme.badColor : Theme.goodColor,
-            textAlign: 'center'}}>
+            textAlign: 'center'
+        }}>
             {`${peopleSummary[person.id]} RUB`}
         </Text>
     ];
@@ -90,7 +91,7 @@ const getTitle = (peopleSummary) => (person) => {
 
 const getAvatar = (person) => {
     let name;
-    if(person.sex === Sex.FEMALE){
+    if (person.sex === Sex.FEMALE) {
         name = 'female';
     } else {
         name = 'male';

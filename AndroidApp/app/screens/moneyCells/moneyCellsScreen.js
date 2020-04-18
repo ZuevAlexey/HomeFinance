@@ -12,13 +12,13 @@ const MoneyCellsScreen = (props) => {
     let summary = getMoneyCellsSummary(moneyCells);
     return (
         <Screen {...props}
-                headerTitle = 'MoneyCells'
-                headerStatus = {getStatusFromSummary(summary)}
+                headerTitle='MoneyCells'
+                headerStatus={getStatusFromSummary(summary)}
         >
             <MoneyCellsList
-                navigation = {props.navigation}
-                moneyCells = {moneyCells}
-                getTitle = {getTitleWithOwner(props.people)}
+                navigation={props.navigation}
+                moneyCells={moneyCells}
+                getTitle={getTitleWithOwner(props.people)}
             />
         </Screen>
     );

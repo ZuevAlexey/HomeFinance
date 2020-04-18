@@ -10,19 +10,19 @@ const petya = {
     id: 1,
     lastName: 'Petrov',
     firstName: 'Petya',
-    sex: Sex.MALE 
+    sex: Sex.MALE
 };
 const vasya = {
     id: 2,
     lastName: 'Ivanov',
     firstName: 'Vasya',
-    sex: Sex.MALE 
+    sex: Sex.MALE
 };
 const tanya = {
     id: 3,
     lastName: 'Sidorova',
     firstName: 'Tanya',
-    sex: Sex.FEMALE 
+    sex: Sex.FEMALE
 };
 const startState = [petya, vasya, tanya];
 
@@ -50,19 +50,19 @@ it(`People reducer process action ${ActionName.EDIT_PERSON}`, () => {
 
 it(`People reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
     expect(PeopleReducer(startState, EditPerson(5, 'Ivanov', 'Vasya', Sex.FEMALE)))
-    .toEqual(startState);
+        .toEqual(startState);
 });
 
 it(`People reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     let action = MarkDeletePerson(3);
     action.lastModificationTime = lastModificationTime;
     expect(PeopleReducer(startState, action))
-    .toEqual([petya, vasya, {...tanya, isDeleted: true, lastModificationTime}]);
+        .toEqual([petya, vasya, {...tanya, isDeleted: true, lastModificationTime}]);
 });
 
 it(`People reducer don\'t process action ${ActionName.MARK_DELETE_PERSON}`, () => {
     expect(PeopleReducer(startState, MarkDeletePerson(5)))
-    .toEqual(startState);
+        .toEqual(startState);
 });
 
 it(`People reducer process action ${ActionName.ADD_PERSON}`, () => {

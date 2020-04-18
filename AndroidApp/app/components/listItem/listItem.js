@@ -6,42 +6,42 @@ import {Avatar} from '../avatar/avatar';
 import Theme from '../theme';
 
 export const ListItem = (props) => {
-      let {
-          avatar,
-          avatarStyle,
-          title,
-          onPress,
-          onEditPress,
-          onDeletePress
-      } = props;
-      return (
-          <TouchableNativeFeedback onPress = {onPress} >
-              <View style = {Styles.container} >
-                  <Avatar
-                      avatar = {avatar}
-                      style = {StyleSheet.flatten(avatarStyle, Styles.avatarContainer)}
-                  />
-                  <View style={Styles.titleContainer} >
-                      {title}
-                  </View>
-                  <View style={Styles.editContainer} >
-                      <Icon
-                          name = 'edit'
-                          color = {Theme.mainColor}
-                          onPress = {onEditPress}
-                          reverse
-                          size = {Theme.listItemButtonSize}
-                      />
-                      <Icon
-                          name = 'delete'
-                          color = {Theme.mainColor}
-                          onPress = {onDeletePress}
-                          reverse
-                          size = {Theme.listItemButtonSize}
-                      />
-                  </View>
-              </View>
-          </TouchableNativeFeedback>
-      );
+    let {
+        avatar,
+        avatarStyle,
+        title,
+        onPress,
+        onEditPress,
+        onDeletePress
+    } = props;
+    return (
+        <TouchableNativeFeedback onPress={onPress}>
+            <View style={Styles.container}>
+                <Avatar
+                    avatar={avatar}
+                    style={StyleSheet.flatten(avatarStyle, Styles.avatarContainer)}
+                />
+                <View style={Styles.titleContainer}>
+                    {title}
+                </View>
+                <View style={Styles.editContainer}>
+                    <Icon
+                        name='edit'
+                        color={Theme.mainColor}
+                        onPress={onEditPress}
+                        reverse
+                        size={Theme.listItemButtonSize}
+                    />
+                    <Icon
+                        name='delete'
+                        color={Theme.mainColor}
+                        onPress={onDeletePress}
+                        reverse
+                        size={Theme.listItemButtonSize}
+                    />
+                </View>
+            </View>
+        </TouchableNativeFeedback>
+    );
 };
 

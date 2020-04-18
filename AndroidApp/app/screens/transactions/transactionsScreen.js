@@ -12,13 +12,13 @@ const TransactionsScreen = (props) => {
     return (
         <Screen
             {...props}
-                headerTitle = 'Transactions'
-                headerStatus = {getStatusFromSummary(summary)}
+            headerTitle='Transactions'
+            headerStatus={getStatusFromSummary(summary)}
         >
             <TransactionsList
-                navigation = {props.navigation}
-                transactions = {props.transactions}
-                moneyCellsIdsSet = {props.moneyCellsIdsSet}
+                navigation={props.navigation}
+                transactions={props.transactions}
+                moneyCellsIdsSet={props.moneyCellsIdsSet}
             />
         </Screen>
     );

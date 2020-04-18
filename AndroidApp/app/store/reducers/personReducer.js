@@ -1,7 +1,7 @@
 import {ActionName} from '../../constants/actionName';
 
 export const PersonReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.EDIT_PERSON:
             return action.id === state.id ? {
                 ...state,

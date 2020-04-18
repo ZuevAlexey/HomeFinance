@@ -24,12 +24,12 @@ it(`Person reducer process action ${ActionName.EDIT_PERSON}`, () => {
     let action = EditPerson(id, lastName, firstName, sex);
     action.lastModificationTime = lastModificationTime;
     expect(PersonReducer(startState, action))
-    .toEqual({id, lastName, firstName, sex, lastModificationTime});
+        .toEqual({id, lastName, firstName, sex, lastModificationTime});
 });
 
 it(`Person reducer don\'t process action ${ActionName.EDIT_PERSON}`, () => {
     expect(PersonReducer(startState, EditPerson(2, 'Ivanov', 'Vasya', Sex.FEMALE)))
-    .toBe(startState);
+        .toBe(startState);
 });
 
 it(`Person reducer process action ${ActionName.MARK_DELETE_PERSON}`, () => {

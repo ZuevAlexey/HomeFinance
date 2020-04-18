@@ -3,8 +3,8 @@ import {isNullOrUndefined} from './maybe';
 
 export const getEnumsFromList = (objects, valueFactory, displayValueFactory, name, defaultValue, sortFunc) => {
     let result = {};
-    if(!isNullOrUndefined(defaultValue)){
-        result[defaultValue.key]=defaultValue.value;
+    if (!isNullOrUndefined(defaultValue)) {
+        result[defaultValue.key] = defaultValue.value;
     }
 
     let sortedObjects = isNullOrUndefined(sortFunc)

@@ -5,7 +5,7 @@ import {defaultState} from '../defaultState';
 import {withNullCheck} from '../../helpers/maybe';
 
 export const TransactionsReducer = (state = [], action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.EDIT_TRANSACTION:
         case ActionName.MARK_DELETE_MONEY_CELL:
         case ActionName.MARK_DELETE_TRANSACTION:
