@@ -22,7 +22,7 @@ export default class List extends React.Component {
         }
 
         this.setState({count: this.state.count + offset});
-    }
+    };
 
     render() {
         let {
@@ -77,4 +77,5 @@ export default class List extends React.Component {
             </View>
         )
     }
-}
+};
+

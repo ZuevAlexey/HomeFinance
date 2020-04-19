@@ -63,20 +63,19 @@ export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
 
     switch (getTransactionType(transaction, moneyCellsIdsSet)) {
         case TransactionType.EXPENSE: {
-            name = 'arrow-circle-o-up';
+            name = 'md-trending-down';
             break;
         }
         case TransactionType.INCOME: {
-            name = 'arrow-circle-o-down';
+            name = 'md-trending-up';
             break;
         }
         case TransactionType.TRANSFER: {
-            name = 'arrow-circle-o-right';
+            name = 'md-swap';
         }
     }
 
     return {
-        type: 'font-awesome',
         name
     };
 };

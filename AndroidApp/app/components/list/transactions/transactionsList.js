@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransaction';
 import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper';
 import {transactionComparer} from '../../../helpers/sorter';
+import {Ionicons} from "@expo/vector-icons";
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
@@ -22,11 +23,7 @@ const TransactionsList = (props) => {
             items={transactions.sort(e => e.date)}
             comparer={transactionComparer}
             addButtonInfo={{
-                icon: {
-                    name: 'credit-card-plus',
-                    type: 'material-community',
-                    color: Theme.buttonIconColor
-                },
+                icon: <Ionicons name="md-add-circle-outline" size={Theme.mainButtonIconSize} color={Theme.buttonIconColor} />,
                 title: 'Add new transaction',
                 onPress: addTransactionPress(navigation, add)
             }}

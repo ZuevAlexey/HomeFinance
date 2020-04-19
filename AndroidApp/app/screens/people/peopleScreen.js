@@ -15,6 +15,7 @@ import {getStatusFromSummary} from '../../helpers/statusHelper';
 import {getPeopleSummary} from '../../helpers/calculator';
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 import {peopleComparer} from '../../helpers/sorter';
+import {Ionicons} from "@expo/vector-icons";
 
 const PeopleScreen = (props) => {
     let {navigation, peopleSummary} = props;
@@ -34,11 +35,7 @@ const PeopleScreen = (props) => {
                 items={props.people}
                 comparer={peopleComparer}
                 addButtonInfo={{
-                    icon: {
-                        name: 'md-person-add',
-                        type: 'ionicon',
-                        color: Theme.buttonIconColor
-                    },
+                    icon: <Ionicons name="md-person-add" size={Theme.mainButtonIconSize} color={Theme.buttonIconColor} />,
                     title: 'Add new person',
                     onPress: addPersonPress(navigation, props.add)
                 }}
@@ -92,9 +89,9 @@ const getTitle = (peopleSummary) => (person) => {
 const getAvatar = (person) => {
     let name;
     if (person.sex === Sex.FEMALE) {
-        name = 'female';
+        name = 'md-woman';
     } else {
-        name = 'male';
+        name = 'md-man';
     }
 
     return {

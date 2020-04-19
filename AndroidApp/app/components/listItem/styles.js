@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
         borderBottomWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
-        paddingLeft: Theme.mainPaddingLeft,
+        paddingLeft: Theme.mainPaddingLeft
     },
     avatarContainer: {
         flex: 1
@@ -27,5 +27,6 @@ module.exports = StyleSheet.create({
         marginLeft: 'auto',
         flexDirection: 'row',
         alignItems: 'center'
-    }
+    },
+    editDeleteIconSize: 20
 });
