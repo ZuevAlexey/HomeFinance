@@ -1,3 +1,5 @@
+import {compress, decompress} from "./compressor";
+
 const aesjs = require('aes-js');
 
 let dataKey = "8bb4964bdf69474c035e0dec0e24fd0fabf2d5d2ed095b82afeaf3abeb4207783ef8da8afd4b5c487fb70f14d22902e5edc625cb0e5b04d59b9431d6ce51f3d2e5971bf5a079b664ad1532793677faafb491083937579a4ce76c6a390d4d1192";
@@ -13,7 +15,7 @@ export const encrypt = async (text, key, dataType) => {
 };
 
 const encryptWithKey = async (text, key) => {
-    return aesjs.utils.hex.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).encrypt(aesjs.utils.utf8.toBytes(text)));
+    return aesjs.utils.hex.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).encrypt(aesjs.utils.utf8.toBytes(compress(text))));
 };
 
 export const decrypt = async (text, key, dataType) => {
@@ -30,7 +32,7 @@ export const decrypt = async (text, key, dataType) => {
 };
 
 const decryptWithKey = async (text, key) => {
-    return aesjs.utils.utf8.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).decrypt(aesjs.utils.hex.toBytes(text)));
+    return decompress(aesjs.utils.utf8.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).decrypt(aesjs.utils.hex.toBytes(text))));
 };
 
 const getKey = async (key, dataType) => {

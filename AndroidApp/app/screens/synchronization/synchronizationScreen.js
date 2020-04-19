@@ -13,7 +13,7 @@ import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
-import {showMessage} from "../../helpers/dialog";
+import {debugObjectAsync, showMessage} from "../../helpers/dialog";
 
 let tcomb = require('tcomb-form-native');
 
@@ -93,6 +93,7 @@ class SynchronizationScreen extends React.Component {
 
             await saveSyncData(this.props.getState());
         } catch (error) {
+            await debugObjectAsync(error.message)
             showMessage(
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`

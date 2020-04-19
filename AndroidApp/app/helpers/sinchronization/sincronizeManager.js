@@ -2,7 +2,7 @@ import StateBranches from './branches';
 import {hasAny, isNullOrUndefined} from "../maybe";
 import {createFile, getFileContent, initializeGDriveEnvironment, updateFile} from "./gdrive/gdriveConnector";
 import {mergeCollection} from "./reducers/mergeCollection";
-import {DATA_TYPE, decrypt, encrypt} from "../coder"
+import {DATA_TYPE, decrypt, encrypt} from "../coder/coder"
 
 const MAIN_FOLDER_NAME = 'HomeFinance';
 const BACKUP_FILE_NAME = 'history';

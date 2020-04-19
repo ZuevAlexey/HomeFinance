@@ -9,5 +9,5 @@ export const migrationsManifest = {
                 systemData: state.systemData
             }
         };
-    }
+    },
 };
