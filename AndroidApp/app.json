@@ -1,12 +1,11 @@
 {
   "expo": {
-	"name": "HomeFinance",
+    "name": "HomeFinance",
     "icon": "./icons/web_hi_res_512.png",
     "version": "1.0.0",
     "slug": "home-finance",
-    "sdkVersion": "33.0.0",
     "orientation": "portrait",
-	"ios": {
+    "ios": {
       "bundleIdentifier": "com.donkeyfpg.homefinance"
     },
     "android": {
