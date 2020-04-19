@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, TouchableNativeFeedback, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableNativeFeedback, View} from 'react-native';
+import {Icon} from 'react-native-elements';
 import Styles from './styles';
 import {Avatar} from '../avatar/avatar';
 import Theme from '../theme';
-import {Ionicons} from "@expo/vector-icons";
 
 export const ListItem = (props) => {
     let {
@@ -25,12 +25,20 @@ export const ListItem = (props) => {
                     {title}
                 </View>
                 <View style={Styles.editContainer}>
-                    <TouchableOpacity  style={Theme.roundButtonContainer} onPress={onEditPress}>
-                        <Ionicons name="md-create" size={Styles.editDeleteIconSize} color={Theme.buttonIconColor} />
-                    </TouchableOpacity >
-                    <TouchableOpacity  style={Theme.roundButtonContainer} onPress={onDeletePress}>
-                        <Ionicons name="md-trash" size={Styles.editDeleteIconSize} color={Theme.buttonIconColor} />
-                    </TouchableOpacity >
+                    <Icon
+                        name='edit'
+                        color={Theme.mainColor}
+                        onPress={onEditPress}
+                        reverse
+                        size={Theme.listItemButtonSize}
+                    />
+                    <Icon
+                        name='delete'
+                        color={Theme.mainColor}
+                        onPress={onDeletePress}
+                        reverse
+                        size={Theme.listItemButtonSize}
+                    />
                 </View>
             </View>
         </TouchableNativeFeedback>
