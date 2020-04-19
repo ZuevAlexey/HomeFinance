@@ -1,8 +1,8 @@
-export const safetyCall = (req, res, action, defaultValue, logger) => {
+export const safetyCall = async (req, res, action, defaultValue, logger) => {
     try {
-        action(req, res);
+        await action(req, res);
     } catch (error){
         logger.error(`request = ${req} ; error = ${error}; stack = ${error.stack}`);
-        res.json(defaultValue);
+        await res.json(defaultValue);
     }
 };

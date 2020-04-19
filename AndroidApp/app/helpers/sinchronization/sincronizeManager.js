@@ -11,15 +11,15 @@ const FILE_EXTENSION = '.txt';
 
 export const synchronizeWithGDrive = async (gDriveEnv, key, actionJson) => {
     let action = JSON.parse(actionJson);
-    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY);
-    let state = JSON.parse(await decrypt(await getFileContent(gDriveEnv.fileId, jsonKey.token, jsonKey.credentials), key, DATA_TYPE.DATA));
+    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY, false, false);
+    let state = JSON.parse(await decrypt(await getFileContent(gDriveEnv.fileId, jsonKey.token, jsonKey.credentials), key, DATA_TYPE.DATA, false, true));
     let requestTime = new Date();
     let newState = await synchronize(gDriveEnv, state, action, requestTime, key, jsonKey.token, jsonKey.credentials);
     return await getDiff(newState, action, requestTime);
 };
 
 export const initializeStore = async (key) => {
-    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY);
+    let jsonKey = await decrypt(key, null, DATA_TYPE.KEY, false, false);
     return await initializeGDriveEnvironment(MAIN_FOLDER_NAME, BACKUP_FILE_NAME, MAIN_FILE_NAME + FILE_EXTENSION, async () => {
         let defaultState = {
             people: [],
@@ -27,7 +27,7 @@ export const initializeStore = async (key) => {
             transactions: [],
             articles: []
         };
-        return await encrypt(JSON.stringify(defaultState), key, DATA_TYPE.DATA);
+        return await encrypt(JSON.stringify(defaultState), key, DATA_TYPE.DATA, true, false);
     }, jsonKey.token, jsonKey.credentials);
 };
 
@@ -39,8 +39,8 @@ const synchronize = async (gDriveEnv, state, action, requestTime, key, token, cr
     let resultState = mergeState(state, action, requestTime);
     let resultStateString = JSON.stringify(resultState);
     let historyFileName = MAIN_FILE_NAME + new Date().toISOString() + FILE_EXTENSION;
-    await createFile(gDriveEnv.backupFolderId, historyFileName, await encrypt(resultStateString, key, DATA_TYPE.DATA), token, credentials);
-    await updateFile(gDriveEnv.fileId, await encrypt(resultStateString, key, DATA_TYPE.DATA), token, credentials);
+    await createFile(gDriveEnv.backupFolderId, historyFileName, await encrypt(resultStateString, key, DATA_TYPE.DATA, true, false), token, credentials);
+    await updateFile(gDriveEnv.fileId, await encrypt(resultStateString, key, DATA_TYPE.DATA, true, false), token, credentials);
     return resultState;
 };
 

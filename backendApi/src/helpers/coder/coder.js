@@ -9,17 +9,28 @@ export const DATA_TYPE = {
     DATA: 1
 };
 
-export const encrypt = async (text, key, dataType) => {
+export const encrypt = async (text, key, dataType, preCompress, postCompress) => {
     let key1 = await getKey(key, dataType);
-    return await encryptWithKey(text, key1);
+    return await encryptWithKey(text, key1, preCompress, postCompress);
 };
 
-const encryptWithKey = async (text, key) => {
-    return aesjs.utils.hex.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).encrypt(aesjs.utils.utf8.toBytes(compress(text))));
+const encryptWithKey = async (text, key, preCompress, postCompress) => {
+    if (preCompress === true) {
+        text = compress(text)
+    }
+
+    let result = aesjs.utils.hex.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).encrypt(aesjs.utils.utf8.toBytes(text)));
+
+    if (postCompress === true) {
+        result = compress(result);
+    }
+
+    return result;
 };
 
-export const decrypt = async (text, key, dataType) => {
-    let s = await decryptWithKey(text, await getKey(key, dataType));
+export const decrypt = async (text, key, dataType, preDecompress, postDecompress) => {
+    let key1 = await getKey(key, dataType);
+    let s = await decryptWithKey(text, key1, preDecompress, postDecompress);
     if (dataType === DATA_TYPE.DATA) {
         return s;
     }
@@ -31,8 +42,17 @@ export const decrypt = async (text, key, dataType) => {
     };
 };
 
-const decryptWithKey = async (text, key) => {
-    return decompress(aesjs.utils.utf8.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).decrypt(aesjs.utils.hex.toBytes(text))));
+const decryptWithKey = async (text, key, preDecompress, postDecompress) => {
+    if(preDecompress === true){
+        text = decompress(text);
+    }
+
+    let result = aesjs.utils.utf8.fromBytes(new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5)).decrypt(aesjs.utils.hex.toBytes(text)));
+    if (postDecompress === true) {
+        result = decompress(result)
+    }
+
+    return result;
 };
 
 const getKey = async (key, dataType) => {

@@ -1,4 +1,5 @@
 import {isNullOrUndefined} from "./maybe";
+import fetch from 'node-fetch';
 
 export const updateFile = async (fileId, fileContent, token, credentials) => {
     let exportFileUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + fileId
