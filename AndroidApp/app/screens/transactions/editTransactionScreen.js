@@ -5,13 +5,13 @@ import {EditForm} from '../../components/editForm/editForm';
 import {CommonConstants} from '../../constants/commonConstants';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {connect} from 'react-redux';
-import {getFullArticleName, GetDropdownMoneyCellInfo} from '../../helpers/displayStringHelper';
+import {GetDropdownMoneyCellInfo, getFullArticleName} from '../../helpers/displayStringHelper';
 import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
 
 class EditTransactionScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getType = this.getType.bind(this);
         this.getMoneyCellsEnums = this.getMoneyCellsEnums.bind(this);
@@ -19,7 +19,7 @@ class EditTransactionScreen extends React.Component {
         let isNew = isNullOrUndefined(transactionId);
 
         let startValue;
-        if(isNew) {
+        if (isNew) {
             startValue = {
                 date: new Date()
             };

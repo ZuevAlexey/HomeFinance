@@ -4,7 +4,7 @@ import {defaultState} from '../defaultState';
 import {withNullCheck} from '../../helpers/maybe';
 
 export const ArticlesReducer = (state = [], action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.SYNCHRONIZATION:
             return synchronize(state, action.data.main.articles);
         case ActionName.RESET_STORAGE:

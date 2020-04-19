@@ -19,19 +19,19 @@ export const EditForm = withNavigation((props) => {
     let {type, options, startValue, action, postAction, navigation} = props;
     let form;
     return (
-        <View style = {{flex:1}}>
+        <View style={{flex: 1}}>
             <ScrollView>
                 <View style={styles.container}>
                     <Form
                         ref={input => form = input}
                         type={type}
-                        value = {startValue}
+                        value={startValue}
                         options={options}
                     />
                     <View style={styles.buttonContainer}>
                         <Button
-                            buttonStyle = {styles.button}
-                            title = 'Save'
+                            buttonStyle={styles.button}
+                            title='Save'
                             onPress={() => onPress(form, action, navigation, postAction)}
                         />
                     </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'column',
-        flex:1,
+        flex: 1,
         alignItems: 'center'
     },
     button: {

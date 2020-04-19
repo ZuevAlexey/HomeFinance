@@ -37,12 +37,12 @@ it(`Transaction reducer process action ${ActionName.EDIT_TRANSACTION}`, () => {
     const action = EditTransaction(id, fromId, toId, articleId, amount, description, date);
     action.lastModificationTime = lastModificationTime;
     expect(TransactionReducer(startState, action))
-    .toEqual({id, fromId, toId, articleId, amount, description, date, isValid : true, lastModificationTime});
+        .toEqual({id, fromId, toId, articleId, amount, description, date, isValid: true, lastModificationTime});
 });
 
 it(`Transaction reducer don\'t process action ${ActionName.EDIT_TRANSACTION}`, () => {
     expect(TransactionReducer(startState, EditTransaction(2, 34, 45, 234, 300, 'оплата', null, true)))
-    .toBe(startState);
+        .toBe(startState);
 });
 
 it(`Transactions reducer process action ${ActionName.MARK_DELETE_TRANSACTION}`, () => {

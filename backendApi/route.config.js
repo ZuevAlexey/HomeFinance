@@ -1,8 +1,9 @@
 module.exports = {
     port: 4698,
     api: {
-        action : "/api/action",
-        test: "/api/test",
+        test : "/api/test",
+        encode: "/api/encode",
+        decode: "/api/decode",
         getState: "/api/getState"
     }
 };

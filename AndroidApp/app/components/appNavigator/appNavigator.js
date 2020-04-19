@@ -56,9 +56,10 @@ export const AppNavigator = createAppContainer(createDrawerNavigator({
     }),
     Synchronization: SynchronizationScreen,
     Debug: DebugScreen,
-},{
+}, {
     contentComponent: CustomDrawerContentComponent,
     header: null,
     contentOptions: {
         activeTintColor: Theme.mainColor
-}}));
+    }
+}));

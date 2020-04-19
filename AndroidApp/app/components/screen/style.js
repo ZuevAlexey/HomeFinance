@@ -1,4 +1,4 @@
-import {StyleSheet, StatusBar} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import Theme from '../theme';
 
 module.exports = StyleSheet.create({

@@ -51,6 +51,11 @@
     ],
     "systemData": {
         "lastSynchronizationTime": "DateTime",
-        "serverAddress": "Url"
+        "key": "string",
+        "gDriveEnv": {
+            "fileId" :  "string",
+            "mainFolderId":  "string",
+            "backupFolderId": "string"
+        }
     }
 }

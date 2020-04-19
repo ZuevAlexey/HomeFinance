@@ -1,19 +1,20 @@
 import React from 'react';
 import {Screen} from '../../components/screen/screen';
-let t = require('tcomb-form-native');
 import {Sex} from '../../constants/sex';
 import {EditForm} from '../../components/editForm/editForm';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {connect} from 'react-redux';
 
+let t = require('tcomb-form-native');
+
 class EditPersonScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         let {personId} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(personId);
 
         let defaultValue;
-        if(isNew){
+        if (isNew) {
             defaultValue = null;
         } else {
             let person = props.gerPerson(personId);
@@ -32,7 +33,7 @@ class EditPersonScreen extends React.Component {
         let {personId, action} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(personId);
         let headerTitle;
-        if(isNew){
+        if (isNew) {
             headerTitle = 'Add New Person';
         } else {
             let person = this.props.gerPerson(personId);
@@ -66,7 +67,7 @@ let Person = t.struct({
 });
 
 let options = {
-    fields:{
+    fields: {
         id: {
             hidden: true
         },

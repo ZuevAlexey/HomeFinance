@@ -15,7 +15,7 @@ function ProcessAction(newState, action) {
 }
 
 export const MainReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.RESET_STORAGE:
         case ActionName.ADD_PERSON:
         case ActionName.EDIT_PERSON:

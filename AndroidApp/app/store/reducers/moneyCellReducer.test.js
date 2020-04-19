@@ -16,7 +16,7 @@ const startState = {
     name: 'Кошелек',
     status: MoneyCellStatus.ACTIVE,
     parent: null,
-    isValid : true
+    isValid: true
 };
 
 const processedActions = [

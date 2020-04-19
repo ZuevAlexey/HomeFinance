@@ -16,12 +16,12 @@ module.exports = StyleSheet.create({
         paddingLeft: Theme.mainPaddingLeft,
     },
     avatarContainer: {
-      flex:1
+        flex: 1
     },
     titleContainer: {
         flex: 3,
         alignItems: 'center',
-        justifyContent : 'center',
+        justifyContent: 'center',
     },
     editContainer: {
         marginLeft: 'auto',

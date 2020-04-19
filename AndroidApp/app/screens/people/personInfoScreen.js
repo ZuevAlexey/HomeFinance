@@ -13,31 +13,31 @@ import {getMoneyCellsSummary, getTransactionsSummary} from '../../helpers/calcul
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 
 const INNER_PAGES = {
-    TRANSACTIONS : 'Transactions',
-    MONEY_CELLS : 'MoneyCells'
+    TRANSACTIONS: 'Transactions',
+    MONEY_CELLS: 'MoneyCells'
 };
 
 class PersonInfoScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {innerPage: INNER_PAGES.MONEY_CELLS};
         this.setInnerPage = this.setInnerPage.bind(this);
         this.renderPageButton = this.renderPageButton.bind(this);
     }
 
-    setInnerPage(innerPage){
-        if(innerPage === this.state.innerPage){
+    setInnerPage(innerPage) {
+        if (innerPage === this.state.innerPage) {
             return;
         }
 
         this.setState({innerPage});
     }
 
-    renderPageButton(page){
+    renderPageButton(page) {
         backgroundColor = this.state.innerPage === page ? Theme.selectedButtonBackgroundColor : Theme.mainColor;
         return <Button
-            title = {page}
-            buttonStyle = {{backgroundColor: backgroundColor}}
+            title={page}
+            buttonStyle={{backgroundColor: backgroundColor}}
             onPress={() => this.setInnerPage(page)}
         />
     };
@@ -50,7 +50,7 @@ class PersonInfoScreen extends React.Component {
         let transactions = getTransactions(moneyCellIdsSet);
 
         let summary;
-        if(this.state.innerPage === INNER_PAGES.MONEY_CELLS){
+        if (this.state.innerPage === INNER_PAGES.MONEY_CELLS) {
             summary = getMoneyCellsSummary(moneyCells);
         } else {
             summary = getTransactionsSummary(transactions, moneyCellIdsSet);
@@ -61,18 +61,21 @@ class PersonInfoScreen extends React.Component {
         return (
             <Screen
                 {...this.props}
-                headerTitle = {GetFullPersonName(person)}
-                headerStatus = {getStatusFromSummary(summary)}
+                headerTitle={GetFullPersonName(person)}
+                headerStatus={getStatusFromSummary(summary)}
             >
-                <View style = {styles.listContainer}>
-                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS && <MoneyCellsList navigation = {navigation} moneyCells = {moneyCells} ownerId = {person.id} />}
-                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS && <TransactionsList navigation = {navigation} transactions = {transactions} moneyCellsIdsSet = {moneyCellIdsSet}/>}
+                <View style={styles.listContainer}>
+                    {this.state.innerPage === INNER_PAGES.MONEY_CELLS &&
+                    <MoneyCellsList navigation={navigation} moneyCells={moneyCells} ownerId={person.id}/>}
+                    {this.state.innerPage === INNER_PAGES.TRANSACTIONS &&
+                    <TransactionsList navigation={navigation} transactions={transactions}
+                                      moneyCellsIdsSet={moneyCellIdsSet}/>}
                 </View>
-                <View style = {styles.buttonsContainer}>
-                    <View style = {styles.buttonContainer}>
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonContainer}>
                         {this.renderPageButton(INNER_PAGES.MONEY_CELLS)}
                     </View>
-                    <View style = {styles.buttonContainer}>
+                    <View style={styles.buttonContainer}>
                         {this.renderPageButton(INNER_PAGES.TRANSACTIONS)}
                     </View>
                 </View>
@@ -94,13 +97,13 @@ const styles = StyleSheet.create({
         margin: 1,
         borderWidth: 1,
         alignItems: 'center',
-        justifyContent : 'center'
+        justifyContent: 'center'
     }
 });
 
 const mapStateToProps = state => {
     return {
-        getPerson: (personId) =>  state.main.people.first(e => e.id === personId),
+        getPerson: (personId) => state.main.people.first(e => e.id === personId),
         getMoneyCells: (personId) => state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
         getTransactions: (moneyCellIdsSet) => {
             return state.main.transactions.filter(tran =>

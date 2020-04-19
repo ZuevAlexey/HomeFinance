@@ -6,11 +6,11 @@ import {AddTransaction} from "./addTransaction";
 import {CommonConstants} from "../../constants/commonConstants";
 
 export const AddMoneyCell = (ownerId, moneyCellType, name, status, amount = 0, isValid = true, startDate = null,
-                               endDate = null, roi = null, parentId = null) => {
+                             endDate = null, roi = null, parentId = null) => {
     let now = new Date();
     let newId = uuid();
     let moneyCellCreate = {
-        type : ActionName.ADD_MONEY_CELL,
+        type: ActionName.ADD_MONEY_CELL,
         id: newId,
         ownerId,
         moneyCellType,
@@ -26,7 +26,7 @@ export const AddMoneyCell = (ownerId, moneyCellType, name, status, amount = 0, i
         creationTime: now,
     };
 
-    if(amount === 0){
+    if (amount === 0) {
         return moneyCellCreate;
     }
 

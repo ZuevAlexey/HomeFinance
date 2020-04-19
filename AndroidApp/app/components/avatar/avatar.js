@@ -13,14 +13,14 @@ export const Avatar = (props) => {
     return (
 
         <View
-            style = {StyleSheet.flatten([Styles.avatarContainer, style])}
-            onPress = {onPress}
-            >
+            style={StyleSheet.flatten([Styles.avatarContainer, style])}
+            onPress={onPress}
+        >
             <Icon
-                color = {Theme.mainColor}
-                size = {Theme.itemListAvatarIconSize}
+                color={Theme.mainColor}
+                size={Theme.itemListAvatarIconSize}
                 {...avatar}
-                onPress = {onPress}
+                onPress={onPress}
             />
         </View>
     );

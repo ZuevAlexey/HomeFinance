@@ -16,7 +16,7 @@ let Theme = {
 };
 
 Theme.mainButtonStyle = {
-    backgroundColor : Theme.mainColor
+    backgroundColor: Theme.mainColor
 }
 
 Theme.listAvatarStyle = {

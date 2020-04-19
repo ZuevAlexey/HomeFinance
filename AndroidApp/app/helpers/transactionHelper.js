@@ -11,10 +11,10 @@ export const getTransactionTitle = (moneyCellsIdsSet, articles) => (transaction)
 
     return (
         [
-            <Text key = 'name' style={{textAlign: 'center'}}>
-            {`${withNullCheck(transaction.description, e => WithCheckLength(e, 40), defaultValue)}`}
+            <Text key='name' style={{textAlign: 'center'}}>
+                {`${withNullCheck(transaction.description, e => WithCheckLength(e, 40), defaultValue)}`}
             </Text>,
-            <Text key = 'amount' style={{textAlign: 'center',color: getTransactionAmountColor(transactionType)}}>
+            <Text key='amount' style={{textAlign: 'center', color: getTransactionAmountColor(transactionType)}}>
                 {`${getSign(transactionType)}${transaction.amount}`}
             </Text>
         ]
@@ -25,15 +25,15 @@ export const getTransactionType = (transaction, moneyCellsIdsSet) => {
     let hasTo = moneyCellsIdsSet.has(transaction.toId);
     let hasFrom = moneyCellsIdsSet.has(transaction.fromId);
 
-    if(hasTo){
-        if(hasFrom){
+    if (hasTo) {
+        if (hasFrom) {
             return TransactionType.TRANSFER;
         }
 
         return TransactionType.INCOME;
     }
 
-    if(hasFrom){
+    if (hasFrom) {
         return TransactionType.EXPENSE;
     }
 
@@ -41,14 +41,14 @@ export const getTransactionType = (transaction, moneyCellsIdsSet) => {
 };
 
 export const getSign = (transactionType) => {
-    switch (transactionType){
-        case TransactionType.EXPENSE:{
+    switch (transactionType) {
+        case TransactionType.EXPENSE: {
             return '-';
         }
-        case TransactionType.INCOME:{
+        case TransactionType.INCOME: {
             return '+';
         }
-        case TransactionType.TRANSFER:{
+        case TransactionType.TRANSFER: {
             return '';
         }
     }
@@ -61,16 +61,16 @@ export const createMoneyCellsIdsSet = (moneyCells) => {
 export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
     let name;
 
-    switch (getTransactionType(transaction, moneyCellsIdsSet)){
-        case TransactionType.EXPENSE:{
+    switch (getTransactionType(transaction, moneyCellsIdsSet)) {
+        case TransactionType.EXPENSE: {
             name = 'arrow-circle-o-up';
             break;
         }
-        case TransactionType.INCOME:{
+        case TransactionType.INCOME: {
             name = 'arrow-circle-o-down';
             break;
         }
-        case TransactionType.TRANSFER:{
+        case TransactionType.TRANSFER: {
             name = 'arrow-circle-o-right';
         }
     }

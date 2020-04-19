@@ -2,7 +2,7 @@ import {ActionName} from '../../constants/actionName';
 
 export const Synchronize = (data) => {
     return {
-        type : ActionName.SYNCHRONIZATION,
+        type: ActionName.SYNCHRONIZATION,
         data
     }
 };

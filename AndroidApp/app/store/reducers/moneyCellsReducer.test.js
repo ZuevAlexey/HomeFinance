@@ -103,5 +103,20 @@ it(`MoneyCells reducer process action ${ActionName.ADD_MONEY_CELL}`, () => {
     action.lastModificationTime = lastModificationTime;
     action.creationTime = creationTime;
     const newMoneyCell = MoneyCellsReducer(startState, action)[stateLength];
-    expect(newMoneyCell).toEqual({creationTime, ownerId, moneyCellType, name, status, amount, isValid, startDate, endDate, roi, parentId, lastModificationTime, id, isDeleted});
+    expect(newMoneyCell).toEqual({
+        creationTime,
+        ownerId,
+        moneyCellType,
+        name,
+        status,
+        amount,
+        isValid,
+        startDate,
+        endDate,
+        roi,
+        parentId,
+        lastModificationTime,
+        id,
+        isDeleted
+    });
 });

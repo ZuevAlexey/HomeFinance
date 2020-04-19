@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Screen} from '../../components/screen/screen';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {getDateDisplayString, getFullArticleName, GetFullMoneyCellName} from '../../helpers/displayStringHelper';
 import Theme from '../../components/theme';
 import {connect} from 'react-redux';
@@ -8,12 +8,12 @@ import {GetInfoText} from "../../helpers/moneyCellsHelper";
 import {CommonConstants} from "../../constants/commonConstants";
 
 class TransactionInfoScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getMoneyCellDisplayString = this.getMoneyCellDisplayString.bind(this);
     }
 
-    getMoneyCellDisplayString(moneyCellId){
+    getMoneyCellDisplayString(moneyCellId) {
         if (moneyCellId === CommonConstants.OUTSIDE_MONEY_CELL_ID) {
             return CommonConstants.OUTSIDE_MONEY_CELL_NAME;
         } else {
@@ -22,7 +22,7 @@ class TransactionInfoScreen extends Component {
             return GetFullMoneyCellName(owner, moneyCell);
         }
     }
-    
+
 
     render() {
         let {transactionId} = this.props.navigation.state.params;
@@ -37,11 +37,11 @@ class TransactionInfoScreen extends Component {
                 headerTitle={`${articleName}`}
             >
                 <View style={styles.infoContainer}>
-                        {GetInfoText('Amount', transaction.amount)}
-                        {GetInfoText('Description', transaction.description)}
-                        {GetInfoText('From', fromMcDs)}
-                        {GetInfoText('To', toMcDs)}
-                        {GetInfoText('Date', transaction.date, e => getDateDisplayString(e))}
+                    {GetInfoText('Amount', transaction.amount)}
+                    {GetInfoText('Description', transaction.description)}
+                    {GetInfoText('From', fromMcDs)}
+                    {GetInfoText('To', toMcDs)}
+                    {GetInfoText('Date', transaction.date, e => getDateDisplayString(e))}
                 </View>
             </Screen>
         );

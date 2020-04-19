@@ -9,24 +9,25 @@ import {deserialyzeFromSync, getInfoForSynchronize} from '../../helpers/synchron
 import {Synchronize} from '../../store/actions/synchronization';
 import {EditForm} from '../../components/editForm/editForm';
 import {EditSystemData} from '../../store/actions/editSystemData';
-import {showMessage, showOkCancelDialog} from '../../helpers/dialog';
 import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
+import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
+import {debugObjectAsync, showMessage} from "../../helpers/dialog";
 
 let tcomb = require('tcomb-form-native');
 
 const branches = [
-  'people',
-  'moneyCells',
-  'transactions',
-  'articles'
+    'people',
+    'moneyCells',
+    'transactions',
+    'articles'
 ];
 
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
         let branch = data.main[el];
-        if(isNullOrUndefined(branch)){
+        if (isNullOrUndefined(branch)) {
             return acc;
         }
 
@@ -36,55 +37,49 @@ function getCount(collectionGetter, data) {
 }
 
 class SynchronizationScreen extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.synchronization = this.synchronization.bind(this);
         this.resetStorage = this.resetStorage.bind(this);
         this.getType = this.getType.bind(this);
         this.getFormValue = this.getFormValue.bind(this);
+        this.save = this.save.bind(this);
     }
 
-    getFormValue(){
+    getFormValue() {
         return {
             lastSynchronizationTime: this.props.systemData.lastSynchronizationTime.toLocaleString(),
-            serverAddress: this.props.systemData.serverAddress
+            key: this.props.systemData.key
         }
     }
 
-    async synchronization(){
+    async save(key) {
+        let gDriveEnv = await initializeStore(key);
+        this.props.saveSystemData(key, gDriveEnv)
+        showMessage(
+            'Synchronization successful',
+            `Google Drive environment was successful initialized`
+        );
+    }
+
+    async synchronization() {
         try {
             let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
             let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
             let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
             let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
 
-            let body = JSON.stringify({
-                type: 'sync',
-                data: {
-                    systemData: {
-                        lastSynchronizationTime: lastSynchronizationTime
-                    },
-                    people: peopleForSynchronize,
-                    moneyCells: moneyCellsForSynchronize,
-                    transactions: transactionsForSynchronize
-                }
-            });
-
-            let response = await fetch(this.props.systemData.serverAddress + '/api/action', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
+            let action = {
+                systemData: {
+                    lastSynchronizationTime: lastSynchronizationTime
                 },
-                body: body
-            });
+                people: peopleForSynchronize,
+                moneyCells: moneyCellsForSynchronize,
+                transactions: transactionsForSynchronize
+            };
 
-            let json = await response.json();
-            if(json.type !== 'sync'){
-                throw 'Unknown response from server';
-            }
-
-            let deserializedData = deserialyzeFromSync(json.data);
+            let json = await synchronizeWithGDrive(this.props.systemData.gDriveEnv, this.props.systemData.key, JSON.stringify(action));
+            let deserializedData = deserialyzeFromSync(json);
             this.props.sync(deserializedData);
 
             let pushCount = peopleForSynchronize.length + moneyCellsForSynchronize.length + transactionsForSynchronize.length;
@@ -98,6 +93,7 @@ class SynchronizationScreen extends React.Component {
 
             await saveSyncData(this.props.getState());
         } catch (error) {
+            await debugObjectAsync(error.message)
             showMessage(
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`
@@ -105,7 +101,7 @@ class SynchronizationScreen extends React.Component {
         }
     }
 
-    async resetStorage(){
+    async resetStorage() {
         let data = await readLocalSyncData();
         this.props.resetStorage(data);
     }
@@ -113,7 +109,7 @@ class SynchronizationScreen extends React.Component {
     getType() {
         let options = {
             lastSynchronizationTime: tcomb.String,
-            serverAddress: tcomb.String,
+            key: tcomb.String
         };
 
         return tcomb.struct(options);
@@ -127,17 +123,19 @@ class SynchronizationScreen extends React.Component {
             >
                 <View style={styles.container}>
                     <EditForm
-                        type = {this.getType()}
-                        options = {options}
-                        startValue = {this.getFormValue()}
-                        action = {(systemData) => this.props.saveSystemData(systemData)}
+                        type={this.getType()}
+                        options={options}
+                        startValue={this.getFormValue()}
+                        action={async (systemData) => {
+                            await this.save(systemData.key)
+                        }}
                     />
                 </View>
                 <View
                     style={styles.buttonsContainer}
                 >
                     <View
-                        style = {styles.buttonContainer}
+                        style={styles.buttonContainer}
                     >
                         <Button
                             buttonStyle={styles.buttonStyle}
@@ -154,7 +152,7 @@ class SynchronizationScreen extends React.Component {
                         />
                     </View>
                     <View
-                        style = {styles.buttonContainer}
+                        style={styles.buttonContainer}
                     >
                         <Button
                             buttonStyle={styles.buttonStyle}
@@ -186,7 +184,7 @@ let options = {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent : 'center',
+        justifyContent: 'center',
         flex: 1,
     },
     buttonsContainer: {
@@ -195,16 +193,16 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderWidth: 0,
         alignItems: 'center',
-        justifyContent : 'center',
+        justifyContent: 'center',
         flexDirection: 'row'
     },
-    buttonContainer:{
+    buttonContainer: {
         flex: 1,
         alignItems: 'center'
     },
     buttonStyle: {
-       ...Theme.mainButtonStyle,
-       width: 140
+        ...Theme.mainButtonStyle,
+        width: 140
     }
 });
 
@@ -221,8 +219,8 @@ const mapDispatchToProps = dispatch => {
         sync: (data) => {
             dispatch(Synchronize(data));
         },
-        saveSystemData: (systemData) => {
-            dispatch(EditSystemData(systemData.serverAddress));
+        saveSystemData: (token, credentials, gDriveEnv) => {
+            dispatch(EditSystemData(token, credentials, gDriveEnv));
         },
         resetStorage: (serializedData) => {
             dispatch(ResetStorage(serializedData))

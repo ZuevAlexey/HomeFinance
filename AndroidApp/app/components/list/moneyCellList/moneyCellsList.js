@@ -14,14 +14,14 @@ const MoneyCellsList = (props) => {
     let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
     return (
         <List
-            avatarFactory = {getAvatar}
-            titleFactory = {getTitle || getSimpleTitle()}
-            onItemPress = {onMoneyCellPress(navigation)}
-            onItemEditPress = {onMoneyCellEditPress(navigation, save)}
-            onItemDeletePress = {onMoneyCellDeletePress(props.delete)}
-            items = {moneyCells}
-            comparer = {getMoneyCellsComparer(people)}
-            addButtonInfo= {{
+            avatarFactory={getAvatar}
+            titleFactory={getTitle || getSimpleTitle()}
+            onItemPress={onMoneyCellPress(navigation)}
+            onItemEditPress={onMoneyCellEditPress(navigation, save)}
+            onItemDeletePress={onMoneyCellDeletePress(props.delete)}
+            items={moneyCells}
+            comparer={getMoneyCellsComparer(people)}
+            addButtonInfo={{
                 icon: {
                     name: 'credit-card-plus',
                     type: 'material-community',
@@ -46,9 +46,13 @@ const onMoneyCellPress = (navigation) => (moneyCell) => {
 };
 
 const onMoneyCellEditPress = (navigation, save) => (moneyCell) => {
+    let oldMoneyCell = {
+        amount: moneyCell.amount,
+        moneyCellType: moneyCell.moneyCellType,
+    };
     navigation.push('EditMoneyCell', {
         moneyCellId: moneyCell.id,
-        action: (newMoneyCell) => save(newMoneyCell)
+        action: (newMoneyCell) => save(newMoneyCell, oldMoneyCell)
     });
 };
 
@@ -63,17 +67,22 @@ const onMoneyCellDeletePress = (deleteAction) => (moneyCell) => {
 
 const getAvatar = (moneyCell) => {
     let name;
-    switch (moneyCell.moneyCellType){
-        case MoneyCellType.CARD:{
+    switch (moneyCell.moneyCellType) {
+        case MoneyCellType.CARD: {
             name = 'credit-card';
             break;
         }
-        case MoneyCellType.CASH:{
+        case MoneyCellType.CASH: {
             name = 'cash-100';
             break;
         }
-        case MoneyCellType.DEPOSIT:{
+        case MoneyCellType.DEPOSIT: {
             name = 'bank';
+            break;
+        }
+        case MoneyCellType.BROKER: {
+            name = 'finance'
+            break;
         }
     }
 
@@ -95,8 +104,8 @@ const mapDispatchToProps = dispatch => {
             dispatch(AddMoneyCell(moneyCell.ownerId, moneyCell.moneyCellType, moneyCell.name, moneyCell.status, moneyCell.amount, moneyCell.isValid, moneyCell.startDate,
                 moneyCell.endDate, moneyCell.roi, moneyCell.parentId))
         },
-        save: (moneyCell) => {
-            dispatch(EditMoneyCell(moneyCell.id, moneyCell.name, moneyCell.status))
+        save: (newMoneyCell, oldMoneyCell) => {
+            dispatch(EditMoneyCell(newMoneyCell.id, newMoneyCell.name, newMoneyCell.status, newMoneyCell.amount, oldMoneyCell.amount, oldMoneyCell.moneyCellType))
         },
         delete: (moneyCell) => {
             dispatch(MarkDeleteMoneyCell(moneyCell.id))

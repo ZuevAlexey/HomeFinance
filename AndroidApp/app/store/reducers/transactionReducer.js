@@ -2,7 +2,7 @@ import {ActionName} from '../../constants/actionName';
 import {CommonConstants} from '../../constants/commonConstants';
 
 export const TransactionReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ActionName.EDIT_TRANSACTION:
             return action.id === state.id ? {
                 ...state,
@@ -18,13 +18,13 @@ export const TransactionReducer = (state = {}, action) => {
         case ActionName.MARK_DELETE_TRANSACTION:
             return action.id === state.id ? {
                 ...state,
-                isDeleted : true,
+                isDeleted: true,
                 lastModificationTime: action.lastModificationTime
             } : state;
         case ActionName.MARK_DELETE_MONEY_CELL:
             return processMarkDeleteMoneyCellAction(state, action);
         case ActionName.MARK_DELETE_PERSON:
-                return processMarkDeletePersonAction(state, action);
+            return processMarkDeletePersonAction(state, action);
         default:
             return state;
     }
@@ -39,7 +39,7 @@ const processMarkDeleteMoneyCellAction = (state, action) => {
 };
 
 const processMarkDeleteAction = (state, predicate) => {
-    if(!predicate(state.fromId) && !predicate(state.toId)){
+    if (!predicate(state.fromId) && !predicate(state.toId)) {
         return state;
     }
 
@@ -48,15 +48,15 @@ const processMarkDeleteAction = (state, predicate) => {
         lastModificationTime: new Date()
     }
 
-    if(predicate(state.fromId)){
+    if (predicate(state.fromId)) {
         result.fromId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
     }
 
-    if(predicate(state.toId)){
+    if (predicate(state.toId)) {
         result.toId = CommonConstants.OUTSIDE_MONEY_CELL_ID;
     }
 
-    if(result.fromId === CommonConstants.OUTSIDE_MONEY_CELL_ID && result.toId === CommonConstants.OUTSIDE_MONEY_CELL_ID){
+    if (result.fromId === CommonConstants.OUTSIDE_MONEY_CELL_ID && result.toId === CommonConstants.OUTSIDE_MONEY_CELL_ID) {
         result.isDeleted = true;
     }
 
