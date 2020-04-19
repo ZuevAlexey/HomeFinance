@@ -9,6 +9,7 @@ import {MarkDeleteMoneyCell} from '../../../store/actions/markDeleteMoneyCell';
 import {AddMoneyCell} from '../../../store/actions/addMoneyCell';
 import {getMoneyCellsComparer} from '../../../helpers/sorter';
 import {getSimpleTitle} from "../../../helpers/moneyCellsHelper";
+import { Ionicons } from '@expo/vector-icons';
 
 const MoneyCellsList = (props) => {
     let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
@@ -22,11 +23,7 @@ const MoneyCellsList = (props) => {
             items={moneyCells}
             comparer={getMoneyCellsComparer(people)}
             addButtonInfo={{
-                icon: {
-                    name: 'credit-card-plus',
-                    type: 'material-community',
-                    color: Theme.buttonIconColor
-                },
+                icon: <Ionicons name="md-add-circle-outline" size={Theme.mainButtonIconSize} color={Theme.buttonIconColor} />,
                 title: 'Add new moneyCell',
                 onPress: addMoneyCellPress(navigation, add, ownerId)
             }}
@@ -69,25 +66,24 @@ const getAvatar = (moneyCell) => {
     let name;
     switch (moneyCell.moneyCellType) {
         case MoneyCellType.CARD: {
-            name = 'credit-card';
+            name = 'md-card';
             break;
         }
         case MoneyCellType.CASH: {
-            name = 'cash-100';
+            name = 'md-cash';
             break;
         }
         case MoneyCellType.DEPOSIT: {
-            name = 'bank';
+            name = 'md-business';
             break;
         }
         case MoneyCellType.BROKER: {
-            name = 'finance'
+            name = 'md-analytics';
             break;
         }
     }
 
     return {
-        type: 'material-community',
         name
     };
 };

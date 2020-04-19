@@ -34,7 +34,7 @@ class PersonInfoScreen extends React.Component {
     }
 
     renderPageButton(page) {
-        backgroundColor = this.state.innerPage === page ? Theme.selectedButtonBackgroundColor : Theme.mainColor;
+        let backgroundColor = this.state.innerPage === page ? Theme.selectedButtonBackgroundColor : Theme.mainColor;
         return <Button
             title={page}
             buttonStyle={{backgroundColor: backgroundColor}}
