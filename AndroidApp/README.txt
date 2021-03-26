@@ -36,3 +36,11 @@ var sharedBlacklist = [
   /heapCapture\/bundle\.js/,
   /.*\/__tests__\/.*/
 ];
+
+
+*********************************************************
+to fix the wrong host of expo local server
+
+You can specify the REACT_NATIVE_PACKAGER_HOSTNAME environment variable to use the correct IP address.
+
+If you're using XDE, then make sure to launch it from your project directory with xde . after you've installed the command line tools.
