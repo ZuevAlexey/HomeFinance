@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {getMoneyCellsSummary} from '../../helpers/calculator';
 import {getStatusFromSummary} from '../../helpers/statusHelper';
 import {getTitleWithOwner} from "../../helpers/moneyCellsHelper";
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 
 const MoneyCellsScreen = (props) => {
     let {moneyCells} = props;
@@ -26,7 +27,7 @@ const MoneyCellsScreen = (props) => {
 
 const mapStateToProps = state => {
     return {
-        moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
+        moneyCells: state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE),
         people: state.main.people.filter(e => !e.isDeleted),
     }
 };

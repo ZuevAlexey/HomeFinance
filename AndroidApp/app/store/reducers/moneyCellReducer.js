@@ -1,5 +1,6 @@
 import {ActionName} from '../../constants/actionName';
 import {isNullOrUndefined} from '../../helpers/maybe';
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 
 export const MoneyCellReducer = (state = {}, action) => {
     switch (action.type) {
@@ -14,6 +15,12 @@ export const MoneyCellReducer = (state = {}, action) => {
             return action.id === state.id ? {
                 ...state,
                 isDeleted: true,
+                lastModificationTime: action.lastModificationTime
+            } : state;
+        case ActionName.CLOSE_MONEY_CELL:
+            return action.id === state.id ? {
+                ...state,
+                status: MoneyCellStatus.INACTIVE,
                 lastModificationTime: action.lastModificationTime
             } : state;
         case ActionName.MARK_DELETE_PERSON:

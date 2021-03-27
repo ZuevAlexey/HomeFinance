@@ -23,7 +23,7 @@ const onPress = async (form, action, navigation) => {
 };
 
 export const EditForm = withNavigation((props) => {
-    let {type, options, startValue, saveAction, deleteAction, navigation} = props;
+    let {type, options, startValue, buttons, navigation} = props;
     let form;
     return (
         <View style={{flex: 1}}>
@@ -35,21 +35,16 @@ export const EditForm = withNavigation((props) => {
                         value={startValue}
                         options={options}
                     />
-                    <View style={styles.saveButtonContainer}>
-                        <Button
-                            buttonStyle={styles.button}
-                            title='Save'
-                            onPress={async () => await onPress(form, saveAction, navigation)}
-                        />
-                    </View>
-                    {deleteAction &&
-                    <View style={styles.deleteButtonContainer}>
-                        <Button
-                            buttonStyle={styles.button}
-                            title='Delete'
-                            onPress={() => onPress(form, deleteAction, navigation)}
-                        />
-                    </View>
+                    {
+                        buttons && buttons.map(button =>
+                            <View style={styles.buttonContainer}>
+                                <Button
+                                    buttonStyle={styles.button}
+                                    title={button.title}
+                                    onPress={async () => await onPress(form, button.action, navigation)}
+                                />
+                            </View>
+                        )
                     }
                 </View>
             </ScrollView>
@@ -64,12 +59,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         padding: 20
     },
-    saveButtonContainer: {
-        flexDirection: 'column',
-        flex: 1,
-        alignItems: 'center'
-    },
-    deleteButtonContainer: {
+    buttonContainer: {
         marginTop: 20,
         flexDirection: 'column',
         flex: 1,

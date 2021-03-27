@@ -71,7 +71,7 @@ class EditMoneyCellScreen extends React.Component {
         let moneyCellType = this.state.value.moneyCellType;
         let type = this.getType(moneyCellType);
         let isNew = this.state.isNew;
-        let {saveAction, deleteAction} = this.props.navigation.state.params;
+        let {buttons} = this.props.navigation.state.params;
         let moneyCell = this.state.value;
         let headerTitle = isNew ? 'Add new money cell' : moneyCell.name;
         return (
@@ -83,8 +83,7 @@ class EditMoneyCellScreen extends React.Component {
                     type={type}
                     options={getOptions(isNew, moneyCellType)}
                     startValue={moneyCell}
-                    saveAction={saveAction}
-                    deleteAction={deleteAction}
+                    buttons={buttons}
                 />
             </Screen>
         );
@@ -134,7 +133,7 @@ const getOptions = (isNew, moneyCellType) => {
 
 const mapStateToProps = (state) => ({
     people: state.main.people.filter(e => !e.isDeleted),
-    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
+    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE),
 });
 
 export default connect(mapStateToProps, undefined)(EditMoneyCellScreen);

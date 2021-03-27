@@ -18,6 +18,8 @@ import {peopleComparer} from '../../helpers/sorter';
 import {Ionicons} from "@expo/vector-icons";
 import {DIALOG_RESULT_CANCEL} from "../../constants/dialogResult";
 import {STOP_NAVIGATION} from "../../constants/navigationSign";
+import {DELETE_BUTTON_NAME, SAVE_BUTTON_NAME} from "../../constants/editFormButtonNames";
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 
 const PeopleScreen = (props) => {
     let {navigation, peopleSummary} = props;
@@ -47,7 +49,12 @@ const PeopleScreen = (props) => {
 
 const addPersonPress = (navigation, add) => () => {
     navigation.push('EditPerson', {
-        saveAction: async (newPerson) => add(newPerson)
+        buttons: [
+            {
+                title: SAVE_BUTTON_NAME,
+                saveAction: async (newPerson) => add(newPerson)
+            }
+        ]
     })
 };
 
@@ -58,24 +65,32 @@ const onPersonPress = (navigation) => (person) => {
 const onPersonEditPress = (navigation, save, deleteAction, getMoneyCellsIds) => person => {
     navigation.push('EditPerson', {
         personId: person.id,
-        saveAction: async (newPerson) => {
-            save(newPerson);
-        },
-        deleteAction: async (personToDelete) => {
-            let displayName = GetFullPersonName(personToDelete);
-            let dialogResult = await showOkCancelDialogAsync(
-                'Deleting person',
-                `You want to delete a person '${displayName}'. Are you sure?`,
-                'Yes, I do',
-            );
+        buttons: [
+            {
+                title: SAVE_BUTTON_NAME,
+                action: async (newPerson) => {
+                    save(newPerson);
+                },
+            },
+            {
+                title: DELETE_BUTTON_NAME,
+                action: async (personToDelete) => {
+                    let displayName = GetFullPersonName(personToDelete);
+                    let dialogResult = await showOkCancelDialogAsync(
+                        'Deleting person',
+                        `You want to delete a person '${displayName}'. Are you sure?`,
+                        'Yes, I do',
+                    );
 
-            if (dialogResult === DIALOG_RESULT_CANCEL) {
-                return STOP_NAVIGATION;
+                    if (dialogResult === DIALOG_RESULT_CANCEL) {
+                        return STOP_NAVIGATION;
+                    }
+
+                    let moneyCellsIdsSet = getMoneyCellsIds(personToDelete.id);
+                    deleteAction(personToDelete, moneyCellsIdsSet)
+                }
             }
-
-            let moneyCellsIdsSet = getMoneyCellsIds(personToDelete.id);
-            deleteAction(personToDelete, moneyCellsIdsSet)
-        }
+        ]
     })
 };
 
@@ -108,8 +123,8 @@ const getAvatar = (person) => {
 const mapStateToProps = state => {
     return {
         people: state.main.people.filter(e => !e.isDeleted),
-        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
-        peopleSummary: getPeopleSummary(state.main.moneyCells.filter(e => !e.isDeleted))
+        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE && e.ownerId === personId)),
+        peopleSummary: getPeopleSummary(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE))
     }
 };
 

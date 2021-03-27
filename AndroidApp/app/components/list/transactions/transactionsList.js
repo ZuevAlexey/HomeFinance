@@ -11,6 +11,7 @@ import {transactionComparer} from '../../../helpers/sorter';
 import {Ionicons} from "@expo/vector-icons";
 import {STOP_NAVIGATION} from "../../../constants/navigationSign";
 import {DIALOG_RESULT_CANCEL} from "../../../constants/dialogResult";
+import {DELETE_BUTTON_NAME, SAVE_BUTTON_NAME} from "../../../constants/editFormButtonNames";
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
@@ -34,14 +35,20 @@ const TransactionsList = (props) => {
 
 const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
-        saveAction: async (transaction) => {
-            if (transaction.fromId === transaction.toId) {
-                await showMessageAsync('Error during transaction creation', 'Source money cell and destination money cell can\'t be the same')
-                return STOP_NAVIGATION;
-            }
+        buttons: [
+            {
+                title: SAVE_BUTTON_NAME,
+                action: async (transaction) => {
+                    if (transaction.fromId === transaction.toId) {
+                        await showMessageAsync('Error during transaction creation', 'Source money cell and destination money cell can\'t be the same')
+                        return STOP_NAVIGATION;
+                    }
 
-            add(transaction)
-        }
+                    add(transaction)
+                }
+
+            }
+        ]
     });
 };
 
@@ -57,27 +64,35 @@ const onTransactionEditPress = (navigation, save, deleteAction) => (transaction)
     };
     navigation.push('EditTransaction', {
         transactionId: transaction.id,
-        saveAction: async (newTransaction) => {
-            if (newTransaction.fromId === newTransaction.toId) {
-                await showMessageAsync('Error during transaction update', 'Source money cell and destination money cell can\'t be the same')
-                return STOP_NAVIGATION;
+        buttons: [
+            {
+                title: SAVE_BUTTON_NAME,
+                action: async (newTransaction) => {
+                    if (newTransaction.fromId === newTransaction.toId) {
+                        await showMessageAsync('Error during transaction update', 'Source money cell and destination money cell can\'t be the same')
+                        return STOP_NAVIGATION;
+                    }
+
+                    save(newTransaction, oldTransaction)
+                }
+            },
+            {
+                title: DELETE_BUTTON_NAME,
+                action: async (transactionToDelete) => {
+                    let dialogResult = await showOkCancelDialogAsync(
+                        'Deleting transaction',
+                        `You want to delete a transaction '${transactionToDelete.description}'. Are you sure?`,
+                        'Yes, I do'
+                    );
+
+                    if (dialogResult === DIALOG_RESULT_CANCEL) {
+                        return STOP_NAVIGATION;
+                    }
+
+                    deleteAction(transactionToDelete)
+                }
             }
-
-            save(newTransaction, oldTransaction)
-        },
-        deleteAction: async (transactionToDelete) => {
-            let dialogResult = await showOkCancelDialogAsync(
-                'Deleting transaction',
-                `You want to delete a transaction '${transactionToDelete.description}'. Are you sure?`,
-                'Yes, I do'
-            );
-
-            if (dialogResult === DIALOG_RESULT_CANCEL) {
-                return STOP_NAVIGATION;
-            }
-
-            deleteAction(transactionToDelete)
-        }
+        ],
     });
 };
 

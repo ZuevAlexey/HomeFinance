@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import {getStatusFromSummary} from '../../helpers/statusHelper';
 import {getMoneyCellsSummary, getTransactionsSummary} from '../../helpers/calculator';
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 
 const INNER_PAGES = {
     TRANSACTIONS: 'Transactions',
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         getPerson: (personId) => state.main.people.first(e => e.id === personId),
-        getMoneyCells: (personId) => state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId),
+        getMoneyCells: (personId) => state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE && e.ownerId === personId),
         getTransactions: (moneyCellIdsSet) => {
             return state.main.transactions.filter(tran =>
                 !tran.isDeleted &&

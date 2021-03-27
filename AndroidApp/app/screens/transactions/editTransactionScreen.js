@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {GetDropdownMoneyCellInfo} from '../../helpers/displayStringHelper';
 import {getFullArticleName} from '../../helpers/transactionHelper';
 import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
+import {MoneyCellStatus} from "../../constants/moneyCellStatus";
 
 let t = require('tcomb-form-native');
 
@@ -64,7 +65,7 @@ class EditTransactionScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {saveAction, deleteAction, transactionId} = this.props.navigation.state.params;
+        let {buttons, transactionId} = this.props.navigation.state.params;
         let transaction = this.state.value;
         let headerTitle = isNullOrUndefined(transactionId) ? 'Add new transaction' : transaction.description;
         return (
@@ -76,8 +77,7 @@ class EditTransactionScreen extends React.Component {
                     type={type}
                     options={options}
                     startValue={this.state.value}
-                    saveAction={saveAction}
-                    deleteAction={deleteAction}
+                    buttons={buttons}
                 />
             </Screen>
         );
@@ -117,7 +117,7 @@ const options = {
 };
 
 const mapStateToProps = (state) => ({
-    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted),
+    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE),
     getTransaction: (transactionId) => state.main.transactions.first(e => !e.isDeleted && e.id === transactionId),
     articles: state.main.articles,
     people: state.main.people.filter(e => !e.isDeleted)

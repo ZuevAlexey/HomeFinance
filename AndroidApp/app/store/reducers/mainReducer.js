@@ -22,6 +22,7 @@ export const MainReducer = (state = {}, action) => {
         case ActionName.ADD_MONEY_CELL:
         case ActionName.EDIT_MONEY_CELL:
         case ActionName.MARK_DELETE_MONEY_CELL:
+        case ActionName.CLOSE_MONEY_CELL:
         case ActionName.MARK_DELETE_PERSON:
         case ActionName.ADD_TRANSACTION:
         case ActionName.EDIT_TRANSACTION:

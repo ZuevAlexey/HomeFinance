@@ -1,5 +1,5 @@
 import React from 'react';
-import {debugObjectAsync, showMessageAsync, showOkCancelDialogAsync} from '../../../helpers/dialog';
+import {showMessageAsync, showOkCancelDialogAsync} from '../../../helpers/dialog';
 import List from '../list';
 import Theme from '../../theme';
 import {MoneyCellType} from '../../../constants/moneyCellType';
@@ -12,6 +12,8 @@ import {getSimpleTitle} from "../../../helpers/moneyCellsHelper";
 import { Ionicons } from '@expo/vector-icons';
 import {DIALOG_RESULT_CANCEL} from "../../../constants/dialogResult";
 import {STOP_NAVIGATION} from "../../../constants/navigationSign";
+import {CLOSE_BUTTON_NAME, DELETE_BUTTON_NAME, SAVE_BUTTON_NAME} from "../../../constants/editFormButtonNames";
+import {CloseMoneyCell} from "../../../store/actions/closeMoneyCell";
 
 const MoneyCellsList = (props) => {
     let {navigation, moneyCells, add, save, getTitle, people, ownerId} = props;
@@ -20,7 +22,7 @@ const MoneyCellsList = (props) => {
             avatarFactory={getAvatar}
             titleFactory={getTitle || getSimpleTitle()}
             onItemPress={onMoneyCellPress(navigation)}
-            onItemEditPress={onMoneyCellEditPress(navigation, save, props.delete)}
+            onItemEditPress={onMoneyCellEditPress(navigation, save, props.delete, props.close)}
             items={moneyCells}
             comparer={getMoneyCellsComparer(people)}
             addButtonInfo={{
@@ -34,7 +36,12 @@ const MoneyCellsList = (props) => {
 
 const addMoneyCellPress = (navigation, add, ownerId) => () => {
     navigation.push('EditMoneyCell', {
-        saveAction: async (moneyCell) => add(moneyCell),
+        buttons : [
+            {
+                title: SAVE_BUTTON_NAME,
+                action: async (moneyCell) => add(moneyCell)
+            }
+        ],
         ownerId: ownerId
     });
 };
@@ -43,32 +50,62 @@ const onMoneyCellPress = (navigation) => (moneyCell) => {
     navigation.push('MoneyCell', {moneyCellId: moneyCell.id});
 };
 
-const onMoneyCellEditPress = (navigation, save, deleteAction) => (moneyCell) => {
+const onMoneyCellEditPress = (navigation, save, deleteAction, closeAction) => (moneyCell) => {
     let oldMoneyCell = {
         amount: moneyCell.amount,
         moneyCellType: moneyCell.moneyCellType,
     };
     navigation.push('EditMoneyCell', {
         moneyCellId: moneyCell.id,
-        saveAction: async (newMoneyCell) => save(newMoneyCell, oldMoneyCell),
-        deleteAction: async (moneyCellToDelete) => {
-            if (oldMoneyCell.amount > 0) {
-                await showMessageAsync('Error during money cell deletion', 'Money cell with positive amount can\'t be deleted. Current amount is ' + oldMoneyCell.amount)
-                return STOP_NAVIGATION;
+        buttons: [
+            {
+                title: SAVE_BUTTON_NAME,
+                action: async (newMoneyCell) => save(newMoneyCell, oldMoneyCell),
+
+            },
+            {
+                title: DELETE_BUTTON_NAME,
+                action: async (moneyCellToDelete) => {
+                    if (oldMoneyCell.amount > 0) {
+                        await showMessageAsync('Error during money cell deletion', 'Money cell with positive amount can\'t be deleted. Current amount is ' + oldMoneyCell.amount);
+                        return STOP_NAVIGATION;
+                    }
+
+                    let dialogResult = await showOkCancelDialogAsync(
+                        'Deleting money cell',
+                        `You want to delete a money cell '${moneyCellToDelete.name}'. Are you sure?`,
+                        'Yes, I do',
+                    );
+
+                    if (dialogResult === DIALOG_RESULT_CANCEL) {
+                        return STOP_NAVIGATION;
+                    }
+
+                    deleteAction(moneyCellToDelete)
+                }
+            },
+            {
+                title: CLOSE_BUTTON_NAME,
+                action: async (moneyCellToClose) => {
+                    if (oldMoneyCell.amount > 0) {
+                        await showMessageAsync('Error during money cell closing', 'Money cell with positive amount can\'t be closed. Current amount is ' + oldMoneyCell.amount);
+                        return STOP_NAVIGATION;
+                    }
+
+                    let dialogResult = await showOkCancelDialogAsync(
+                        'Closing money cell',
+                        `You want to close a money cell '${moneyCellToClose.name}'. Are you sure?`,
+                        'Yes, I do',
+                    );
+
+                    if (dialogResult === DIALOG_RESULT_CANCEL) {
+                        return STOP_NAVIGATION;
+                    }
+
+                    closeAction(moneyCellToClose)
+                }
             }
-
-            let dialogResult = await showOkCancelDialogAsync(
-                'Deleting money cell',
-                `You want to delete a money cell '${moneyCellToDelete.name}'. Are you sure?`,
-                'Yes, I do',
-            );
-
-            if (dialogResult === DIALOG_RESULT_CANCEL) {
-                return STOP_NAVIGATION;
-            }
-
-            deleteAction(moneyCellToDelete)
-        }
+        ],
     });
 };
 
@@ -115,6 +152,9 @@ const mapDispatchToProps = dispatch => {
         },
         delete: (moneyCell) => {
             dispatch(MarkDeleteMoneyCell(moneyCell.id))
+        },
+        close: (moneyCell) => {
+            dispatch(CloseMoneyCell(moneyCell.id))
         }
     }
 };

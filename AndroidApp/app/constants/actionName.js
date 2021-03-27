@@ -6,6 +6,7 @@ export const ActionName = {
     ADD_MONEY_CELL: 'addMoneyCell',
     EDIT_MONEY_CELL: 'editMoneyCell',
     MARK_DELETE_MONEY_CELL: 'markDeleteMoneyCell',
+    CLOSE_MONEY_CELL: 'closeMoneyCell',
     ADD_TRANSACTION: 'addTransaction',
     EDIT_TRANSACTION: 'editTransaction',
     MARK_DELETE_TRANSACTION: 'markDeleteTransaction',

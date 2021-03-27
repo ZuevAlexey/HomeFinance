@@ -8,6 +8,7 @@ export const MoneyCellsReducer = (state = [], action) => {
     switch (action.type) {
         case ActionName.EDIT_MONEY_CELL:
         case ActionName.MARK_DELETE_MONEY_CELL:
+        case ActionName.CLOSE_MONEY_CELL:
         case ActionName.ADD_TRANSACTION:
         case ActionName.EDIT_TRANSACTION:
         case ActionName.MARK_DELETE_TRANSACTION:
