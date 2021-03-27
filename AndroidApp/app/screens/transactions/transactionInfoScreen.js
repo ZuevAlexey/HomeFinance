@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Screen} from '../../components/screen/screen';
 import {StyleSheet, View} from 'react-native';
-import {getDateDisplayString, getFullArticleName, GetFullMoneyCellName} from '../../helpers/displayStringHelper';
+import {getDateDisplayString, GetFullMoneyCellName} from '../../helpers/displayStringHelper';
+import {getFullArticleName} from '../../helpers/transactionHelper';
 import Theme from '../../components/theme';
 import {connect} from 'react-redux';
 import {GetInfoText} from "../../helpers/moneyCellsHelper";
@@ -22,7 +23,6 @@ class TransactionInfoScreen extends Component {
             return GetFullMoneyCellName(owner, moneyCell);
         }
     }
-
 
     render() {
         let {transactionId} = this.props.navigation.state.params;

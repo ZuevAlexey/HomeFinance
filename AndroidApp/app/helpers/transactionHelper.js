@@ -2,8 +2,9 @@ import React from 'react';
 import {Text} from 'react-native';
 import {getTransactionAmountColor} from './colorHelper';
 import {withNullCheck} from './maybe';
-import {getFullArticleName, WithCheckLength} from "./displayStringHelper";
+import {getDateDisplayString, WithCheckLength} from "./displayStringHelper";
 import {TransactionType} from "../constants/transactionType";
+import Theme from "../components/theme";
 
 export const getTransactionTitle = (moneyCellsIdsSet, articles) => (transaction) => {
     let transactionType = getTransactionType(transaction, moneyCellsIdsSet);
@@ -16,6 +17,9 @@ export const getTransactionTitle = (moneyCellsIdsSet, articles) => (transaction)
             </Text>,
             <Text key='amount' style={{textAlign: 'center', color: getTransactionAmountColor(transactionType)}}>
                 {`${getSign(transactionType)}${transaction.amount}`}
+            </Text>,
+            <Text key='date' style={{textAlign: 'center', color: Theme.fontColor}}>
+                {`${getDateDisplayString(transaction.date)}`}
             </Text>
         ]
     );
@@ -78,6 +82,17 @@ export const getAvatar = (moneyCellsIdsSet) => (transaction) => {
     return {
         name
     };
+};
+
+export const getFullArticleName = article => {
+    switch (getTransactionTypeByArticle(article.id)) {
+        case TransactionType.INCOME:
+            return `${article.name} (income)`;
+        case TransactionType.EXPENSE:
+            return `${article.name} (expense)`;
+        case TransactionType.TRANSFER:
+            return article.name;
+    }
 };
 
 export const getTransactionTypeByArticle = (articleId) => {

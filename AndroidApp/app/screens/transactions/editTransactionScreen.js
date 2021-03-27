@@ -5,7 +5,8 @@ import {EditForm} from '../../components/editForm/editForm';
 import {CommonConstants} from '../../constants/commonConstants';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {connect} from 'react-redux';
-import {GetDropdownMoneyCellInfo, getFullArticleName} from '../../helpers/displayStringHelper';
+import {GetDropdownMoneyCellInfo} from '../../helpers/displayStringHelper';
+import {getFullArticleName} from '../../helpers/transactionHelper';
 import {articleComparer, getMoneyCellsComparer} from '../../helpers/sorter';
 
 let t = require('tcomb-form-native');
@@ -63,7 +64,7 @@ class EditTransactionScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {action, transactionId} = this.props.navigation.state.params;
+        let {saveAction, transactionId} = this.props.navigation.state.params;
         let transaction = this.state.value;
         let headerTitle = isNullOrUndefined(transactionId) ? 'Add new transaction' : transaction.description;
         return (
@@ -75,7 +76,7 @@ class EditTransactionScreen extends React.Component {
                     type={type}
                     options={options}
                     startValue={this.state.value}
-                    action={action}
+                    saveAction={saveAction}
                 />
             </Screen>
         );

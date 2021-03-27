@@ -71,7 +71,7 @@ class EditMoneyCellScreen extends React.Component {
         let moneyCellType = this.state.value.moneyCellType;
         let type = this.getType(moneyCellType);
         let isNew = this.state.isNew;
-        let {action} = this.props.navigation.state.params;
+        let {saveAction} = this.props.navigation.state.params;
         let moneyCell = this.state.value;
         let headerTitle = isNew ? 'Add new money cell' : moneyCell.name;
         return (
@@ -83,7 +83,7 @@ class EditMoneyCellScreen extends React.Component {
                     type={type}
                     options={getOptions(isNew, moneyCellType)}
                     startValue={moneyCell}
-                    action={action}
+                    saveAction={saveAction}
                 />
             </Screen>
         );

@@ -44,6 +44,18 @@ class SynchronizationScreen extends React.Component {
         this.getType = this.getType.bind(this);
         this.getFormValue = this.getFormValue.bind(this);
         this.save = this.save.bind(this);
+        this.stopSync = this.stopSync.bind(this);
+        this.startSync = this.startSync.bind(this);
+
+        this.state = {isSyncNow: false}
+    }
+
+    stopSync() {
+        this.setState({isSyncNow: false})
+    }
+
+    startSync() {
+        this.setState({isSyncNow: true})
     }
 
     getFormValue() {
@@ -64,6 +76,7 @@ class SynchronizationScreen extends React.Component {
 
     async synchronization() {
         try {
+            this.startSync();
             let lastSynchronizationTime = this.props.systemData.lastSynchronizationTime;
             let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
             let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
@@ -98,6 +111,8 @@ class SynchronizationScreen extends React.Component {
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`
             );
+        } finally {
+            this.stopSync()
         }
     }
 
@@ -126,7 +141,7 @@ class SynchronizationScreen extends React.Component {
                         type={this.getType()}
                         options={options}
                         startValue={this.getFormValue()}
-                        action={async (systemData) => {
+                        saveAction={async (systemData) => {
                             await this.save(systemData.key)
                         }}
                     />
@@ -155,6 +170,7 @@ class SynchronizationScreen extends React.Component {
                         style={styles.buttonContainer}
                     >
                         <Button
+                            disabled={this.state.isSyncNow}
                             buttonStyle={styles.buttonStyle}
                             title={'Synchronization'}
                             onPress={() => this.synchronization()}

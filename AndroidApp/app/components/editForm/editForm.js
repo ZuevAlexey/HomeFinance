@@ -3,20 +3,27 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import Theme from '../../components/theme';
 import {Button} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
+import {stopNavigation} from "../../constants/navigationSign";
 
 let t = require('tcomb-form-native');
 let Form = t.form.Form;
 
-const onPress = (form, action, navigation) => {
+const onPress = (form, saveAction, navigation) => {
     let value = form.getValue();
     if (value) {
-        action && action(value);
+        if (saveAction) {
+            let stopResult = saveAction(form);
+            if (stopResult && stopResult.stop === stopNavigation.stop) {
+                return;
+            }
+        }
+
         navigation.goBack();
     }
 };
 
 export const EditForm = withNavigation((props) => {
-    let {type, options, startValue, action, postAction, navigation} = props;
+    let {type, options, startValue, saveAction, postAction, navigation} = props;
     let form;
     return (
         <View style={{flex: 1}}>
@@ -32,7 +39,7 @@ export const EditForm = withNavigation((props) => {
                         <Button
                             buttonStyle={styles.button}
                             title='Save'
-                            onPress={() => onPress(form, action, navigation, postAction)}
+                            onPress={() => onPress(form, saveAction, navigation, postAction)}
                         />
                     </View>
                 </View>

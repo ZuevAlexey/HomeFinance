@@ -46,7 +46,7 @@ const PeopleScreen = (props) => {
 
 const addPersonPress = (navigation, add) => () => {
     navigation.push('EditPerson', {
-        action: (newPerson) => add(newPerson)
+        saveAction: (newPerson) => add(newPerson)
     })
 };
 
@@ -57,7 +57,7 @@ const onPersonPress = (navigation) => (person) => {
 const onPersonEditPress = (navigation, save) => person => {
     navigation.push('EditPerson', {
         personId: person.id,
-        action: (newPerson) => {
+        saveAction: (newPerson) => {
             save(newPerson);
         }
     })

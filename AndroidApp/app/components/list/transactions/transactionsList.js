@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../list';
 import Theme from '../../theme';
-import {showOkCancelDialog} from '../../../helpers/dialog';
+import {showMessage, showOkCancelDialog} from '../../../helpers/dialog';
 import {AddTransaction} from '../../../store/actions/addTransaction';
 import {EditTransaction} from '../../../store/actions/editTransaction';
 import {connect} from 'react-redux';
@@ -9,6 +9,7 @@ import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransactio
 import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper';
 import {transactionComparer} from '../../../helpers/sorter';
 import {Ionicons} from "@expo/vector-icons";
+import {stopNavigation} from "../../../constants/navigationSign";
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
@@ -33,7 +34,14 @@ const TransactionsList = (props) => {
 
 const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
-        action: (transaction) => add(transaction)
+        saveAction: (transaction) => {
+            if (transaction.fromId === transaction.toId) {
+                showMessage('Error during saving transaction', 'Source money cell and destination money cell can\'t be the same')
+                return stopNavigation;
+            }
+
+            add(transaction)
+        }
     });
 };
 
@@ -49,7 +57,14 @@ const onTransactionEditPress = (navigation, save) => (transaction) => {
     };
     navigation.push('EditTransaction', {
         transactionId: transaction.id,
-        action: (newTransaction) => save(newTransaction, oldTransaction)
+        saveAction: (newTransaction) => {
+            if (newTransaction.fromId === newTransaction.toId) {
+                showMessage('Error during saving transaction', 'Source money cell and destination money cell can\'t be the same')
+                return stopNavigation;
+            }
+
+            save(newTransaction, oldTransaction)
+        }
     });
 };
 

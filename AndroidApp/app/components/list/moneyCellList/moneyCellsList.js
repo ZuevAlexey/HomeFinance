@@ -33,7 +33,7 @@ const MoneyCellsList = (props) => {
 
 const addMoneyCellPress = (navigation, add, ownerId) => () => {
     navigation.push('EditMoneyCell', {
-        action: (moneyCell) => add(moneyCell),
+        saveAction: (moneyCell) => add(moneyCell),
         ownerId: ownerId
     });
 };
@@ -49,7 +49,7 @@ const onMoneyCellEditPress = (navigation, save) => (moneyCell) => {
     };
     navigation.push('EditMoneyCell', {
         moneyCellId: moneyCell.id,
-        action: (newMoneyCell) => save(newMoneyCell, oldMoneyCell)
+        saveAction: (newMoneyCell) => save(newMoneyCell, oldMoneyCell)
     });
 };
 
