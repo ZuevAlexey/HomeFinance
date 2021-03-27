@@ -3,7 +3,7 @@ import List from '../../components/list/list';
 import {Text} from 'react-native';
 import Theme from '../../components/theme';
 import {Screen} from '../../components/screen/screen';
-import {showOkCancelDialog} from '../../helpers/dialog';
+import {showOkCancelDialogAsync} from '../../helpers/dialog';
 import {Sex} from '../../constants/sex';
 import {connect} from 'react-redux';
 import {AddPerson} from '../../store/actions/addPerson';
@@ -16,6 +16,8 @@ import {getPeopleSummary} from '../../helpers/calculator';
 import {createMoneyCellsIdsSet} from '../../helpers/transactionHelper';
 import {peopleComparer} from '../../helpers/sorter';
 import {Ionicons} from "@expo/vector-icons";
+import {DIALOG_RESULT_CANCEL} from "../../constants/dialogResult";
+import {STOP_NAVIGATION} from "../../constants/navigationSign";
 
 const PeopleScreen = (props) => {
     let {navigation, peopleSummary} = props;
@@ -30,8 +32,7 @@ const PeopleScreen = (props) => {
                 avatarStyle={Theme.listAvatarStyle}
                 titleFactory={getTitle(peopleSummary)}
                 onItemPress={onPersonPress(navigation)}
-                onItemEditPress={onPersonEditPress(navigation, props.save)}
-                onItemDeletePress={onPersonDeletePress(navigation, props.delete, props.getMoneyCellsIds)}
+                onItemEditPress={onPersonEditPress(navigation, props.save, props.delete, props.getMoneyCellsIds)}
                 items={props.people}
                 comparer={peopleComparer}
                 addButtonInfo={{
@@ -46,7 +47,7 @@ const PeopleScreen = (props) => {
 
 const addPersonPress = (navigation, add) => () => {
     navigation.push('EditPerson', {
-        saveAction: (newPerson) => add(newPerson)
+        saveAction: async (newPerson) => add(newPerson)
     })
 };
 
@@ -54,24 +55,28 @@ const onPersonPress = (navigation) => (person) => {
     navigation.push('Person', {personId: person.id})
 };
 
-const onPersonEditPress = (navigation, save) => person => {
+const onPersonEditPress = (navigation, save, deleteAction, getMoneyCellsIds) => person => {
     navigation.push('EditPerson', {
         personId: person.id,
-        saveAction: (newPerson) => {
+        saveAction: async (newPerson) => {
             save(newPerson);
+        },
+        deleteAction: async (personToDelete) => {
+            let displayName = GetFullPersonName(personToDelete);
+            let dialogResult = await showOkCancelDialogAsync(
+                'Deleting person',
+                `You want to delete a person '${displayName}'. Are you sure?`,
+                'Yes, I do',
+            );
+
+            if (dialogResult === DIALOG_RESULT_CANCEL) {
+                return STOP_NAVIGATION;
+            }
+
+            let moneyCellsIdsSet = getMoneyCellsIds(personToDelete.id);
+            deleteAction(personToDelete, moneyCellsIdsSet)
         }
     })
-};
-
-const onPersonDeletePress = (navigation, deleteAction, getMoneyCellsIds) => (person) => {
-    let displayName = GetFullPersonName(person);
-    let moneyCellsIdsSet = getMoneyCellsIds(person.id);
-    showOkCancelDialog(
-        'Deleting person',
-        `You want to delete a person '${displayName}'. Are you sure?`,
-        () => deleteAction(person, moneyCellsIdsSet),
-        'Yes, I do',
-    );
 };
 
 const getTitle = (peopleSummary) => (person) => {

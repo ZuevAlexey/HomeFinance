@@ -13,7 +13,7 @@ import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
-import {debugObjectAsync, showMessage} from "../../helpers/dialog";
+import {debugObjectAsync, showMessageAsync} from "../../helpers/dialog";
 
 let tcomb = require('tcomb-form-native');
 
@@ -68,7 +68,7 @@ class SynchronizationScreen extends React.Component {
     async save(key) {
         let gDriveEnv = await initializeStore(key);
         this.props.saveSystemData(key, gDriveEnv)
-        showMessage(
+        await showMessageAsync(
             'Synchronization successful',
             `Google Drive environment was successful initialized`
         );
@@ -99,7 +99,7 @@ class SynchronizationScreen extends React.Component {
             let editCount = getCount(p => p.edit, deserializedData);
             let removeCount = getCount(p => p.remove, deserializedData);
             let addCount = getCount(p => p.add, deserializedData);
-            showMessage(
+            await showMessageAsync(
                 'Synchronization successful',
                 `Сhanges sent ${pushCount}. Сhanges received ${editCount + removeCount + addCount}`
             );
@@ -107,7 +107,7 @@ class SynchronizationScreen extends React.Component {
             await saveSyncData(this.props.getState());
         } catch (error) {
             await debugObjectAsync(error.message)
-            showMessage(
+            await showMessageAsync(
                 'Sync error',
                 `Check your internet connection and try again. In case of repetition of the situation in technical support.`
             );
@@ -157,7 +157,7 @@ class SynchronizationScreen extends React.Component {
                             title={'Reset storage'}
                             backgroundColor={Theme.mainColor}
                             onPress={() => {
-                                showOkCancelDialog(
+                                showOkCancelDialogAsync(
                                     'Reset storage',
                                     `You want to reset the storage to the last sync. Are you sure?`,
                                     () => this.resetStorage(),

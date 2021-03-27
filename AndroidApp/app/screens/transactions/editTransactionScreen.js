@@ -64,7 +64,7 @@ class EditTransactionScreen extends React.Component {
 
     render() {
         let type = this.getType();
-        let {saveAction, transactionId} = this.props.navigation.state.params;
+        let {saveAction, deleteAction, transactionId} = this.props.navigation.state.params;
         let transaction = this.state.value;
         let headerTitle = isNullOrUndefined(transactionId) ? 'Add new transaction' : transaction.description;
         return (
@@ -77,6 +77,7 @@ class EditTransactionScreen extends React.Component {
                     options={options}
                     startValue={this.state.value}
                     saveAction={saveAction}
+                    deleteAction={deleteAction}
                 />
             </Screen>
         );

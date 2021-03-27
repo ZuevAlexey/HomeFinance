@@ -31,7 +31,6 @@ export default class List extends React.Component {
             avatarFactory,
             onItemPress,
             onItemEditPress,
-            onItemDeletePress,
             addButtonInfo,
             comparer
         } = this.props;
@@ -59,7 +58,6 @@ export default class List extends React.Component {
                                 avatarStyle={Theme.listAvatarStyle}
                                 onPress={() => onItemPress(item.item)}
                                 onEditPress={() => onItemEditPress(item.item)}
-                                onDeletePress={() => onItemDeletePress(item.item)}
                             />)}
                     />
                 </View>

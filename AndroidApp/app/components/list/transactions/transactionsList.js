@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../list';
 import Theme from '../../theme';
-import {showMessage, showOkCancelDialog} from '../../../helpers/dialog';
+import {showMessageAsync, showOkCancelDialogAsync} from '../../../helpers/dialog';
 import {AddTransaction} from '../../../store/actions/addTransaction';
 import {EditTransaction} from '../../../store/actions/editTransaction';
 import {connect} from 'react-redux';
@@ -9,7 +9,8 @@ import {MarkDeleteTransaction} from '../../../store/actions/markDeleteTransactio
 import {getAvatar, getTransactionTitle} from '../../../helpers/transactionHelper';
 import {transactionComparer} from '../../../helpers/sorter';
 import {Ionicons} from "@expo/vector-icons";
-import {stopNavigation} from "../../../constants/navigationSign";
+import {STOP_NAVIGATION} from "../../../constants/navigationSign";
+import {DIALOG_RESULT_CANCEL} from "../../../constants/dialogResult";
 
 const TransactionsList = (props) => {
     let {navigation, transactions, add, save, moneyCellsIdsSet, articles} = props;
@@ -19,8 +20,7 @@ const TransactionsList = (props) => {
             avatarStyle={Theme.listAvatarStyle}
             titleFactory={getTransactionTitle(moneyCellsIdsSet, articles)}
             onItemPress={onTransactionPress(navigation)}
-            onItemEditPress={onTransactionEditPress(navigation, save)}
-            onItemDeletePress={onTransactionDeletePress(props.delete)}
+            onItemEditPress={onTransactionEditPress(navigation, save, props.delete)}
             items={transactions.sort(e => e.date)}
             comparer={transactionComparer}
             addButtonInfo={{
@@ -34,10 +34,10 @@ const TransactionsList = (props) => {
 
 const addTransactionPress = (navigation, add) => () => {
     navigation.push('EditTransaction', {
-        saveAction: (transaction) => {
+        saveAction: async (transaction) => {
             if (transaction.fromId === transaction.toId) {
-                showMessage('Error during saving transaction', 'Source money cell and destination money cell can\'t be the same')
-                return stopNavigation;
+                await showMessageAsync('Error during transaction creation', 'Source money cell and destination money cell can\'t be the same')
+                return STOP_NAVIGATION;
             }
 
             add(transaction)
@@ -49,7 +49,7 @@ const onTransactionPress = (navigation) => (transaction) => {
     navigation.push('Transaction', {transactionId: transaction.id});
 };
 
-const onTransactionEditPress = (navigation, save) => (transaction) => {
+const onTransactionEditPress = (navigation, save, deleteAction) => (transaction) => {
     let oldTransaction = {
         fromId: transaction.fromId,
         toId: transaction.toId,
@@ -57,24 +57,32 @@ const onTransactionEditPress = (navigation, save) => (transaction) => {
     };
     navigation.push('EditTransaction', {
         transactionId: transaction.id,
-        saveAction: (newTransaction) => {
+        saveAction: async (newTransaction) => {
             if (newTransaction.fromId === newTransaction.toId) {
-                showMessage('Error during saving transaction', 'Source money cell and destination money cell can\'t be the same')
-                return stopNavigation;
+                await showMessageAsync('Error during transaction update', 'Source money cell and destination money cell can\'t be the same')
+                return STOP_NAVIGATION;
             }
 
             save(newTransaction, oldTransaction)
+        },
+        deleteAction: async (transactionToDelete) => {
+            let dialogResult = await showOkCancelDialogAsync(
+                'Deleting transaction',
+                `You want to delete a transaction '${transactionToDelete.description}'. Are you sure?`,
+                'Yes, I do'
+            );
+
+            if (dialogResult === DIALOG_RESULT_CANCEL) {
+                return STOP_NAVIGATION;
+            }
+
+            deleteAction(transactionToDelete)
         }
     });
 };
 
 const onTransactionDeletePress = (deleteAction) => (transaction) => {
-    showOkCancelDialog(
-        'Deleting transaction',
-        `You want to delete a transaction '${transaction.description}'. Are you sure?`,
-        () => deleteAction(transaction),
-        'Yes, I do',
-    );
+
 };
 
 const mapStateToProps = state => {

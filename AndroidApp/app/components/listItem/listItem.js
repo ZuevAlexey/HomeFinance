@@ -11,8 +11,7 @@ export const ListItem = (props) => {
         avatarStyle,
         title,
         onPress,
-        onEditPress,
-        onDeletePress
+        onEditPress
     } = props;
     return (
         <TouchableNativeFeedback onPress={onPress}>
@@ -29,13 +28,6 @@ export const ListItem = (props) => {
                         name='edit'
                         color={Theme.mainColor}
                         onPress={onEditPress}
-                        reverse
-                        size={Theme.listItemButtonSize}
-                    />
-                    <Icon
-                        name='delete'
-                        color={Theme.mainColor}
-                        onPress={onDeletePress}
                         reverse
                         size={Theme.listItemButtonSize}
                     />

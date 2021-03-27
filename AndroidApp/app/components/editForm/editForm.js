@@ -3,17 +3,17 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import Theme from '../../components/theme';
 import {Button} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
-import {stopNavigation} from "../../constants/navigationSign";
+import {STOP_NAVIGATION} from "../../constants/navigationSign";
 
 let t = require('tcomb-form-native');
 let Form = t.form.Form;
 
-const onPress = (form, saveAction, navigation) => {
+const onPress = async (form, action, navigation) => {
     let value = form.getValue();
     if (value) {
-        if (saveAction) {
-            let stopResult = saveAction(form);
-            if (stopResult && stopResult.stop === stopNavigation.stop) {
+        if (action) {
+            let stopResult = await action(value);
+            if (stopResult && stopResult === STOP_NAVIGATION) {
                 return;
             }
         }
@@ -23,7 +23,7 @@ const onPress = (form, saveAction, navigation) => {
 };
 
 export const EditForm = withNavigation((props) => {
-    let {type, options, startValue, saveAction, postAction, navigation} = props;
+    let {type, options, startValue, saveAction, deleteAction, navigation} = props;
     let form;
     return (
         <View style={{flex: 1}}>
@@ -35,13 +35,22 @@ export const EditForm = withNavigation((props) => {
                         value={startValue}
                         options={options}
                     />
-                    <View style={styles.buttonContainer}>
+                    <View style={styles.saveButtonContainer}>
                         <Button
                             buttonStyle={styles.button}
                             title='Save'
-                            onPress={() => onPress(form, saveAction, navigation, postAction)}
+                            onPress={async () => await onPress(form, saveAction, navigation)}
                         />
                     </View>
+                    {deleteAction &&
+                    <View style={styles.deleteButtonContainer}>
+                        <Button
+                            buttonStyle={styles.button}
+                            title='Delete'
+                            onPress={() => onPress(form, deleteAction, navigation)}
+                        />
+                    </View>
+                    }
                 </View>
             </ScrollView>
         </View>
@@ -55,7 +64,13 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         padding: 20
     },
-    buttonContainer: {
+    saveButtonContainer: {
+        flexDirection: 'column',
+        flex: 1,
+        alignItems: 'center'
+    },
+    deleteButtonContainer: {
+        marginTop: 20,
         flexDirection: 'column',
         flex: 1,
         alignItems: 'center'

@@ -1,23 +1,39 @@
 import {Alert} from 'react-native';
-import {isNullOrUndefined} from './maybe';
+import {DIALOG_RESULT_CANCEL, DIALOG_RESULT_YES} from "../constants/dialogResult";
 
-export const showOkCancelDialog = (title, message, onOkPress, okTitle, cancelTitle) => {
-    Alert.alert(
-        title,
-        message,
-        [
-            {text: cancelTitle ? cancelTitle : 'Cancel'},
-            {
-                text: okTitle ? okTitle : 'Ok', onPress: () => {
-                    if (isNullOrUndefined(onOkPress)) {
-                        return;
-                    }
-                    onOkPress()
+export const showOkCancelDialogAsync = (title, message, okTitle, cancelTitle) => {
+    return new Promise((resolve, reject) => {
+        Alert.alert(
+            title,
+            message,
+            [
+                {
+                    text: cancelTitle ? cancelTitle : 'Cancel',
+                    onPress: () => resolve(DIALOG_RESULT_CANCEL)
+                },
+                {
+                    text: okTitle ? okTitle : 'Ok',
+                    onPress: () => resolve(DIALOG_RESULT_YES)
                 }
-            }
-        ],
-        {cancelable: true}
-    );
+            ],
+            {cancelable: false}
+        );
+    });
+};
+
+export const showMessageAsync = (title, message, okAction) => {
+    return new Promise((resolve, reject) => {
+        Alert.alert(title, message, [
+                {
+                    text: 'Ok',
+                    onPress: () => {
+                        okAction && okAction()
+                        resolve(DIALOG_RESULT_YES)
+                    }
+                }],
+            {cancelable: false}
+        );
+    });
 };
 
 export const showMessage = (title, message, okAction) => {

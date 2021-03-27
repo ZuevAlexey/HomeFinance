@@ -30,7 +30,7 @@ class EditPersonScreen extends React.Component {
     }
 
     render() {
-        let {personId, saveAction} = this.props.navigation.state.params;
+        let {personId, saveAction, deleteAction} = this.props.navigation.state.params;
         let isNew = isNullOrUndefined(personId);
         let headerTitle;
         if (isNew) {
@@ -50,6 +50,7 @@ class EditPersonScreen extends React.Component {
                     options={options}
                     startValue={this.state.value}
                     saveAction={saveAction}
+                    deleteAction={deleteAction}
                 />
             </Screen>
         );

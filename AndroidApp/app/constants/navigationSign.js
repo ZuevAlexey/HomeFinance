@@ -1,3 +1,1 @@
-export const stopNavigation = {
-    stop: true
-}
+export const STOP_NAVIGATION = "STOP_NAVIGATION"
