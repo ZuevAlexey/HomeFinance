@@ -96,17 +96,9 @@ const onTransactionEditPress = (navigation, save, deleteAction) => (transaction)
     });
 };
 
-const onTransactionDeletePress = (deleteAction) => (transaction) => {
-
-};
-
 const mapStateToProps = state => {
     return {
-        articles: state.main.articles,
-        moneyCellsMap: state.main.moneyCells.reduce((acc, el) => {
-            acc[el.id] = el.name;
-            return acc;
-        }, {})
+        articles: state.main.articles
     }
 };
 

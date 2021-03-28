@@ -42,7 +42,8 @@ class EditTransactionScreen extends React.Component {
     }
 
     getMoneyCellsEnums = () => {
-        return getEnumsFromList(this.props.moneyCells,
+        let transaction = this.state.value;
+        return getEnumsFromList(this.props.getMoneyCells(transaction.fromId, transaction.toId),
             mc => mc.id,
             mc => GetDropdownMoneyCellInfo(this.props.people.first(e => e.id === mc.ownerId), mc),
             'MoneyCells',
@@ -117,10 +118,16 @@ const options = {
 };
 
 const mapStateToProps = (state) => ({
-    moneyCells: state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE),
     getTransaction: (transactionId) => state.main.transactions.first(e => !e.isDeleted && e.id === transactionId),
     articles: state.main.articles,
-    people: state.main.people.filter(e => !e.isDeleted)
+    people: state.main.people.filter(e => !e.isDeleted),
+    getMoneyCells: (fromId, toId) => state.main.moneyCells.filter(e => !e.isDeleted &&
+        (
+            e.status !== MoneyCellStatus.CLOSED ||
+            fromId !== CommonConstants.OUTSIDE_MONEY_CELL_ID && e.id === fromId ||
+            toId !== CommonConstants.OUTSIDE_MONEY_CELL_ID && e.id === toId
+        )
+    ),
 });
 
 export default connect(mapStateToProps, undefined)(EditTransactionScreen);

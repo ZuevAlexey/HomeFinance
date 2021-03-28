@@ -28,7 +28,7 @@ const TransactionsScreen = (props) => {
 const mapStateToProps = state => {
     return {
         transactions: state.main.transactions.filter(e => !e.isDeleted),
-        moneyCellsIdsSet: createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE))
+        moneyCellsIdsSet: createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted))
     }
 };
 

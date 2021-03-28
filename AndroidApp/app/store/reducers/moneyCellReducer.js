@@ -20,7 +20,7 @@ export const MoneyCellReducer = (state = {}, action) => {
         case ActionName.CLOSE_MONEY_CELL:
             return action.id === state.id ? {
                 ...state,
-                status: MoneyCellStatus.INACTIVE,
+                status: MoneyCellStatus.CLOSED,
                 lastModificationTime: action.lastModificationTime
             } : state;
         case ActionName.MARK_DELETE_PERSON:

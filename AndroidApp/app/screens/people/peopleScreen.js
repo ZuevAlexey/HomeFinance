@@ -123,8 +123,8 @@ const getAvatar = (person) => {
 const mapStateToProps = state => {
     return {
         people: state.main.people.filter(e => !e.isDeleted),
-        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE && e.ownerId === personId)),
-        peopleSummary: getPeopleSummary(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.INACTIVE))
+        getMoneyCellsIds: (personId) => createMoneyCellsIdsSet(state.main.moneyCells.filter(e => !e.isDeleted && e.ownerId === personId)),
+        peopleSummary: getPeopleSummary(state.main.moneyCells.filter(e => !e.isDeleted && e.status !== MoneyCellStatus.CLOSED))
     }
 };
 

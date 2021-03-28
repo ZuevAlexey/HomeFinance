@@ -26,7 +26,7 @@ const card = {
     startDate: new Date(2018, 8, 0),
     endData: new Date(2018, 8, 0),
     name: 'Картонка',
-    status: MoneyCellStatus.INACTIVE,
+    status: MoneyCellStatus.CLOSED,
     parentId: null
 };
 const deposit = {

@@ -33,7 +33,7 @@ AssertUnprocessedActions(processedActions, 'MoneyCell', MoneyCellReducer);
 
 it(`MoneyCell reducer process action ${ActionName.EDIT_MONEY_CELL}`, () => {
     const name = 'Зарплатная карточка';
-    const status = MoneyCellStatus.INACTIVE;
+    const status = MoneyCellStatus.CLOSED;
     let action = EditMoneyCell(1, name, status);
     action.lastModificationTime = lastModificationTime;
     let newMoneyCell = MoneyCellReducer(startState, action);
@@ -41,7 +41,7 @@ it(`MoneyCell reducer process action ${ActionName.EDIT_MONEY_CELL}`, () => {
 });
 
 it(`MoneyCell reducer don\'t process action ${ActionName.EDIT_MONEY_CELL}`, () => {
-    expect(MoneyCellReducer(startState, EditMoneyCell(2, 'Вклад', MoneyCellStatus.INACTIVE)))
+    expect(MoneyCellReducer(startState, EditMoneyCell(2, 'Вклад', MoneyCellStatus.CLOSED)))
         .toBe(startState);
 });
 

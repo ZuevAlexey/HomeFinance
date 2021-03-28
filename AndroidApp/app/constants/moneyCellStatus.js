@@ -1,4 +1,5 @@
 export const MoneyCellStatus = {
     ACTIVE: 'Active',
-    INACTIVE: 'Inactive'
+    INACTIVE: 'Inactive',
+    CLOSED: 'Closed'
 };
