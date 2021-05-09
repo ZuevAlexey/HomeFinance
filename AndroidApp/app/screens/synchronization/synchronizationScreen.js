@@ -14,6 +14,7 @@ import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper'
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
 import {debugObjectAsync, showMessageAsync} from "../../helpers/dialog";
+import {SAVE_BUTTON_NAME} from "../../constants/editFormButtonNames";
 
 let tcomb = require('tcomb-form-native');
 
@@ -141,9 +142,14 @@ class SynchronizationScreen extends React.Component {
                         type={this.getType()}
                         options={options}
                         startValue={this.getFormValue()}
-                        saveAction={async (systemData) => {
-                            await this.save(systemData.key)
-                        }}
+                        buttons={[
+                            {
+                                title: SAVE_BUTTON_NAME,
+                                action: async (systemData) => {
+                                    await this.save(systemData.key)
+                                }
+                            }
+                        ]}
                     />
                 </View>
                 <View
