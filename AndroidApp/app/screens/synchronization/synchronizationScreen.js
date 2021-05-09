@@ -14,6 +14,7 @@ import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper'
 import {isNullOrUndefined} from '../../helpers/maybe';
 import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
 import {debugObjectAsync, showMessageAsync} from "../../helpers/dialog";
+import {SAVE_BUTTON_NAME} from "../../constants/editFormButtonNames";
 
 let tcomb = require('tcomb-form-native');
 
@@ -66,12 +67,20 @@ class SynchronizationScreen extends React.Component {
     }
 
     async save(key) {
-        let gDriveEnv = await initializeStore(key);
-        this.props.saveSystemData(key, gDriveEnv)
-        await showMessageAsync(
-            'Synchronization successful',
-            `Google Drive environment was successful initialized`
-        );
+        try {
+            let gDriveEnv = await initializeStore(key);
+            this.props.saveSystemData(key, gDriveEnv)
+            await showMessageAsync(
+                'GDrive initialization success',
+                `Google Drive environment was successful initialized`
+            );
+        } catch (error) {
+            await debugObjectAsync(error.message)
+            await showMessageAsync(
+                'GDrive initialization error',
+                `Check your internet connection and try again. In case of repetition of the situation in technical support.`
+            );
+        }
     }
 
     async synchronization() {
@@ -81,7 +90,6 @@ class SynchronizationScreen extends React.Component {
             let peopleForSynchronize = getInfoForSynchronize(this.props.people, lastSynchronizationTime);
             let moneyCellsForSynchronize = getInfoForSynchronize(this.props.moneyCells, lastSynchronizationTime);
             let transactionsForSynchronize = getInfoForSynchronize(this.props.transactions, lastSynchronizationTime);
-
             let action = {
                 systemData: {
                     lastSynchronizationTime: lastSynchronizationTime
@@ -95,10 +103,15 @@ class SynchronizationScreen extends React.Component {
             let deserializedData = deserialyzeFromSync(json);
             this.props.sync(deserializedData);
 
+
             let pushCount = peopleForSynchronize.length + moneyCellsForSynchronize.length + transactionsForSynchronize.length;
+
             let editCount = getCount(p => p.edit, deserializedData);
+
             let removeCount = getCount(p => p.remove, deserializedData);
+
             let addCount = getCount(p => p.add, deserializedData);
+
             await showMessageAsync(
                 'Synchronization successful',
                 `Сhanges sent ${pushCount}. Сhanges received ${editCount + removeCount + addCount}`
@@ -141,9 +154,14 @@ class SynchronizationScreen extends React.Component {
                         type={this.getType()}
                         options={options}
                         startValue={this.getFormValue()}
-                        saveAction={async (systemData) => {
-                            await this.save(systemData.key)
-                        }}
+                        buttons={[
+                            {
+                                title: SAVE_BUTTON_NAME,
+                                action: async (systemData) => {
+                                    await this.save(systemData.key)
+                                }
+                            }
+                        ]}
                     />
                 </View>
                 <View
