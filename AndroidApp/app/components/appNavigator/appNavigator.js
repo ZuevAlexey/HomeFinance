@@ -1,6 +1,5 @@
 import React from 'react';
 import {createAppContainer, createDrawerNavigator, createStackNavigator} from 'react-navigation';
-import DebugScreen from '../../screens/debug/debugScreen';
 import PeopleScreen from '../../screens/people/peopleScreen';
 import {CustomDrawerContentComponent} from '../customDrawerComponent/customDrawerComponent';
 import MoneyCellsScreen from '../../screens/moneyCells/moneyCellsScreen';
@@ -54,8 +53,7 @@ export const AppNavigator = createAppContainer(createDrawerNavigator({
     }, {
         headerMode: 'none'
     }),
-    Synchronization: SynchronizationScreen,
-    Debug: DebugScreen,
+    Synchronization: SynchronizationScreen
 }, {
     contentComponent: CustomDrawerContentComponent,
     header: null,

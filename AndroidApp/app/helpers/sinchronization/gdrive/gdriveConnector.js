@@ -39,15 +39,18 @@ export const initializeGDriveEnvironment = async (mainFolderName, backupFolderNa
         let createFileResponse = await createFile(mainFolderId, fileName, await getFileContent(), token, credentials);
         let createdFile = await createFileResponse.json();
         fileId = createdFile.id
-    } else {
+    } else if (filesJson.files.length === 1) {
         fileId = filesJson.files[0].id;
+    } else {
+        throw new Error('There are ' + filesJson.files.length + " files with name " + fileName)
     }
 
-    return {
+    let result = {
         fileId,
         mainFolderId,
         backupFolderId
     };
+    return result;
 };
 
 export const createFile = async (folderId, fileName, fileContent, token, credentials) => {
