@@ -12,18 +12,12 @@ import {EditSystemData} from '../../store/actions/editSystemData';
 import {ResetStorage} from '../../store/actions/resetStorage';
 import {readLocalSyncData, saveSyncData} from '../../helpers/resetStorageHelper';
 import {isNullOrUndefined} from '../../helpers/maybe';
-import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/sincronizeManager";
+import {initializeStore, synchronizeWithGDrive} from "../../helpers/sinchronization/synchronizeManager";
 import {debugObjectAsync, showMessageAsync} from "../../helpers/dialog";
 import {SAVE_BUTTON_NAME} from "../../constants/editFormButtonNames";
+import branches from '../../helpers/sinchronization/branches_names.js';
 
 let tcomb = require('tcomb-form-native');
-
-const branches = [
-    'people',
-    'moneyCells',
-    'transactions',
-    'articles'
-];
 
 function getCount(collectionGetter, data) {
     return branches.reduce((acc, el) => {
@@ -114,7 +108,7 @@ class SynchronizationScreen extends React.Component {
 
             await showMessageAsync(
                 'Synchronization successful',
-                `Сhanges sent ${pushCount}. Сhanges received ${editCount + removeCount + addCount}`
+                `Changes sent ${pushCount}. Сhanges received ${editCount + removeCount + addCount}`
             );
 
             await saveSyncData(this.props.getState());
@@ -122,7 +116,7 @@ class SynchronizationScreen extends React.Component {
             await debugObjectAsync(error.message)
             await showMessageAsync(
                 'Sync error',
-                `Check your internet connection and try again. In case of repetition of the situation in technical support.`
+                `Check your internet connection and try again.`
             );
         } finally {
             this.stopSync()
