@@ -1,8 +1,9 @@
-import StateBranches from './branches';
+import {branches, branches_names} from './branches_names';
 import {hasAny, isNullOrUndefined} from "../maybe";
 import {createFile, getFileContent, initializeGDriveEnvironment, updateFile} from "./gdrive/gdriveConnector";
 import {mergeCollection} from "./reducers/mergeCollection";
 import {DATA_TYPE, decrypt, encrypt} from "../coder/coder"
+import {CommonConstants} from "../../constants/commonConstants";
 
 const MAIN_FOLDER_NAME = 'HomeFinance';
 const BACKUP_FILE_NAME = 'history';
@@ -23,12 +24,11 @@ export const synchronizeWithGDrive = async (gDriveEnv, key, actionJson) => {
 export const initializeStore = async (key) => {
     let jsonKey = await decrypt(key, null, DATA_TYPE.KEY, false, false);
     return await initializeGDriveEnvironment(MAIN_FOLDER_NAME, BACKUP_FILE_NAME, MAIN_FILE_NAME + FILE_EXTENSION, async () => {
-        let defaultState = {
-            people: [],
-            moneyCells: [],
-            transactions: [],
-            articles: []
-        };
+        let defaultState = {}
+        defaultState[branches.PEOPLE_BRANCH_NAME] = [];
+        defaultState[branches.MONEY_CELLS_BRANCH_NAME] = [];
+        defaultState[branches.TRANSACTIONS_BRANCH_NAME] = [];
+        defaultState[branches.ARTICLES_BRANCH_NAME] = [];
         return await encrypt(JSON.stringify(defaultState), key, DATA_TYPE.DATA, true, false);
     }, jsonKey.token, jsonKey.credentials);
 };
@@ -38,7 +38,7 @@ const synchronize = async (gDriveEnv, state, action, requestTime, key, token, cr
         return state;
     }
 
-    let resultState = mergeState(state, action, requestTime);
+    let resultState = mergeState(state, action, requestTime.toISOString());
     let resultStateString = JSON.stringify(resultState);
     let historyFileName = MAIN_FILE_NAME + new Date().toISOString() + FILE_EXTENSION;
     let fileContent = await encrypt(resultStateString, key, DATA_TYPE.DATA, true, false);
@@ -55,7 +55,7 @@ const getDiff = async (state, action, requestTime) => {
             lastSynchronizationTime: requestTime.toISOString()
         }
     };
-    await StateBranches.asyncForEach(async branchName => {
+    await branches_names.asyncForEach(async branchName => {
         let branchDiff = await getBranchDiff(state[branchName], action.systemData.lastSynchronizationTime);
         if (branchDiff !== undefined) {
             diff[branchName] = branchDiff;
@@ -109,14 +109,55 @@ const hasInfoForState = action => {
         return false;
     }
 
-    return hasAny(action, ['people', 'moneyCells', 'transactions'], e => !isNullOrUndefined(e) && !isNullOrUndefined(e.length) && e.length !== 0);
+    return hasAny(action, [branches.PEOPLE_BRANCH_NAME, branches.MONEY_CELLS_BRANCH_NAME, branches.TRANSACTIONS_BRANCH_NAME], e => !isNullOrUndefined(e) && !isNullOrUndefined(e.length) && e.length !== 0);
 };
 
 const mergeState = (state, action, requestTime) => {
     let newState = {};
-    StateBranches.forEach(branchName => {
-        newState[branchName] = mergeCollection(state[branchName], action, branchName, requestTime.toISOString());
+    branches_names.forEach(branchName => {
+        newState[branchName] = mergeCollection(state, action, branchName, requestTime);
     });
+
+    recalculateMoneyCellsAmount(newState, action, requestTime);
 
     return newState;
 };
+
+const recalculateMoneyCellsAmount = (newState, action, requestTime) => {
+    let moneyCellsToRecalculate = {}
+    let newAmount = {amount: 0}
+    action[branches.TRANSACTIONS_BRANCH_NAME].forEach(transaction => {
+        moneyCellsToRecalculate[transaction.fromId] = {...newAmount};
+        moneyCellsToRecalculate[transaction.toId] = {...newAmount};
+    })
+
+    action[branches.MONEY_CELLS_BRANCH_NAME].forEach(moneyCell => {
+        moneyCellsToRecalculate[moneyCell.id] = {...newAmount};
+    })
+
+    delete moneyCellsToRecalculate[CommonConstants.OUTSIDE_MONEY_CELL_ID];
+
+    newState[branches.TRANSACTIONS_BRANCH_NAME].forEach(transaction => {
+        if (transaction.isDeleted) {
+            return;
+        }
+
+        let fromMoneyCell = moneyCellsToRecalculate[transaction.fromId];
+        if (fromMoneyCell) {
+            fromMoneyCell.amount -= transaction.amount;
+        }
+
+        let toMoneyCell = moneyCellsToRecalculate[transaction.toId];
+        if (toMoneyCell) {
+            toMoneyCell.amount += transaction.amount;
+        }
+    })
+
+    newState[branches.MONEY_CELLS_BRANCH_NAME].forEach(moneyCell => {
+        let newAmount = moneyCellsToRecalculate[moneyCell.id];
+        if(newAmount) {
+            moneyCell.amount = newAmount.amount;
+            moneyCell.lastModificationTime = requestTime;
+        }
+    });
+}
