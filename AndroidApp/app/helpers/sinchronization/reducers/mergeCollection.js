@@ -1,6 +1,7 @@
 import {mergeItem} from "./mergeItem";
 
-export const mergeCollection = (state, action, collectionName, requestTime) => {
+export const mergeCollection = (fullState, action, collectionName, requestTime) => {
+    let state = fullState[collectionName];
     let collectionDiff = action[collectionName];
     if (collectionDiff === undefined || collectionDiff.length === undefined || collectionDiff.length === 0) {
         return state;
